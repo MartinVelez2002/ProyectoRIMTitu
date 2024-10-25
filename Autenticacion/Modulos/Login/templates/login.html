@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<title>Formulario de Login</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/diseño.css' %}">
+	<link href="https://fonts.googleapis.com/css2?family=Arima:wght@100..700&display=swap" rel="stylesheet">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    {% block head %}
+    
+    {% endblock %}
+</head>
+<body>
+    {% block main %}
+	<img class="wave" src="{% static 'img/wave.png' %}">
+	<div class="container">
+		<div class="img">
+			<img src="{% static 'img/illustrationl.svg' %} ">
+		</div>
+		<div class="login-content">
+			<form method="post">
+                {% csrf_token %}	
+				<h2 class="title">Bienvenido</h2>
+           		<div class="input-div one">
+           		   <div class="i">
+						<i class="fa-solid fa-user"></i>
+           		   </div>
+           		   <div class="div">
+           		   		<h5>Usuario</h5>
+           		   		{{ form.username }}
+           		   </div>
+           		</div>
+           		<div class="input-div pass">
+           		   <div class="i"> 
+						<i class="fa-solid fa-lock"></i>
+           		   </div>
+           		   <div class="div">
+           		    	<h5>Contraseña</h5>
+           		    	{{ form.password }}
+            	   </div>
+            	</div>
+                <a href="{% url 'claveolv'%}">¿Olvidó su contraseña?</a>
+            	<input type="submit" class="btn" value="Iniciar Sesión">
+            </form>
+        </div>
+    </div>
+    {% endblock %}
+	<script src="https://kit.fontawesome.com/6f24398be6.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

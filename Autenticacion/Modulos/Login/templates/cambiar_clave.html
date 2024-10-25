@@ -1,0 +1,40 @@
+{% extends 'login.html' %}
+{% load static %}
+
+
+     {% block title %}
+    <title>Clave Nueva</title>
+    {% endblock %}
+
+    {% block main %}
+
+            <div class="container">
+                <form method="POST" class="form pass">
+                    {% csrf_token %}
+                    <h2>Contraseña Nueva</h2>
+                    <div class="box">
+                        <div class="inputBox">
+                            {{ form.password1 }}
+                            <i class="fa-solid fa-lock" id="emoji"></i>
+                             <span id="toggleBtn1"></span>
+                            <span class='spa'>Contraseña</span>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <div class="inputBox">
+                            {{ form.password2 }}
+                            <i class="fa-solid fa-lock " id="emoji"></i>
+                             <span id="toggleBtn"></span>
+                            <span class='spa'>Confirmar contraseña</span>
+                        </div>
+                    </div>
+                    <div class="inputBox">
+                        <input type="submit" value="Cambiar">
+                    </div>
+                 </form>
+            </div>
+
+        {% block JS %}
+             <script src="{% static 'validar_login.js' %}"></script>
+        {% endblock %}
+    {% endblock %}
