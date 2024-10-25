@@ -58,7 +58,8 @@ class ForgetPasswordForm(forms.Form):
         correo = forms.EmailField(widget=forms.TextInput(
             attrs=
             {'type': 'text',
-             'id': 'correo'}))
+             'id': 'correo',
+             'required': True}))
 
 class CambiarPasswordForm(forms.Form):
         password1 = forms.CharField(max_length=100, widget=forms.PasswordInput(

@@ -2,40 +2,50 @@
 {% load static %}
 
 
-    {% block title %}
-        <title>Olvidar Clave</title>
-    {% endblock %}
+{% block title %}
+Olvidar Clave
+{% endblock %}
 
 
 
-    {% block main %}
+{% block main %}
+<img class="wave" src="{% static 'img/wave3.png' %}">
+<div class="container">
+    <div class="img">
+        <img src="{% static 'img/illustrationse.svg' %}">
+    </div>
+    <div class="send-email-content">
+        <form class="form pass" method="Post">
+            {% csrf_token %}
+            <div style='background: pink;opacity: 0.7; font-size: 1.2em'>
+                {% if messages %}
+                {% for message in messages %}
+                {{ message }}
+                {% endfor %}
+                {% endif %}
+            </div>
 
-        <div class="container">
-            <form class="form pass" method="Post" >
-                {% csrf_token %}
-                 <div style='background: pink;opacity: 0.7; font-size: 1.2em'>
-                    {% if messages %}
-                        {% for message in messages %}
-                          {{ message }}
-                        {% endfor %}
-                    {% endif %}
-                 </div>
-                
-                <div class="form olvidar">
-                    <h2>Contraseña Olvidada</h2>
-                    
-                    <div class="inputBox">
+            <div class="form olvidar">
+                <h2> ¿Desea restablecer la contraseña?</h2>
+                <div class="message" >
+                    <span style="color: #797878;"><strong>Introduzca el correo electrónico asociado a su cuenta de usuario y se le enviará un enlace para restablecer la contraseña.</strong></span>
+                </div>
+
+
+                <div class="input-div email">
+                    <div class="i">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                    <div class="div">
+                        <h5>Correo Electrónico</h5>
                         {{ form.correo }}
-                        <i class="fa-regular fa-envelope" id="emoji"></i>
-                        <span class='spa'>Correo electrónico</span>
-                    </div>
-                    <div class="inputBox">
-                        <input type="submit" value='Verificar' class="enviar">
-                    </div>
-                    <div class="links">
-                        <p><a href="{% url 'login' %}" class="volver">Regresar</a></p>
                     </div>
                 </div>
-            </form>
-        </div>
-    {% endblock %}
+                <div class="links">
+                    <p><a href="{% url 'login' %}" class="volver">Regresar</a></p>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
