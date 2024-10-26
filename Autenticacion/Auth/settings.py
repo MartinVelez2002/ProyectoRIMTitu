@@ -41,8 +41,8 @@ INSTALLED_APPS = [
     'Modulos.Login',
     'Modulos.Prioridad',
     'Modulos.Ubicacion',
-    'Modulos.Turno',
-    'Modulos.TipoIncidente',
+    'Modulos.Calendario',
+    'Modulos.Novedad',
 ]
 
 MIDDLEWARE = [
