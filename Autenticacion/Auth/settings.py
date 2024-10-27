@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'Modulos.Ubicacion',
     'Modulos.Calendario',
     'Modulos.Novedad',
+    'Modulos.Incidente',
 ]
 
 MIDDLEWARE = [
