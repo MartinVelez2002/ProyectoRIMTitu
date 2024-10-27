@@ -13,9 +13,6 @@ class CabIncidente_Model(models.Model):
     Fecha = models.DateField(auto_now = False)
     Estado = models.BooleanField(default = True)
     
-class EstadoIncidente(models.Model):
-    Descripcion = models.CharField(max_length = 20)
-    Estado = models.BooleanField(default = True)
 
 # class DetIncidente_Model(models.Model):
 #     CabIncidente = models.ForeignKey(CabIncidente_Model, on_delete = models.PROTECT)
