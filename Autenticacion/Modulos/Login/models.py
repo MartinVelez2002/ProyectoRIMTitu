@@ -36,14 +36,14 @@ class UsuarioManager(BaseUserManager):
 
 
 class Usuario(AbstractBaseUser):
-    username = models.CharField(max_length=100,unique=True)
+    username = models.CharField(max_length=20,unique=True)
     email = models.EmailField(unique=True, max_length=50)
     nombre = models.CharField(max_length = 20, blank = True, null = True)
     apellido = models.CharField(max_length = 20, blank = True, null = True)
     cedula = models.CharField(unique=True, max_length=10 ,validators=[RegexValidator(regex='^.{10}$', message='Introduzca una cédula válida')], default='')
     usuario_activo = models.BooleanField(default=True)
     usuario_administrador = models.BooleanField(default=False)
-    rol = models.CharField(max_length=2, choices=ROL,default=ROL[0][1], blank=True, null=True)
+    rol = models.CharField(max_length=10, choices=ROL,default=ROL[0][1], blank=True, null=True)
     
     
     objects = UsuarioManager()
