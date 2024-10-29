@@ -64,14 +64,13 @@ class RegistroView(LoginRequiredMixin, CreateView):
                 username=form.cleaned_data.get('username'),
                 password=form.cleaned_data.get('password1'),
                 cedula=form.cleaned_data.get('cedula'),
-                rol=form.cleaned_data.get('rol'),
-                nombre=form.cleaned_data.get('nombre'),
-                apellido=form.cleaned_data.get('apellido'),
+                rol=form.cleaned_data.get('rol'),          
                
             )
+            messages.success(request, 'Usuario registrado con éxito.')
             return redirect('index')
-        else:
-            messages.error(self.request, 'Por favor corrige los errores en el formulario.')
+        else:  
+        
             return render(request, self.template_name, {'form': form})
 
 

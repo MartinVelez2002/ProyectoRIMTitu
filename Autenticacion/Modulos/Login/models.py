@@ -18,8 +18,6 @@ class UsuarioManager(BaseUserManager):
             email=self.normalize_email(email),
             password=password,
             cedula = cedula,
-            nombre=nombre,
-            apellido=apellido,
             rol=rol
             )
 
@@ -28,11 +26,14 @@ class UsuarioManager(BaseUserManager):
         return usuario
 
     def create_superuser(self, email, username, password):
+        # Define el rol como "Coordinador" para el superusuario
+        
+
         usuario = self.create_user(
             email,
             username=username,
             password=password,
-            
+        
         )
 
         usuario.usuario_administrador = True
@@ -46,7 +47,7 @@ class Usuario(AbstractBaseUser):
     email = models.EmailField(unique=True, max_length=50)
     nombre = models.CharField(max_length = 15, blank = True, null = True)
     apellido = models.CharField(max_length = 15, blank = True, null = True)
-    cedula = models.CharField(unique=True, max_length=10 ,validators=[RegexValidator(regex='^.{10}$')])
+    cedula = models.CharField(unique=True, max_length=10 ,validators=[RegexValidator(regex='^.{10}$')], null=True)
     estado = models.BooleanField(default=True)
     usuario_administrador = models.BooleanField(default=False)
     rol = models.CharField(max_length=2, choices=ROL,default=ROL[0][1], blank=True, null=True)
@@ -56,7 +57,7 @@ class Usuario(AbstractBaseUser):
 
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email','rol']
+    REQUIRED_FIELDS = ['email']
 
     def __str__(self):
         return self.username

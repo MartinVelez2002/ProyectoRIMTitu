@@ -35,7 +35,7 @@ class FormularioRegistro(forms.ModelForm):
         widgets = {
             'username': forms.TextInput(),
             'email': forms.EmailInput(),
-            'cedula': forms.TextInput(),
+            'cedula': forms.TextInput(attrs={'id':'inputCedula'}),
             'nombre': forms.TextInput(),
             'apellido': forms.TextInput(),
             'rol': forms.Select()
@@ -58,12 +58,13 @@ class FormularioRegistro(forms.ModelForm):
     
     def clean_cedula(self):
         cedula = self.cleaned_data.get('cedula')
-        if len(cedula) > 10:
-            raise forms.ValidationError('La cédula debe tener un máximo de 10 caracteres.')
-        
+
+        if cedula and len(cedula) > 10:
+            self.add_error('cedula', 'La cédula debe tener un máximo de 10 caracteres.')  # Vincula el error al campo 'cedula'
+
         # Verificar si la cédula ya existe
-        if Usuario.objects.filter(cedula=cedula).exists():
-            raise forms.ValidationError('Esta cédula ya está registrada.')
+        if cedula and Usuario.objects.filter(cedula=cedula).exists():
+            self.add_error('cedula', 'Esta cédula ya está registrada.')  # Vincula el error al campo 'cedula'
 
         return cedula
     
