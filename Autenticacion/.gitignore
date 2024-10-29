@@ -1,6 +1,15 @@
 # Created by https://www.toptal.com/developers/gitignore/api/windows,python,venv,dotenv
 # Edit at https://www.toptal.com/developers/gitignore?templates=windows,python,venv,dotenv
 
+### Django ###
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
 ### dotenv ###
 .env
 

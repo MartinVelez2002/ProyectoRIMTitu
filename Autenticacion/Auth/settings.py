@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import os
 from dotenv import load_dotenv
 from pathlib import Path
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -83,14 +84,13 @@ WSGI_APPLICATION = 'Auth.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'HOST': 'aws-0-sa-east-1.pooler.supabase.com',
-        'NAME': 'postgres',
-        'USER': 'postgres.owuudqwvdtopcogargqo',
-        'PASSWORD': '5RMRcZNXlFHYAp8x',
-        'PORT': '6543',
+        'HOST': os.getenv("HOST"),
+        'NAME': os.getenv("NAME"),
+        'USER': os.getenv("USER"),
+        'PASSWORD': os.getenv("PASSWORD"),
+        'PORT': os.getenv("PORT"),
     }
 }
-
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
