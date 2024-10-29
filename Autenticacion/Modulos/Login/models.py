@@ -50,6 +50,8 @@ class Usuario(AbstractBaseUser):
     estado = models.BooleanField(default=True)
     usuario_administrador = models.BooleanField(default=False)
     rol = models.CharField(max_length=2, choices=ROL, default=ROL[0][1], blank=True, null=True)
+
+
     
     
     objects = UsuarioManager()
@@ -93,5 +95,4 @@ class Usuario(AbstractBaseUser):
 
     # def has_module_perms(self, app_label):
     #     return True
-
 

@@ -82,10 +82,15 @@ WSGI_APPLICATION = 'Auth.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'HOST': 'aws-0-sa-east-1.pooler.supabase.com',
+        'NAME': 'postgres',
+        'USER': 'postgres.owuudqwvdtopcogargqo',
+        'PASSWORD': '5RMRcZNXlFHYAp8x',
+        'PORT': '6543',
     }
 }
+
 
 
 # Password validation
