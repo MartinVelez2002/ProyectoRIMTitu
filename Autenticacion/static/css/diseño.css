@@ -21,6 +21,7 @@ body{
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 15rem;
     padding: 0 2rem;
+	
 }
 
 .img {
@@ -47,6 +48,7 @@ body{
     justify-content: flex-end; 
     align-items: center;
     text-align: center;
+
 }
 
 
@@ -93,21 +95,22 @@ form{
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	font-size: 15px;
 }
 
 
 .input-div > div{
     position: relative;
-	height: 45px;
+	height: 35px;
 }
 
 .input-div > div > h5{
 	position: absolute;
 	left: 10px;
-	top: 55%;
+	top: 50%;
 	transform: translateY(-50%);
 	color: #999;
-	font-size: 17px;
+	font-size: 15px;
 	transition: .3s;
 }
 
@@ -135,7 +138,7 @@ form{
 
 .input-div.focus > div > h5{
 	top: -4px;
-	font-size: 14px;
+	font-size: 12px;
 }
 
 .input-div.focus > .i > i{
@@ -153,15 +156,12 @@ form{
     border: none;
     outline: none;
     background: none;
-    padding: 0.5rem 0.7rem;
-    font-size: 1.2rem;
+    padding: 0 0 0 0.5rem ;
+    font-size: 1rem;
     color: #555;
     font-family: 'Arima', sans-serif;
 }
 
-.input-div.pass{
-	margin-bottom: 4px;
-}
 
 a{
 	display: block;
@@ -206,19 +206,24 @@ a:hover{
     cursor: pointer;
     border: none;
     color: #555;
-    font-size: 1.2rem;
     font-family: 'Arima', sans-serif;
 }
 
-.input-div select:focus {
-    outline: none;
-}
 
 /* Estilos para el ícono de rol */
 .input-div .i i.fa-user-tag {
     font-size: 18px;
 }
 
+
+.error-message {
+	background-color: #ffcccc;
+	color: #d8000c;
+	padding: 10px;
+	margin: 10px 0;
+	font-size: 1.2em;
+	border-radius: 5px;
+}
 
 /* Media Queries para adaptabilidad */
 @media screen and (max-width: 1050px){

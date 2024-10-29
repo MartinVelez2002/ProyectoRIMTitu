@@ -25,7 +25,7 @@ class Login(FormView):
     template_name = 'login.html'
     form_class = FormularioLogin
     success_url = reverse_lazy('index')
-
+    
     @method_decorator(csrf_protect)
     @method_decorator(never_cache)
     def dispatch(self, request, *args, **kwargs):
@@ -47,23 +47,34 @@ class MainView(LoginRequiredMixin, TemplateView):
     template_name = 'index.html'
 
 
-class RegistroView(LoginRequiredMixin,CreateView):
+
+
+
+class RegistroView(LoginRequiredMixin, CreateView):
     template_name = 'registro.html'
     model = Usuario
     form_class = FormularioRegistro
 
     def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
+        form = self.form_class(request.POST)    
         if form.is_valid():
-            nuevo_usuario = Usuario(
+            # Usar el método create_user de UsuarioManager
+            nuevo_usuario = Usuario.objects.create_user(
+                email=form.cleaned_data.get('email'),
                 username=form.cleaned_data.get('username'),
-                email=form.cleaned_data.get('email')
+                password=form.cleaned_data.get('password1'),
+                cedula=form.cleaned_data.get('cedula'),
+                rol=form.cleaned_data.get('rol'),
+                nombre=form.cleaned_data.get('nombre'),
+                apellido=form.cleaned_data.get('apellido'),
+               
             )
-            nuevo_usuario.set_password(form.cleaned_data.get('password1'))
-            nuevo_usuario.save()
-            return redirect('login')
+            return redirect('index')
         else:
+            messages.error(self.request, 'Por favor corrige los errores en el formulario.')
             return render(request, self.template_name, {'form': form})
+
+
 
 
 
@@ -71,7 +82,7 @@ class RegistroView(LoginRequiredMixin,CreateView):
 class ForgetPassword(FormView):
     template_name = 'olvidar_clave.html'  # Tu plantilla de olvidar clave
     form_class = ForgetPasswordForm
-    success_url = reverse_lazy('claveolv')  # Quedarse en la misma página tras el envío
+    success_url = reverse_lazy('olvidar_clave')  # Quedarse en la misma página tras el envío
 
     def form_valid(self, form):
         correo = form.cleaned_data.get('correo')
@@ -107,9 +118,10 @@ class ForgetPassword(FormView):
 
         return super().form_valid(form)
 
-    
-
-
+    def form_invalid(self, form):
+        # Aquí puedes manejar lo que ocurre si el formulario es inválido.
+        messages.error(self.request, 'Por favor, ingrese un correo válido.')
+        return super().form_invalid(form)
 
 
 class PasswordResetConfirmView(View):
@@ -128,7 +140,7 @@ class PasswordResetConfirmView(View):
             return render(request, self.template_name, {'form': form, 'validlink': True, 'uid': uidb64, 'token': token})
         else:
             messages.error(request, 'El enlace de restablecimiento de contraseña es inválido o ha expirado.')
-            return redirect('claveolv')  # Redirigir a la página de olvidar contraseña
+            return redirect('olvidar_clave')  # Redirigir a la página de olvidar contraseña
 
     def post(self, request, uidb64, token):
         try:
@@ -136,7 +148,7 @@ class PasswordResetConfirmView(View):
             usuario = Usuario.objects.get(pk=uid)  # Usar tu modelo Usuario
         except (TypeError, ValueError, OverflowError, Usuario.DoesNotExist):
             messages.error(request, 'El usuario no existe o el enlace es inválido.')
-            return redirect('claveolv')  # Redirigir a la página de olvidar contraseña
+            return redirect('olvidar_clave')  # Redirigir a la página de olvidar contraseña
 
         form = self.form_class(request.POST)
         if form.is_valid():
@@ -146,4 +158,8 @@ class PasswordResetConfirmView(View):
             messages.success(request, 'Tu contraseña ha sido restablecida con éxito.')
             return redirect('login')  # Redirigir al inicio de sesión
         else:
-            return render(request, self.template_name, {'form': form, 'validlink': True, 'uid': uidb64, 'token': token})
+            # Si el formulario no es válido, volver a renderizarlo con errores
+            messages.error(request, 'Las claves no coinciden.')
+            
+        return render(request, self.template_name, {'form': form, 'validlink': True, 'uid': uidb64, 'token': token})
+       

@@ -2,15 +2,16 @@ class Opciones:
 
     @staticmethod
     def rol():
-        Roles = (('C', 'Coordinador'), ('AC', 'Agente de Control'))
+        Roles = (('S', 'Supervisor'), ('AC', 'Agente de Control'))
         return Roles
 
     
     @staticmethod
     def permiso():
-        Permisos_Coordinador = {'crear', 'leer', 'eliminar', 'editar'}
+        Administrador = {'crear', 'leer', 'eliminar', 'editar'}
+        Supervisor = {}
         Agente_Control = {'crear', 'leer', 'editar'}
-        return Permisos_Coordinador, Agente_Control
+        return Administrador, Supervisor, Agente_Control
 
     @staticmethod
     def prioridad():

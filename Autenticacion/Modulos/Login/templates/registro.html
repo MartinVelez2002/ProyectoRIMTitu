@@ -2,66 +2,83 @@
 {% load static %}
 
 {% block title %}
-    <title>Registro</title>
+    Registro
 {% endblock %}
 
 
 {% block main %}
-
-    <div class="container">
-        <form id="formul" class="form signup" method="post" enctype="multipart/form-data" action="{{ action_save }}">
+<img class="wave" src="{% static 'img/wave2.png' %}">
+<div class="container">
+    <div class="regist-content">
+        <form method="post">	
             {% csrf_token %}
-            <h2>Cuenta Nueva</h2>
-            <div class="inputBox input-control">
-                {{ form.username }}
-                <i class="fa-regular fa-user " id="emoji"></i>
-                <span class="spa">Usuario</span>
-                <div class="error"></div>
-            </div>
-            <div class="inputBox input-control">
-                {{ form.email }}
-                <i class="fa-regular fa-envelope" id="emoji"></i>
-                <span class="spa">Correo electrónico</span>
-                <div class="error"></div>
-            </div>
-            <div class="box form">
-                <div class="inputBox input-control">
-                    {{ form.password1 }}
-                    <i class="fa-solid fa-lock" id="emoji"></i>
-                    <span id="toggleBtn"></span>
-                    <span class="spa">Contraseña</span>
-                    <div class="error"></div>
+            
+            
+            <h2 class="title">Crear Personal</h2>
+                <div class="input-div one">
+                    <div class="i">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div class="div">
+                        <h5>Usuario</h5>
+                        {{ form.username }}
+                    </div>
                 </div>
-                <div class="validacion form">
-                    <ul>
-                        <li id="lower">Al menos un caracter en minúscula</li>
-                        <li id="upper">Al menos un caracter en mayúscula</li>
-                        <li id="number">Al menos un número</li>
-                        <li id="special">Al menos un caracter especial</li>
-                        <li id="length">Al menos 10 caracteres</li>
-                    </ul>
+                <div class="input-div one">
+                    <div class="i">
+                        <i class="fa-solid fa-id-card"></i>
+                    </div>
+                    <div class="div">
+                        <h5>Cédula</h5>
+                        {{ form.cedula }}
+                    </div>
                 </div>
-            </div>
-            <div class="box">
-                <div class="inputBox input-control">
-                    {{ form.password2 }}
-                    <i class="fa-solid fa-lock" id="emoji"></i>
-                    <span id="toggleBtn1"></span>
-                    <span class="spa">Confirmar contraseña</span>
-                    <div class="error"></div>
+                <div class="input-div email">
+                    <div class="i">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                    <div class="div">
+                        <h5>Correo Electrónico</h5>
+                        {{ form.email }}
+                    </div>
                 </div>
-            </div>
-            <div class="inputBox">
-                <input type="submit" value="Registrarse">
-            </div>
-            <p>¿Ya tienes una cuenta?<a href="{% url 'login' %}" class="login">Iniciar Sesión</a></p>
+                <div class="input-div pass">
+                    <div class="i"> 
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+                    <div class="div">
+                       <h5>Contraseña</h5>
+                       {{ form.password1 }}
+                    </div>
+                </div>
+               <div class="input-div pass">
+                    <div class="i"> 
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+                    <div class="div">
+                        <h5>Repetir contraseña</h5>
+                        {{ form.password2 }}
+                    </div>
+                </div>
+                <div class="input-div select">
+                    <div class="i"> 
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+                    <div class="div">
+                        <h5>Rol</h5>
+                        {{ form.rol }}
+                    </div>
+                </div>
+            
+            <!-- Fin del nuevo campo -->
+            <input type="submit" class="btn" value="Registrar">
         </form>
     </div>
-
-    {% block JS %}
-        <script src="{% static 'js/validacionregistro.js' %}"></script>
-        <script src="{% static 'js/validación_clave.js' %}"></script>
-    {% endblock %}
+    <div class="img">
+        <img src="{% static 'img/illustrationr.svg' %}">
+    </div>
+</div>
+   
 {% endblock %}
 
 

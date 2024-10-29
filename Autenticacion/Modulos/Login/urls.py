@@ -11,7 +11,7 @@ urlpatterns = [
     path('accounts/login/',Login.as_view(), name='login'),
     path('logout',login_required(LogoutUsuario),name = 'logout'),
     path('registro',RegistroView.as_view(),name = 'registro'),
-    path('clave_olvidar/',ForgetPassword.as_view(),name='claveolv'),
+    path('clave_olvidar/',ForgetPassword.as_view(),name='olvidar_clave'),
     path('restablecer_clave/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='restablecer_clave'),
 
 ]

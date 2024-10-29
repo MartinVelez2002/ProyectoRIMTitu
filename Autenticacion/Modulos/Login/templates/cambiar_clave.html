@@ -1,9 +1,12 @@
+
+
+
+
 {% extends 'login.html' %}
 {% load static %}
 
-
 {% block title %}
-<title>Clave Nueva</title>
+Restablecer Clave
 {% endblock %}
 
 {% block main %}
@@ -13,8 +16,16 @@
         <img src="{% static 'img/illustrationch.svg' %}" height="400">
     </div>
     <div class="change-pass-content">
-        <form method="POST" class="form pass">
+        <form method="post">
             {% csrf_token %}
+            <!-- Bloque para mostrar mensajes de error -->
+            {% if messages %}
+            <div class="error-message">
+                {% for message in messages %}
+                    {{ message }}<br>
+                {% endfor %}
+            </div>
+        {% endif %}
             <h2 class="title">Restablecer contraseña</h2>
             <div class="input-div pass">
                 <div class="i">
@@ -23,6 +34,7 @@
                 <div class="div">
                     <h5>Contraseña</h5>
                     {{ form.password1 }}
+                   
                 </div>
             </div>
             <div class="input-div pass2">
@@ -32,15 +44,18 @@
                 <div class="div">
                     <h5>Confirmar contraseña</h5>
                     {{ form.password2 }}
+                    
                 </div>
             </div>
-
             <input type="submit" class="btn" value="Cambiar contraseña">
+            
         </form>
     </div>
 </div>
+{% endblock %}
 
-{% block JS %}
-<script src="{% static 'validar_login.js' %}"></script>
-{% endblock %}
-{% endblock %}
+
+
+
+
+
