@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
                 ('cedula', models.CharField(default='', max_length=10, unique=True, validators=[django.core.validators.RegexValidator(message='Introduzca una cédula válida', regex='^.{10}$')])),
                 ('usuario_activo', models.BooleanField(default=True)),
                 ('usuario_administrador', models.BooleanField(default=False)),
-                ('rol', models.CharField(blank=True, choices=[('C', 'Coordinador'), ('AC', 'Agente de Control')], default='Coordinador', max_length=10, null=True)),
+                ('rol', models.CharField(blank=True, choices=[('C', 'Coordinador'), ('AC', 'Agente de Control')], default='Coordinador', max_length=2, null=True)),
             ],
             options={
                 'abstract': False,
