@@ -49,11 +49,40 @@ class MainView(LoginRequiredMixin, TemplateView):
 
 
 
+# class RegistroView(LoginRequiredMixin, CreateView):
+#     template_name = 'registro.html'
+#     model = Usuario
+#     form_class = FormularioRegistro
+#     success_url = reverse_lazy('registro')
+
+#     def post(self, request, *args, **kwargs):
+#         form = self.form_class(request.POST)    
+#         if form.is_valid():
+#             # Usar el método create_user de UsuarioManager
+#             nuevo_usuario = Usuario.objects.create_user(
+#                 email=form.cleaned_data.get('email'),
+#                 username=form.cleaned_data.get('username'),
+#                 password=form.cleaned_data.get('password1'),
+#                 cedula=form.cleaned_data.get('cedula'),
+#                 rol=form.cleaned_data.get('rol'),          
+               
+#             )
+#             messages.success(request, 'Usuario registrado con éxito.')
+            
+#         else:  
+        
+#             return render(request, self.template_name, {'form': form})
+
+
+
+
+
 
 class RegistroView(LoginRequiredMixin, CreateView):
     template_name = 'registro.html'
     model = Usuario
     form_class = FormularioRegistro
+    success_url = reverse_lazy('registro')
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)    
@@ -67,11 +96,39 @@ class RegistroView(LoginRequiredMixin, CreateView):
                 rol=form.cleaned_data.get('rol'),          
                
             )
+            
+            # Preparar y enviar el correo
+            subject = 'Bienvenido a nuestro sistema'
+            email_template_name = "credenciales.html"
+            context = {
+                "user": nuevo_usuario.username,
+                "email": nuevo_usuario.email,
+                "password": form.cleaned_data.get('password1'),
+                "site_name": 'Municipio de Milagro',
+            }
+            
+            # Debug: Imprimir el contexto
+            print(context)  #
+            html_message = render_to_string(email_template_name,context)
+            
+            send_mail(
+                subject,  
+                '',
+                settings.DEFAULT_FROM_EMAIL,  # Cambia esto por el correo desde el que envías
+                [nuevo_usuario.email],
+                fail_silently=False,
+                html_message=html_message
+            )
+            
+            
             messages.success(request, 'Usuario registrado con éxito.')
-            return redirect('index')
+            return redirect(self.success_url)
+            
         else:  
-        
-            return render(request, self.template_name, {'form': form})
+            messages.error(request,'El formulario no ha procesado la información correctamente.')
+            
+        return render(request, self.template_name, {'form': form})
+
 
 
 
