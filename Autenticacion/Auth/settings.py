@@ -58,6 +58,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
 ROOT_URLCONF = 'Auth.urls'
 
 TEMPLATES = [
@@ -82,22 +85,22 @@ WSGI_APPLICATION = 'Auth.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'HOST': os.getenv("HOST"),
-        'NAME': os.getenv("NAME"),
-        'USER': os.getenv("USER"),
-        'PASSWORD': os.getenv("PASSWORD"),
-        'PORT': os.getenv("PORT"),
-    }
-}
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',  # Ruta donde se creará la base de datos SQLite
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'HOST': os.getenv("HOST"),
+#         'NAME': os.getenv("NAME"),
+#         'USER': os.getenv("USER"),
+#         'PASSWORD': os.getenv("PASSWORD"),
+#         'PORT': os.getenv("PORT"),
 #     }
 # }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',  # Ruta donde se creará la base de datos SQLite
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -143,7 +146,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 MEDIA_URL = '/media/'
+
 AUTH_USER_MODEL = 'Login.Usuario'
+
 
 
 

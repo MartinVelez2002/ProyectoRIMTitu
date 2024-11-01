@@ -4,10 +4,16 @@
     box-sizing: border-box;
 }
 
+
+
+
+
 body{
     font-family: 'Arima', sans-serif;
 	overflow: hidden;
 }
+
+
 
 .wave{
 	position: fixed;
@@ -19,10 +25,30 @@ body{
 	height: 100vh;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-gap: 15rem;
-    padding: 0 2rem;
+    gap: 15rem;
+    margin: 20px;
 	
 }
+
+.container-regist {
+	height: 100vh;
+	display: flex;
+	justify-content: end;
+	align-items: center;
+	text-align: center;
+	padding: 60px; /* Espacio interno */
+   
+	
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 10px 40px;
+}
+
+
+
 
 .img {
 	display: flex;
@@ -35,6 +61,7 @@ body{
 	
 }
 
+
 .login-content, .send-email-content, .change-pass-content {
 	display: flex;
 	justify-content: flex-start;
@@ -43,13 +70,7 @@ body{
 	
 }
 
-.regist-content{
-    display: flex;
-    justify-content: flex-end; 
-    align-items: center;
-    text-align: center;
 
-}
 
 
 form{

@@ -27,15 +27,15 @@
 			<form method="post">
 				{% csrf_token %}
 				<div style='font-size: 1.2em'>
-					{% if messages %}
-						{% for message in messages %}
-							<div class="message" style="padding: 10px; margin: 10px 0; border-radius: 5px; 
-										{% if message.tags == 'error' %} background-color: #ffcccc; color: #d8000c; {% endif %}
-										{% if message.tags == 'success' %} background-color: #aee17a; color: #005700; {% endif %}">
-								{{ message }}
-							</div>
-						{% endfor %}
-					{% endif %}
+				
+					{% for message in messages %}
+						<div class="message" style="padding: 10px; margin: 10px 0; border-radius: 5px; 
+									{% if message.tags == 'error' %} background-color: #ffcccc; color: #d8000c; {% endif %}
+									{% if message.tags == 'success' %} background-color: #aee17a; color: #005700; {% endif %}">
+							{{ message }}
+						</div>
+					{% endfor %}
+				
 				</div>
 				<h2 class="title">Bienvenido</h2>
 				<div class="input-div one">

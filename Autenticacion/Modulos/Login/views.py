@@ -6,17 +6,18 @@ from django.core.mail import send_mail
 from django.contrib import messages
 from django.conf import settings
 from django.template.loader import render_to_string 
-from django.contrib.auth import login, logout
-from django.http import HttpResponseRedirect, request
+from django.contrib.auth import login, logout, authenticate
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import View
+from django.contrib.sessions.models import Session
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, CreateView
-from django.views.generic.edit import FormView, UpdateView
+from django.views.generic.edit import FormView
 from Modulos.Login.forms import FormularioLogin, FormularioRegistro, CambiarPasswordForm, ForgetPasswordForm
 from Modulos.Login.models import Usuario
 # Create your views here.
@@ -36,43 +37,36 @@ class Login(FormView):
 
 
     def form_valid(self, form):
-        login(self.request,form.get_user())
-        return super(Login, self).form_valid(form)
+        username = form.cleaned_data['username']
+        password = form.cleaned_data['password']
+        
+        user = authenticate(request=self.request, username=username, password=password)
+        
+        if user is not None:
+            login(self.request, user)
+            return super(Login, self).form_valid(form)
+        return self.form_invalid(form)
+        
+    def form_invalid(self, form):
+        # Añadir el mensaje de error cuando el formulario es inválido
+        messages.error(self.request, "Credenciales inválidas. Intente nuevamente.")
+        return super(Login, self).form_invalid(form)
+
 
 def LogoutUsuario(request):
-    logout(request)
-    return HttpResponseRedirect('accounts/login/')
+    if request.user.is_authenticated:
+        # Cierra la sesión del usuario actual
+        logout(request)
+        # Opcional: Eliminar la sesión de la base de datos si deseas mantener el control
+        Session.objects.filter(session_key=request.session.session_key).delete()
+
+    return redirect('login')  
+
+
+
 
 class MainView(LoginRequiredMixin, TemplateView):
     template_name = 'index.html'
-
-
-
-
-# class RegistroView(LoginRequiredMixin, CreateView):
-#     template_name = 'registro.html'
-#     model = Usuario
-#     form_class = FormularioRegistro
-#     success_url = reverse_lazy('registro')
-
-#     def post(self, request, *args, **kwargs):
-#         form = self.form_class(request.POST)    
-#         if form.is_valid():
-#             # Usar el método create_user de UsuarioManager
-#             nuevo_usuario = Usuario.objects.create_user(
-#                 email=form.cleaned_data.get('email'),
-#                 username=form.cleaned_data.get('username'),
-#                 password=form.cleaned_data.get('password1'),
-#                 cedula=form.cleaned_data.get('cedula'),
-#                 rol=form.cleaned_data.get('rol'),          
-               
-#             )
-#             messages.success(request, 'Usuario registrado con éxito.')
-            
-#         else:  
-        
-#             return render(request, self.template_name, {'form': form})
-
 
 
 
@@ -107,8 +101,7 @@ class RegistroView(LoginRequiredMixin, CreateView):
                 "site_name": 'Municipio de Milagro',
             }
             
-            # Debug: Imprimir el contexto
-            print(context)  #
+           
             html_message = render_to_string(email_template_name,context)
             
             send_mail(
