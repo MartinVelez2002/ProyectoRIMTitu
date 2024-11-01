@@ -42,10 +42,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Modulos.Login',
-    'Modulos.Ubicacion',
-    'Modulos.Calendario',
-    'Modulos.Novedad',
-    'Modulos.Incidente',
+    'Modulos.Coordinador.Ubicacion',
+    'Modulos.Coordinador.Calendario',
+    'Modulos.Coordinador.Novedad',
+    'Modulos.Coordinador.Incidente',
 ]
 
 MIDDLEWARE = [

@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class NovedadConfig(AppConfig):
+class UbicacionConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'Modulos.Novedad'
+    name = 'Modulos.Coordinador.Ubicacion'

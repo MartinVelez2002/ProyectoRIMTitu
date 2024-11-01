@@ -1,7 +1,7 @@
 from django.db import models
-from Modulos.Ubicacion.models import Ubicacion_Model
+from Modulos.Coordinador.Ubicacion.models import Ubicacion_Model
 from Modulos.Login.models import Usuario
-from Modulos.Novedad.models import Novedad_Model
+from Modulos.Coordinador.Novedad.models import Novedad_Model
 
 # Create your models here.
 class CabIncidente_Model(models.Model):

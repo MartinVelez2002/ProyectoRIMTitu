@@ -58,7 +58,7 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     cedula = models.CharField(unique=True, max_length=10 ,validators=[RegexValidator(regex='^.{10}$')], null=True)
     estado = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)  # Permitir el acceso al admin
-    is_superuser = models.BooleanField(default=False)  # S
+    is_superuser = models.BooleanField(default=False)  #Acceso completo y sin restricciones, permitiendo cualquier acción.
     date_joined = models.DateTimeField(auto_now_add=True)
     rol = models.ForeignKey('Rol', on_delete=models.SET_NULL, null=True, blank=True) 
     
