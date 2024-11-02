@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block title %}
-Restablecer Clave
+Cambiar Clave
 {% endblock %}
 
 {% block main %}
@@ -23,13 +23,22 @@ Restablecer Clave
                 {% endfor %}
             </div>
         {% endif %}
-            <h2 class="title">Restablecer contraseña</h2>
+            <h2 class="title">Cambiar contraseña</h2>
             <div class="input-div pass">
                 <div class="i">
                     <i class="fa-solid fa-lock"></i>
                 </div>
                 <div class="div">
-                    <h5>Contraseña</h5>
+                    <h5>Contraseña actual</h5>
+                    {{ form.password_actual}}
+                </div>
+            </div>
+            <div class="input-div pass">
+                <div class="i">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <div class="div">
+                    <h5>Nueva contraseña</h5>
                     {{ form.password1 }}
                    
                 </div>

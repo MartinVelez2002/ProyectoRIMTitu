@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 
-from Modulos.Login.views import Login,LogoutUsuario,MainView,RegistroView,ForgetPassword, PasswordResetConfirmView
+from Modulos.Login.views import Login,LogoutUsuario,MainView,RegistroView, ForgetPassword, PasswordResetConfirmView, ChangePasswordFirstSession
 from django.urls import path
 
 
@@ -13,5 +13,7 @@ urlpatterns = [
     path('registro',RegistroView.as_view(),name = 'registro'),
     path('clave_olvidar/',ForgetPassword.as_view(),name='olvidar_clave'),
     path('restablecer_clave/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='restablecer_clave'),
-
+    path('cambiar_clave/',ChangePasswordFirstSession.as_view(), name = 'cambiar_clave')
 ]
+
+

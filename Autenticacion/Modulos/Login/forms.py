@@ -80,20 +80,6 @@ class FormularioRegistro(forms.ModelForm):
 
 
 
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -109,6 +95,12 @@ class ForgetPasswordForm(forms.Form):
     
  
 class CambiarPasswordForm(forms.Form):
+    password_actual = forms.CharField(max_length=15, widget=forms.PasswordInput(
+        attrs={'type': 'password',
+               'class': 'input',
+              
+               }), required=False)
+    
     password1 = forms.CharField(max_length=15, widget=forms.PasswordInput(
         attrs={'type': 'password',
                'class': 'input',
@@ -131,7 +123,8 @@ class CambiarPasswordForm(forms.Form):
         cleaned_data = super().clean()
         password1 = cleaned_data.get('password1')
         password2 = cleaned_data.get('password2')
-
+        password_actual = cleaned_data.get('password_actual')
+        
         if password1 and password2 and password1 != password2:
-            self.add_error('password2', 'Las claves no coinciden.')
+            self.add_error('password1', 'Las claves no coinciden.')
         return cleaned_data
