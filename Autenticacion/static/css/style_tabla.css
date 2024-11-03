@@ -1,0 +1,79 @@
+/* Estilos personalizados */
+body {
+    background-color: #f4f6f9;
+    font-family: 'Arial', sans-serif;
+}
+
+.table-container {
+    margin: 50px auto;
+    max-width: 800px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.table-container h4{
+    background: #12171e;
+    padding: 10px;
+    border-radius: 20px 20px 0px 0px;
+    color: white;
+}
+
+.table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+thead {
+    background-color: #12171e;
+    color: #fff;
+}
+
+.table th, td {
+    padding: 40px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.table .highlight-row {
+    background-color: #e9ecef;
+}
+
+/* Colores de botones */
+.btn-edit, .btn-delete {
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    padding: 8px;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+.btn-delete {
+    background-color: #dc3545;
+}
+
+.btn-edit:hover, .btn-delete:hover {
+    opacity: 0.85;
+}
+
+.btn-add {
+    position: relative;
+    left: 70%;
+}
+
+/* Estilos para responsive */
+@media (max-width: 768px) {
+    .table-container {
+        padding: 10px;
+    }
+
+    .table th, td {
+        padding: 10px;
+    }
+}

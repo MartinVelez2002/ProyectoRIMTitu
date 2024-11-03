@@ -1,0 +1,29 @@
+<form class="container text-dark" method="post" action="{{ action_save }}" enctype="multipart/form-data"
+    name="registro">
+    {% csrf_token %}
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h3 class="text-center text-white">
+                    {{ titulo }}
+                </h3>
+            </div>
+            <div class="modal-body">
+                {% block controls %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+    {% block boton %}
+    <div class="col cent">
+        <button type="submit" class="btn btn-success btn-lg me-md-5">
+            Guardar registro
+        </button>
+        <a href="{{ listar_url }}" class="btn btn-danger btn-lg">
+            Cancelar
+        </a>
+    </div>
+
+    {% endblock %}
+
+</form>

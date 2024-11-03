@@ -1,16 +1,37 @@
 {% extends 'index.html' %}
 {% load static %}
 
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/style_tabla.css' %}">
+{% endblock %}
+
 {% block main %}
 <div class="content">
     {% include 'sidebar.html' %}
     <!-- Main Content -->
-
-    <main class="main-content">
+    <main class="main-content pt-5">
         <div class="container">
-            {% block content %}
-                
-            {% endblock %}
+            <a class="btn btn-dark btn-add" href="{{ dirl_url }}">
+                {% block btnTitle %}
+                {% endblock %}
+            </a>
+            <div class="table-container">
+                <h4 class="text-center">Lista de Personal</h4>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            {% block thead %}
+
+                            {% endblock %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% block tbody %}
+
+                        {% endblock %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </main>
 </div>
