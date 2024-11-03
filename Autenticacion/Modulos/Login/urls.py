@@ -6,7 +6,7 @@ from django.urls import path
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('ajustes/', login_required(admin.site.urls)),
     path('',MainView.as_view(),name = 'index'),
     path('accounts/login/',Login.as_view(), name='login'),
     path('logout',login_required(LogoutUsuario),name = 'logout'),
