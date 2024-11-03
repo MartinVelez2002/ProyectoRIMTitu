@@ -1,5 +1,6 @@
-{% extends 'index.html' }
+{% extends 'index.html' %}
 {% load static %}
+
 {% block main %}
 <div class="content">
     {% include 'sidebar.html' %}
@@ -7,7 +8,7 @@
 
     <main class="main-content">
         <div class="container">
-            {% block main %}
+            {% block content %}
                 
             {% endblock %}
         </div>

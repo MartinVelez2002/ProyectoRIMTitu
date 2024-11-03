@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio</title>
+    <title> {% block title %} Inicio  {% endblock %} </title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     {% block css %}
     <link rel="stylesheet" href="{% static 'css/modulos.css' %}">
@@ -29,64 +29,67 @@
     {% block main %}
     <div class="cards-container">
         <main class="cards">
-            <div class="card">
-                <div class="card-img-top">
-                    <i class="fa-solid fa-box-tissue"></i>
+            <a href="#">
+                <div class="card">
+                    <div class="img-container">
+                        <i class="fa-solid fa-box-tissue"></i>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text"> Reportes del personal </p>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <p class="card-text"> Reportes del personal </p>
+            </a>
+            <a href="#">
+                <div class="card">
+                    <div class="img-container">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text"> Lugares de Guardia </p>
+                    </div>
                 </div>
-            </div>
-            <div class="card">
-                <div class="img-container">
-                    <img src="{% static 'img/modulos/Registro de Personal.png' %}" class="card-img-top"
-                        alt="Icono ubicacion">
+            </a>
+            <a href="#">
+                <div class="card">
+                    <div class="img-container">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text"> Registro de personal </p>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <p class="card-text"> Registro de personal </p>
+            </a>
+            <a href="{% url 'novedad:inicio' %}">
+                <div class="card">
+                    <div class="img-container">
+                        <i class="fa-solid fa-list-check"></i>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text"> Novedades </p>
+                    </div>
                 </div>
-            </div>
-            <div class="card">
-                <div class="img-container">
-                    <img src="{% static 'img/modulos/Ubicacion.png' %}" class="card-img-top" alt="Icono ubicacion">
+            </a>
+            <a href="#">
+                <div class="card">
+                    <div class="img-container">
+                        <i class="fa-solid fa-list-ul"></i>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text"> Tipo de Novedades </p>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <p class="card-text"> Ubicación </p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="img-container">
-                    <img src="{% static 'img/modulos/Rol.png' %}" class="card-img-top" alt="Icono ubicacion">
-                </div>
-                <div class="card-body">
-                    <p class="card-text"> Rol </p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="img-container">
-                    <img src="{% static 'img/modulos/Rol.png' %}" class="card-img-top" alt="Icono ubicacion">
-                </div>
-                <div class="card-body">
-                    <p class="card-text"> Novedades </p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="img-container">
-                    <img src="{% static 'img/modulos/Rol.png' %}" class="card-img-top" alt="Icono ubicacion">
-                </div>
-                <div class="card-body">
-                    <p class="card-text"> Tipo de Novedades </p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="img-container">
-                    <img src="{% static 'img/modulos/Rol.png' %}" class="card-img-top" alt="Icono ubicacion">
-                </div>
-                <div class="card-body">
-                    <p class="card-text"> Planificación </p>
-                </div>
-            </div>
 
+            </a>
+            <a href="#">
+                <div class="card">
+                    <div class="img-container">
+                        <i class="fa-solid fa-calendar"></i>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text"> Planificación </p>
+                    </div>
+                </div>
+            </a>
         </main>
     </div>
     {% endblock %}
