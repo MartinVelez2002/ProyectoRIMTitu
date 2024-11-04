@@ -12,6 +12,11 @@ body {
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
 }
 
+.btn-add{
+    position: relative;
+    left: 65%;
+}
+
 .table-container h4{
     background: #12171e;
     padding: 10px;
