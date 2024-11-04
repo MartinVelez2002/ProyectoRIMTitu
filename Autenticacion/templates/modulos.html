@@ -1,0 +1,47 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/style_tabla.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="content">
+    {% block sidebar %}
+    {% include 'sidebar.html' %}
+    {% endblock %}
+    
+    <!-- Main Content -->
+    {% block forms %}
+    <main class="main-content pt-5">
+        <div class="container">
+            <!-- Botón para abrir el modal -->
+            <a class="btn btn-dark btn-add" onclick="abrir_modal('{{ dirurl }}')">
+                {% block btnTitle %}
+                {% endblock %}
+            </a>
+            
+            <div class="table-container table-responsive">
+                <h4 class="text-center">{{ title_table }}</h4>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            {% block thead %}
+                            {% endblock %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% block tbody %}
+                        {% endblock %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
+{% endblock %}
+<div class="modal fade" id="insertar" role="dialgo"></div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script src="{% static 'js/modal.js' %}"></script>
+{% endblock %}

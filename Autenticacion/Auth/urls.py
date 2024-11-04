@@ -18,8 +18,8 @@ from django.conf.urls.static import static
 from Auth import settings
 
 urlpatterns = [
-
     path('', include('Modulos.Login.urls')),
+    path('novedad/', include('Modulos.Coordinador.Novedad.urls')),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
