@@ -11,46 +11,35 @@ Adicionar novedad
 {% endblock %}
 
 {% block thead %}
-<th> Descripción </th>
 <th> Tipo de Novedad </th>
+<th> Descripción </th>
 <th> Estado </th>
 <th> Acciones </th>
 {% endblock %}
 
 {% block tbody %}
+{% if novedad %}
+{% for nov in novedad %}
 <tr>
-    <th scope="row">1</th>
-    <td>Mark</td>
-    <td>Otto</td>
-    <td>@mdo</td>
+    <td>{{ nov.TipoNovedad }}</td>
+    <td>{{ nov.Descripcion }}</td>
+    {% if nov.Estado == True %}
+        <td>Activo</td>
+    {% else %}
+        <td>Inactivo</td>
+    {% endif %}
     <td>
         <a href="#" class="btn-edit"> <i class="fa-duotone fa-solid fa-pen"></i> </a>
 
         <a href="#" class="btn-delete"> <i class="fa-solid fa-trash"></i> </a>
     </td>
 </tr>
-<tr class="highlight-row">
-    <th scope="row">2</th>
-    <td>Jacob</td>
-    <td>Thornton</td>
-    <td>@fat</td>
-    <td>
-        <a href="#" class="btn-edit"> <i class="fa-duotone fa-solid fa-pen"></i> </a>
-
-        <a href="#" class="btn-delete"> <i class="fa-solid fa-trash"></i> </a>
-    </td>
-</tr>
-<tr>
-    <th scope="row">3</th>
-    <td>Larry</td>
-    <td>Bird</td>
-    <td>@twitter</td>
-    <td>
-        <a href="#" class="btn-edit"> <i class="fa-duotone fa-solid fa-pen"></i> </a>
-
-        <a href="#" class="btn-delete"> <i class="fa-solid fa-trash"></i> </a>
-    </td>
-</tr>
+{% endfor %}
+{% else %}
+    <tr>
+        <td colspan="4"> No existen novedades registradas</td>
+    </tr>
+{% endif %}
 
 {% endblock %}
 

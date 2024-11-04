@@ -62,11 +62,6 @@ thead {
     opacity: 0.85;
 }
 
-.btn-add {
-    position: relative;
-    left: 70%;
-}
-
 /* Estilos para responsive */
 @media (max-width: 768px) {
     .table-container {

@@ -17,21 +17,21 @@
                 <span class="tooltip"> Lugares de Guardia </span>
             </li>
             <li>
-                <a class="nav-link active" href="#">
+                <a class="nav-link active" href="{% url 'login:registro' %}">
                     <i class="fa-solid fa-users"></i>
                     <span class="nav-item"> Registro de personal </span>
                 </a>
                 <span class="tooltip"> Listado de personal </span>
             </li>
             <li>
-                <a class="nav-link active" href="#">
+                <a class="nav-link active" href="{% url 'novedad:inicio' %}">
                     <i class="fa-solid fa-list-check"></i>
                     <span class="nav-item"> Novedades </span>
                 </a>
                 <span class="tooltip"> Novedades </span>
             </li>
             <li>
-                <a class="nav-link active" href="#">
+                <a class="nav-link active" href="{% url 'novedad:inicio_tipoNov' %}">
                     <i class="fa-solid fa-list-ul"></i>
                     <span class="nav-item"> Tipo de Novedades </span>
                 </a>
@@ -47,7 +47,7 @@
         </ul>
     </div>
     <div class="logout">
-        <a class="active" href="{% url 'logout' %}">
+        <a class="active" href="{% url 'login:logout' %}">
             <button class="Btn">
 
                 <div class="sign"><svg viewBox="0 0 512 512">

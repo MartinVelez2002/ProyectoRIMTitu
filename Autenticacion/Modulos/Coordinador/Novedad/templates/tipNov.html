@@ -1,0 +1,40 @@
+{% extends 'modulos.html' %}
+{% load static %}
+
+
+{% block title %}
+Modulo Tipo Novedad
+{% endblock %}
+
+{% block btnTitle %}
+Adicionar tipo de Novedad
+{% endblock %}
+
+{% block thead %}
+<th> Descripción </th>
+<th> Estado </th>
+<th> Acciones </th>
+{% endblock %}
+
+{% block tbody %}
+{% if tipNov %}
+    {% for tpn in tipNov %}
+    <tr>
+        <td> {{ tpn.Descripcion }} </td>
+        {% if tpn.Estado == True %}
+            <td> Activo </td>
+        {% else %}
+            <td> Inactivo </td>
+        {% endif %}
+        <td>
+            <a href="#" class="btn-edit"> <i class="fa-duotone fa-solid fa-pen"></i> </a>
+            <a href="#" class="btn-delete"> <i class="fa-solid fa-trash"></i> </a>
+        </td>
+    </tr>
+    {% endfor %}
+{% else %}
+    <tr>
+        <td colspan="3">No existen tipos de novedades registradas </td>
+    </tr>
+{% endif %}
+{% endblock %}

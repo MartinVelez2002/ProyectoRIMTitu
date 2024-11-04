@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from Modulos.Login.views import Login,LogoutUsuario,MainView,RegistroView, ForgetPassword, PasswordResetConfirmView, ChangePasswordFirstSession
 from django.urls import path
 
-
+app_name = 'login'
 urlpatterns = [
     path('ajustes/', login_required(admin.site.urls)),
     path('',MainView.as_view(),name = 'index'),

@@ -27,6 +27,7 @@ body {
 .content{
     display: flex;
     flex-direction: row;
+    
 }
 /* Sidebar */
 .side-bar {
