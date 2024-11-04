@@ -233,8 +233,7 @@ class PasswordResetConfirmView(View):
             messages.error(request, 'El enlace de restablecimiento de contraseña es inválido o ha expirado.')
             return redirect('olvidar_clave')  # Redirigir a la página de olvidar contraseña
 
-    def post(self, request, uidb64, token):
-        
+    def post(self, request, uidb64, token):  
         try:
             uid = urlsafe_base64_decode(uidb64).decode()
             usuario = Usuario.objects.get(pk=uid)  # Usar tu modelo Usuario
@@ -243,7 +242,6 @@ class PasswordResetConfirmView(View):
             return redirect('olvidar_clave')  # Redirigir a la página de olvidar contraseña
 
 
-        print("Datos recibidos:", request.POST)
         form = self.form_class(request.POST)
         if form.is_valid():
             nueva_contraseña = form.cleaned_data.get('password1')
