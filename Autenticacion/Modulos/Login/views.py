@@ -9,14 +9,14 @@ from django.template.loader import render_to_string
 from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.contrib.sessions.models import Session
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView, CreateView
+from django.views.generic import TemplateView, CreateView, ListView
 from django.views.generic.edit import FormView
 from Modulos.Login.forms import FormularioLogin, FormularioRegistro, CambiarPasswordForm, ForgetPasswordForm
 from Modulos.Login.models import Usuario
@@ -254,5 +254,19 @@ class PasswordResetConfirmView(View):
             messages.error(request, 'Las claves no coinciden.')  
         return render(request, self.template_name, {'form': form, 'validlink': True, 'uid': uidb64, 'token': token})
 
+class Usuario_view(ListView):
+    template_name = 'listado_personal.html'
+    model = Usuario
+    context_object_name = 'personal'
 
-
+    def get_queryset(self):
+        # Filtrar usuarios con is_superuser=False
+        return Usuario.objects.filter(is_superuser=False)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['dirurl'] = reverse('login:registro')
+        context['title_table'] = 'Listado de Personal'
+        context['cancelar'] = reverse('login:personal')
+        context['action_save'] = self.request.path
+        return context
