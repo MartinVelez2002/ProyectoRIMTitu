@@ -42,11 +42,12 @@ Olvidar Clave
                     {{ form.correo }}
                 </div>
             </div>
-            <div class="links">
-                <p><a href="{% url 'login:login' %}" class="volver">Regresar</a></p>
-            </div>
+            <input type="submit" class="btn" value="Enviar correo">
+            
+            <a href="{% url 'login:login' %}" style="font-size:20px;">Regresar</a>
             
         </form>
+        
     </div>
 </div>
 

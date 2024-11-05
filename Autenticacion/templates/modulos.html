@@ -1,9 +1,6 @@
 {% extends 'index.html' %}
 {% load static %}
 
-{% block css %}
-<link rel="stylesheet" href="{% static 'css/style_tabla.css' %}">
-{% endblock %}
 
 {% block main %}
 <div class="content">
@@ -38,8 +35,9 @@
             </div>
         </div>
     </main>
+    {% endblock %}
 </div>
-{% endblock %}
+
 <div class="modal fade" id="insertar" role="dialgo"></div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
