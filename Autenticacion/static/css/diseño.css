@@ -6,7 +6,7 @@
 
 body, .regist-content{
     font-family: 'Arima', sans-serif;
-
+	overflow: hidden;
 }
 
 .wave{
@@ -294,6 +294,8 @@ a:hover{
 	border-radius: 5px;
 }
 
+
+
 /* Media Queries para adaptabilidad */
 @media screen and (max-width: 1050px){
 	.container{
@@ -306,7 +308,7 @@ a:hover{
 		width: 290px;
 	}
 
-	.login-content h2, .regist-content h2, .send-email-content h2{
+	.login-content h2, .regist-content h2, .send-email-content h2, .change-pass-content h2{
         font-size: 2.4rem;
         margin: 8px 0;
 	}
@@ -333,7 +335,7 @@ a:hover{
 		display: none;
 	}
 
-	.login-content, .regist-content, .send-email-content{
+	.login-content, .regist-content, .send-email-content, .change-pass-content{
 		justify-content: center;
 	}
 }
