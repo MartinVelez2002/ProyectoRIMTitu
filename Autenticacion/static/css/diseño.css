@@ -43,9 +43,6 @@ body{
 
 }
 
-
-
-
 .img {
 	display: flex;
 	align-items: center;
@@ -57,7 +54,6 @@ body{
 	
 }
 
-
 .login-content, .send-email-content, .change-pass-content {
 	display: flex;
 	justify-content: flex-start;
@@ -65,9 +61,6 @@ body{
 	text-align: center;
 	
 }
-
-
-
 
 form{
 	width: 450px;
