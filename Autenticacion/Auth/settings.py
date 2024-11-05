@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-xzp&tukmj$l1hrbgl33gonwp$3h4p=_!-vzr8rlu2%*a2^@f!k'
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -150,6 +150,10 @@ MEDIA_URL = '/media/'
 AUTH_USER_MODEL = 'Login.Usuario'
 
 
+
+# Configuración de tiempo de inactividad
+SESSION_COOKIE_AGE = 120  # Tiempo en segundos (3 minutos)
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # Cierra la sesión al cerrar el navegador
 
 
 
