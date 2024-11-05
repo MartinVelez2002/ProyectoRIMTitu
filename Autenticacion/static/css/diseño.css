@@ -6,7 +6,7 @@
 
 body, .regist-content{
     font-family: 'Arima', sans-serif;
-	overflow: hidden;
+
 }
 
 .wave{
@@ -24,22 +24,24 @@ body, .regist-content{
 	
 }
 
+/* Contenedor principal que centra el formulario */
 .container-regist {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	text-align: center;
 	width: 100%;
-
+	
 }
+
 
 
 .form-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); 
-    gap: 5px 40px;
-    
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 5px 15px;
 }
+
 
 .img {
 	display: flex;
@@ -62,7 +64,7 @@ body, .regist-content{
 }
 
 .regist-content form {
-	width: 900px;
+	width: 700px;
 }
 
 form{
@@ -168,7 +170,7 @@ form{
 {
     position: absolute;
     background: rgba(46, 59, 78, 0.5);
-    top: 7px;
+    top: 5px;
     width: 30px;
     height: 30px;
     right: 10px;
@@ -335,4 +337,41 @@ a:hover{
 	.login-content, .regist-content, .send-email-content{
 		justify-content: center;
 	}
+}
+
+
+
+/* Responsividad en pantallas más pequeñas */
+@media screen and (max-width: 768px) {
+    /* Cambia el formulario a una sola columna */
+    .form-grid {
+        grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
+		gap: 2px;
+    }
+
+    /* Ajusta el ancho del formulario */
+    .regist-content form {
+        width: 100%; /* Ancho completo del contenedor */
+        max-width: 400px; /* Máximo ancho en pantallas pequeñas */
+    }
+
+    /* Ajusta los inputs y otros campos */
+    .input-div > div > input,
+    .input-div > div > select {
+        font-size: 0.9rem; /* Reducir tamaño de fuente para inputs */
+        padding: 0 0 0 0.4rem;
+    }
+}
+
+
+/* Ajuste adicional para pantallas extra pequeñas */
+@media screen and (max-width: 480px) {
+    .regist-content h2 {
+        font-size: 1.8rem; /* Reducir tamaño de título */
+    }
+
+    .btn, .regist-content .btn {
+        font-size: 1rem; /* Tamaño de fuente del botón en pantallas pequeñas */
+        height: 45px;
+    }
 }
