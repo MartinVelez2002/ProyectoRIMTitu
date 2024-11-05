@@ -9,8 +9,6 @@ body{
 	overflow: hidden;
 }
 
-
-
 .wave{
 	position: fixed;
 	height: 100vh;
@@ -40,8 +38,9 @@ body{
 
 .form-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); 
-    gap: 20px 60px;
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 10px 40px;
+
 }
 
 
@@ -71,7 +70,7 @@ body{
 
 
 form{
-	width: 360px;
+	width: 450px;
 }
 
 
