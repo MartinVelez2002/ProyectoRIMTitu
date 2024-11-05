@@ -16,7 +16,7 @@ urlpatterns = [
     
     path('registro/',RegistroView.as_view(),name = 'registro'),
     
-    path('clave_olvidar/',ForgetPassword.as_view(),name='olvidar_clave'),
+    path('clave_olvidar',ForgetPassword.as_view(),name='olvidar_clave'),
     
     path('restablecer_clave/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='restablecer_clave'),
     

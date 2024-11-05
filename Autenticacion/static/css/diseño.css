@@ -28,19 +28,20 @@ body{
 
 .container-regist {
 	height: 100vh;
+	width: 770px;
 	display: flex;
 	justify-content: end;
 	align-items: center;
 	text-align: center;
 	padding: 60px; /* Espacio interno */
-   
+	bottom: 20px;
 	
 }
 
 .form-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); 
-    gap: 10px 40px;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 20px 60px;
 }
 
 
@@ -163,6 +164,52 @@ form{
 }
 
 
+.container .login-content .input-div .div span[id='toggleBtn'],
+.container-regist .regist-content .input-div .div span[id='toggleBtn1'],
+.container-regist .regist-content .input-div .div span[id='toggleBtn2'],
+.container .change-pass-content .input-div .div span[id='toggleBtnActual'],
+.container .change-pass-content .input-div .div span[id='toggleBtnNueva'],
+.container .change-pass-content .input-div .div span[id='toggleBtnNuevaConf']
+{
+    position: absolute;
+    background: rgba(46, 59, 78, 0.5);
+    top: 7px;
+    width: 30px;
+    height: 30px;
+    right: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.container .login-content .input-div .div span[id='toggleBtn']::before,
+.container-regist .regist-content .input-div .div span[id='toggleBtn1']::before,
+.container-regist .regist-content .input-div .div span[id='toggleBtn2']::before,
+.container .change-pass-content .input-div .div span[id='toggleBtnActual']::before,
+.container .change-pass-content .input-div .div span[id='toggleBtnNueva']::before,
+.container .change-pass-content .input-div .div span[id='toggleBtnNuevaConf']::before
+
+{
+    content: '\f06e';
+    font-family: fontAwesome, serif;
+
+}
+
+.container .login-content .input-div .div span[id='toggleBtn'].hide::before,
+.container-regist .regist-content .input-div .div span[id='toggleBtn1'].hide::before,
+.container-regist .regist-content .input-div .div span[id='toggleBtn2'].hide::before,
+.container .change-pass-content .input-div .div span[id='toggleBtnActual'].hide::before,
+.container .change-pass-content .input-div .div span[id='toggleBtnNueva'].hide::before,
+.container .change-pass-content .input-div .div span[id='toggleBtnNuevaConf'].hide::before
+{
+    content: '\f070';
+    font-family: fontAwesome, serif;
+}
+
+
+
 .input-div > div > input,
 .input-div > div > select {
     position: absolute;
@@ -231,6 +278,16 @@ a:hover{
 .input-div .i i.fa-user-tag {
     font-size: 18px;
 }
+
+
+
+
+
+
+
+
+
+
 
 
 .error-message {

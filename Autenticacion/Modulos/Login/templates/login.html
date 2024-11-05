@@ -55,9 +55,10 @@
 					<div class="div">
 						<h5>Contraseña</h5>
 						{{ form.password }}
+						<span id="toggleBtn"></span>
 					</div>
 				</div>
-				<a href="{% url 'olvidar_clave'%}">¿Olvidó su contraseña?</a>
+				<a href="{% url 'login:olvidar_clave' %}">¿Olvidó su contraseña?</a>
 				<input type="submit" class="btn" value="Iniciar Sesión">
 			</form>
 		</div>
@@ -66,10 +67,11 @@
 
 
 	{% block JS %}
-	<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
-	<script src="https://kit.fontawesome.com/6f24398be6.js" crossorigin="anonymous"></script>
-	<script src="{% static 'js/ocultar_errores.js'%}"></script>
-	<script src="{% static 'js/validaciones.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+		<script src="https://kit.fontawesome.com/6f24398be6.js" crossorigin="anonymous"></script>
+		<script src="{% static 'js/ocultar_mensajes.js'%}"></script>
+		<script src="{% static 'js/validaciones.js' %}"></script>
+		<script src="{% static 'js/hide_show_passw.js' %}"></script>
 	{% endblock %}
 
 </body>

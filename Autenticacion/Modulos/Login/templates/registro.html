@@ -11,7 +11,7 @@ Registro
 
 
 {% block forms %}
-<img class="wave" src="{% static 'img/wave2.png' %}">
+
 <div class="container-regist">
     <div class="regist-content">
         <form method="post">
@@ -93,6 +93,7 @@ Registro
                     <div class="div">
                         <h5>Contraseña</h5>
                         {{ form.password1 }}
+                        <span id='toggleBtn1'></span>
                     </div>
                 </div>
                 <div class="input-div pass">
@@ -102,7 +103,7 @@ Registro
                     <div class="div">
                         <h5>Repetir contraseña</h5>
                         {{ form.password2 }}
-
+                        <span id='toggleBtn2'></span>   
                     </div>
                 </div>
                 <div class="input-div select">

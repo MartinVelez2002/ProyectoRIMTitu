@@ -25,8 +25,8 @@ from Modulos.Login.models import Usuario
 class Login(FormView):
     template_name = 'login.html'
     form_class = FormularioLogin
-    success_url = reverse_lazy('index')
-    change_password_url = reverse_lazy('cambiar_clave')
+    success_url = reverse_lazy('login:index')
+    change_password_url = reverse_lazy('login:cambiar_clave')
     
     
     @method_decorator(csrf_protect)
@@ -65,7 +65,7 @@ def LogoutUsuario(request):
         # Opcional: Eliminar la sesión de la base de datos si deseas mantener el control
         Session.objects.filter(session_key=request.session.session_key).delete()
 
-    return redirect('login')  
+    return redirect('login:login')  
 
 
 
@@ -81,7 +81,7 @@ class RegistroView(LoginRequiredMixin, CreateView):
     template_name = 'registro.html'
     model = Usuario
     form_class = FormularioRegistro
-    success_url = reverse_lazy('registro')
+    success_url = reverse_lazy('login:registro')
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)    
@@ -136,7 +136,7 @@ class RegistroView(LoginRequiredMixin, CreateView):
 class ForgetPassword(FormView):
     template_name = 'olvidar_clave.html'  # Tu plantilla de olvidar clave
     form_class = ForgetPasswordForm
-    success_url = reverse_lazy('olvidar_clave')  # Quedarse en la misma página tras el envío
+    success_url = reverse_lazy('login:olvidar_clave')  # Quedarse en la misma página tras el envío
     
     def form_valid(self, form):
         correo = form.cleaned_data.get('correo')
@@ -183,7 +183,7 @@ class ForgetPassword(FormView):
 class ChangePasswordFirstSession(LoginRequiredMixin, FormView):
     template_name = 'cambiar_clave_primera_sesion.html'  # Cambia por el nombre de tu plantilla
     form_class = CambiarPasswordForm  # Usa tu formulario personalizado
-    success_url = reverse_lazy('login')  # Redirige al usuario a la página de inicio de sesión después del cambio
+    success_url = reverse_lazy('login:login')  # Redirige al usuario a la página de inicio de sesión después del cambio
     
     
     def form_valid(self, form):
@@ -231,7 +231,7 @@ class PasswordResetConfirmView(View):
             return render(request, self.template_name, {'form': form, 'validlink': True, 'uid': uidb64, 'token': token})
         else:
             messages.error(request, 'El enlace de restablecimiento de contraseña es inválido o ha expirado.')
-            return redirect('olvidar_clave')  # Redirigir a la página de olvidar contraseña
+            return redirect('login:olvidar_clave')  # Redirigir a la página de olvidar contraseña
 
     def post(self, request, uidb64, token):  
         try:
@@ -239,7 +239,7 @@ class PasswordResetConfirmView(View):
             usuario = Usuario.objects.get(pk=uid)  # Usar tu modelo Usuario
         except (TypeError, ValueError, OverflowError, Usuario.DoesNotExist):
             messages.error(request, 'El usuario no existe o el enlace es inválido.')
-            return redirect('olvidar_clave')  # Redirigir a la página de olvidar contraseña
+            return redirect('login:olvidar_clave')  # Redirigir a la página de olvidar contraseña
 
 
         form = self.form_class(request.POST)
@@ -248,7 +248,7 @@ class PasswordResetConfirmView(View):
             usuario.set_password(nueva_contraseña)  # Método para establecer la nueva contraseña
             usuario.save()
             messages.success(request, 'Tu contraseña ha sido restablecida con éxito.')
-            return redirect('login')  # Redirigir al inicio de sesión
+            return redirect('login:login')  # Redirigir al inicio de sesión
         else:
             # Si el formulario no es válido, volver a renderizarlo con errores
             messages.error(request, 'Las claves no coinciden.')  

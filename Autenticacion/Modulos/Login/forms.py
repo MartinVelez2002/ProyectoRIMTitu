@@ -8,7 +8,8 @@ class FormularioLogin(AuthenticationForm):
     def __init__(self, *args, **kwargs):
         super(FormularioLogin, self).__init__(*args, **kwargs)
         self.fields['username'].widget.attrs['class'] = 'input'
-        self.fields['password'].widget.attrs['class'] = 'input'
+        self.fields['password'].widget.attrs.update({'class': 'input', 'id': 'contraseña'})
+
 
 
 class FormularioRegistro(forms.ModelForm):
@@ -17,6 +18,7 @@ class FormularioRegistro(forms.ModelForm):
         widget=forms.PasswordInput(attrs={
             'class': 'input',
             'required': 'required',
+            'id':'passw1'
         })
     )
 
@@ -25,6 +27,7 @@ class FormularioRegistro(forms.ModelForm):
         widget=forms.PasswordInput(attrs={
             'class': 'input',
             'required': 'required',
+            'id':'passw2'
         })
     )
 
@@ -35,7 +38,7 @@ class FormularioRegistro(forms.ModelForm):
         widgets = {
             'username': forms.TextInput(),
             'email': forms.EmailInput(),
-            'cedula': forms.TextInput(attrs={'id':'inputCedula'}),
+            'cedula': forms.TextInput(),
             'nombre': forms.TextInput(),
             'apellido': forms.TextInput(),
             'rol': forms.Select()
@@ -56,9 +59,6 @@ class FormularioRegistro(forms.ModelForm):
         en la base de datos. Se retorna la clave válida.
     """
     
-    
-    
-    
     def clean(self):
         cleaned_data = super().clean()
         password1 = cleaned_data.get('password1')
@@ -68,18 +68,6 @@ class FormularioRegistro(forms.ModelForm):
             self.add_error('password2', 'Las claves no coinciden')
         return cleaned_data
     
-    
-
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        user.set_password(self.cleaned_data['password1'])
-        if commit:
-            user.save()
-        return user
-
-
-
-
 
 
 
@@ -89,7 +77,7 @@ class ForgetPasswordForm(forms.Form):
             attrs=
             {'type': 'text',
              'class': 'input',
-             'required': True}))
+             'required': 'required'}))
 
     
     
@@ -98,19 +86,22 @@ class CambiarPasswordForm(forms.Form):
     password_actual = forms.CharField(max_length=15, widget=forms.PasswordInput(
         attrs={'type': 'password',
                'class': 'input',
+               'id':'passw_actual'
               
                }), required=False)
     
     password1 = forms.CharField(max_length=15, widget=forms.PasswordInput(
         attrs={'type': 'password',
                'class': 'input',
-               'required': 'required'
+               'required': 'required',
+               'id':'passw_new'
                }))
 
     password2 = forms.CharField(max_length=15, widget=forms.PasswordInput(
         attrs={'type': 'password',
                'class': 'input',
-               'required': 'required'
+               'required': 'required',
+               'id':'passw_new_conf'
                }))
 
   
