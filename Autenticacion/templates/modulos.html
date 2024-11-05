@@ -2,6 +2,11 @@
 {% load static %}
 
 
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/style_tabla.css' %}">     
+{% endblock %}
+
+
 {% block main %}
 <div class="content">
     {% block sidebar %}
