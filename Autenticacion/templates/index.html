@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     {% block css %} 
         <link rel="stylesheet" href="{% static 'css/modulos.css' %}">  
+        <link rel="stylesheet" href="{% static 'css/style_tabla.css' %}">   
     {% endblock %}
     
     <!-- CSS - Bootstrap -->
@@ -37,7 +38,7 @@
     {% block main %}
     <div class="cards-container">
         <main class="cards">
-            <a href="#">
+            <a href="{% url 'login:personal' %}">
                 <div class="card">
                     <div class="img-container">
                         <i class="fa-solid fa-box-tissue"></i>

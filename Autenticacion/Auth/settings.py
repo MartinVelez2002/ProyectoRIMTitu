@@ -15,6 +15,7 @@ from dotenv import load_dotenv
 from pathlib import Path
 load_dotenv()
 
+SECRET_KEY = os.getenv("SECRET_KEY")
 load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -57,7 +58,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
@@ -152,6 +152,7 @@ AUTH_USER_MODEL = 'Login.Usuario'
 
 
 # Configuración de tiempo de inactividad
+
 SESSION_COOKIE_AGE = 1500  # Tiempo en segundos (3 minutos)
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # Cierra la sesión al cerrar el navegador
 

@@ -2,10 +2,6 @@
 {% load static %}
 
 
-{% block css %}
-<link rel="stylesheet" href="{% static 'css/style_tabla.css' %}">     
-{% endblock %}
-
 
 {% block main %}
 <div class="content">
@@ -24,7 +20,7 @@
             </a>
             
             <div class="table-container table-responsive">
-                <h5 class="text-center">{{ title_table }}</h5>
+                <h5 class="text-center bg-dark text-white p-3">{{ title_table }}</h5>
                 <table class="table">
                     <thead>
                         <tr>
