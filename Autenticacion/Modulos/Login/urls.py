@@ -6,6 +6,7 @@ from Modulos.Login.views import Login,LogoutUsuario,MainView,RegistroView, Forge
 from django.urls import path
 
 app_name = 'login'
+
 urlpatterns = [
     path('ajustes/', login_required(admin.site.urls)),
     

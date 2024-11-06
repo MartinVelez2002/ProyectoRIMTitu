@@ -174,9 +174,12 @@ class ForgetPassword(FormView):
                 html_message=html_message  # Versión HTML del correo
             )
             messages.success(self.request, 'Correo enviado. Revisa tu bandeja de entrada.')
+            return super().form_valid(form)
+        
         else:
             messages.error(self.request, '¡El correo ingresado no está registrado!')
-            return super().form_valid(form)
+            return super().form_invalid(form)
+    
 
     def form_invalid(self, form):
         # Aquí puedes manejar lo que ocurre si el formulario es inválido.
@@ -202,9 +205,11 @@ class ChangePasswordFirstSession(LoginRequiredMixin, FormView):
         return super().form_valid(form)
     
     
-    def form_invalid(self, form): 
+    def form_invalid(self, form):
+        # Si hay errores de validación, asegúrate de que el formulario los esté procesando
+        messages.error(self.request, "Por favor, corrija los errores.")
         return super().form_invalid(form)
-    
+        
     
     def is_password_valid(self, form):
         password_actual = form.cleaned_data.get('password_actual')
