@@ -9,6 +9,14 @@
 	overflow: hidden;
 }
 
+.mod {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 79px);
+}
+
+
 .container-regist {
 	display: flex;
 	justify-content: center;
@@ -18,20 +26,15 @@
 	
 }
 
-
 .form-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); 
+    grid-template-columns: repeat(4, 1fr); 
     gap: 5px 15px;
 }
 
-
-
-.regist-content form {
+.regist-content .form-grid {
 	width: 700px;
 }
-
-
 
 .regist-content h2{
 	margin: 15px 0;
@@ -39,8 +42,6 @@
 	text-transform: uppercase;
 	font-size: 2.2rem;
 }
-
-
 
 .regist-content .input-div
 {
@@ -86,6 +87,7 @@
 	background-color: #12171e;
 	transition: .4s;
 }
+
 
 .input-div:before{
 	right: 50%;
@@ -176,27 +178,31 @@ a:hover{
 	color: #12171e;
 }
 
-.regist-content .btn{
-	display: block;
-	width: 100%;
-	height: 50px;
-	border-radius: 25px;
+.modal-body .btn{
+	width: 30%;
+	height: 40px;
+	border-radius: 10px;
 	outline: none;
 	border: none;
 	background-image: linear-gradient(to right, #1e2835, #425b70, rgb(34, 38, 46));
 	background-size: 200%;
-	font-size: 1.2rem;
+	font-size: 1rem;
 	color: #fff;
 	font-family: 'Arima', sans-serif;
 	margin: 1rem 0;
 	cursor: pointer;
 	transition: .5s;
 }
-.regist-content .btn:hover{
+
+.modal-body .btn:hover{
 	background-position: right;
 	color: #fff
 }
 
+.div-btn{
+	display: flex;
+	justify-content: space-evenly;
+}
 
 /* Estilos adicionales para el campo select de rol */
 .input-div select {
@@ -226,72 +232,41 @@ a:hover{
 }
 
 
-
 /* Media Queries para adaptabilidad */
 @media screen and (max-width: 1050px){
-	.container-regist{
-		grid-gap: 5rem;
+
+
+	.form-grid {
+		grid-template-columns: repeat(2, 1fr);
+		width: 600px;
+		gap: 20px;
 	}
+
+
 }
 
 @media screen and (max-width: 1000px){
-	.regist-content form{
-		width: 290px;
+	.form-grid {
+		width: 400px;
+		gap: 15px;
 	}
-
-	.regist-content h2{
-        font-size: 2.4rem;
-        margin: 8px 0;
-	}
-
 }
 
-@media screen and (max-width: 900px){
-	.container-regist{
-		grid-template-columns: 1fr;
+@media screen and (max-width: 700px){
+	.form-grid {
+		grid-template-columns: repeat(1, 1fr);
+		width: 300px;
 	}
 
-	.regist-content{
-		justify-content: center;
-	}
 }
 
 
 
 /* Responsividad en pantallas más pequeñas */
-@media screen and (max-width: 768px) {
-	.container-regist {
-		overflow: scroll;
+@media screen and (max-width: 500px) {
+
+	
+	.form-grid {
+		width: 200px;
 	}
-    /* Cambia el formulario a una sola columna */
-    .form-grid {
-        grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
-		gap: 2px;
-    }
-
-    /* Ajusta el ancho del formulario */
-    .regist-content form {
-        width: 100%; /* Ancho completo del contenedor */
-        max-width: 400px; /* Máximo ancho en pantallas pequeñas */
-    }
-
-    /* Ajusta los inputs y otros campos */
-    .input-div > div > input,
-    .input-div > div > select {
-        font-size: 0.9rem; /* Reducir tamaño de fuente para inputs */
-        padding: 0 0 0 0.4rem;
-    }
-}
-
-
-/* Ajuste adicional para pantallas extra pequeñas */
-@media screen and (max-width: 480px) {
-    .regist-content h2 {
-        font-size: 1.8rem; /* Reducir tamaño de título */
-    }
-
-    .regist-content .btn {
-        font-size: 1rem; /* Tamaño de fuente del botón en pantallas pequeñas */
-        height: 45px;
-    }
 }

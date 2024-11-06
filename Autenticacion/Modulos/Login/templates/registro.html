@@ -3,9 +3,6 @@
 
 
 
-{% block css %}
-<link rel="stylesheet" href="{% static 'css/diseño_forms.css' %}">
-{% endblock %}
 {% block controls %}
 
     {% if messages %}
@@ -27,6 +24,8 @@
             {% endfor %}
         </div>
     {% endif %}
+
+    
     <div class="form-grid">
         <div class="input-div one">
             <div class="i">
@@ -103,9 +102,8 @@
             </div>
         </div>
     </div>
-    <!-- Fin del nuevo campo -->
-    <input type="submit" class="btn" value="Registrar">
     {% endblock %}
+
 
 {% block js %}
 <script src="{% static 'js/hide_show_passw.js' %}"></script>
