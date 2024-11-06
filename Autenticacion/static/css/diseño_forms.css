@@ -1,48 +1,31 @@
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
 
-.regist-content{
+.container {
     font-family: 'Arima', sans-serif;
 	overflow: hidden;
 }
 
-.container-regist {
+
+.regist-content {
 	display: flex;
-	justify-content: center;
+	flex-direction: column;
 	align-items: center;
-	text-align: center;
-	width: 100%;
-	
+	justify-content: center;
 }
 
 
 .form-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr); 
-    gap: 5px 15px;
-}
-
-
-
-.regist-content form {
+    gap: 5px 20px;
 	width: 700px;
 }
 
 
 
-.regist-content h2{
-	margin: 15px 0;
-	color: #333;
-	text-transform: uppercase;
-	font-size: 2.2rem;
-}
 
 
 
-.regist-content .input-div
+.form-grid .input-div
 {
 	position: relative;
     display: grid;
@@ -87,24 +70,24 @@
 	transition: .4s;
 }
 
-.input-div:before{
+.form-grid .input-div:before{
 	right: 50%;
 }
 
-.input-div:after{
+.form-grid .input-div:after{
 	left: 50%;
 }
 
-.input-div.focus:before, .input-div.focus:after{
+.form-grid .input-div.focus:before, .input-div.focus:after{
 	width: 50%;
 }
 
-.input-div.focus > div > h5{
+.form-grid .input-div.focus > div > h5{
 	top: -4px;
 	font-size: 12px;
 }
 
-.input-div.focus > .i > i{
+.form-grid .input-div.focus > .i > i{
 	color: #12171e;
 }
 
@@ -163,22 +146,10 @@
 }
 
 
-a{
-	display: block;
-	text-align: right;
-	text-decoration: none;
-	color: #999;
-	font-size: 0.9rem;
-	transition: .3s;
-}
-
-a:hover{
-	color: #12171e;
-}
 
 .regist-content .btn{
 	display: block;
-	width: 100%;
+	width: 50%;
 	height: 50px;
 	border-radius: 25px;
 	outline: none;
@@ -192,6 +163,7 @@ a:hover{
 	cursor: pointer;
 	transition: .5s;
 }
+
 .regist-content .btn:hover{
 	background-position: right;
 	color: #fff
@@ -209,10 +181,6 @@ a:hover{
 }
 
 
-/* Estilos para el ícono de rol */
-.input-div .i i.fa-user-tag {
-    font-size: 18px;
-}
 
 
 
@@ -229,69 +197,43 @@ a:hover{
 
 /* Media Queries para adaptabilidad */
 @media screen and (max-width: 1050px){
-	.container-regist{
-		grid-gap: 5rem;
+
+
+	.form-grid {
+		grid-template-columns: repeat(2, 1fr);
+		width: 600px;
+		gap: 20px;
 	}
+
+
 }
 
 @media screen and (max-width: 1000px){
-	.regist-content form{
-		width: 290px;
+	.form-grid {
+		width: 400px;
+		gap: 15px;
 	}
-
-	.regist-content h2{
-        font-size: 2.4rem;
-        margin: 8px 0;
-	}
-
 }
 
-@media screen and (max-width: 900px){
-	.container-regist{
-		grid-template-columns: 1fr;
+@media screen and (max-width: 700px){
+	.form-grid {
+		grid-template-columns: repeat(1, 1fr);
+		width: 300px;
 	}
 
-	.regist-content{
-		justify-content: center;
-	}
 }
 
 
 
 /* Responsividad en pantallas más pequeñas */
-@media screen and (max-width: 768px) {
-	.container-regist {
-		overflow: scroll;
+@media screen and (max-width: 500px) {
+
+	
+	.form-grid {
+		width: 200px;
 	}
-    /* Cambia el formulario a una sola columna */
-    .form-grid {
-        grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
-		gap: 2px;
-    }
 
-    /* Ajusta el ancho del formulario */
-    .regist-content form {
-        width: 100%; /* Ancho completo del contenedor */
-        max-width: 400px; /* Máximo ancho en pantallas pequeñas */
-    }
-
-    /* Ajusta los inputs y otros campos */
-    .input-div > div > input,
-    .input-div > div > select {
-        font-size: 0.9rem; /* Reducir tamaño de fuente para inputs */
-        padding: 0 0 0 0.4rem;
-    }
+   
+    
 }
 
-
-/* Ajuste adicional para pantallas extra pequeñas */
-@media screen and (max-width: 480px) {
-    .regist-content h2 {
-        font-size: 1.8rem; /* Reducir tamaño de título */
-    }
-
-    .regist-content .btn {
-        font-size: 1rem; /* Tamaño de fuente del botón en pantallas pequeñas */
-        height: 45px;
-    }
-}
