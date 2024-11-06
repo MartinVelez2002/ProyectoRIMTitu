@@ -7,7 +7,7 @@ class TipoNovedad_form(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'Descripcion': forms.TextInput(
-                attrs={'class': 'form-control'}
+                attrs={'class': 'input'}
             )
         }
 
@@ -27,6 +27,6 @@ class Novedad_form(forms.ModelForm):
             # Excluye el campo 'Estado' de recibir los atributos comunes
             if field_name != 'Estado':
                 field.widget.attrs.update({
-                    'class': 'form-control',
+                    'class': 'input',
                     'required': True
                 })

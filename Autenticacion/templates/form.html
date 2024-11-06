@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block css %}
-<!-- <link rel="stylesheet" href="{% static 'css/diseño.css' %}"> -->
+<link rel="stylesheet" href="{% static 'css/diseño_forms.css' %}">
 {% endblock %}
 
 {% block header %}
@@ -19,27 +19,33 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-dark">
-                <h3 class="text-center text-white">
+                <h2 class="title text-center text-white">
                     {{ titulo }}
-                </h3>
+                </h2>
             </div>
             <div class="modal-body">
-                {% block controls %}
-                {% endblock %}
+                <div class="container-regist">
+                    <div class="regist-content">
+                        {% block controls %}
+                        {% endblock %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     {% block boton %}
     <div class="text-center">
-        <button type="submit" class="btn btn-success btn-lg me-md-5">
+        <button type="submit" class="btn">
             Guardar registro
         </button>
-        <a href="{{cancelar}}" class="btn btn-danger btn-lg">
+        <a href="{{cancelar}}" class="btn">
             Cancelar
         </a>
     </div>
 
     {% endblock %}
 </form>
+{% endblock %}
 
+{% block js %}
 {% endblock %}

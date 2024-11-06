@@ -1,0 +1,295 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.regist-content{
+    font-family: 'Arima', sans-serif;
+	overflow: hidden;
+}
+
+.container-regist {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	width: 100%;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 5px 15px;
+}
+
+
+.regist-content form {
+	width: 800px;
+}
+
+
+
+.regist-content h2{
+	margin: 15px 0;
+	color: #333;
+	text-transform: uppercase;
+	font-size: 2.2rem;
+}
+
+
+
+.regist-content .input-div
+{
+	position: relative;
+    display: grid;
+    grid-template-columns: 30% 80%;
+    margin: 25px 15px;
+    padding: 5px 0px;
+    border-bottom: 2px solid #d9d9d9;
+}
+
+
+.i{
+	color: #c0bcbc;
+	display: flex;
+	justify-content: start;
+	align-items: center;
+	font-size: 15px;
+}
+
+
+.input-div > div{
+    position: relative;
+	height: 35px;
+	width: 75px;
+}
+
+.input-div > div > h5{
+	position: absolute;
+	left: 0px;
+	top: 50%;
+	transform: translateY(-50%);
+	color: #999;
+	font-size: 15px;
+	transition: .3s;
+}
+
+.input-div:before, .input-div:after{
+	content: '';
+	position: absolute;
+	bottom: -2px;
+	width: 0%;
+	height: 2px;
+	background-color: #12171e;
+	transition: .4s;
+}
+
+.input-div:before{
+	right: 50%;
+}
+
+.input-div:after{
+	left: 50%;
+}
+
+.input-div.focus:before, .input-div.focus:after{
+	width: 50%;
+}
+
+.input-div.focus > div > h5{
+	top: -4px;
+	font-size: 12px;
+}
+
+.input-div.focus > .i > i{
+	color: #12171e;
+}
+
+
+
+.input-div .div span[id='toggleBtn1'],
+.input-div .div span[id='toggleBtn2']
+{
+    position: absolute;
+    background: rgba(46, 59, 78, 0.5);
+    top: 5px;
+    width: 30px;
+    height: 30px;
+	left: 95%;
+    border-radius: 50%;
+    cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+
+
+
+.input-div .div span[id='toggleBtn1']::before,
+.input-div .div span[id='toggleBtn2']::before
+{
+    content: '\f06e';
+    font-family: fontAwesome, serif;
+
+}
+
+.input-div .div span[id='toggleBtn1'].hide::before,
+.input-div .div span[id='toggleBtn2'].hide::before
+{
+    content: '\f070';
+    font-family: fontAwesome, serif;
+}
+
+
+
+.input-div > div > input,
+.input-div > div > select {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: none;
+    padding: 0 0 0 0.5rem ;
+    font-size: 1rem;
+    color: #555;
+    font-family: 'Arima', sans-serif;
+}
+
+
+a{
+	display: block;
+	text-align: right;
+	text-decoration: none;
+	color: #999;
+	font-size: 0.9rem;
+	transition: .3s;
+}
+
+a:hover{
+	color: #12171e;
+}
+
+.regist-content .btn{
+	display: block;
+	width: 100%;
+	height: 50px;
+	border-radius: 25px;
+	outline: none;
+	border: none;
+	background-image: linear-gradient(to right, #1e2835, #425b70, rgb(34, 38, 46));
+	background-size: 200%;
+	font-size: 1.2rem;
+	color: #fff;
+	font-family: 'Arima', sans-serif;
+	margin: 1rem 0;
+	cursor: pointer;
+	transition: .5s;
+}
+.regist-content .btn:hover{
+	background-position: right;
+	color: #fff
+}
+
+
+/* Estilos adicionales para el campo select de rol */
+.input-div select {
+    appearance: none;
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+    color: #555;
+    font-family: 'Arima', sans-serif;
+}
+
+
+/* Estilos para el ícono de rol */
+.input-div .i i.fa-user-tag {
+    font-size: 18px;
+}
+
+
+
+.error-message {
+	background-color: #ffcccc;
+	color: #d8000c;
+	padding: 10px;
+	margin: 10px 0;
+	font-size: 1.2em;
+	border-radius: 5px;
+}
+
+
+
+/* Media Queries para adaptabilidad */
+@media screen and (max-width: 1050px){
+	.container-regist{
+		grid-gap: 5rem;
+	}
+}
+
+@media screen and (max-width: 1000px){
+	.regist-content form{
+		width: 290px;
+	}
+
+	.regist-content h2{
+        font-size: 2.4rem;
+        margin: 8px 0;
+	}
+
+}
+
+@media screen and (max-width: 900px){
+	.container-regist{
+		grid-template-columns: 1fr;
+	}
+
+	.regist-content{
+		justify-content: center;
+	}
+}
+
+
+
+/* Responsividad en pantallas más pequeñas */
+@media screen and (max-width: 768px) {
+	.container-regist {
+		overflow: scroll;
+	}
+    /* Cambia el formulario a una sola columna */
+    .form-grid {
+        grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
+		gap: 2px;
+    }
+
+    /* Ajusta el ancho del formulario */
+    .regist-content form {
+        width: 100%; /* Ancho completo del contenedor */
+        max-width: 400px; /* Máximo ancho en pantallas pequeñas */
+    }
+
+    /* Ajusta los inputs y otros campos */
+    .input-div > div > input,
+    .input-div > div > select {
+        font-size: 0.9rem; /* Reducir tamaño de fuente para inputs */
+        padding: 0 0 0 0.4rem;
+    }
+}
+
+
+/* Ajuste adicional para pantallas extra pequeñas */
+@media screen and (max-width: 480px) {
+    .regist-content h2 {
+        font-size: 1.8rem; /* Reducir tamaño de título */
+    }
+
+    .regist-content .btn {
+        font-size: 1rem; /* Tamaño de fuente del botón en pantallas pequeñas */
+        height: 45px;
+    }
+}

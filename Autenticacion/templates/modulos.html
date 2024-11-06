@@ -8,7 +8,7 @@
     {% block sidebar %}
     {% include 'sidebar.html' %}
     {% endblock %}
-    
+
     <!-- Main Content -->
     {% block forms %}
     <main class="main-content pt-5">
@@ -18,7 +18,7 @@
                 {% block btnTitle %}
                 {% endblock %}
             </a>
-            
+
             <div class="table-container table-responsive">
                 <h5 class="text-center bg-dark text-white p-3">{{ title_table }}</h5>
                 <table class="table">
@@ -41,8 +41,11 @@
 
 <div class="modal fade" id="insertar" role="dialgo"></div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block js %}
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/6f24398be6.js" crossorigin="anonymous"></script>
 <script src="{% static 'js/modal.js' %}"></script>
-<script src="{% static 'js/hide_show_passw.js' %}"></script>
 {% endblock %}

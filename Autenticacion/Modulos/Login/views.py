@@ -82,7 +82,13 @@ class RegistroView(LoginRequiredMixin, CreateView):
     model = Usuario
     form_class = FormularioRegistro
     success_url = reverse_lazy('login:registro')
-
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titulo'] = 'Crear Personal'
+        
+        return context
+    
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)    
         if form.is_valid():
@@ -104,6 +110,7 @@ class RegistroView(LoginRequiredMixin, CreateView):
                 "email": nuevo_usuario.email,
                 "password": form.cleaned_data.get('password1'),
                 "site_name": 'Municipio de Milagro',
+                
             }
             
            
@@ -269,4 +276,6 @@ class Usuario_view(ListView):
         context['title_table'] = 'Listado de Personal'
         context['cancelar'] = reverse('login:personal')
         context['action_save'] = self.request.path
+        
+        
         return context
