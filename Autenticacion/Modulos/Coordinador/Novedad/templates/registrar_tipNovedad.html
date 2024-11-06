@@ -2,7 +2,17 @@
 {% load static %}
 
 {% block controls %}
+<div class="form-grid">
+    <div class="input-div one">
+        <div class="i">
+            <i class="fa-solid fa-user"></i>
+        </div>
+        <div class="div">
+            <h5>Tipo de Novedad</h5>
+            {{ form.Descripcion }}
+        </div>
+    </div>
+</div>
 
-{{ form.as_p }}
 
 {% endblock %}

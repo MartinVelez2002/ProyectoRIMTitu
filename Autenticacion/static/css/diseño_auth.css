@@ -98,7 +98,6 @@ body{
 
 
 
-
 form{
 	width: 360px;
 }
@@ -145,7 +144,6 @@ form{
 .input-div > div{
     position: relative;
 	height: 35px;
-
 }
 
 .input-div > div > h5{

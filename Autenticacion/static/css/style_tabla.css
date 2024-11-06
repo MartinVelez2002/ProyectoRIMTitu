@@ -12,17 +12,6 @@ body {
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
 }
 
-.btn-add{
-    position: relative;
-    left: 65%;
-}
-
-@media (width < 875px){
-    .btn-add{
-        position: static;
-    }
-
-}
 .table-container h4{
     background: #12171e;
     padding: 10px;
@@ -71,6 +60,18 @@ thead {
 
 .btn-edit:hover, .btn-delete:hover {
     opacity: 0.85;
+}
+
+
+.btn-add{
+    position: relative;
+    left: 65%;
+}
+
+@media (width < 875px) {
+    .btn-add{
+        left: 30%;
+    }
 }
 
 /* Estilos para responsive */

@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 
-from Modulos.Login.views import Login,LogoutUsuario,MainView,RegistroView, ForgetPassword, PasswordResetConfirmView, ChangePasswordFirstSession
+from Modulos.Login.views import Login,LogoutUsuario,MainView,RegistroView, ForgetPassword, PasswordResetConfirmView, ChangePasswordFirstSession, Usuario_view
+
 from django.urls import path
 
 app_name = 'login'
@@ -15,6 +16,8 @@ urlpatterns = [
     path('logout/',login_required(LogoutUsuario),name = 'logout'),
     
     path('registro/',RegistroView.as_view(), name = 'registro'),
+    
+    path('personal/', Usuario_view.as_view(), name = 'personal'),
     
     path('clave_olvidar',ForgetPassword.as_view(),name='olvidar_clave'),
     

@@ -31,3 +31,4 @@ flecha.onclick = function () {
         flecha.classList.replace("fa-angles-right", "fa-angles-left");
     }
 };
+

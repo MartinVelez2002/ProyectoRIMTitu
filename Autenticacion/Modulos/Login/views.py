@@ -10,14 +10,14 @@ from django.template.loader import render_to_string
 from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.contrib.sessions.models import Session
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView, CreateView
+from django.views.generic import TemplateView, CreateView, ListView
 from django.views.generic.edit import FormView
 from Modulos.Login.forms import FormularioLogin, FormularioRegistro, CambiarPasswordForm, ForgetPasswordForm
 from Modulos.Login.models import Usuario
@@ -83,7 +83,13 @@ class RegistroView(LoginRequiredMixin, CreateView):
     model = Usuario
     form_class = FormularioRegistro
     success_url = reverse_lazy('login:registro')
-
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titulo'] = 'Crear Personal'
+        
+        return context
+    
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)    
         if form.is_valid():
@@ -105,6 +111,7 @@ class RegistroView(LoginRequiredMixin, CreateView):
                 "email": nuevo_usuario.email,
                 "password": form.cleaned_data.get('password1'),
                 "site_name": 'Municipio de Milagro',
+                
             }
             
            
@@ -318,3 +325,29 @@ class PasswordResetConfirmView(View):
             length.match(password)):
             return True
         return False
+
+
+
+
+
+
+
+class Usuario_view(LoginRequiredMixin,ListView):
+    template_name = 'listado_personal.html'
+    model = Usuario
+    context_object_name = 'personal'
+
+    
+    def get_queryset(self):
+        # Filtrar usuarios con is_superuser=False
+        return Usuario.objects.filter(is_superuser=False)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['dirurl'] = reverse('login:registro')
+        context['title_table'] = 'Listado de Personal'
+        context['cancelar'] = reverse('login:personal')
+        context['action_save'] = self.request.path
+        
+        
+        return context

@@ -3,6 +3,26 @@
 
 {% block controls %}
 
-{{ form.as_p }}
+<div class="form-grid">
+    <div class="input-div one">
+        <div class="i">
+            <i class="fa-solid fa-user"></i>
+        </div>
+        <div class="div">
+            <h5>Tipo de Novedad</h5>
+            {{ form.TipoNovedad }}
+        </div>
+    </div>
+
+    <div class="input-div one">
+        <div class="i">
+            <i class="fa-solid fa-user"></i>
+        </div>
+        <div class="div">
+            <h5>Descripción de la novedad</h5>
+            {{ form.Descripcion }}
+        </div>
+    </div>
+</div>
 
 {% endblock %}
