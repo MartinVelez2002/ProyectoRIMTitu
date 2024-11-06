@@ -39,6 +39,10 @@ body {
     grid-template-columns: repeat(1, 1fr);
 }
 
+.navbar-toggler-icon{
+    color: white;
+}
+
 .side-bar .nav-link {
     color: var(--sidebar-text-color);
     margin: 10px;
@@ -122,33 +126,12 @@ body {
 }
 
 @media (max-width: 875px) {
-    /* Mostrar el sidebar superpuesto sobre el contenido */
     .side-bar {
         position: fixed;
-        top: 0;
-        left: 0;
-        height: 100vh;
-        width: 250px; /* Puedes ajustar este ancho según tu preferencia */
-        transform: translateX(-250px);
-        transition: transform var(--transition-speed) ease;
-        z-index: 1000; /* Para asegurarte de que esté sobre el contenido */
-        display: block;
+        z-index: 1000;
     }
-
-    /* Cuando el sidebar está activo, muéstralo completamente */
-    .side-bar.active {
-        transform: translateX(0);
-    }
-
-    /* El contenido principal se ajusta cuando el sidebar está activo */
-    .main-content {
-        transition: margin-left var(--transition-speed) ease;
-        margin-left: 0; /* Resetear el margen en pantallas pequeñas */
-    }
-
-    /* Cuando el sidebar está activo, oscurece el fondo del contenido principal para resaltar el sidebar */
-    .main-content.overlay {
-        background-color: rgba(0, 0, 0, 0.5);
+    .main-content{
+        width: 100%;
     }
 }
 

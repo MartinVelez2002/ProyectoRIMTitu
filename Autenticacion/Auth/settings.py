@@ -152,7 +152,7 @@ AUTH_USER_MODEL = 'Login.Usuario'
 
 
 # Configuración de tiempo de inactividad
-SESSION_COOKIE_AGE = 180  # Tiempo en segundos (3 minutos)
+SESSION_COOKIE_AGE = 1500  # Tiempo en segundos (3 minutos)
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # Cierra la sesión al cerrar el navegador
 
 
