@@ -14,7 +14,7 @@ urlpatterns = [
     
     path('logout/',login_required(LogoutUsuario),name = 'logout'),
     
-    path('registro/',RegistroView.as_view(),name = 'registro'),
+    path('registro/',RegistroView.as_view(), name = 'registro'),
     
     path('clave_olvidar',ForgetPassword.as_view(),name='olvidar_clave'),
     

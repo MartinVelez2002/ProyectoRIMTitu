@@ -6,59 +6,81 @@
 Cambiar Clave
 {% endblock %}
 
+
 {% block main %}
-<img class="wave" src="{% static 'img/wave4.png' %}">
-<div class="container">
-    <div class="img">
-        <img src="{% static 'img/illustrationch.svg' %}" height="400">
-    </div>
-    <div class="change-pass-content">
-        <form method="post">
-            {% csrf_token %}
-            <!-- Bloque para mostrar mensajes de error -->
-            {% if messages %}
-            <div class="error-message">
-                {% for message in messages %}
-                    {{ message }}<br>
-                {% endfor %}
-            </div>
-            {% endif %}
-            <h2 class="title">Cambiar contraseña</h2>
-            <div class="input-div pass">
-                <div class="i">
-                    <i class="fa-solid fa-lock"></i>
+
+<div class="container-change-pass">
+    <div class="container-grid">
+        <div class="validacion form">
+                 
+            <h3> La contraseña nueva debe cumplir con los siguientes parámetros:</h3>
+            <ul>   
+                <li id="lower">Al menos un caracter en minúscula</li>
+                <li id="upper">Al menos un caracter en mayúscula</li>
+                <li id="number">Al menos un número</li>
+                <li id="special">Al menos un caracter especial</li>
+                <li id="length">Al menos 8 caracteres</li>
+            </ul>
+        </div>
+        <div class="change-pass-content">
+            <form method="POST" id='passwordForm' >
+                {% csrf_token %}
+                <!-- Bloque para mostrar mensajes de error -->
+               
+                {% if messages %}
+                <div class="error-message">
+                    {% for message in messages %}
+                        {{ message }}<br>
+                    {% endfor %}
                 </div>
-                <div class="div">
-                    <h5>Contraseña actual</h5>
-                    {{ form.password_actual}}
-                    <span id="toggleBtnActual"></span>
+                {% endif %}
+                {% if form.password1.errors %}
+                <div class="error-message">
+                    {% for error in form.password1.errors %}
+                    <p>{{ error }}</p>
+                    {% endfor %}
                 </div>
-            </div>
-            <div class="input-div pass">
-                <div class="i">
-                    <i class="fa-solid fa-lock"></i>
+                {% endif %}
+                <h2 class="title">Cambiar contraseña</h2>
+                
+                <div class="input-div pass">
+                    <div class="i">
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+                    <div class="div">
+                        <h5>Contraseña actual</h5>
+                        {{ form.password_actual}}
+                        <span id="toggleBtnActual"></span>
+                    </div>
                 </div>
-                <div class="div">
-                    <h5>Nueva contraseña</h5>
-                    {{ form.password1 }}
-                    <span id="toggleBtnNueva"></span>
+                <div class="input-div pass">
+                    <div class="i">
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+                    <div class="div">
+                        <h5>Nueva contraseña</h5>
+                        {{ form.password1 }}
+                        <span id="toggleBtnNueva"></span>
+                    </div>
                 </div>
-            </div>
-            <div class="input-div pass2">
-                <div class="i">
-                    <i class="fa-solid fa-lock"></i>
+                <div class="input-div pass2">
+                    <div class="i">
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+                    <div class="div">
+                        <h5>Confirmar contraseña</h5>
+                        {{ form.password2 }}
+                        <span id="toggleBtnNuevaConf"></span>
+                    </div>
                 </div>
-                <div class="div">
-                    <h5>Confirmar contraseña</h5>
-                    {{ form.password2 }}
-                    <span id="toggleBtnNuevaConf"></span>
-                </div>
-            </div>
-            <input type="submit" class="btn" value="Cambiar contraseña">
-            
-        </form>
+                <input type="submit" class="btn" value="Cambiar">
+                
+            </form>
+        </div>
     </div>
 </div>
+
+
 
 
 

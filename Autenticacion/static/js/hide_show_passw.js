@@ -17,10 +17,6 @@ let clave_nueva_conf = document.getElementById('passw_new_conf'); // Asegúrate 
 // Función para alternar la visibilidad de la contraseña
 function togglePasswordVisibility(inputField, toggleButton) {
 
-    if (!inputField) {
-        console.error("El campo de contraseña no fue encontrado.");
-        return;
-    }
 
     if (inputField.type === 'password') {
         inputField.setAttribute('type', 'text');
@@ -32,6 +28,8 @@ function togglePasswordVisibility(inputField, toggleButton) {
         toggleButton.classList.remove('hide');
     }
 }
+
+
 // Asignar onclick solo si los elementos existen en el DOM
 if (toggleBtn) {
     toggleBtn.onclick = function () {

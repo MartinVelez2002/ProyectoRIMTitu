@@ -1,0 +1,471 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Arima', sans-serif;
+	overflow: hidden;
+}
+
+.wave {
+	position: fixed;
+	height: 100vh;
+	z-index: -1;
+}
+
+.container{
+	height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15rem;
+    margin: 20px;
+	
+}
+
+
+.container-change-pass {
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 20px;
+	
+}
+
+
+.container-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 100px; /* Espacio entre las columnas */
+    align-items: center; /* Alinea los elementos verticalmente al centro */
+    width: 80%; /* Ancho del contenedor grid */
+	
+}
+
+
+
+.title-container {
+    display: flex;
+    align-items: center; /* Alinea verticalmente el icono con el texto */
+    gap: 5px; /* Espacio entre el icono y el título */
+}
+
+.title-container i, h3 {
+    font-size: 1rem; /* Tamaño del icono */
+}
+
+
+
+
+.validacion ul {
+    list-style-type: disc; /* Punto de viñeta */
+    list-style-position: inside; /* Hace que la viñeta esté alineada con el texto */
+    padding-left: 30px; /* Elimina sangría a la izquierda */
+    margin-top: 8px; /* Espacio entre el título y la lista */
+}
+
+.validacion ul li {
+    font-size: 0.95em; /* Ajusta el tamaño de fuente de los elementos de la lista */
+    font-weight: normal; /* Diferencia el peso de los elementos de la lista del título */
+    line-height: 1.5; /* Espacio entre líneas para mejorar la legibilidad */
+}
+
+
+
+
+
+
+.img {
+	display: flex;
+	align-items: center;
+	justify-content: center;	
+}
+
+.img img{
+	width: 500px;
+	
+}
+
+.login-content, .send-email-content, .change-pass-content {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	text-align: center;
+	
+}
+
+
+
+
+form{
+	width: 360px;
+}
+
+
+.login-content h2,
+.send-email-content h2,
+.change-pass-content h2{
+	margin: 15px 0;
+	color: #333;
+	text-transform: uppercase;
+	font-size: 2.2rem;
+}
+
+.send-email-content h2,
+.change-pass-content h2
+{
+	font-size: 1.5rem;
+}
+
+
+
+.login-content .input-div, 
+.send-email-content .input-div,
+.change-pass-content .input-div{
+	position: relative;
+    display: grid;
+    grid-template-columns: 7% 93%;
+    margin: 25px 0;
+    padding: 5px 0;
+    border-bottom: 2px solid #d9d9d9;
+}
+
+
+.i{
+	color: #c0bcbc;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 15px;
+}
+
+
+.input-div > div{
+    position: relative;
+	height: 35px;
+
+}
+
+.input-div > div > h5{
+	position: absolute;
+	left: 10px;
+	top: 50%;
+	transform: translateY(-50%);
+	color: #999;
+	font-size: 15px;
+	transition: .3s;
+}
+
+.input-div:before, .input-div:after{
+	content: '';
+	position: absolute;
+	bottom: -2px;
+	width: 0%;
+	height: 2px;
+	background-color: #12171e;
+	transition: .4s;
+}
+
+.input-div:before{
+	right: 50%;
+}
+
+.input-div:after{
+	left: 50%;
+}
+
+.input-div.focus:before, .input-div.focus:after{
+	width: 50%;
+}
+
+.input-div.focus > div > h5{
+	top: -4px;
+	font-size: 12px;
+}
+
+.input-div.focus > .i > i{
+	color: #12171e;
+}
+
+
+.input-div .div span[id='toggleBtn'],
+.input-div .div span[id='toggleBtnActual'],
+.input-div .div span[id='toggleBtnNueva'],
+.input-div .div span[id='toggleBtnNuevaConf']
+{
+    position: absolute;
+    background: rgba(46, 59, 78, 0.5);
+    top: 5px;
+    width: 30px;
+    height: 30px;
+    right: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+
+
+.input-div .div span[id='toggleBtn']::before,
+.input-div .div span[id='toggleBtnActual']::before,
+.input-div .div span[id='toggleBtnNueva']::before,
+.input-div .div span[id='toggleBtnNuevaConf']::before
+
+{
+    content: '\f06e';
+    font-family: fontAwesome, serif;
+
+}
+
+.input-div .div span[id='toggleBtn'].hide::before,
+.input-div .div span[id='toggleBtnActual'].hide::before,
+.input-div .div span[id='toggleBtnNueva'].hide::before,
+.input-div .div span[id='toggleBtnNuevaConf'].hide::before
+{
+    content: '\f070';
+    font-family: fontAwesome, serif;
+}
+
+
+
+.input-div > div > input,
+.input-div > div > select {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: none;
+    padding: 0 0 0 0.5rem ;
+    font-size: 1rem;
+    color: #555;
+    font-family: 'Arima', sans-serif;
+}
+
+
+a{
+	display: block;
+	text-align: right;
+	text-decoration: none;
+	color: #999;
+	font-size: 0.9rem;
+	transition: .3s;
+}
+
+a:hover{
+	color: #12171e;
+}
+
+.btn{
+	display: block;
+	width: 100%;
+	height: 50px;
+	border-radius: 25px;
+	outline: none;
+	border: none;
+	background-image: linear-gradient(to right, #1e2835, #425b70, rgb(34, 38, 46));
+	background-size: 200%;
+	font-size: 1.2rem;
+	color: #fff;
+	font-family: 'Arima', sans-serif;
+	margin: 1rem 0;
+	cursor: pointer;
+	transition: .5s;
+}
+.btn:hover{
+	background-position: right;
+	color: #fff
+}
+
+
+/* Estilos adicionales para el campo select de rol */
+.input-div select {
+    appearance: none;
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+    color: #555;
+    font-family: 'Arima', sans-serif;
+}
+
+
+/* Estilos para el ícono de rol */
+.input-div .i i.fa-user-tag {
+    font-size: 18px;
+}
+
+
+
+.error-message {
+	background-color: #ffcccc;
+	color: #d8000c;
+	padding: 10px;
+	margin: 10px 0;
+	font-size: 1.2em;
+	border-radius: 5px;
+}
+
+
+
+
+.container-change-pass .validacion
+{
+    background: #626b75;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 15px 25px rgba(0,0,0,0.15);
+}
+
+.container-change-pass .validacion ul
+{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.container-change-pass .validacion ul li
+{
+    position: relative;
+    list-style: none;
+    color: #fff;
+    font-size: 0.8em;
+    transition: 0.5s;
+}
+
+.container-change-pass .validacion ul li.valid
+{
+    color: lime;
+}
+
+.container-change-pass .validacion ul li::before
+{
+    content: '\f192';
+    font-family: fontAwesome, serif;
+    width: 20px;
+    height: 10px;
+    display: inline-flex;
+}
+
+.container-change-pass .validacion ul li.valid::before
+{
+    content: '\f00c';
+    color: lime;
+}
+
+
+
+
+
+
+
+/* Media Queries para adaptabilidad */
+@media screen and (max-width: 1050px){
+	.container{
+		grid-gap: 5rem;
+	}
+}
+
+@media screen and (max-width: 1000px){
+	form{
+		width: 390px;
+	}
+
+	.login-content h2, .send-email-content h2, .change-pass-content h2{
+        font-size: 2.4rem;
+        margin: 8px 0;
+	}
+
+	.send-email-content h2 {
+		font-size: 2rem;
+	}
+
+	.img img{
+		width: 400px;
+	}
+}
+
+@media screen and (max-width: 900px){
+	.container{
+		grid-template-columns: 1fr;
+    
+	}
+
+    
+	.img{
+		display: none;
+	}
+
+	.wave{
+		display: none;
+	}
+
+	.login-content, .send-email-content, .change-pass-content{
+		justify-content: center;
+	}
+}
+
+
+
+
+
+/* Adaptabilidad en pantallas medianas */
+@media screen and (max-width: 1050px) {
+    .container-grid {
+        gap: 5rem; /* Reducir el espacio entre columnas */
+        width: 90%; /* Ajustar ancho en pantallas medianas */
+    }
+}
+
+/* Adaptabilidad en pantallas pequeñas */
+@media screen and (max-width: 900px) {
+    .container-change-pass {
+        display: flex;
+        flex-direction: column; /* Colocar elementos en una columna */
+        align-items: center; /* Centrar los elementos en pantallas pequeñas */
+        height: auto; /* Ajustar la altura */
+        padding: 20px; /* Agregar algo de espacio alrededor */
+    }
+
+    .container-grid {
+        grid-template-columns: 1fr; /* Una sola columna en pantallas pequeñas */
+        width: 100%; /* Usar el 100% del ancho disponible */
+        gap: 20px; /* Reducir el espacio entre elementos */
+    }
+
+    .title-container i, h3 {
+        font-size: 0.9rem; /* Ajustar el tamaño de la fuente en pantallas pequeñas */
+    }
+
+    .change-pass-content h2 {
+        font-size: 2rem;
+        margin: 8px 0;
+    }
+}
+
+/* Adaptabilidad en pantallas extra pequeñas */
+@media screen and (max-width: 600px) {
+    .container-grid {
+       	width: auto;
+        gap: 5px; /* Espacio reducido entre elementos */
+		
+    }
+
+    form {
+        width: 290px;
+    };
+	
+	.change-pass-content h2 {
+		font-size: 1.5rem;
+	}
+    .title-container h3 {
+        font-size: 1rem; /* Ajustar el tamaño de la fuente */
+    }
+
+   
+}

@@ -1,3 +1,4 @@
+import re
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_decode
 from django.utils.http import urlsafe_base64_encode
@@ -7,7 +8,7 @@ from django.contrib import messages
 from django.conf import settings
 from django.template.loader import render_to_string 
 from django.contrib.auth import login, logout, authenticate
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
@@ -124,8 +125,7 @@ class RegistroView(LoginRequiredMixin, CreateView):
             
         else:  
             messages.error(request,'El formulario no ha procesado la información correctamente.')
-            
-        return render(request, self.template_name, {'form': form})
+            return render(request, self.template_name, {'form': form})
 
 
 
@@ -169,8 +169,7 @@ class ForgetPassword(FormView):
             messages.success(self.request, 'Correo enviado. Revisa tu bandeja de entrada.')
         else:
             messages.error(self.request, '¡El correo ingresado no está registrado!')
-
-        return super().form_valid(form)
+            return super().form_valid(form)
 
     def form_invalid(self, form):
         # Aquí puedes manejar lo que ocurre si el formulario es inválido.
@@ -187,42 +186,74 @@ class ChangePasswordFirstSession(LoginRequiredMixin, FormView):
     
     
     def form_valid(self, form):
-        # Obtener las contraseñas desde el formulario
+        if not self.is_password_valid(form):
+            return self.form_invalid(form)
+        
+        # Si todo es válido, se procesa el cambio de contraseña
+        self.change_user_password(form.cleaned_data.get('password1'))
+        messages.success(self.request, "Tu contraseña ha sido cambiada exitosamente.")
+        return super().form_valid(form)
+    
+    
+    def form_invalid(self, form): 
+        return super().form_invalid(form)
+    
+    
+    def is_password_valid(self, form):
         password_actual = form.cleaned_data.get('password_actual')
         password1 = form.cleaned_data.get('password1')
 
-        # Verificar que la contraseña actual sea correcta
         if not self.request.user.check_password(password_actual):
             messages.error(self.request, 'La contraseña actual es incorrecta.')
-            return self.form_invalid(form)
+            return False
 
-        # Cambiar la contraseña del usuario
+        if not self.password_meets_criteria(password1):
+            messages.error(self.request, 'La nueva contraseña no cumple con los requisitos de seguridad.')
+            return False
+
+        return True
+       
+    
+    def password_meets_criteria(self, password):
+        """
+        Verifica que la contraseña cumpla con los siguientes criterios:
+        1. Al menos un carácter en minúscula.
+        2. Al menos un carácter en mayúscula.
+        3. Al menos un número.
+        4. Al menos un carácter especial.
+        5. Al menos 8 caracteres.
+        """
+        lower = re.compile('(?=.*[a-z])')
+        upper = re.compile('(?=.*[A-Z])')
+        number = re.compile('(?=.*[0-9])')
+        special = re.compile('(?=.*[!@#\\$%\\^&\\*])')
+        length = re.compile('(?=.{8,})')
+
+        if (lower.match(password) and
+            upper.match(password) and
+            number.match(password) and
+            special.match(password) and
+            length.match(password)):
+            return True
+        return False
+    
+    
+    def change_user_password(self, new_password):
+        # Lógica para cambiar la contraseña del usuario
         user = self.request.user
-        user.set_password(password1)
-        user.primera_sesion = False  # Marcar que ya no es la primera sesión
-        user.save()
-
-        # Mensaje de confirmación
-        messages.success(self.request, "Tu contraseña ha sido cambiada exitosamente.")
-        return super().form_valid(form)
-
-    def form_invalid(self, form):
-        # En caso de error en el formulario, muestra un mensaje de error
-        messages.error(self.request, "Hubo un error al cambiar la contraseña. Inténtalo de nuevo.")
-        return super().form_invalid(form)
-
-
-
-
+        user.set_password(new_password)
+        user.primera_sesion = False
+        user.save() 
+    
 
 class PasswordResetConfirmView(View):
-    template_name = 'cambiar_clave.html'  # Tu plantilla para cambiar la contraseña
+    template_name = 'cambiar_clave.html'  
     form_class = CambiarPasswordForm
 
     def get(self, request, uidb64, token):
         try:
             uid = urlsafe_base64_decode(uidb64).decode()
-            usuario = Usuario.objects.get(pk=uid)  # Usar tu modelo Usuario
+            usuario = Usuario.objects.get(pk=uid)  # Modelo Usuario y extraer la instancia del usuario
         except (TypeError, ValueError, OverflowError, Usuario.DoesNotExist):
             usuario = None
 
@@ -233,10 +264,12 @@ class PasswordResetConfirmView(View):
             messages.error(request, 'El enlace de restablecimiento de contraseña es inválido o ha expirado.')
             return redirect('login:olvidar_clave')  # Redirigir a la página de olvidar contraseña
 
+
+   
     def post(self, request, uidb64, token):  
         try:
             uid = urlsafe_base64_decode(uidb64).decode()
-            usuario = Usuario.objects.get(pk=uid)  # Usar tu modelo Usuario
+            usuario = Usuario.objects.get(pk=uid)  
         except (TypeError, ValueError, OverflowError, Usuario.DoesNotExist):
             messages.error(request, 'El usuario no existe o el enlace es inválido.')
             return redirect('login:olvidar_clave')  # Redirigir a la página de olvidar contraseña
@@ -245,6 +278,13 @@ class PasswordResetConfirmView(View):
         form = self.form_class(request.POST)
         if form.is_valid():
             nueva_contraseña = form.cleaned_data.get('password1')
+            
+            # Validar criterios de contraseña
+            if not self.password_meets_criteria(nueva_contraseña):
+                messages.error(request, 'La contraseña no cumple con los requisitos de seguridad.')
+                return render(request, self.template_name, {'form': form, 'validlink': True, 'uid': uidb64, 'token': token})
+            
+            
             usuario.set_password(nueva_contraseña)  # Método para establecer la nueva contraseña
             usuario.save()
             messages.success(request, 'Tu contraseña ha sido restablecida con éxito.')
@@ -252,7 +292,29 @@ class PasswordResetConfirmView(View):
         else:
             # Si el formulario no es válido, volver a renderizarlo con errores
             messages.error(request, 'Las claves no coinciden.')  
-        return render(request, self.template_name, {'form': form, 'validlink': True, 'uid': uidb64, 'token': token})
+            return render(request, self.template_name, {'form': form, 'validlink': True, 'uid': uidb64, 'token': token})
 
 
 
+    def password_meets_criteria(self, password):
+        """
+        Verifica que la contraseña cumpla con los siguientes criterios:
+        1. Al menos un carácter en minúscula.
+        2. Al menos un carácter en mayúscula.
+        3. Al menos un número.
+        4. Al menos un carácter especial.
+        5. Al menos 8 caracteres.
+        """
+        lower = re.compile('(?=.*[a-z])')
+        upper = re.compile('(?=.*[A-Z])')
+        number = re.compile('(?=.*[0-9])')
+        special = re.compile('(?=.*[!@#\\$%\\^&\\*])')
+        length = re.compile('(?=.{8,})')
+
+        if (lower.match(password) and
+            upper.match(password) and
+            number.match(password) and
+            special.match(password) and
+            length.match(password)):
+            return True
+        return False

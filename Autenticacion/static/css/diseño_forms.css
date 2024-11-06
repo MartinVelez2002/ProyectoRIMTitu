@@ -4,27 +4,13 @@
     box-sizing: border-box;
 }
 
-body, .regist-content{
+.regist-content{
     font-family: 'Arima', sans-serif;
 	overflow: hidden;
 }
 
-.wave{
-	position: fixed;
-	height: 100vh;
-	z-index: -1;
-}
 
-.container{
-	height: 100vh;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15rem;
-    margin: 20px;
-	
-}
 
-/* Contenedor principal que centra el formulario */
 .container-regist {
 	display: flex;
 	justify-content: center;
@@ -35,66 +21,31 @@ body, .regist-content{
 }
 
 
-
 .form-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr); 
     gap: 5px 15px;
 }
 
-.img {
-	display: flex;
-	align-items: center;
-	justify-content: center;	
-}
 
-.img img{
-	width: 500px;
-	
-}
-
-.login-content, .send-email-content, .change-pass-content {
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
-	text-align: center;
-	
-}
 
 .regist-content form {
 	width: 700px;
 }
 
 
-form{
-	width: 360px;
-}
 
-
-.login-content h2, 
-.regist-content h2,
-.send-email-content h2,
-.change-pass-content h2{
+.regist-content h2{
 	margin: 15px 0;
 	color: #333;
 	text-transform: uppercase;
 	font-size: 2.2rem;
 }
 
-.send-email-content h2{
-	font-size: 1.4rem;
-}
-
-.change-pass-content h2 {
-	font-size: 2rem;
-}
 
 
-
-.login-content .input-div, 
-.regist-content .input-div,
-.send-email-content .input-div,
-.change-pass-content .input-div{
+.regist-content .input-div
+{
 	position: relative;
     display: grid;
     grid-template-columns: 7% 93%;
@@ -160,12 +111,9 @@ form{
 }
 
 
-.container .login-content .input-div .div span[id='toggleBtn'],
-.container-regist .regist-content .input-div .div span[id='toggleBtn1'],
-.container-regist .regist-content .input-div .div span[id='toggleBtn2'],
-.container .change-pass-content .input-div .div span[id='toggleBtnActual'],
-.container .change-pass-content .input-div .div span[id='toggleBtnNueva'],
-.container .change-pass-content .input-div .div span[id='toggleBtnNuevaConf']
+
+.input-div .div span[id='toggleBtn1'],
+.input-div .div span[id='toggleBtn2']
 {
     position: absolute;
     background: rgba(46, 59, 78, 0.5);
@@ -180,25 +128,19 @@ form{
 	justify-content: center;
 }
 
-.container .login-content .input-div .div span[id='toggleBtn']::before,
-.container-regist .regist-content .input-div .div span[id='toggleBtn1']::before,
-.container-regist .regist-content .input-div .div span[id='toggleBtn2']::before,
-.container .change-pass-content .input-div .div span[id='toggleBtnActual']::before,
-.container .change-pass-content .input-div .div span[id='toggleBtnNueva']::before,
-.container .change-pass-content .input-div .div span[id='toggleBtnNuevaConf']::before
 
+
+
+.input-div .div span[id='toggleBtn1']::before,
+.input-div .div span[id='toggleBtn2']::before
 {
     content: '\f06e';
     font-family: fontAwesome, serif;
 
 }
 
-.container .login-content .input-div .div span[id='toggleBtn'].hide::before,
-.container-regist .regist-content .input-div .div span[id='toggleBtn1'].hide::before,
-.container-regist .regist-content .input-div .div span[id='toggleBtn2'].hide::before,
-.container .change-pass-content .input-div .div span[id='toggleBtnActual'].hide::before,
-.container .change-pass-content .input-div .div span[id='toggleBtnNueva'].hide::before,
-.container .change-pass-content .input-div .div span[id='toggleBtnNuevaConf'].hide::before
+.input-div .div span[id='toggleBtn1'].hide::before,
+.input-div .div span[id='toggleBtn2'].hide::before
 {
     content: '\f070';
     font-family: fontAwesome, serif;
@@ -236,7 +178,7 @@ a:hover{
 	color: #12171e;
 }
 
-.btn, .regist-content .btn{
+.regist-content .btn{
 	display: block;
 	width: 100%;
 	height: 50px;
@@ -252,7 +194,7 @@ a:hover{
 	cursor: pointer;
 	transition: .5s;
 }
-.btn:hover, .regist-content .btn:hover{
+.regist-content .btn:hover{
 	background-position: right;
 	color: #fff
 }
@@ -276,15 +218,6 @@ a:hover{
 
 
 
-
-
-
-
-
-
-
-
-
 .error-message {
 	background-color: #ffcccc;
 	color: #d8000c;
@@ -298,44 +231,29 @@ a:hover{
 
 /* Media Queries para adaptabilidad */
 @media screen and (max-width: 1050px){
-	.container{
+	.container-regist{
 		grid-gap: 5rem;
 	}
 }
 
 @media screen and (max-width: 1000px){
-	form{
+	.regist-content form{
 		width: 290px;
 	}
 
-	.login-content h2, .regist-content h2, .send-email-content h2, .change-pass-content h2{
+	.regist-content h2{
         font-size: 2.4rem;
         margin: 8px 0;
 	}
 
-	.send-email-content h2 {
-		font-size: 2.1rem;
-	}
-
-	.img img{
-		width: 400px;
-	}
 }
 
 @media screen and (max-width: 900px){
-	.container{
+	.container-regist{
 		grid-template-columns: 1fr;
 	}
 
-	.img{
-		display: none;
-	}
-
-	.wave{
-		display: none;
-	}
-
-	.login-content, .regist-content, .send-email-content, .change-pass-content{
+	.regist-content{
 		justify-content: center;
 	}
 }
@@ -344,6 +262,9 @@ a:hover{
 
 /* Responsividad en pantallas más pequeñas */
 @media screen and (max-width: 768px) {
+	.container-regist {
+		overflow: scroll;
+	}
     /* Cambia el formulario a una sola columna */
     .form-grid {
         grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
@@ -371,7 +292,7 @@ a:hover{
         font-size: 1.8rem; /* Reducir tamaño de título */
     }
 
-    .btn, .regist-content .btn {
+    .regist-content .btn {
         font-size: 1rem; /* Tamaño de fuente del botón en pantallas pequeñas */
         height: 45px;
     }
