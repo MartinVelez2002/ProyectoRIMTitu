@@ -12,7 +12,6 @@
 	justify-content: center;
 }
 
-
 .form-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr); 
@@ -156,7 +155,7 @@
 	border: none;
 	background-image: linear-gradient(to right, #1e2835, #425b70, rgb(34, 38, 46));
 	background-size: 200%;
-	font-size: 1.2rem;
+	font-size: 1rem;
 	color: #fff;
 	font-family: 'Arima', sans-serif;
 	margin: 1rem 0;
@@ -169,6 +168,10 @@
 	color: #fff
 }
 
+.div-btn{
+	display: flex;
+	justify-content: space-evenly;
+}
 
 /* Estilos adicionales para el campo select de rol */
 .input-div select {
@@ -192,7 +195,6 @@
 	font-size: 1.2em;
 	border-radius: 5px;
 }
-
 
 
 /* Media Queries para adaptabilidad */

@@ -16,7 +16,7 @@
 <form class="container text-dark" method="post" action="{{ action_save }}" enctype="multipart/form-data"
     name="registro">
     {% csrf_token %}
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog mod modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-dark">
                 <h2 class="title text-center text-white">
@@ -27,8 +27,20 @@
                 <div class="container-regist">
                     <div class="regist-content">
                         {% block controls %}
+
+
                         {% endblock %}
                     </div>
+                </div>
+                <div class="div-btn">
+                    <button type="submit" class="btn ">
+                        Guardar registro
+                    </button>
+                    <button class="btn">
+                        <a href="{{cancelar}}" class="nav-link text-center">
+                            Cancelar
+                        </a>
+                    </button>
                 </div>
             </div>
         </div>
