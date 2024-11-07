@@ -5,6 +5,8 @@ from django.views.generic import TemplateView, CreateView, ListView, UpdateView
 from django.urls import reverse_lazy, reverse
 from Modulos.Auditoria.models import AuditoriaUser
 from Modulos.Auditoria.utils import save_audit
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 class Novedad_View(LoginRequiredMixin, ListView):
     template_name = 'novedad.html'
