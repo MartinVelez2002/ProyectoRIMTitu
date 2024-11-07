@@ -1,4 +1,3 @@
-from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 
 from Modulos.Login.views import *
