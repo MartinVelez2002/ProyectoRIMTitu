@@ -23,6 +23,13 @@ from Modulos.Login.forms import FormularioLogin, FormularioRegistro, CambiarPass
 from Modulos.Login.models import Usuario
 # Create your views here.
 
+
+class AdminRedirectView(View):
+    def get(self, request, *args, **kwargs):
+        return redirect('/admin/')
+
+
+
 class Login(FormView):
     template_name = 'login.html'
     form_class = FormularioLogin

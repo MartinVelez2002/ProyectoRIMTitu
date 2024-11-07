@@ -1,14 +1,14 @@
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 
-from Modulos.Login.views import Login,LogoutUsuario,MainView,RegistroView, ForgetPassword, PasswordResetConfirmView, ChangePasswordFirstSession, Usuario_view
+from Modulos.Login.views import *
 
 from django.urls import path
 
 app_name = 'login'
 
 urlpatterns = [
-    path('ajustes/', login_required(admin.site.urls)),
+    path('admin/', login_required(AdminRedirectView.as_view()), name='admin'),
     
     path('',MainView.as_view(),name = 'index'),
     
