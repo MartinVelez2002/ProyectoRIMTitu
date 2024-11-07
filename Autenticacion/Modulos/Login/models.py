@@ -60,7 +60,8 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)  # Permitir el acceso al admin
     is_superuser = models.BooleanField(default=False)  #Acceso completo y sin restricciones, permitiendo cualquier acción.
     primera_sesion = models.BooleanField(default=True)
-    date_joined = models.DateTimeField(auto_now_add=True)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    fecha_modificacion = models.DateTimeField(auto_now=True)
     rol = models.ForeignKey('Rol', on_delete=models.SET_NULL, null=True, blank=True) 
     
     objects = UsuarioManager()
