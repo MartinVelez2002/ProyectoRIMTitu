@@ -34,12 +34,44 @@
                     </tbody>
                 </table>
             </div>
+            {% block pagination %}
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+
+                    {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">previous</a>
+                    </li>
+                    {% endif %}
+
+                    {% for i in page_obj.paginator.page_range %}
+                    {% if i == page_obj.number %}
+                    <li class="page-item active">
+                        <a class="page-link" href="#">{{ i }}</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endblock %}
         </div>
     </main>
     {% endblock %}
 </div>
 
 <div class="modal fade" id="insertar" role="dialgo"></div>
+<div class="modal fade" id="editar" role = dialog ></div>
+
 
 {% endblock %}
 

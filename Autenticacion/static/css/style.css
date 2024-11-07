@@ -17,9 +17,10 @@
 }
 
 body {
+    font-family: 'Arima', sans-serif;
     display: flex;
     flex-direction: column;
-    background-color: var(--bg-color);
+    background-color: #F1F3F4;
     height: 100vh;
     margin: 0;
 }
@@ -138,6 +139,35 @@ body {
     .main-content{
         width: 100%;
     }
+}
+
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.page-item .page-link {
+    color: #4c82af; /* Verde más suave */
+    font-weight: 500;
+    padding: 10px 15px;
+    border: 1px solid #4c7aaf;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.page-item.active .page-link {
+    background-color: #4c7aaf; /* Fondo verde */
+    color: #fff;
+    border-color: #4c8baf;
+}
+
+.page-item .page-link:hover {
+    background-color: #3a679b; /* Fondo verde más oscuro en hover */
+    color: #fff;
+    text-decoration: none;
 }
 
 

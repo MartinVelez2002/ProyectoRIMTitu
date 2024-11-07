@@ -25,8 +25,9 @@ from django.http import HttpResponseNotFound
 
 
 # Create your views here.
-class Pag404(TemplateView):
-    template_name = '404.html'
+
+# class Pag404(TemplateView):
+#     template_name = '404.html'
 
 
 @method_decorator(login_required, name='dispatch')
