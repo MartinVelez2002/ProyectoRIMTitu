@@ -1,7 +1,6 @@
 import re
 from django.contrib.auth.tokens import default_token_generator
-from django.utils.http import urlsafe_base64_decode
-from django.utils.http import urlsafe_base64_encode
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.core.mail import send_mail
 from django.contrib import messages
@@ -21,7 +20,19 @@ from django.views.generic import TemplateView, CreateView, ListView
 from django.views.generic.edit import FormView
 from Modulos.Login.forms import FormularioLogin, FormularioRegistro, CambiarPasswordForm, ForgetPasswordForm
 from Modulos.Login.models import Usuario
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseNotFound
+
+
 # Create your views here.
+class Pag404(TemplateView):
+    template_name = '404.html'
+
+
+@method_decorator(login_required, name='dispatch')
+class AdminRedirectView(View):
+    def get(self, request, *args, **kwargs):
+        return redirect('/admin/')
 
 class Login(FormView):
     template_name = 'login.html'
