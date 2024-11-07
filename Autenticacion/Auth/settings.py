@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'Modulos.Coordinador.Calendario',
     'Modulos.Coordinador.Novedad',
     'Modulos.Coordinador.Incidente',
+    'Modulos.Auditoria'
 ]
 
 MIDDLEWARE = [

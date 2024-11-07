@@ -35,6 +35,13 @@ class AdminRedirectView(View):
     def get(self, request, *args, **kwargs):
         return redirect('/admin/')
 
+
+class AdminRedirectView(View):
+    def get(self, request, *args, **kwargs):
+        return redirect('/admin/')
+
+
+
 class Login(FormView):
     template_name = 'login.html'
     form_class = FormularioLogin
