@@ -1,12 +1,12 @@
 from django.shortcuts import render
 from Modulos.Coordinador.Novedad.models import TipoNovedad_Model, Novedad_Model
 from Modulos.Coordinador.Novedad.forms import Novedad_form, TipoNovedad_form
-from django.views.generic import TemplateView, CreateView, ListView, UpdateView
+from django.views.generic import CreateView, ListView, UpdateView
 from django.urls import reverse_lazy, reverse
 from Modulos.Auditoria.models import AuditoriaUser
 from Modulos.Auditoria.utils import save_audit
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.contrib import messages
 
 class Novedad_View(LoginRequiredMixin, ListView):
     template_name = 'novedad.html'
@@ -20,9 +20,7 @@ class Novedad_View(LoginRequiredMixin, ListView):
         context['title_table'] = 'Listado de Novedades'
         return context
     
-    
-    
-class Novedad_Create(CreateView):
+class Novedad_Create(LoginRequiredMixin, CreateView):
     model = Novedad_Model
     template_name = 'registrar_novedad.html'
     form_class = Novedad_form
@@ -43,26 +41,36 @@ class Novedad_Create(CreateView):
         # Registrar en auditoría la acción de creación
         save_audit(self.request, novedad, action=AuditoriaUser.AccionChoices.CREAR)  
         return response
-
         
     def form_invalid(self, form):
+        messages.error(self.request, "Favor llenar el formulario")
         return super().form_invalid(form)
+
+class Novedad_Update(LoginRequiredMixin, UpdateView):
+    model = Novedad_Model
+    template_name = 'registrar_novedad.html'
+    success_url = reverse_lazy('novedad:inicio')
+    form_class = Novedad_form
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['action_save'] = self.request.path
+        context['titulo'] = 'Edición de novedad'
+        context['cancelar'] = reverse('novedad:inicio')
+        
+        return context
     
-    
-    
-    
-class TipoNovedad_View(ListView):
+class TipoNovedad_View(LoginRequiredMixin, ListView):
     template_name = 'tipNov.html'
     model = TipoNovedad_Model
     context_object_name = 'tipNov'
     paginate_by = 5
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['dirurl'] = reverse('novedad:crear_tipNov')
         context['title_table'] = 'Listado Tipo de Novedades'
-        context['edit_url'] = reverse('novedad:editar_tipNov')
-        
+                
         return context
     
 class TipoNovedad_Create(LoginRequiredMixin, CreateView):
@@ -81,14 +89,15 @@ class TipoNovedad_Create(LoginRequiredMixin, CreateView):
     
 class TipoNovedad_Update(LoginRequiredMixin, UpdateView):
     model = TipoNovedad_Model
-    template_name = 'registrar_novedad.html'
-    success_url = reverse_lazy("novedad:inicio")
+    template_name = 'registrar_tipNovedad.html'
+    success_url = reverse_lazy("novedad:inicio_tipoNov")
     form_class = TipoNovedad_form
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['action_save'] = self.request.path
-        context['titulo'] = 'Edición de novedad'
-        context['cancelar'] = reverse('novedad:inicio')
+        context['titulo'] = 'Edición del tipo de novedad'
+        context['cancelar'] = reverse('novedad:inicio_tipoNov')
+        
 
         return context

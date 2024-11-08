@@ -24,26 +24,26 @@ Registrar nueva novedad
     <td>{{ nov.TipoNovedad }}</td>
     <td>{{ nov.Descripcion }}</td>
     {% if nov.Estado == True %}
-        <td>Activo</td>
+    <td>Activo</td>
     {% else %}
-        <td>Inactivo</td>
+    <td>Inactivo</td>
     {% endif %}
     <td>
-        <a class="btn-edit">
-            <i class="fa-duotone fa-solid fa-pen">
-                
-            </i></a>
-        
-        
-        <a class="btn-delete"> <i class="fa-solid fa-trash"></i> </a>
+        <a class="btn btn-dark" onclick="abrir_modal_editar('{% url 'novedad:editar_nov' nov.id %}')">
+            Editar
+        </a>
+
+
+        <a class="btn btn-danger"> 
+            Inactivar 
+        </a>
     </td>
 </tr>
 {% endfor %}
 {% else %}
-    <tr>
-        <td colspan="4"> No existen novedades registradas</td>
-    </tr>
+<tr>
+    <td colspan="4"> No existen novedades registradas</td>
+</tr>
 {% endif %}
 
 {% endblock %}
-

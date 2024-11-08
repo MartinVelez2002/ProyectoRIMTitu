@@ -17,9 +17,9 @@ from django.contrib.sessions.models import Session
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView, CreateView, ListView
+from django.views.generic import TemplateView, CreateView, ListView, UpdateView
 from django.views.generic.edit import FormView
-from Modulos.Login.forms import FormularioLogin, FormularioRegistro, CambiarPasswordForm, ForgetPasswordForm
+from Modulos.Login.forms import FormularioLogin, FormularioRegistro, CambiarPasswordForm, ForgetPasswordForm, FormularioEditarPersonal
 from Modulos.Login.models import Usuario
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseNotFound
@@ -83,8 +83,6 @@ def LogoutUsuario(request):
 
 class MainView(LoginRequiredMixin, TemplateView):
     template_name = 'index.html'
-
-
 
 
 
@@ -154,7 +152,7 @@ class RegistroView(LoginRequiredMixin, CreateView):
 
 
 class ForgetPassword(FormView):
-    template_name = 'olvidar_clave.html'  # Tu plantilla de olvidar clave
+    template_name = 'olvidar_clave.html'
     form_class = ForgetPasswordForm
     success_url = reverse_lazy('login:olvidar_clave')  # Quedarse en la misma página tras el envío
     
@@ -180,11 +178,11 @@ class ForgetPassword(FormView):
             # Enviar el correo usando solo el HTML
             send_mail(
                 subject, 
-                '',  # El mensaje de texto plano lo dejamos vacío si no quieres enviar uno
+                '',  # Mensaje de texto plano
                 settings.DEFAULT_FROM_EMAIL, 
                 [usuario.email], 
                 fail_silently=False, 
-                html_message=html_message  # Versión HTML del correo
+                html_message=html_message  # Versión HTML
             )
             messages.success(self.request, 'Correo enviado. Revisa tu bandeja de entrada.')
             return super().form_valid(form)
@@ -203,8 +201,8 @@ class ForgetPassword(FormView):
 
 
 class ChangePasswordFirstSession(LoginRequiredMixin, FormView):
-    template_name = 'cambiar_clave_primera_sesion.html'  # Cambia por el nombre de tu plantilla
-    form_class = CambiarPasswordForm  # Usa tu formulario personalizado
+    template_name = 'cambiar_clave_primera_sesion.html'  
+    form_class = CambiarPasswordForm 
     success_url = reverse_lazy('login:login')  # Redirige al usuario a la página de inicio de sesión después del cambio
     
     
@@ -367,4 +365,19 @@ class Usuario_view(LoginRequiredMixin,ListView):
         context['cancelar'] = reverse('login:personal')
         context['action_save'] = self.request.path  
         
+        return context
+    
+class Usuario_update(LoginRequiredMixin, UpdateView):
+    model = Usuario
+    form_class = FormularioEditarPersonal
+    success_url = reverse_lazy('login:personal')
+    template_name = 'editar_personal.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['action_save'] = self.request.path
+        context['titulo'] = 'Edición de personal'
+        context['cancelar'] = reverse('login:personal')
+        
+
         return context

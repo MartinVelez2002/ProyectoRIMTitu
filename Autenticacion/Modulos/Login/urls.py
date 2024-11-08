@@ -18,6 +18,8 @@ urlpatterns = [
     path('registro/',RegistroView.as_view(), name = 'registro'),
     
     path('personal/', Usuario_view.as_view(), name = 'personal'),
+
+    path('editar_personal/<int:pk>', Usuario_update.as_view(), name='editar_personal'),
     
     path('clave_olvidar',ForgetPassword.as_view(),name='olvidar_clave'),
     

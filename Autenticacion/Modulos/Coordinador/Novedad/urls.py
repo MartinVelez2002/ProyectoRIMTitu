@@ -1,6 +1,6 @@
 from django.urls import path
 from django.contrib.auth.decorators import login_required
-from Modulos.Coordinador.Novedad.views import Novedad_View, Novedad_Create, TipoNovedad_Create, TipoNovedad_View, TipoNovedad_Update
+from Modulos.Coordinador.Novedad.views import Novedad_View, Novedad_Create, TipoNovedad_Create, TipoNovedad_View, TipoNovedad_Update, Novedad_Update
 
 app_name = 'novedad'
 urlpatterns = [
@@ -10,7 +10,8 @@ urlpatterns = [
     
     path('crear_novedad/', Novedad_Create.as_view(), name = 'crear_novedad'),
     
-    
+    path('editar_nov/<int:pk>', Novedad_Update.as_view(), name = 'editar_nov'),
+
     # URLs de TipoNovedad
     path('inicio_tipoNov/', TipoNovedad_View.as_view(), name = 'inicio_tipoNov'),
     

@@ -28,5 +28,4 @@ class Novedad_form(forms.ModelForm):
             if field_name != 'Estado':
                 field.widget.attrs.update({
                     'class': 'input',
-                    'required': True
                 })
