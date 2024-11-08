@@ -146,11 +146,12 @@
 
 
 
-.regist-content .btn{
-	display: block;
-	width: 50%;
-	height: 50px;
-	border-radius: 25px;
+.modal-content .div-btn .btn{
+	display: flex;
+	justify-content: space-around;
+	width: 30%;
+	height: 40px;
+	border-radius: 20px;
 	outline: none;
 	border: none;
 	background-image: linear-gradient(to right, #1e2835, #425b70, rgb(34, 38, 46));
