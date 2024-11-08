@@ -27,9 +27,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -148,6 +148,7 @@ MEDIA_URL = '/media/'
 
 AUTH_USER_MODEL = 'Login.Usuario'
 
+LOGIN_URL = 'accounts/login/'  # Ruta al login si el usuario no está autenticado
 
 
 # Configuración de tiempo de inactividad

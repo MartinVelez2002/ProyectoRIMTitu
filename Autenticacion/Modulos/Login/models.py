@@ -24,6 +24,8 @@ class UsuarioManager(BaseUserManager):
 
         usuario = self.model(
             username=username,
+            nombre=nombre,
+            apellido=apellido,
             email=self.normalize_email(email),
             password=password,
             cedula = cedula,

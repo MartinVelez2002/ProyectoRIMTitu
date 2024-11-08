@@ -22,28 +22,30 @@ Registrar nuevo personal
 
 {% block tbody %}
 
-    {% if personal %}
-        {% for i in personal %}
-        <td> {{i.nombre}} </td>
-        <td> {{i.apellido}} </td>
-        <td> {{i.cedula}} </td>
-        <td> {{i.email}} </td>
-        <td> {{i.rol}} </td>
-        {% if i.estado == True %}
-        <td> Activo </td>
-        {% else %}
-        <td> Inactivo </td>
-        {% endif %}
-
-        <td>
-            <a href="#" class="btn-edit"> <i class="fa-duotone fa-solid fa-pen"></i> </a>
-    
-            <a href="#" class="btn-delete"> <i class="fa-solid fa-trash"></i> </a>
-        </td>
-        {% endfor %}
+{% if personal %}
+{% for i in personal %}
+<tr>
+    <td> {{i.nombre}} </td>
+    <td> {{i.apellido}} </td>
+    <td> {{i.cedula}} </td>
+    <td> {{i.email}} </td>
+    <td> {{i.rol}} </td>
+    {% if i.estado == True %}
+    <td> Activo </td>
     {% else %}
-        <tr>
-            <td colspan="7"> No existe personal registrado</td>
-        </tr>
+    <td> Inactivo </td>
     {% endif %}
+
+    <td>
+        <a href="#" class="btn-edit"> <i class="fa-duotone fa-solid fa-pen"></i> </a>
+
+        <a href="#" class="btn-delete"> <i class="fa-solid fa-trash"></i> </a>
+    </td>
+</tr>
+{% endfor %}
+{% else %}
+    <tr>
+        <td colspan="7"> No existe personal registrado</td>
+    </tr>
+{% endif %}
 {% endblock %}

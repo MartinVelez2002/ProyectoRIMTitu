@@ -18,15 +18,17 @@ from django.conf.urls.static import static
 from Auth import settings
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
-from django.conf.urls import handler404
-from Modulos.Login.views import Pag404
+
+
+
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
     path('', include('Modulos.Login.urls')),
     path('novedad/', include('Modulos.Coordinador.Novedad.urls')),
 
 ]   
 
-handler404 = Pag404.as_view()
+
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

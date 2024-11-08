@@ -7,9 +7,10 @@ from django.contrib import messages
 from django.conf import settings
 from django.template.loader import render_to_string 
 from django.contrib.auth import login, logout, authenticate
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseForbidden, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
+from django.contrib.auth.decorators import user_passes_test
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.contrib.sessions.models import Session
@@ -22,22 +23,6 @@ from Modulos.Login.forms import FormularioLogin, FormularioRegistro, CambiarPass
 from Modulos.Login.models import Usuario
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseNotFound
-
-
-# Create your views here.
-class Pag404(TemplateView):
-    template_name = '404.html'
-
-
-@method_decorator(login_required, name='dispatch')
-class AdminRedirectView(View):
-    def get(self, request, *args, **kwargs):
-        return redirect('/admin/')
-
-
-class AdminRedirectView(View):
-    def get(self, request, *args, **kwargs):
-        return redirect('/admin/')
 
 
 
@@ -64,17 +49,24 @@ class Login(FormView):
         user = authenticate(request=self.request, username=username, password=password)
         
         if user is not None:
+            # Verificar si el usuario está activo
+            if not user.estado:
+                messages.error(self.request, "Tu cuenta está inactiva. Contacta al administrador.")
+                return self.form_invalid(form)
+            
+            # Iniciar sesión si el usuario está activo
             login(self.request, user)
+                
             
             if user.primera_sesion:
                 return HttpResponseRedirect(self.change_password_url)
-            return super(Login, self).form_valid(form)
+            return super().form_valid(form)
+        
+        messages.error(self.request, "Credenciales inválidas. Intente nuevamente.")
         return self.form_invalid(form)
         
     def form_invalid(self, form):
-        # Añadir el mensaje de error cuando el formulario es inválido
-        messages.error(self.request, "Credenciales inválidas. Intente nuevamente.")
-        return super(Login, self).form_invalid(form)
+        return super().form_invalid(form)
 
 
 def LogoutUsuario(request):
@@ -100,12 +92,12 @@ class RegistroView(LoginRequiredMixin, CreateView):
     template_name = 'registro.html'
     model = Usuario
     form_class = FormularioRegistro
-    success_url = reverse_lazy('login:registro')
+    success_url = reverse_lazy('login:personal')
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Crear Personal'
-        
+        context['action_save'] = self.request.path
         return context
     
     def post(self, request, *args, **kwargs):
@@ -113,6 +105,8 @@ class RegistroView(LoginRequiredMixin, CreateView):
         if form.is_valid():
             # Usar el método create_user de UsuarioManager
             nuevo_usuario = Usuario.objects.create_user(
+                nombre=form.cleaned_data['nombre'],
+                apellido=form.cleaned_data['apellido'],
                 email=form.cleaned_data.get('email'),
                 username=form.cleaned_data.get('username'),
                 password=form.cleaned_data.get('password1'),
@@ -126,6 +120,7 @@ class RegistroView(LoginRequiredMixin, CreateView):
             email_template_name = "credenciales.html"
             context = {
                 "user": nuevo_usuario.username,
+                'nombre': nuevo_usuario.nombre,
                 "email": nuevo_usuario.email,
                 "password": form.cleaned_data.get('password1'),
                 "site_name": 'Municipio de Milagro',
@@ -370,7 +365,6 @@ class Usuario_view(LoginRequiredMixin,ListView):
         context['dirurl'] = reverse('login:registro')
         context['title_table'] = 'Listado de Personal'
         context['cancelar'] = reverse('login:personal')
-        context['action_save'] = self.request.path
-        
+        context['action_save'] = self.request.path  
         
         return context

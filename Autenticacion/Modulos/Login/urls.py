@@ -7,7 +7,7 @@ from django.urls import path
 app_name = 'login'
 
 urlpatterns = [
-    path('admin/', login_required(AdminRedirectView.as_view()), name='admin'),
+    
     
     path('',MainView.as_view(),name = 'index'),
     
