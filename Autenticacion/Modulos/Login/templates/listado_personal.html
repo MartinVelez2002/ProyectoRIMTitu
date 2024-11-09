@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-Modulo Personal
+Módulo Personal
 {% endblock %}
 
 
@@ -37,11 +37,13 @@ Registrar nuevo personal
     {% endif %}
 
     <td>
-        <a class="btn-edit" onclick="abrir_modal_editar('{% url 'login:editar_personal' i.id %}')"> 
-            <i class="fa-duotone fa-solid fa-pen"></i> 
+        <a class="btn btn-dark" onclick="abrir_modal_editar('{% url 'login:editar_personal' i.id %}')"> 
+            Editar
         </a>
 
-        <a href="#" class="btn-delete"> <i class="fa-solid fa-trash"></i> </a>
+        <a href="#" class="btn btn-danger"> 
+            Inactivar    
+        </a>
     </td>
 </tr>
 {% endfor %}

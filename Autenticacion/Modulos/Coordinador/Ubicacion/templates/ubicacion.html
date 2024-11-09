@@ -1,0 +1,41 @@
+{% extends 'modulos.html' %}
+{% load static %}
+
+{% block title %}
+Módulo Ubicación
+{% endblock %}
+
+{% block btnTitle %}
+Registrar nueva Ubicación
+{% endblock %}
+
+<script async src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMap"
+    defer>
+</script>
+
+
+{% block thead %}
+<th> Sector </th>
+<th> Calle principal </th>
+<th> Intersección </th>
+<th> Estado </th>
+<th> Acciones </th>
+{% endblock %}
+
+
+{% block tbody %}
+
+{% if ubicacion %}
+<tr>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+</tr>
+{% else %}
+<tr>
+    <td colspan="5"> No existe ubicación registrada </td>
+</tr>
+
+{% endblock %}

@@ -1,6 +1,6 @@
 from django.urls import path
 from django.contrib.auth.decorators import login_required
-from Modulos.Coordinador.Novedad.views import Novedad_View, Novedad_Create, TipoNovedad_Create, TipoNovedad_View, TipoNovedad_Update, Novedad_Update
+from .views import Novedad_View, Novedad_Create, TipoNovedad_Create, TipoNovedad_View, TipoNovedad_Update, Novedad_Update
 
 app_name = 'novedad'
 urlpatterns = [
