@@ -11,5 +11,5 @@ setTimeout(function() {
         message.style.display = 'none';      
         
     });
-}, 3000);
+}, 5000);
 

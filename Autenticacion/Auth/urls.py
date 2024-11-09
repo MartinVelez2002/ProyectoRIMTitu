@@ -17,7 +17,7 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from Auth import settings
 from django.contrib import admin
-from django.contrib.auth.decorators import login_required
+
 
 
 

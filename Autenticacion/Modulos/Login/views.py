@@ -7,10 +7,9 @@ from django.contrib import messages
 from django.conf import settings
 from django.template.loader import render_to_string 
 from django.contrib.auth import login, logout, authenticate
-from django.http import HttpResponseForbidden, HttpResponseRedirect, JsonResponse
+from django.http import  HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
-from django.contrib.auth.decorators import user_passes_test
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.contrib.sessions.models import Session
@@ -21,8 +20,7 @@ from django.views.generic import TemplateView, CreateView, ListView, UpdateView
 from django.views.generic.edit import FormView
 from Modulos.Login.forms import FormularioLogin, FormularioRegistro, CambiarPasswordForm, ForgetPasswordForm, FormularioEditarPersonal
 from Modulos.Login.models import Usuario
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseNotFound
+
 
 
 
@@ -62,11 +60,15 @@ class Login(FormView):
                 return HttpResponseRedirect(self.change_password_url)
             return super().form_valid(form)
         
-        messages.error(self.request, "Credenciales inválidas. Intente nuevamente.")
-        return self.form_invalid(form)
+        
+  
         
     def form_invalid(self, form):
+        messages.error(self.request, "Credenciales inválidas. Intente nuevamente.")
         return super().form_invalid(form)
+
+
+
 
 
 def LogoutUsuario(request):
