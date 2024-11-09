@@ -1,7 +1,9 @@
 from django.db import models
 from django.contrib.auth.hashers import make_password
-from django.core.validators import RegexValidator
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+
+from Modulos.Login.utils import validar_cedula
+
 # Create your models here.
 
 
@@ -57,7 +59,7 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True, max_length=50)
     nombre = models.CharField(max_length = 15, blank = True, null = True)
     apellido = models.CharField(max_length = 15, blank = True, null = True)
-    cedula = models.CharField(unique=True, max_length=10 ,validators=[RegexValidator(regex='^.{10}$')], null=True)
+    cedula = models.CharField(unique=True, max_length=10 ,validators=[validar_cedula], null=True)
     estado = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)  # Permitir el acceso al admin
     is_superuser = models.BooleanField(default=False)  #Acceso completo y sin restricciones, permitiendo cualquier acción.

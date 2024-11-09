@@ -1,6 +1,5 @@
 const inputs = document.querySelectorAll(".input");
 
-
 function addcl() {
     let parent = this.parentNode.parentNode;
     parent.classList.add("focus");
@@ -8,26 +7,16 @@ function addcl() {
 
 function remcl() {
     let parent = this.parentNode.parentNode;
-    if (this.value == "") {
+    if (this.value.trim() === "") {
         parent.classList.remove("focus");
     }
 }
 
+// Verificar al cargar la página si el input ya tiene valor
 inputs.forEach(input => {
-    input.addEventListener("focus", addcl);
-    input.addEventListener("blur", remcl);
-});
-
-
-// Verificar si los inputs tienen un valor al cargar la página y aplicar la clase focus automáticamente
-inputs.forEach(input => {
-    if (input.value !== "") {
-        let parent = input.closest('.div');
-        if (parent) {
-            parent.classList.add("focus");
-        }
+    if (input.value.trim() !== "") {
+        input.parentNode.parentNode.classList.add("focus");
     }
-
     input.addEventListener("focus", addcl);
     input.addEventListener("blur", remcl);
 });
