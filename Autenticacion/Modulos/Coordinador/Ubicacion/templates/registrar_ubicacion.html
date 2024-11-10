@@ -7,9 +7,9 @@
 {% endblock %}
 
 {% block js %}
-<script src="{% static 'js/input_effect.js' %}"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&libraries=drawing&callback=initMap" loading="async" defer></script>
 <script src="{% static 'js/map.js' %}"></script>
+<script src="{% static 'js/input_effect.js' %}"></script>
 {% endblock %}
 
 
@@ -17,6 +17,15 @@
 <div class="form-grid form-grid-map">
     <div id="map"></div>
     <div>
+        <div class="input-div one">
+            <div class="i">
+                <i class="fa-sharp fa-solid fa-location-dot"></i>
+            </div>
+            <div class="div">
+                <h5> Lugar </h5>
+                {{ form.Lugar }}
+            </div>
+        </div>
         <div class="input-div one">
             <div class="i">
                 <i class="fa-sharp fa-solid fa-location-dot"></i>
