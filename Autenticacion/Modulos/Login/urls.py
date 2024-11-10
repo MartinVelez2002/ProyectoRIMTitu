@@ -25,7 +25,12 @@ urlpatterns = [
     
     path('restablecer_clave/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='restablecer_clave'),
     
-    path('cambiar_clave/',ChangePasswordFirstSession.as_view(), name = 'cambiar_clave')
+    path('cambiar_clave/',ChangePasswordFirstSession.as_view(), name = 'cambiar_clave'),
+
+    # Rol
+    path('listar_rol/', Rol_View.as_view(), name = 'listar_rol'),
+    
+    path('crear_rol/', Rol_Create.as_view(), name = 'crear_rol')
 ]
 
 

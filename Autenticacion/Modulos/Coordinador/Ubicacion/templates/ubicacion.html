@@ -11,6 +11,7 @@ Registrar nueva Ubicación
 
 
 {% block thead %}
+<th> Lugar </th>
 <th> Sector </th>
 <th> Calle principal </th>
 <th> Intersección </th>
@@ -20,17 +21,29 @@ Registrar nueva Ubicación
 
 
 {% block tbody %}
-
 {% if ubicacion %}
 {% for i in ubicacion %}
 <tr>
-    <td> {{ i.Sector }} </td>
-    <td> {{ i.CallePrincipal }} </td>
-    <td> {{ i.Interseccion }} </td>
-    <td> {{ i.Estado }} </td>
-    <td> </td>
-</tr>
+    <td> {{i.Lugar}} </td>
+    <td> {{i.Sector}} </td>
+    <td> {{ i.CallePrincipal}} </td>
+    <td> {{i.Interseccion}} </td>
+    {% if i.Estado == True %}
+    <td> Activo </td>
+    {% else %}
+    <td> Inactivo </td>
+    {% endif %}
+    <td> 
+        <td>
 
+    
+            <a class="btn btn-danger"> 
+                Inactivar 
+            </a>
+        </td>
+
+    </td>
+</tr>
 {% endfor %}
 {% else %}
 <tr>

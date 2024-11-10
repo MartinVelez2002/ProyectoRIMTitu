@@ -5,11 +5,18 @@ from Modulos.Coordinador.Ubicacion.models import Ubicacion_Model
 class Ubicacion_Form(forms.ModelForm):
     class Meta:
         model = Ubicacion_Model
-        fields = ['Sector', 'CallePrincipal', 'Interseccion', 'Estado']
+        fields = ['Lugar', 'Sector', 'CallePrincipal', 'Interseccion', 'Estado']
         widgets = {
-            'Sector': forms.TextInput(),
-            'CallePrincipal': forms.TextInput(),
-            'Interseccion': forms.TextInput(),
+            'Lugar': forms.TextInput(attrs={
+                'id':'lugar_input'}),
+            'Sector': forms.TextInput(attrs={
+                'id':'sector_input'}),
+            'CallePrincipal': forms.TextInput(
+                attrs={
+                'id':'calle_principal_input'}),
+            'Interseccion': forms.TextInput(
+                attrs={
+                'id':'interseccion_input'}),
         }
         
         def __init__(self, *args, **kwargs):

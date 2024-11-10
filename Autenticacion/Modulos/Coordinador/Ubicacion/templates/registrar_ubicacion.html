@@ -1,19 +1,61 @@
 {% extends 'form.html' %}
 {% load static %}
-<script async src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMap" defer>
-</script>
-<style>
-    #map{
-        height: 300px;
-        width: 400px;
-    }
-</style>
-{% block controls %}
-<div id="map">
 
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/map.css' %}">
+<link rel="stylesheet" href="{% static 'css/diseño_forms.css' %}">
+{% endblock %}
+
+{% block js %}
+<script src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&libraries=places&callback=initMap" loading="async" defer></script>
+<script src="{% static 'js/map.js' %}"></script>
+<script src="{% static 'js/input_effect.js' %}"></script>
+{% endblock %}
+
+
+{% block controls %}
+<div class="form-grid form-grid-map">
+    <div id="map"></div>
+    <div>
+        <div class="input-div one">
+            <div class="i">
+                <i class="fa-sharp fa-solid fa-location-dot"></i>
+            </div>
+            <div class="div">
+                <h5> Lugar </h5>
+                {{ form.Lugar }}
+            </div>
+        </div>
+        <div class="input-div one">
+            <div class="i">
+                <i class="fa-sharp fa-solid fa-location-dot"></i>
+            </div>
+            <div class="div">
+                <h5> Sector </h5>
+                {{ form.Sector }}
+            </div>
+        </div>
+
+        <div class="input-div one">
+            <div class="i">
+                <i class="fa-sharp fa-solid fa-road"></i>
+            </div>
+            <div class="div">
+                <h5> Calle Principal </h5>
+                {{ form.CallePrincipal }}
+            </div>
+        </div>
+
+        <div class="input-div one">
+            <div class="i">
+                <i class="fa-sharp fa-solid fa-location-arrow"></i>
+            </div>
+            <div class="div">
+                <h5> Intersección </h5>
+                {{ form.Interseccion }}
+            </div>
+        </div>
+    </div>
 </div>
 
 {% endblock %}
-
-<script src="{% static 'js/map.js' %}">
-</script>
