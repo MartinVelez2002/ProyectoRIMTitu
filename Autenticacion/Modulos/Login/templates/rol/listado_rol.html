@@ -1,0 +1,49 @@
+{% extends 'modulos.html' %}
+{% load static %}
+
+{% block title %}
+Módulo roles
+{% endblock %}
+
+{% block btnTitle %}
+Registrar un nuevo rol
+{% endblock %}
+
+{% block thead %}
+<th> Nombre del rol </th>
+<th> Estado  </th>
+<th> Acciones </th>
+{% endblock %}
+
+{% block tbody %}
+{% if rol %}
+{% for i in rol %}
+
+<tr>
+    <td> {{i.name}} </td>
+    {% if i.estado == True %}
+    <td> Activo </td>
+    {% else %}
+    <td> Inactivo </td>
+    {% endif %}
+
+    <td> 
+        <a class="btn btn-dark"> 
+            Editar
+        </a>
+
+        <a href="#" class="btn btn-danger"> 
+            Inactivar    
+        </a>
+    </td>
+</tr>
+{% endfor %}
+{% else %}
+<tr>
+    <td colspan="3"> No existen roles registrados </td>
+</tr>
+{% endif %}
+
+{% endblock %}
+
+

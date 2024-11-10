@@ -1,0 +1,16 @@
+{% extends 'form.html' %}
+{% load static %}
+
+{% block controls %}
+<div class="form-grid">
+    <div class="input-div one">
+        <div class="i">
+            <i class="fa-solid fa-user"></i>
+        </div>
+        <div class="div">
+            <h5>Rol</h5>
+            {{ form.name }}
+        </div>
+    </div>
+</div>
+{% endblock %}

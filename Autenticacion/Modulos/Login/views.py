@@ -18,8 +18,8 @@ from django.views.decorators.cache import never_cache
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, CreateView, ListView, UpdateView
 from django.views.generic.edit import FormView
-from Modulos.Login.forms import FormularioLogin, FormularioRegistro, CambiarPasswordForm, ForgetPasswordForm, FormularioEditarPersonal
-from Modulos.Login.models import Usuario
+from Modulos.Login.forms import FormularioLogin, FormularioRegistro, CambiarPasswordForm, ForgetPasswordForm, FormularioEditarPersonal, Rol_Form
+from Modulos.Login.models import Usuario, Rol
 
 
 
@@ -89,7 +89,7 @@ class MainView(LoginRequiredMixin, TemplateView):
 
 
 class RegistroView(LoginRequiredMixin, CreateView):
-    template_name = 'registro.html'
+    template_name = 'personal/registro.html'
     model = Usuario
     form_class = FormularioRegistro
     success_url = reverse_lazy('login:personal')
@@ -351,7 +351,7 @@ class PasswordResetConfirmView(View):
 
 
 class Usuario_view(LoginRequiredMixin,ListView):
-    template_name = 'listado_personal.html'
+    template_name = 'personal/listado_personal.html'
     model = Usuario
     context_object_name = 'personal'
 
@@ -364,16 +364,14 @@ class Usuario_view(LoginRequiredMixin,ListView):
         context = super().get_context_data(**kwargs)
         context['dirurl'] = reverse('login:registro')
         context['title_table'] = 'Listado de Personal'
-        context['cancelar'] = reverse('login:personal')
-        context['action_save'] = self.request.path  
-        
+
         return context
     
 class Usuario_update(LoginRequiredMixin, UpdateView):
     model = Usuario
     form_class = FormularioEditarPersonal
     success_url = reverse_lazy('login:personal')
-    template_name = 'editar_personal.html'
+    template_name = 'personal/editar_personal.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -383,3 +381,33 @@ class Usuario_update(LoginRequiredMixin, UpdateView):
         
 
         return context
+
+
+class Rol_View(LoginRequiredMixin, ListView):
+    template_name = 'rol/listado_rol.html'
+    model = Rol
+    context_object_name = 'rol'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['dirurl'] = reverse('login:crear_rol')
+        context['title_table'] = 'Listado de roles'
+    
+        return context
+    
+    
+class Rol_Create(LoginRequiredMixin, CreateView):
+    template_name = 'rol/crear_rol.html'
+    model = Rol
+    form_class = Rol_Form
+    success_url = reverse_lazy('login:listar_rol')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titulo'] = 'Formulario: Rol'
+        context['cancelar'] = reverse('login:listar_rol')
+        context['action_save'] = self.request.path
+        
+        return context
+
+        

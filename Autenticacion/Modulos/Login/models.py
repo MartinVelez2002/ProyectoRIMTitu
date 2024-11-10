@@ -10,9 +10,8 @@ from Modulos.Login.utils import validar_cedula
 
 # Modelo de Rol
 class Rol(models.Model):
-    name = models.CharField(max_length=25, unique=True,  verbose_name="Nombre del rol") 
-    description = models.CharField(max_length=100, blank=True, null=True, verbose_name="Descripción detallada del rol")  # Limita la descripción a 200 caracteres
-
+    name = models.CharField(max_length=25, unique=True,  verbose_name="Nombre del rol")
+    estado = models.BooleanField(default=True)
     def __str__(self):
         return self.name
 

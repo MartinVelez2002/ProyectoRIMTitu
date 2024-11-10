@@ -1,8 +1,17 @@
 from django.contrib.auth.forms import AuthenticationForm
 from django import forms
 from django.core.exceptions import ValidationError
-from Modulos.Login.models import Usuario
+from Modulos.Login.models import Usuario, Rol
 
+class Rol_Form(forms.ModelForm):
+    class Meta: 
+        model = Rol
+        fields = '__all__'
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'class':'input'
+            })
+        }
 
 class FormularioLogin(AuthenticationForm):
     def __init__(self, *args, **kwargs):
