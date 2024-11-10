@@ -23,7 +23,7 @@ class Ubicacion_Create(LoginRequiredMixin, CreateView):
     model = Ubicacion_Model
     template_name = 'registrar_ubicacion.html'
     form_class = Ubicacion_Form
-    success_url = revese_lazy('ubicacion:inicio')
+    success_url = reverse_lazy('ubicacion:inicio')
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
