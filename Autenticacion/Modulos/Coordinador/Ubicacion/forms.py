@@ -7,7 +7,8 @@ class Ubicacion_Form(forms.ModelForm):
         model = Ubicacion_Model
         fields = ['Lugar', 'Sector', 'CallePrincipal', 'Interseccion', 'Estado']
         widgets = {
-            'Lugar': forms.TextInput(),
+            'Lugar': forms.TextInput(attrs={
+                'id':'lugar_input'}),
             'Sector': forms.TextInput(attrs={
                 'id':'sector_input'}),
             'CallePrincipal': forms.TextInput(
