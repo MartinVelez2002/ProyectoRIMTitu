@@ -9,5 +9,4 @@ urlpatterns = [
     path('crear_ubicacion/', Ubicacion_Create.as_view(), name = 'crear_ubicacion')
     
     
-    
 ]

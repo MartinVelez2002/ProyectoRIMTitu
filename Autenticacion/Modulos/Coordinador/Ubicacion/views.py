@@ -1,7 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, ListView, UpdateView
 from django.urls import reverse_lazy, reverse
-from django.shortcuts import render
 from django.conf import settings
 
 from Modulos.Coordinador.Ubicacion.models import Ubicacion_Model
@@ -23,7 +22,7 @@ class Ubicacion_Create(LoginRequiredMixin, CreateView):
     model = Ubicacion_Model
     template_name = 'registrar_ubicacion.html'
     form_class = Ubicacion_Form
-    success_url = revese_lazy('ubicacion:inicio')
+    success_url = reverse_lazy('ubicacion:inicio')
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

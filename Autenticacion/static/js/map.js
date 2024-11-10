@@ -4,5 +4,8 @@ function initMap(){
         zoom: 10,
     });
 
-    map.addListener("click", (e))
+    map.addListener("click", (e) => {
+        const latLng = e.latLng;
+        console.log(`Latitud: ${latLng.lat()}, Longitud: ${latLng.lng()}`);
+    })
 }

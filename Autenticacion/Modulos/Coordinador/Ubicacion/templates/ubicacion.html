@@ -9,10 +9,6 @@ Módulo Ubicación
 Registrar nueva Ubicación
 {% endblock %}
 
-<script async src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMap"
-    defer>
-</script>
-
 
 {% block thead %}
 <th> Sector </th>
@@ -26,16 +22,19 @@ Registrar nueva Ubicación
 {% block tbody %}
 
 {% if ubicacion %}
+{% for i in ubicacion %}
 <tr>
-    <td> </td>
-    <td> </td>
-    <td> </td>
-    <td> </td>
+    <td> {{ i.Sector }} </td>
+    <td> {{ i.CallePrincipal }} </td>
+    <td> {{ i.Interseccion }} </td>
+    <td> {{ i.Estado }} </td>
     <td> </td>
 </tr>
+
+{% endfor %}
 {% else %}
 <tr>
     <td colspan="5"> No existe ubicación registrada </td>
 </tr>
-
+{% endif %}
 {% endblock %}

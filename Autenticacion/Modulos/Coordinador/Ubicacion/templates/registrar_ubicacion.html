@@ -1,7 +1,19 @@
 {% extends 'form.html' %}
 {% load static %}
-
+<script async src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMap" defer>
+</script>
+<style>
+    #map{
+        height: 300px;
+        width: 400px;
+    }
+</style>
 {% block controls %}
+<div id="map">
 
+</div>
 
 {% endblock %}
+
+<script src="{% static 'js/map.js' %}">
+</script>

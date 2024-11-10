@@ -26,7 +26,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('Modulos.Login.urls')),
     path('novedad/', include('Modulos.Coordinador.Novedad.urls')),
-
+    path('ubicacion/', include('Modulos.Coordinador.Ubicacion.urls')),
 ]   
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
