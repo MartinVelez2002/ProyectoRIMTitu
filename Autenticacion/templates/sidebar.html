@@ -10,25 +10,18 @@
                 <span class="tooltip"> Reportes del Personal </span>
             </li>
             <li>
-                <a class="nav-link active" href="{% url 'ubicacion:inicio' %}">
-                    <i class="fa-solid fa-map-location-dot"></i>
-                    <span class="nav-item"> Lugares de Guardia </span>
+                <a class="nav-link active" href="{% url 'login:listar_rol' %}">
+                    <i class="fa-sharp fa-solid fa-address-book"></i>
+                    <span class="nav-item"> Rol </span>
                 </a>
-                <span class="tooltip"> Lugares de Guardia </span>
+                <span class="tooltip"> Rol </span>
             </li>
             <li>
                 <a class="nav-link active" href="{% url 'login:personal' %}">
                     <i class="fa-solid fa-users"></i>
                     <span class="nav-item"> Registro de personal </span>
                 </a>
-                <span class="tooltip"> Listado de personal </span>
-            </li>
-            <li>
-                <a class="nav-link active" href="{% url 'novedad:inicio' %}">
-                    <i class="fa-solid fa-list-check"></i>
-                    <span class="nav-item"> Novedades </span>
-                </a>
-                <span class="tooltip"> Novedades </span>
+                <span class="tooltip"> Registro de personal </span>
             </li>
             <li>
                 <a class="nav-link active" href="{% url 'novedad:inicio_tipoNov' %}">
@@ -38,18 +31,25 @@
                 <span class="tooltip"> Tipo de Novedades </span>
             </li>
             <li>
+                <a class="nav-link active" href="{% url 'novedad:inicio' %}">
+                    <i class="fa-solid fa-list-check"></i>
+                    <span class="nav-item"> Novedades </span>
+                </a>
+                <span class="tooltip"> Novedades </span>
+            </li>
+            <li>
+                <a class="nav-link active" href="{% url 'ubicacion:inicio' %}">
+                    <i class="fa-solid fa-map-location-dot"></i>
+                    <span class="nav-item"> Lugares de Guardia </span>
+                </a>
+                <span class="tooltip"> Lugares de Guardia </span>
+            </li>
+            <li>
                 <a class="nav-link active" href="#">
                     <i class="fa-solid fa-calendar"></i>
                     <span class="nav-item"> Planificación </span>
                 </a>
                 <span class="tooltip"> Planificación </span>
-            </li>
-            <li>
-                <a class="nav-link active" href="{% url 'login:listar_rol' %}">
-                    <i class="fa-sharp fa-solid fa-address-book"></i>
-                    <span class="nav-item"> Rol </span>
-                </a>
-                <span class="tooltip"> Rol </span>
             </li>
         </ul>
     </div>
