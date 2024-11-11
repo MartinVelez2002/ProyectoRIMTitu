@@ -61,6 +61,24 @@ class FormularioRegistro(forms.ModelForm):
             'required': 'required'
         })
 
+
+    """
+        Validar contraseñas
+        Método que valida que ambas contraseñas sean iguales, antes de ser encriptadas y guardadas
+        en la base de datos. Se retorna la clave válida.
+    """
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        password1 = cleaned_data.get('password1')
+        password2 = cleaned_data.get('password2')
+
+        if password1 and password2 and password1 != password2:
+            self.add_error(None, 'Las claves no coinciden')
+        return cleaned_data
+    
+    
+    
 class FormularioEditarPersonal(FormularioRegistro):
     class Meta(FormularioRegistro.Meta):
         fields = ['username', 'email', 'cedula', 'nombre', 'apellido', 'rol']
@@ -72,6 +90,8 @@ class FormularioEditarPersonal(FormularioRegistro):
             del self.fields['password1']
         if 'password2' in self.fields:
             del self.fields['password2']
+    
+    
     """
         Validar contraseñas
         Método que valida que ambas contraseñas sean iguales, antes de ser encriptadas y guardadas

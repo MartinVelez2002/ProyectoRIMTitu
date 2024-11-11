@@ -8,8 +8,9 @@ from django.conf import settings
 from django.template.loader import render_to_string 
 from django.contrib.auth import login, logout, authenticate
 from django.http import  HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
+from django.apps import apps
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.contrib.sessions.models import Session
@@ -419,3 +420,17 @@ class Rol_Create(LoginRequiredMixin, CreateView):
         rol.save()
         return super().form_valid(form)
         
+
+
+
+class InactivarObjetoView(View):
+    def post(self, request, app_label, model_name, pk):
+        # Obtiene el modelo dinámicamente
+        model = apps.get_model(app_label, model_name)
+        # Obtén el objeto usando su pk
+        obj = get_object_or_404(model, pk=pk)
+        # Cambia el estado del objeto a inactivo
+        if hasattr(obj, 'estado'):  # Verifica si tiene el campo 'estado'
+            obj.estado = False
+            obj.save()
+        return redirect('nombre_de_la_vista_listado')  # Redirige al listado correspondiente
