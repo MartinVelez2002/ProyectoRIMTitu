@@ -36,6 +36,12 @@ class Turn_Create(LoginRequiredMixin, CreateView):
         context['action_save'] = self.request.path
         return context
     
+    def form_valid(self, form):
+        turno = form.save(commit = False)
+        turno.Estado = True
+        turno.save()
+        return super().form_valid(form)
+
     def form_invalid(self, form):
         messages.error(self.request, "Por favor registrar un turno diferente a los ya creados")
         return super().form_invalid(form)
