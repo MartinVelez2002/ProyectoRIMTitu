@@ -1,5 +1,5 @@
 
-.container {
+.container, .main-content, .cards-container, .content {
     font-family: 'Arima', sans-serif;
 	overflow: hidden;
 }
