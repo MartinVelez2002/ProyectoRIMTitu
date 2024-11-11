@@ -5,7 +5,7 @@ from Modulos.Coordinador.Ubicacion.models import Ubicacion_Model
 class Ubicacion_Form(forms.ModelForm):
     class Meta:
         model = Ubicacion_Model
-        fields = ['Lugar', 'Sector', 'CallePrincipal', 'Interseccion', 'Estado']
+        fields = ['Lugar', 'Sector', 'CallePrincipal', 'Estado']
         widgets = {
             'Lugar': forms.TextInput(attrs={
                 'id':'lugar_input'}),
@@ -14,10 +14,7 @@ class Ubicacion_Form(forms.ModelForm):
             'CallePrincipal': forms.TextInput(
                 attrs={
                 'id':'calle_principal_input'}),
-            'Interseccion': forms.TextInput(
-                attrs={
-                'id':'interseccion_input'}),
-        }
+                }
         
         def __init__(self, *args, **kwargs):
             super(Ubicacion_Form, self).__init__(*args, **kwargs)

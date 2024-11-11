@@ -34,6 +34,9 @@ class Novedad_Create(LoginRequiredMixin, CreateView):
         return context
 
     def form_valid(self, form):
+        novedad = form.save(commit=False)
+        novedad.Estado = True
+        novedad.save()
         # Primero, guarda la novedad llamando a form_valid del padre
         response = super().form_valid(form) 
         # Ahora `self.object` está disponible y se puede usar
@@ -87,6 +90,13 @@ class TipoNovedad_Create(LoginRequiredMixin, CreateView):
         
         return context
     
+    def form_valid(self, form):
+        tipNov = form.save(commit = False)
+        tipNov.Estado = True
+        tipNov.save()
+        return super().form_valid(form)
+
+
 class TipoNovedad_Update(LoginRequiredMixin, UpdateView):
     model = TipoNovedad_Model
     template_name = 'registrar_tipNovedad.html'

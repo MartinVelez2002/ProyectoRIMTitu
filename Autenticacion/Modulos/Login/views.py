@@ -412,5 +412,10 @@ class Rol_Create(LoginRequiredMixin, CreateView):
         context['action_save'] = self.request.path
         
         return context
-
+    
+    def form_valid(self, form):
+        rol = form.save(commit=False)
+        rol.estado = True
+        rol.save()
+        return super().form_valid(form)
         

@@ -1,0 +1,49 @@
+{% extends 'modulos.html' %}
+{% load static %}
+
+{% block title %}
+Módulo Ubicación
+{% endblock %}
+
+{% block btnTitle %}
+Registrar nueva Ubicación
+{% endblock %}
+
+
+{% block thead %}
+<th> Lugar </th>
+<th> Sector </th>
+<th> Calle principal </th>
+<th> Estado </th>
+<th> Acciones </th>
+{% endblock %}
+
+
+{% block tbody %}
+{% if ubicacion %}
+{% for i in ubicacion %}
+<tr>
+    <td> {{i.Lugar}} </td>
+    <td> {{i.Sector}} </td>
+    <td> {{ i.CallePrincipal}} </td>
+    {% if i.Estado == True %}
+    <td> Activo </td>
+    {% else %}
+    <td> Inactivo </td>
+    {% endif %}
+    <td>
+
+        <a class="btn btn-danger">
+            Inactivar
+        </a>
+
+
+    </td>
+</tr>
+{% endfor %}
+{% else %}
+<tr>
+    <td colspan="5"> No existe ubicación registrada </td>
+</tr>
+{% endif %}
+{% endblock %}
