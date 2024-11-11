@@ -14,7 +14,6 @@ Registrar nueva Ubicación
 <th> Lugar </th>
 <th> Sector </th>
 <th> Calle principal </th>
-<th> Intersección </th>
 <th> Estado </th>
 <th> Acciones </th>
 {% endblock %}
@@ -27,7 +26,6 @@ Registrar nueva Ubicación
     <td> {{i.Lugar}} </td>
     <td> {{i.Sector}} </td>
     <td> {{ i.CallePrincipal}} </td>
-    <td> {{i.Interseccion}} </td>
     {% if i.Estado == True %}
     <td> Activo </td>
     {% else %}

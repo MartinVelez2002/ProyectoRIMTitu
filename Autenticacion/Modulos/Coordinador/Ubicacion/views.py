@@ -11,6 +11,7 @@ class Ubicacion_View(LoginRequiredMixin, ListView):
     model = Ubicacion_Model
     template_name = 'ubicacion.html'
     context_object_name = 'ubicacion'
+    paginate_by = 5
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

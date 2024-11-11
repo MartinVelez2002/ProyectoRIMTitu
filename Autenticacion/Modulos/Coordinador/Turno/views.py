@@ -12,6 +12,8 @@ class Turn_View(LoginRequiredMixin, ListView):
     model = Turno_Model
     context_object_name = 'turno'
     template_name = 'listado_turno.html'
+    paginate_by = 5
+    
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

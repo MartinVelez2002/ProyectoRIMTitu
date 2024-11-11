@@ -354,7 +354,7 @@ class Usuario_view(LoginRequiredMixin,ListView):
     template_name = 'personal/listado_personal.html'
     model = Usuario
     context_object_name = 'personal'
-
+    paginate_by = 5
     
     def get_queryset(self):
         # Filtrar usuarios con is_superuser=False
@@ -372,6 +372,7 @@ class Usuario_update(LoginRequiredMixin, UpdateView):
     form_class = FormularioEditarPersonal
     success_url = reverse_lazy('login:personal')
     template_name = 'personal/editar_personal.html'
+    
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
