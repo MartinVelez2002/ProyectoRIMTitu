@@ -8,8 +8,8 @@ class Calendario_Form (ModelForm):
         model = Calendario_Model
         fields = '__all__'
         widgets = {
-            'Fecha_inicio': forms.TimeInput(),
-            'Fecha_fin': forms.TimeInput(),
+            'Fecha_inicio': forms.TimeInput(attrs={'type':'time'}),
+            'Fecha_fin': forms.TimeInput(attrs={'type':'time'}),
         }
     def __init__(self, *args, **kwargs):
         super(Calendario_Form, self).__init__(*args, **kwargs)
