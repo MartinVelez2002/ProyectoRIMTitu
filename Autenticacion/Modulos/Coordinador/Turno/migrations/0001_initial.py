@@ -12,13 +12,11 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Ubicacion_Model',
+            name='Turno_Model',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('Lugar', models.CharField(max_length=50)),
-                ('Sector', models.CharField(max_length=100)),
-                ('CallePrincipal', models.CharField(max_length=100)),
-                ('Interseccion', models.CharField(max_length=100)),
+                ('Hora_inicio', models.TimeField()),
+                ('Hora_fin', models.TimeField()),
                 ('Estado', models.BooleanField(default=True)),
             ],
         ),

@@ -48,13 +48,23 @@
                     </div>
                 </div>
             </a>
-            <a href="{% url 'ubicacion:inicio' %}">
+            <a href="{% url 'login:listar_rol' %}">
                 <div class="card">
                     <div class="img-container">
-                        <i class="fa-solid fa-map-location-dot"></i>
+                        <i class="fa-sharp fa-solid fa-address-book"></i>
                     </div>
                     <div class="card-body">
-                        <p class="card-text"> Lugares de Guardia </p>
+                        <p class="card-text"> Rol </p>
+                    </div>
+                </div>
+            </a>
+            <a href="{% url 'turno:listar_turno' %}">
+                <div class="card">
+                    <div class="img-container">
+                        <i class="fa-sharp fa-solid fa-address-book"></i>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text"> Turno </p>
                     </div>
                 </div>
             </a>
@@ -68,6 +78,16 @@
                     </div>
                 </div>
             </a>
+            <a href="{% url 'novedad:inicio_tipoNov' %}">
+                <div class="card">
+                    <div class="img-container">
+                        <i class="fa-solid fa-list-ul"></i>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text"> Tipo de Novedades </p>
+                    </div>
+                </div>
+            </a>
             <a href="{% url 'novedad:inicio' %}">
                 <div class="card">
                     <div class="img-container">
@@ -78,16 +98,15 @@
                     </div>
                 </div>
             </a>
-            <a href="{% url 'novedad:inicio_tipoNov' %}">
+            <a href="{% url 'ubicacion:inicio' %}">
                 <div class="card">
                     <div class="img-container">
-                        <i class="fa-solid fa-list-ul"></i>
+                        <i class="fa-solid fa-map-location-dot"></i>
                     </div>
                     <div class="card-body">
-                        <p class="card-text"> Tipo de Novedades </p>
+                        <p class="card-text"> Lugares de Guardia </p>
                     </div>
                 </div>
-
             </a>
             <a href="#">
                 <div class="card">
@@ -96,16 +115,6 @@
                     </div>
                     <div class="card-body">
                         <p class="card-text"> Planificación </p>
-                    </div>
-                </div>
-            </a>
-            <a href="{% url 'login:listar_rol' %}">
-                <div class="card">
-                    <div class="img-container">
-                        <i class="fa-sharp fa-solid fa-address-book"></i>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text"> Rol </p>
                     </div>
                 </div>
             </a>

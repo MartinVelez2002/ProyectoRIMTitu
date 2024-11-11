@@ -6,12 +6,6 @@
 <link rel="stylesheet" href="{% static 'css/diseño_forms.css' %}">
 {% endblock %}
 
-{% block js %}
-<script src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&libraries=places&callback=initMap" loading="async" defer></script>
-<script src="{% static 'js/map.js' %}"></script>
-<script src="{% static 'js/input_effect.js' %}"></script>
-{% endblock %}
-
 
 {% block controls %}
 <div class="form-grid form-grid-map">
@@ -58,4 +52,10 @@
     </div>
 </div>
 
+{% endblock %}
+
+{% block js %}
+<script src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&libraries=places&callback=initMap" loading="async" defer></script>
+<script src="{% static 'js/map.js' %}"></script>
+<script src="{% static 'js/input_effect.js' %}"></script>
 {% endblock %}

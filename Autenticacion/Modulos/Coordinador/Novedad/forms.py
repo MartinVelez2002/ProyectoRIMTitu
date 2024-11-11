@@ -11,7 +11,6 @@ class TipoNovedad_form(forms.ModelForm):
             )
         }
 
-
 class Novedad_form(forms.ModelForm):
     class Meta:
         model = Novedad_Model

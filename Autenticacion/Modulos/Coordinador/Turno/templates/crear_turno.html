@@ -1,0 +1,26 @@
+{% extends 'form.html' %}
+{% load static %}
+
+{% block controls %}
+<div class="form-grid">
+    <div class="input-div one">
+        <div class="i">
+            <i class="fa-sharp fa-solid fa-window-maximize"></i>
+        </div>
+        <div class="div">
+            <h5> Hora de Inicio </h5>
+            {{ form.Hora_inicio }}
+        </div>
+    </div>
+
+    <div class="input-div one">
+        <div class="i">
+            <i class="fa-sharp fa-solid fa-whiskey-glass"></i>
+        </div>
+        <div class="div">
+            <h5>Hora Fin</h5>
+            {{ form.Hora_fin }}
+        </div>
+    </div>
+</div>
+{% endblock %}

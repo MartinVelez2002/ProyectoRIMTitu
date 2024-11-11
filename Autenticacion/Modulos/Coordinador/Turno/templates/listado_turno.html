@@ -1,0 +1,42 @@
+{% extends 'modulos.html' %}
+{% load static %}
+
+{% block title %}
+Módulo Turno
+{% endblock %}
+
+{% block btnTitle %}
+Registrar un nuevo turno
+{% endblock %}
+
+{% block thead %}
+<th> Hora de Inicio </th>
+<th> Hora Fin </th>
+<th> Estado </th>
+<th> Acciones </th>
+{% endblock %}
+
+{% block tbody %}
+{% if turno %}
+{% for i in turno %}
+<tr>
+    <td> {{ i.Hora_inicio }} </td>
+    <td> {{ i.Hora_fin }} </td>
+    {% if i.Estado == True %}
+    <td> Activo </td>
+    {% else %}
+    <td> Inacitvo </td>
+    {% endif %}
+    <td>
+        <a class="btn btn-danger">
+            Inactivar
+        </a>
+    </td>
+</tr>
+{% endfor %}
+{% else %}
+<tr>
+    <td colspan="4"> No existen turnos registrados </td>
+</tr>
+{% endif %}
+{% endblock %}
