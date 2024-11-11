@@ -60,6 +60,8 @@ class Login(FormView):
                 return HttpResponseRedirect(self.change_password_url)
             return super().form_valid(form)
         
+        messages.error(self.request, "Usuario no autenticado")
+        return self.form_invalid(form)
         
   
         
