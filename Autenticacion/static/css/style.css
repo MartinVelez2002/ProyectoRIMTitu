@@ -10,29 +10,14 @@
     --transition-speed: 0.5s;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Arima', sans-serif;
-    display: flex;
-    flex-direction: column;
-    background-color: #F1F3F4;
-    height: 100vh;
-    margin: 0;
-}
 
 .content{
     display: flex;
     flex-direction: row;
     
 }
-.navbar{
-    position: relative;
-}
+
+
 
 
 /* Sidebar */

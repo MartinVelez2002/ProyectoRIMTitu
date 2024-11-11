@@ -12,11 +12,11 @@
     </title>
     <!-- Fuente de letra de google -->
     <link href="https://fonts.googleapis.com/css2?family=Arima:wght@100..700&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     {% block css %}
     <link rel="stylesheet" href="{% static 'css/modulos.css' %}">
     <link rel="stylesheet" href="{% static 'css/style_tabla.css' %}">
+    <link rel="stylesheet" href="{% static 'css/diseño_forms.css' %}">
     {% endblock %}
     
     <!-- CSS - Bootstrap -->
@@ -35,7 +35,11 @@
         {% include 'navbar.html' %}
     </header>
     {% endblock %}
+    
+    
     {% block main %}
+
+   
     <div class="cards-container">
         <main class="cards">
             <a href="#">
