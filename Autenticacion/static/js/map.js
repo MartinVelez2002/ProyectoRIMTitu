@@ -1,3 +1,4 @@
+
 let map;
 let geocoder;
 let marker; 
@@ -16,6 +17,7 @@ function initMap() {
         placeMarker(latLng);
 
         geocodeLatLng(latLng);
+
     });
 }
 

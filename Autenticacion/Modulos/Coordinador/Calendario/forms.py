@@ -44,3 +44,4 @@ class TurnUsuarioUbicacion_Form (ModelForm):
             'required': 'required'
         })
 
+

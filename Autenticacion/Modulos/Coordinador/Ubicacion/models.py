@@ -6,3 +6,6 @@ class Ubicacion_Model(models.Model):
     Sector = models.CharField(max_length = 100)
     CallePrincipal = models.CharField(max_length = 100)
     Estado = models.BooleanField(default = True)
+    
+    def __str__(self):
+        return f'{self.Lugar}'

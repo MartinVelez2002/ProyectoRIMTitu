@@ -74,7 +74,7 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['email']
 
     def __str__(self):
-        return self.username
+        return f'{self.nombre} {self.apellido}'
     
     def save(self, *args, **kwargs):
         # Encripta la contraseña si está en texto plano

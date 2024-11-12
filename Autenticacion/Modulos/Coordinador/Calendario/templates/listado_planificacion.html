@@ -1,0 +1,44 @@
+{% extends 'modulos.html' %}
+{% load static %}
+
+{% block title %}
+Modulo Planificación
+{% endblock %}
+
+{% block btnTitle %}
+Registra una nueva planificación
+{% endblock %}
+
+{% block thead %}
+<th> Personal </th>
+<th> Periodo </th>
+<th> Turno </th>
+<th> Ubicación </th>
+<th> Estado </th>
+<th> Acciones </th>
+{% endblock %}
+
+{% block tbody %}
+{% if calendarioUs %}
+{% for i in calendarioUs %}
+<tr>
+    <td> {{i.Usuario}} </td>
+    <td> {{i.Calendario}} </td>
+    <td> {{i.Turno}} </td>
+    <td> {{i.Ubicacion}} </td>
+    {% if i.Estado == True %}
+    <td> Activo </td>
+    {% else %}
+    <td> Inactivo </td>
+    {% endif %}
+    <td> 
+
+    </td>
+</tr>
+{% endfor %}
+{% else %}
+<tr>
+    <td colspan="6"> No existen planificaciones </td>
+</tr>
+{% endif %}
+{% endblock %}

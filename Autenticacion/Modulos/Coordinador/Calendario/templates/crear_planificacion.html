@@ -1,0 +1,46 @@
+{% extends 'form.html' %}
+{% load static %}
+
+{% block controls %}
+
+<div class="form-grid">
+    <div class="input-div one">
+        <div class="i">
+            <i class="fa-sharp fa-solid fa-window-maximize"></i>
+        </div>
+        <div class="div">
+            <h5> Usuario </h5>
+            {{ form.Usuario }}
+        </div>
+    </div>
+
+    <div class="input-div one">
+        <div class="i">
+            <i class="fa-sharp fa-solid fa-whiskey-glass"></i>
+        </div>
+        <div class="div">
+            <h5>Periodo</h5>
+            {{ form.Calendario }}
+        </div>
+    </div>
+    <div class="input-div one">
+        <div class="i">
+            <i class="fa-sharp fa-solid fa-window-maximize"></i>
+        </div>
+        <div class="div">
+            <h5>Turno</h5>
+            {{ form.Turno }}
+        </div>
+    </div>
+    <div class="input-div one">
+        <div class="i">
+            <i class="fa-sharp fa-solid fa-window-maximize"></i>
+        </div>
+        <div class="div">
+            <h5>Ubicación</h5>
+            {{ form.Ubicacion }}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

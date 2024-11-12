@@ -37,3 +37,35 @@ class Calendario_Create(LoginRequiredMixin, CreateView):
         context['cancelar'] = reverse('calendario:listado_calendario')
         context['action_save'] = self.request.path
         return context
+
+
+class CalendarioUsuario_View(LoginRequiredMixin, ListView):
+    model = TurnUsuario_Model
+    template_name = 'listado_planificacion.html'
+    context_object_name = 'calendarioUs'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['dirurl'] = reverse('calendario:crear_planificacion')
+        context['title_table'] = 'Listado de Planificación'
+        
+        return context
+
+class CalendarioUsuario_Create(LoginRequiredMixin, CreateView):
+    model = Turno_Model
+    template_name = 'crear_planificacion.html'
+    form_class = TurnUsuarioUbicacion_Form
+    success_url = reverse_lazy('calendario:listar_planificacion')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titulo'] = 'Formulario: Planificación'
+        context['cancelar'] = reverse('calendario:listar_planificacion')
+        context['action_save'] = self.request.path
+        return context
+    
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        # Filtrar solo usuarios válidos para el select
+        form.fields['Usuario'].queryset = Usuario.objects.filter(is_superuser=False)
+        return form

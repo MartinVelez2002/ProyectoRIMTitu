@@ -11,3 +11,6 @@ class Turno_Model(models.Model):
         constraints = [
             models.UniqueConstraint(fields=['Hora_inicio', 'Hora_fin'], name='unique_hora_inicio_hora_fin')
         ]
+        
+    def __str__(self):
+        return f'{self.Hora_inicio} hasta {self.Hora_fin}'
