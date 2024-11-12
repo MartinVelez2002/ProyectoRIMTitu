@@ -1,0 +1,42 @@
+{% extends 'modulos.html' %}
+{% load static %}
+
+{% block title %}
+Modulo Calendario
+{% endblock %}
+
+{% block btnTitle %}
+Registrar un nuevo calendario
+{% endblock %}
+
+{% block thead %}
+<th> Fecha de inicio </th>
+<th> Fecha fin </th>
+<th> Estado </th>
+<th> Acciones </th>
+{% endblock %}
+
+
+{% block tbody %}
+{% if calendario %}
+{% for i in calendario %}
+<tr>
+    <td> {{ i.Fecha_inicio }} </td>
+    <td> {{ i.Fecha_fin }} </td>
+    {% if i.Estado == True %}
+    <td> Activo </td>
+    {% else %}
+    <td> Inactivo </td>
+    {% endif %}
+
+    <td>
+
+    </td>
+</tr>
+{% endfor %}
+{% else %}
+<tr>
+    <td colspan="4"> No existen registros de calendario</td>
+</tr>
+{% endif %}
+{% endblock %}

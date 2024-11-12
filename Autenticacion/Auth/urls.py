@@ -28,6 +28,7 @@ urlpatterns = [
     path('novedad/', include('Modulos.Coordinador.Novedad.urls')),
     path('ubicacion/', include('Modulos.Coordinador.Ubicacion.urls')),
     path('turno/', include('Modulos.Coordinador.Turno.urls')),
+    path('calendario/', include('Modulos.Coordinador.Calendario.urls')),
 ]   
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

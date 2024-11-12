@@ -8,8 +8,12 @@ class Calendario_Form (ModelForm):
         model = Calendario_Model
         fields = ['Fecha_inicio','Fecha_fin']
         widgets = {
-            'Fecha_inicio': forms.TimeInput(),
-            'Fecha_fin': forms.TimeInput(),
+            'Fecha_inicio': forms.TimeInput(
+                attrs={
+                    'type': 'date'}),
+            'Fecha_fin': forms.TimeInput(
+                attrs={
+                    'type': 'date'}),
         }
    
 

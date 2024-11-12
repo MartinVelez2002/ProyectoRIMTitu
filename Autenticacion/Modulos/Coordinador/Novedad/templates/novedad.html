@@ -21,19 +21,17 @@ Registrar nueva novedad
 {% if novedad %}
 {% for nov in novedad %}
 <tr>
-    <td class="align-items-center" >{{ nov.TipoNovedad }}</td>
-    <td class="align-items-center">{{ nov.Descripcion }}</td>
+    <td>{{ nov.TipoNovedad }}</td>
+    <td>{{ nov.Descripcion }}</td>
     {% if nov.Estado == True %}
-    <td class="align-items-center">Activo</td>
+    <td>Activo</td>
     {% else %}
-    <td class="align-items-center">Inactivo</td>
+    <td>Inactivo</td>
     {% endif %}
     <td>
         <a class="btn btn-dark" onclick="abrir_modal_editar('{% url 'novedad:editar_nov' nov.id %}')">
             Editar
         </a>
-
-
         <a class="btn btn-danger"> 
             Inactivar 
         </a>

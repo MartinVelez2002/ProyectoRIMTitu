@@ -390,6 +390,7 @@ class Rol_View(LoginRequiredMixin, ListView):
     template_name = 'rol/listado_rol.html'
     model = Rol
     context_object_name = 'rol'
+    paginate_by = '5'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -414,7 +415,7 @@ class Rol_Create(LoginRequiredMixin, CreateView):
         return context
     
     def form_valid(self, form):
-        rol = form.save(commit=False)
+        rol = form.save(commit=False)   
         rol.estado = True
         rol.save()
         return super().form_valid(form)
