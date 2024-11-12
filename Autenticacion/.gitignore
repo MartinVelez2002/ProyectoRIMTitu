@@ -10,6 +10,13 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 
+# Archivos generados por Django durante la ejecución
+*.pot
+*.pyc
+*.pyo
+*.swp
+*.swo
+
 ### dotenv ###
 .env
 
