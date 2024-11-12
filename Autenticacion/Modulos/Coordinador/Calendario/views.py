@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
 from Modulos.Coordinador.Calendario.models import *
 from Modulos.Coordinador.Calendario.forms import *
+from django.contrib import messages
 # Create your views here.
 
 class Calendario_View(LoginRequiredMixin, ListView):
@@ -19,11 +20,8 @@ class Calendario_View(LoginRequiredMixin, ListView):
         context['title_table'] = 'Listado del Calendario'
         
         return context
-    def form_valid():
-        calendario = form.save(commit= False)
-        calendario.Estado = True
-        calendario.save()
-        return super().form_valid(form)
+    
+
     
 class Calendario_Create(LoginRequiredMixin, CreateView):
     model = Calendario_Model
