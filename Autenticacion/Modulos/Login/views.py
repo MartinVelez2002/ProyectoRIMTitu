@@ -10,7 +10,6 @@ from django.contrib.auth import login, logout, authenticate
 from django.http import  HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
-from django.apps import apps
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.contrib.sessions.models import Session
@@ -67,7 +66,6 @@ class Login(FormView):
   
         
     def form_invalid(self, form):
-        messages.error(self.request, "Credenciales inválidas. Intente nuevamente.")
         return super().form_invalid(form)
 
 
@@ -349,25 +347,31 @@ class PasswordResetConfirmView(View):
 
 
 
-
-
-
 class Usuario_view(LoginRequiredMixin,ListView):
     template_name = 'personal/listado_personal.html'
     model = Usuario
     context_object_name = 'personal'
     paginate_by = 5
     
-    def get_queryset(self):
+
+    def get_queryset(self):       
         # Filtrar usuarios con is_superuser=False
         return Usuario.objects.filter(is_superuser=False)
+        
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['dirurl'] = reverse('login:registro')
         context['title_table'] = 'Listado de Personal'
-
+        
+    
         return context
+    
+    
+    
+    
+    
+    
     
 class Usuario_update(LoginRequiredMixin, UpdateView):
     model = Usuario
@@ -423,14 +427,28 @@ class Rol_Create(LoginRequiredMixin, CreateView):
 
 
 
-class InactivarObjetoView(View):
-    def post(self, request, app_label, model_name, pk):
-        # Obtiene el modelo dinámicamente
-        model = apps.get_model(app_label, model_name)
-        # Obtén el objeto usando su pk
-        obj = get_object_or_404(model, pk=pk)
-        # Cambia el estado del objeto a inactivo
-        if hasattr(obj, 'estado'):  # Verifica si tiene el campo 'estado'
-            obj.estado = False
-            obj.save()
-        return redirect('nombre_de_la_vista_listado')  # Redirige al listado correspondiente
+
+
+class CambiarEstadoMixin(View):
+    model = None  # Este atributo debe ser sobrescrito en cada vista hija
+
+    def post(self, request, pk):
+        if not self.model:
+            return redirect('login:personal')  # Si no se ha definido un modelo, redirigir
+
+        # Obtener el objeto según el modelo y pk
+        objeto = get_object_or_404(self.model, pk=pk)
+
+        # Cambiar el estado (si está activo, se inactiva; si está inactivo, se activa)
+        if objeto.estado:
+            objeto.estado = False  # Inactiva el objeto
+        else:
+            objeto.estado = True  # Activa el objeto
+        objeto.save()
+      
+        return redirect('login:personal')
+
+    
+    
+class InactivarActivarUsuarioView(CambiarEstadoMixin):
+    model = Usuario

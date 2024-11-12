@@ -1,4 +1,4 @@
-from django.shortcuts import render
+
 from Modulos.Coordinador.Novedad.models import TipoNovedad_Model, Novedad_Model
 from Modulos.Coordinador.Novedad.forms import Novedad_form, TipoNovedad_form
 from django.views.generic import CreateView, ListView, UpdateView
@@ -7,6 +7,9 @@ from Modulos.Auditoria.models import AuditoriaUser
 from Modulos.Auditoria.utils import save_audit
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
+from django.shortcuts import redirect, get_object_or_404
+from django.views import View
+
 
 class Novedad_View(LoginRequiredMixin, ListView):
     template_name = 'novedad.html'
@@ -111,3 +114,37 @@ class TipoNovedad_Update(LoginRequiredMixin, UpdateView):
         
 
         return context
+    
+    
+
+
+class CambiarEstadoMixin(View):
+    model = None  # Este atributo debe ser sobrescrito en cada vista hija
+    redirect_url = None   # URL de redirección según el modelo
+
+    def post(self, request, pk):
+        if not self.model or not self.redirect_url:
+            return redirect('')   # Si no se ha definido un modelo, redirigir
+
+        # Obtener el objeto según el modelo y pk
+        objeto = get_object_or_404(self.model, pk=pk)
+
+        # Cambiar el estado (si está activo, se inactiva; si está inactivo, se activa)
+        if objeto.Estado:
+            objeto.Estado = False  # Inactiva el objeto
+        else:
+            objeto.Estado = True  # Activa el objeto
+        objeto.save()
+      
+        return redirect(self.redirect_url)
+ 
+    
+    
+    
+class InactivarActivarTipoNovedadView(CambiarEstadoMixin):
+    model = TipoNovedad_Model
+    redirect_url = 'novedad:inicio_tipoNov'  # Redirección específica para TipoNovedad_Model
+
+class InactivarActivarNovedadView(CambiarEstadoMixin):
+    model = Novedad_Model
+    redirect_url = 'novedad:inicio'  # Redirección específica para Novedad_Model

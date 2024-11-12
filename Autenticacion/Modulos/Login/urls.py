@@ -18,6 +18,12 @@ urlpatterns = [
     path('registro/',RegistroView.as_view(), name = 'registro'),
     
     path('personal/', Usuario_view.as_view(), name = 'personal'),
+    
+
+
+    # Inactivar objeto
+    path('inactivar/<int:pk>', InactivarActivarUsuarioView.as_view(), name='inactivar_objeto'),
+
 
     path('editar_personal/<int:pk>', Usuario_update.as_view(), name='editar_personal'),
     

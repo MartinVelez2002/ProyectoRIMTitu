@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import Novedad_View, Novedad_Create, TipoNovedad_Create, TipoNovedad_View, TipoNovedad_Update, Novedad_Update
+from .views import *
 
 app_name = 'novedad'
 urlpatterns = [
@@ -18,5 +18,9 @@ urlpatterns = [
     path('crear_tipNov/', TipoNovedad_Create.as_view(), name = 'crear_tipNov'),
     
     path('editar_tipNov/<int:pk>', TipoNovedad_Update.as_view(), name = 'editar_tipNov'),
+    
+    path('inactivar_tipo_novedad/<int:pk>/', InactivarActivarTipoNovedadView.as_view(), name='inactivar_activar_tipo_novedad'),
+   
+    path('inactivar_novedad/<int:pk>/', InactivarActivarNovedadView.as_view(), name='inactivar_activar_novedad')
     
 ]
