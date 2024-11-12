@@ -32,9 +32,15 @@ Registrar nuevo tipo de Novedad
             </a>
             
         
-            <a class="btn btn-danger"> 
-                Inactivar 
-            </a>
+            <form action="{% url 'novedad:inactivar_activar_tipo_novedad' pk=tpn.id %}" method="post" style="display: inline;">
+                {% csrf_token %}
+    
+                {% if tpn.Estado %}
+                <button type="submit" class="btn btn-success">Inactivar</button> <!-- Verde para Activo -->
+                {% else %}
+                <button type="submit" class="btn btn-danger">Activar</button> <!-- Rojo para Inactivo -->
+                {% endif %}
+            </form>
         </td>
     </tr>
     {% endfor %}
