@@ -24,6 +24,7 @@ urlpatterns = [
     # Inactivar objeto
     path('inactivar/<int:pk>', InactivarActivarUsuarioView.as_view(), name='inactivar_objeto'),
 
+    path('inactivar_rol/<int:pk>', InactivarActivarRolView.as_view(), name='inactivar_rol'),
 
     path('editar_personal/<int:pk>', Usuario_update.as_view(), name='editar_personal'),
     

@@ -3,6 +3,7 @@ from django.views.generic import CreateView, ListView, UpdateView
 from django.urls import reverse_lazy, reverse
 from django.conf import settings
 
+from Modulos.Coordinador.Novedad.views import CambiarEstadoMixin
 from Modulos.Coordinador.Ubicacion.models import Ubicacion_Model
 from Modulos.Coordinador.Ubicacion.forms import Ubicacion_Form
 
@@ -25,12 +26,7 @@ class Ubicacion_Create(LoginRequiredMixin, CreateView):
     form_class = Ubicacion_Form
     success_url = reverse_lazy('ubicacion:inicio')
     
-    def form_valid(self, form):
-        ubicacion = form.save(commit = False)
-        ubicacion.Estado = True
-        ubicacion.save()
-
-        return super().form_valid(form)
+  
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -42,4 +38,7 @@ class Ubicacion_Create(LoginRequiredMixin, CreateView):
     
     
     
-# Create your views here.
+    
+class InactivarActivarUbicacionView(CambiarEstadoMixin):
+    model = Ubicacion_Model
+    redirect_url = 'ubicacion:inicio'  # Redirección específica para TipoNovedad_Model

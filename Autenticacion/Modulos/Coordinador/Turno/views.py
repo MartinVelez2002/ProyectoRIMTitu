@@ -4,6 +4,7 @@ from django.views.generic import CreateView, ListView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
 from django.contrib import messages
+from Modulos.Coordinador.Novedad.views import CambiarEstadoMixin
 from Modulos.Coordinador.Turno.models import *
 from Modulos.Coordinador.Turno.forms import *
 # Create your views here.
@@ -35,14 +36,15 @@ class Turn_Create(LoginRequiredMixin, CreateView):
         context['cancelar'] = reverse('turno:listar_turno')
         context['action_save'] = self.request.path
         return context
-    
-    def form_valid(self, form):
-        turno = form.save(commit = False)
-        turno.Estado = True
-        turno.save()
-        return super().form_valid(form)
+  
 
     def form_invalid(self, form):
         messages.error(self.request, "Por favor registrar un turno diferente a los ya creados")
         return super().form_invalid(form)
 
+
+
+    
+class InactivarActivarTurnoView(CambiarEstadoMixin):
+    model = Turno_Model
+    redirect_url = 'turno:listar_turno'  # Redirección específica para TipoNovedad_Model

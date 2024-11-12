@@ -21,7 +21,6 @@ class Calendario_View(LoginRequiredMixin, ListView):
         
         return context
     
-
     
 class Calendario_Create(LoginRequiredMixin, CreateView):
     model = Calendario_Model

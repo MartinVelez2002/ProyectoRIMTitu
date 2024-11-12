@@ -18,6 +18,8 @@ from django.views.decorators.cache import never_cache
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, CreateView, ListView, UpdateView
 from django.views.generic.edit import FormView
+from Modulos.Auditoria.models import AuditoriaUser
+from Modulos.Auditoria.utils import save_audit
 from Modulos.Login.forms import FormularioLogin, FormularioRegistro, CambiarPasswordForm, ForgetPasswordForm, FormularioEditarPersonal, Rol_Form
 from Modulos.Login.models import Usuario, Rol
 
@@ -386,8 +388,17 @@ class Usuario_update(LoginRequiredMixin, UpdateView):
         context['titulo'] = 'Edición de personal'
         context['cancelar'] = reverse('login:personal')
         
-
         return context
+
+
+    def form_valid(self, form):
+        # Primero, guarda la novedad llamando a form_valid del padre
+        response = super().form_valid(form) 
+        # Ahora `self.object` está disponible y se puede usar
+        rol = self.object 
+        # Registrar en auditoría la acción de creación
+        save_audit(self.request, rol, action=AuditoriaUser.AccionChoices.MODIFICAR)  
+        return response
 
 
 class Rol_View(LoginRequiredMixin, ListView):
@@ -419,22 +430,23 @@ class Rol_Create(LoginRequiredMixin, CreateView):
         return context
     
     def form_valid(self, form):
-        rol = form.save(commit=False)   
-        rol.estado = True
-        rol.save()
-        return super().form_valid(form)
-        
-
-
+        # Primero, guarda la novedad llamando a form_valid del padre
+        response = super().form_valid(form) 
+        # Ahora `self.object` está disponible y se puede usar
+        rol = self.object 
+        # Registrar en auditoría la acción de creación
+        save_audit(self.request, rol, action=AuditoriaUser.AccionChoices.CREAR)  
+        return response
 
 
 
 class CambiarEstadoMixin(View):
     model = None  # Este atributo debe ser sobrescrito en cada vista hija
+    redirect_url = None   # URL de redirección según el modelo
 
     def post(self, request, pk):
-        if not self.model:
-            return redirect('login:personal')  # Si no se ha definido un modelo, redirigir
+        if not self.model or not self.redirect_url:
+            return redirect('')   # Si no se ha definido un modelo, redirigir
 
         # Obtener el objeto según el modelo y pk
         objeto = get_object_or_404(self.model, pk=pk)
@@ -446,9 +458,14 @@ class CambiarEstadoMixin(View):
             objeto.estado = True  # Activa el objeto
         objeto.save()
       
-        return redirect('login:personal')
+        return redirect(self.redirect_url)
 
     
     
 class InactivarActivarUsuarioView(CambiarEstadoMixin):
     model = Usuario
+    redirect_url = 'login:personal'
+
+class InactivarActivarRolView(CambiarEstadoMixin):
+    model = Rol
+    redirect_url = 'login:listar_rol'
