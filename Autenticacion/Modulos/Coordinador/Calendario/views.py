@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
 from Modulos.Coordinador.Calendario.models import *
 from Modulos.Coordinador.Calendario.forms import *
-from django.contrib import messages
+from Modulos.Coordinador.Novedad.views import CambiarEstadoMixin 
 # Create your views here.
 
 class Calendario_View(LoginRequiredMixin, ListView):
@@ -31,6 +31,19 @@ class Calendario_Create(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Formulario: Calendario'
+        context['cancelar'] = reverse('calendario:listado_calendario')
+        context['action_save'] = self.request.path
+        return context
+
+class Calendario_Update(LoginRequiredMixin, UpdateView):
+    model = Calendario_Model
+    template_name = 'crear_calendario.html'
+    success_url = reverse_lazy('calendario:listado_calendario')
+    form_class = Calendario_Form
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titulo'] = 'Edición de Calendario'
         context['cancelar'] = reverse('calendario:listado_calendario')
         context['action_save'] = self.request.path
         return context
@@ -66,3 +79,7 @@ class CalendarioUsuario_Create(LoginRequiredMixin, CreateView):
         # Filtrar solo usuarios válidos para el select
         form.fields['Usuario'].queryset = Usuario.objects.filter(is_superuser=False)
         return form
+    
+class InactivarActivarCalendario(CambiarEstadoMixin):
+    model = Calendario_Model
+    redirect_url = 'calendario:listado_calendario'

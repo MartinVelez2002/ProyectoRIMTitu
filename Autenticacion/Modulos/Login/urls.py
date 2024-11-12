@@ -37,7 +37,9 @@ urlpatterns = [
     # Rol
     path('listar_rol/', Rol_View.as_view(), name = 'listar_rol'),
     
-    path('crear_rol/', Rol_Create.as_view(), name = 'crear_rol')
+    path('crear_rol/', Rol_Create.as_view(), name = 'crear_rol'),
+
+    path('editar_rol/<int:pk>', Rol_Update.as_view(), name = 'editar_rol' )
 ]
 
 

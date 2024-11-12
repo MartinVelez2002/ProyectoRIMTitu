@@ -438,6 +438,19 @@ class Rol_Create(LoginRequiredMixin, CreateView):
         save_audit(self.request, rol, action=AuditoriaUser.AccionChoices.CREAR)  
         return response
 
+class Rol_Update(LoginRequiredMixin, UpdateView):
+    template_name = 'rol/crear_rol.html'
+    model = Rol
+    form_class = Rol_Form
+    success_url = reverse_lazy('login:listar_rol')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titulo'] = 'Edición de rol'
+        context['cancelar'] = reverse('login:listar_rol')
+        context['action_save'] = self.request.path
+        
+        return context
 
 
 class CambiarEstadoMixin(View):

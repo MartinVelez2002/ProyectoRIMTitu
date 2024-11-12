@@ -7,6 +7,8 @@ urlpatterns=[
     path('inicio/', Ubicacion_View.as_view(), name = 'inicio'),
 
     path('crear_ubicacion/', Ubicacion_Create.as_view(), name = 'crear_ubicacion'),
-    
+
+    path('editar_ubicacion/<int:pk>', Ubicacion_Update.as_view(), name = 'editar_ubicacion'),
+
     path('inactivar_ubicacion/<int:pk>/', InactivarActivarUbicacionView.as_view(), name='inactivar_activar_ubicacion')
 ]

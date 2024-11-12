@@ -32,6 +32,9 @@ Registrar nueva Ubicación
     <td> Inactivo </td>
     {% endif %}
     <td>
+        <a class="btn btn-dark" onclick="abrir_modal_editar('{% url 'ubicacion:editar_ubicacion' i.id %}')">
+            Editar
+        </a>
 
         <form action="{% url 'ubicacion:inactivar_activar_ubicacion' pk=i.id %}" method="post" style="display: inline;">
             {% csrf_token %}

@@ -30,7 +30,18 @@ Registrar un nuevo calendario
     {% endif %}
 
     <td>
+        <a class="btn btn-dark" onclick="abrir_modal_editar('{% url 'calendario:editar_calendario' i.id %}')">
+            Editar
+        </a>
+        <form action="{% url 'calendario:InactivarActivarCalendario' i.id %}" method="post" style="display: inline;">
+            {% csrf_token %}
 
+            {% if nov.Estado %}
+            <button type="submit" class="btn btn-success">Inactivar</button> <!-- Verde para Activo -->
+            {% else %}
+            <button type="submit" class="btn btn-danger">Activar</button> <!-- Rojo para Inactivo -->
+            {% endif %}
+        </form>
     </td>
 </tr>
 {% endfor %}

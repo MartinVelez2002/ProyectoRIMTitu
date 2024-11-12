@@ -25,8 +25,6 @@ class Ubicacion_Create(LoginRequiredMixin, CreateView):
     template_name = 'registrar_ubicacion.html'
     form_class = Ubicacion_Form
     success_url = reverse_lazy('ubicacion:inicio')
-    
-  
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -36,8 +34,20 @@ class Ubicacion_Create(LoginRequiredMixin, CreateView):
         context['google_maps_api_key'] = settings.GOOGLE_API_KEY
         return context
     
+class Ubicacion_Update(LoginRequiredMixin, UpdateView):
+    model = Ubicacion_Model
+    template_name = 'registrar_ubicacion.html'
+    form_class = Ubicacion_Form
+    success_url = reverse_lazy('ubicacion:inicio')
     
-    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titulo'] = 'Edición de la ubicación'
+        context['cancelar'] = reverse('ubicacion:inicio')
+        context['action_save'] = self.request.path
+        context['google_maps_api_key'] = settings.GOOGLE_API_KEY
+
+        return context
     
 class InactivarActivarUbicacionView(CambiarEstadoMixin):
     model = Ubicacion_Model

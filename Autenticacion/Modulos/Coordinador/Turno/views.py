@@ -43,7 +43,20 @@ class Turn_Create(LoginRequiredMixin, CreateView):
         return super().form_invalid(form)
 
 
+class Turno_Update(LoginRequiredMixin, UpdateView):
+    model = Turno_Model
+    template_name = 'crear_turno.html'
+    form_class = Turno_Form
+    success_url = reverse_lazy('turno:listar_turno')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['action_save'] = self.request.path
+        context['titulo'] = 'Edición de turno'
+        context['cancelar'] = reverse('turno:listar_turno')
+        
 
+        return context
     
 class InactivarActivarTurnoView(CambiarEstadoMixin):
     model = Turno_Model
