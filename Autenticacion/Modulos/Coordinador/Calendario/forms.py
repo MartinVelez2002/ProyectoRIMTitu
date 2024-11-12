@@ -8,8 +8,12 @@ class Calendario_Form (ModelForm):
         model = Calendario_Model
         fields = '__all__'
         widgets = {
-            'Fecha_inicio': forms.TimeInput(),
-            'Fecha_fin': forms.TimeInput(),
+            'Fecha_inicio': forms.TimeInput(
+                attrs={
+                    'type': 'date'}),
+            'Fecha_fin': forms.TimeInput(
+                attrs={
+                    'type': 'date'}),
         }
     def __init__(self, *args, **kwargs):
         super(Calendario_Form, self).__init__(*args, **kwargs)
@@ -19,8 +23,6 @@ class Calendario_Form (ModelForm):
                 field.widget.attrs.update({
                     'class': 'input',
                 })
-
-
 
 class TurnUsuarioUbicacion_Form (ModelForm):
     class Meta:
