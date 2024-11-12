@@ -15,4 +15,6 @@ urlpatterns = [
     
     path('crear_planificacion/', CalendarioUsuario_Create.as_view(), name = 'crear_planificacion'),
 
+    path('InactivarActivarPlanificacion/<int:pk>', InactivarActivarPlanificacion.as_view(), name = 'InactivarActivarPlanificacion'),
+
 ]

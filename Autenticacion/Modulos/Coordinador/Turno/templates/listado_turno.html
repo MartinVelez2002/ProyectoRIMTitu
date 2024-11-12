@@ -31,13 +31,13 @@ Registrar un nuevo turno
         <a class="btn btn-dark" onclick="abrir_modal_editar('{% url 'turno:editar_turno' i.id %}')">
             Editar
         </a>
-        <form action="{% url 'turno:inactivar_activar_turno' pk=i.id %}" method="post" style="display: inline;">
+        <form action="{% url 'turno:inactivar_activar_turno' i.id %}" method="post" style="display: inline;">
             {% csrf_token %}
 
             {% if i.Estado %}
-            <button type="submit" class="btn btn-success">Inactivar</button> <!-- Verde para Activo -->
+            <button type="submit" class="btn btn-danger">Inactivar</button> <!-- Verde para Activo -->
             {% else %}
-            <button type="submit" class="btn btn-danger">Activar</button> <!-- Rojo para Inactivo -->
+            <button type="submit" class="btn btn-success">Activar</button> <!-- Rojo para Inactivo -->
             {% endif %}
         </form>
     </td>

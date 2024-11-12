@@ -35,6 +35,7 @@ thead {
     border-bottom: 1px solid #ddd;
 }
 
+
 .table tbody tr:nth-child(even) {
     background-color: #f9f9f9;
 }

@@ -36,13 +36,13 @@ Registrar nueva Ubicación
             Editar
         </a>
 
-        <form action="{% url 'ubicacion:inactivar_activar_ubicacion' pk=i.id %}" method="post" style="display: inline;">
+        <form action="{% url 'ubicacion:inactivar_activar_ubicacion' i.id %}" method="post" style="display: inline;">
             {% csrf_token %}
 
             {% if i.Estado %}
-            <button type="submit" class="btn btn-success">Inactivar</button> <!-- Verde para Activo -->
+            <button type="submit" class="btn btn-danger">Inactivar</button> <!-- Verde para Activo -->
             {% else %}
-            <button type="submit" class="btn btn-danger">Activar</button> <!-- Rojo para Inactivo -->
+            <button type="submit" class="btn btn-success">Activar</button> <!-- Rojo para Inactivo -->
             {% endif %}
         </form>
 

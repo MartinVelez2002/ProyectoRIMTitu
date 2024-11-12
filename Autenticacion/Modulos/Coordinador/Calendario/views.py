@@ -48,6 +48,10 @@ class Calendario_Update(LoginRequiredMixin, UpdateView):
         context['action_save'] = self.request.path
         return context
 
+class InactivarActivarCalendario(CambiarEstadoMixin):
+    model = Calendario_Model
+    redirect_url = 'calendario:listado_calendario'
+
 
 class CalendarioUsuario_View(LoginRequiredMixin, ListView):
     model = TurnUsuario_Model
@@ -80,6 +84,6 @@ class CalendarioUsuario_Create(LoginRequiredMixin, CreateView):
         form.fields['Usuario'].queryset = Usuario.objects.filter(is_superuser=False)
         return form
     
-class InactivarActivarCalendario(CambiarEstadoMixin):
-    model = Calendario_Model
-    redirect_url = 'calendario:listado_calendario'
+class InactivarActivarPlanificacion(CambiarEstadoMixin):
+    model = TurnUsuario_Model
+    redirect_url = 'calendario:listar_planificacion'

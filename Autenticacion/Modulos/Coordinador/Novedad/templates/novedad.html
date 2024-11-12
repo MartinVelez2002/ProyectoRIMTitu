@@ -36,9 +36,9 @@ Registrar nueva novedad
             {% csrf_token %}
 
             {% if nov.Estado %}
-            <button type="submit" class="btn btn-success">Inactivar</button> <!-- Verde para Activo -->
+            <button type="submit" class="btn btn-danger">Inactivar</button> <!-- Verde para Activo -->
             {% else %}
-            <button type="submit" class="btn btn-danger">Activar</button> <!-- Rojo para Inactivo -->
+            <button type="submit" class="btn btn-success">Activar</button> <!-- Rojo para Inactivo -->
             {% endif %}
         </form>
     </td>
