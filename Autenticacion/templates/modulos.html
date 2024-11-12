@@ -6,7 +6,7 @@
 {% block main %}
 
 <div class="content">
-   
+
     {% block sidebar %}
     {% include 'sidebar.html' %}
     {% endblock %}
@@ -14,22 +14,35 @@
     {% block forms %}
     <main class="main-content pt-5">
         {% if messages %}
-            {% for message in messages %}
-                <div class="message" style="padding: 10px; margin: 10px 0; border-radius: 5px; 
+        {% for message in messages %}
+        <div class="message" style="padding: 10px; margin: 10px 0; border-radius: 5px; 
                     {% if message.tags == 'error' %} background-color: #ffcccc; color: #d8000c; {% endif %}
                     {% if message.tags == 'success' %} background-color: #aee17a; color: #005700; {% endif %}">
-                    {{ message }}
-                </div>
-            {% endfor %}
+            {{ message }}
+        </div>
+        {% endfor %}
         {% endif %}
 
         <div class="container">
-            <!-- Botón para abrir el modal -->
-            <a class="btn btn-dark btn-add" onclick="abrir_modal('{{ dirurl }}')">
-                {% block btnTitle %}
-                {% endblock %}
-            </a>
-
+            <div>
+                <div>
+                    {% block search %}
+                    <form action="{{ dir_search }}" method="GET">
+                        <div class="input-group container mb-3">
+                            <input type="text" name="query" value="{{ query }}" class="form-control"
+                                placeholder="Buscar cliente por nombre/apellido o cédula" id="idInputSearch"
+                                aria-describedby="basic-addon2" />
+                            <button type="submit" class="btn btn-primary mr-1" id="idSearchSp">Buscar</button>
+                        </div>
+                    </form>
+                    {% endblock %}
+                </div>
+                <!-- Botón para abrir el modal -->
+                <a class="btn btn-dark btn-add" onclick="abrir_modal('{{ dirurl }}')">
+                    {% block btnTitle %}
+                    {% endblock %}
+                </a>
+            </div>
             <div class="table-container table-responsive">
                 <h5 class="text-center bg-dark text-white p-3">{{ title_table }}</h5>
                 <table class="table">
@@ -81,17 +94,11 @@
 </div>
 
 <div class="modal fade" id="insertar" role="dialgo"></div>
-<div class="modal fade" id="editar" role = "dialog" ></div>
+<div class="modal fade" id="editar" role="dialog"></div>
 
 
 {% endblock %}
 
 {% block js %}
-    <script src="{% static 'js/ocultar_mensajes.js'%}"></script>
+<script src="{% static 'js/ocultar_mensajes.js'%}"></script>
 {% endblock %}
-
-
-
-
-
-
