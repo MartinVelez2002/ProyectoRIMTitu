@@ -19,11 +19,7 @@ class Calendario_View(LoginRequiredMixin, ListView):
         context['title_table'] = 'Listado del Calendario'
         
         return context
-    def form_valid():
-        calendario = form.save(commit= False)
-        calendario.Estado = True
-        calendario.save()
-        return super().form_valid(form)
+    
     
 class Calendario_Create(LoginRequiredMixin, CreateView):
     model = Calendario_Model

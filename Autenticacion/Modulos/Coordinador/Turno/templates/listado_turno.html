@@ -25,12 +25,18 @@ Registrar un nuevo turno
     {% if i.Estado == True %}
     <td> Activo </td>
     {% else %}
-    <td> Inacitvo </td>
+    <td> Inactivo </td>
     {% endif %}
     <td>
-        <a class="btn btn-danger">
-            Inactivar
-        </a>
+        <form action="{% url 'turno:inactivar_activar_turno' pk=i.id %}" method="post" style="display: inline;">
+            {% csrf_token %}
+
+            {% if i.Estado %}
+            <button type="submit" class="btn btn-success">Inactivar</button> <!-- Verde para Activo -->
+            {% else %}
+            <button type="submit" class="btn btn-danger">Activar</button> <!-- Rojo para Inactivo -->
+            {% endif %}
+        </form>
     </td>
 </tr>
 {% endfor %}

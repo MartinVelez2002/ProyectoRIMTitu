@@ -1,11 +1,11 @@
 const inputs = document.querySelectorAll(".input");
-
-export function addcl() {
+    
+function addcl() {
     let parent = this.parentNode.parentNode;
     parent.classList.add("focus");
 }
 
-export function remcl() {
+function remcl() {
     let parent = this.parentNode.parentNode;
     if (this.value.trim() === "") {
         parent.classList.remove("focus");

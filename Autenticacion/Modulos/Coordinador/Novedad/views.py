@@ -36,17 +36,6 @@ class Novedad_Create(LoginRequiredMixin, CreateView):
         context['action_save'] = self.request.path
         return context
 
-    def form_valid(self, form):
-        novedad = form.save(commit=False)
-        novedad.Estado = True
-        novedad.save()
-        # Primero, guarda la novedad llamando a form_valid del padre
-        response = super().form_valid(form) 
-        # Ahora `self.object` está disponible y se puede usar
-        novedad = self.object 
-        # Registrar en auditoría la acción de creación
-        save_audit(self.request, novedad, action=AuditoriaUser.AccionChoices.CREAR)  
-        return response
         
     def form_invalid(self, form):
         messages.error(self.request, "Favor llenar el formulario")
@@ -92,12 +81,7 @@ class TipoNovedad_Create(LoginRequiredMixin, CreateView):
         context['action_save'] = self.request.path
         
         return context
-    
-    def form_valid(self, form):
-        tipNov = form.save(commit = False)
-        tipNov.Estado = True
-        tipNov.save()
-        return super().form_valid(form)
+
 
 
 class TipoNovedad_Update(LoginRequiredMixin, UpdateView):
