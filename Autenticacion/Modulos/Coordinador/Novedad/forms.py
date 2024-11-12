@@ -4,7 +4,7 @@ from Modulos.Coordinador.Novedad.models import Novedad_Model, TipoNovedad_Model
 class TipoNovedad_form(forms.ModelForm):
     class Meta:
         model = TipoNovedad_Model
-        fields = '__all__'
+        fields = ['Descripcion']
         widgets = {
             'Descripcion': forms.TextInput(
                 attrs={'class': 'input'}

@@ -10,29 +10,13 @@
     --transition-speed: 0.5s;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Arima', sans-serif;
-    display: flex;
-    flex-direction: column;
-    background-color: #F1F3F4;
-    height: 100vh;
-    margin: 0;
-}
 
 .content{
     display: flex;
     flex-direction: row;
-    
 }
-.navbar{
-    position: relative;
-}
+
+
 
 
 /* Sidebar */
@@ -51,7 +35,6 @@ body {
     flex-direction: column; /* Coloca los elementos en una sola columna */
     padding: 0;
     margin: 0;
-    list-style: none;
 }
 
 /* Opcional: Ajustes para mejorar el aspecto del scroll */
@@ -65,7 +48,7 @@ body {
 }
 
 .side-bar::-webkit-scrollbar-thumb:hover {
-    background-color: #555;
+    background-color: #c4c4c4;
 }
 .navbar-toggler-icon{
     color: white;
@@ -122,6 +105,8 @@ body {
 .side-bar .logout {
     display: flex;
     justify-content: center;
+    align-items: center;
+    padding: 10px;
 }
 
 .side-bar .tooltip {

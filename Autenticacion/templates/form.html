@@ -1,9 +1,6 @@
 {% extends 'modulos.html' %}
 {% load static %}
 
-{% block css %}
-<link rel="stylesheet" href="{% static 'css/diseño_forms.css' %}">
-{% endblock %}
 
 {% block header %}
 {% endblock %}
@@ -27,14 +24,23 @@
             <div class="modal-body">
                 <div class="container-regist">
                     {% if messages %}
-                    {% for message in messages %}
-                    <div class="message" style="padding: 10px; margin: 10px 0; border-radius: 5px; 
-            {% if message.tags == 'error' %} background-color: #ffcccc; color: #d8000c; {% endif %}
-            {% if message.tags == 'success' %} background-color: #aee17a; color: #005700; {% endif %}">
-                        {{ message }}
-                    </div>
-                    {% endfor %}
+                        {% for message in messages %}
+                        <div class="message" style="padding: 10px; margin: 10px 0; border-radius: 5px; 
+                            {% if message.tags == 'error' %} background-color: #ffcccc; color: #d8000c; {% endif %}
+                            {% if message.tags == 'success' %} background-color: #aee17a; color: #005700; {% endif %}">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
                     {% endif %}
+                    {% if form.errors %}
+                    <div class="error-message">
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
                     <div class="regist-content">
                         {% block controls %}
 
@@ -45,7 +51,7 @@
 
                 <div class="div-btn">
 
-                    <button type="submit" class="btn ">
+                    <button type="submit" class="btn align-items-center ">
                         Guardar registro
                     </button>
                     <a href="{{cancelar}}" class="btn nav-link text-center align-items-center">

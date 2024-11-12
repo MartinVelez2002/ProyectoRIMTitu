@@ -10,9 +10,9 @@ let toggleBtnNuevaConf = document.getElementById('toggleBtnNuevaConf');
 let clave_registro = document.getElementById('passw1');
 let clave_conf_registro = document.getElementById('passw2');
 let clave_login = document.getElementById('contraseña');
-let clave_actual = document.getElementById('passw_actual'); // Asegúrate que el ID sea correcto
-let clave_nueva = document.getElementById('passw_new'); // Asegúrate que el ID sea correcto
-let clave_nueva_conf = document.getElementById('passw_new_conf'); // Asegúrate que el ID sea correcto
+let clave_actual = document.getElementById('passw_actual'); 
+let clave_nueva = document.getElementById('passw_new'); 
+let clave_nueva_conf = document.getElementById('passw_new_conf'); 
 
 // Función para alternar la visibilidad de la contraseña
 function togglePasswordVisibility(inputField, toggleButton) {
