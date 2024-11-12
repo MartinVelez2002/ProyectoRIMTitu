@@ -319,7 +319,6 @@ class PasswordResetConfirmView(View):
             return redirect('login:login')  # Redirigir al inicio de sesión
         else:
             # Si el formulario no es válido, volver a renderizarlo con errores
-            messages.error(request, 'Las claves no coinciden.')  
             return render(request, self.template_name, {'form': form, 'validlink': True, 'uid': uidb64, 'token': token})
 
 

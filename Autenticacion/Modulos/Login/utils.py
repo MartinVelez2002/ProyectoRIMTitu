@@ -6,7 +6,7 @@ from django.core.exceptions import ValidationError
 def validar_cedula(cedula):
     cedula = str(cedula)
     if not cedula.isdigit():
-        raise ValidationError('La cédula debe contener solo datos numéricos')
+        raise ValidationError('La cédula debe contener solo datos numéricos.')
     
     longitud = len(cedula)
     if longitud != 10:

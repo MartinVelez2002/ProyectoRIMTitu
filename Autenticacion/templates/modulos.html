@@ -15,11 +15,11 @@
     <main class="main-content pt-5">
         {% if messages %}
             {% for message in messages %}
-            <div class="message" style="padding: 10px; margin: 10px 0; border-radius: 5px; 
-                {% if message.tags == 'error' %} background-color: #ffcccc; color: #d8000c; {% endif %}
-                {% if message.tags == 'success' %} background-color: #aee17a; color: #005700; {% endif %}">
-                {{ message }}
-            </div>
+                <div class="message" style="padding: 10px; margin: 10px 0; border-radius: 5px; 
+                    {% if message.tags == 'error' %} background-color: #ffcccc; color: #d8000c; {% endif %}
+                    {% if message.tags == 'success' %} background-color: #aee17a; color: #005700; {% endif %}">
+                    {{ message }}
+                </div>
             {% endfor %}
         {% endif %}
 
@@ -81,14 +81,17 @@
 </div>
 
 <div class="modal fade" id="insertar" role="dialgo"></div>
-<div class="modal fade" id="editar" role = dialog ></div>
+<div class="modal fade" id="editar" role = "dialog" ></div>
 
 
 {% endblock %}
 
 {% block js %}
-<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-    crossorigin="anonymous"></script>
-<script src="{% static 'js/modal.js' %}"></script>
-<script src="{% static 'js/ocultar_mensajes,js'%}"></script>
+    <script src="{% static 'js/ocultar_mensajes.js'%}"></script>
 {% endblock %}
+
+
+
+
+
+

@@ -14,7 +14,7 @@ class TipoNovedad_form(forms.ModelForm):
 class Novedad_form(forms.ModelForm):
     class Meta:
         model = Novedad_Model
-        fields = ['TipoNovedad', 'Descripcion', 'Estado']
+        fields = ['TipoNovedad', 'Descripcion']
         widgets = {
             'Descripcion': forms.TextInput(),
             'TipoNovedad': forms.Select(),
@@ -22,9 +22,8 @@ class Novedad_form(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(Novedad_form, self).__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            # Excluye el campo 'Estado' de recibir los atributos comunes
-            if field_name != 'Estado':
-                field.widget.attrs.update({
-                    'class': 'input',
-                })
+        for field in self.fields.values():
+            field.widget.attrs.update({
+            'class': 'input',
+            'required': 'required'
+        })
