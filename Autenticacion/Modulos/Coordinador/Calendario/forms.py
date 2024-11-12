@@ -6,21 +6,20 @@ from Modulos.Coordinador.Calendario.models import Calendario_Model, TurnUsuario_
 class Calendario_Form (ModelForm):
     class Meta:
         model = Calendario_Model
-        fields = '__all__'
+        fields = ['Fecha_inicio','Fecha_fin']
         widgets = {
             'Fecha_inicio': forms.TimeInput(),
             'Fecha_fin': forms.TimeInput(),
         }
+   
+
     def __init__(self, *args, **kwargs):
         super(Calendario_Form, self).__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            # Excluye el campo 'Estado' de recibir los atributos comunes
-            if field_name != 'Estado':
-                field.widget.attrs.update({
-                    'class': 'input',
-                })
-
-
+        for field in self.fields.values():
+            field.widget.attrs.update({
+            'class': 'input',
+            'required': 'required'
+        })
 
 class TurnUsuarioUbicacion_Form (ModelForm):
     class Meta:
@@ -32,12 +31,12 @@ class TurnUsuarioUbicacion_Form (ModelForm):
             'Turno': forms.Select(),
             'Ubicacion': forms.Select(),
         }
+        
     def __init__(self, *args, **kwargs):
         super(TurnUsuarioUbicacion_Form, self).__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            # Excluye el campo 'Estado' de recibir los atributos comunes
-            if field_name != 'Estado':
-                field.widget.attrs.update({
-                    'class': 'input',
-                })
+        for field in self.fields.values():
+            field.widget.attrs.update({
+            'class': 'input',
+            'required': 'required'
+        })
 

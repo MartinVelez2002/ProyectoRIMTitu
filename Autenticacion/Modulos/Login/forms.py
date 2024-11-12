@@ -74,9 +74,27 @@ class FormularioRegistro(forms.ModelForm):
         password2 = cleaned_data.get('password2')
 
         if password1 and password2 and password1 != password2:
-            self.add_error(None, 'Las claves no coinciden')
+            self.add_error('password1', 'Las contraseñas no coinciden.')
         return cleaned_data
     
+    
+    def clean_cedula(self):
+        cedula = self.cleaned_data.get('cedula')
+        if Usuario.objects.filter(cedula=cedula).exists():
+            raise ValidationError("Este número de cédula ya está registrado.")
+        return cedula
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if Usuario.objects.filter(email=email).exists():
+            raise ValidationError("Este correo electrónico ya está registrado.")
+        return email
+    
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if Usuario.objects.filter(username=username).exists():
+            raise ValidationError("Este nombre de usuario ya está registrado.")
+        return username
     
     
 class FormularioEditarPersonal(FormularioRegistro):
@@ -104,7 +122,7 @@ class FormularioEditarPersonal(FormularioRegistro):
         password2 = cleaned_data.get('password2')
 
         if password1 and password2 and password1 != password2:
-            self.add_error('password2', 'Las claves no coinciden')
+            self.add_error('password2', 'Las contraseñas no coinciden.')
         return cleaned_data
     
 
@@ -156,5 +174,5 @@ class CambiarPasswordForm(forms.Form):
         password_actual = cleaned_data.get('password_actual')
         
         if password1 and password2 and password1 != password2:
-            self.add_error('password1', 'Las claves no coinciden.')
+            self.add_error('password1', 'Las contraseñas no coinciden.')
         return cleaned_data

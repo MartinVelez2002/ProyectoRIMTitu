@@ -23,10 +23,9 @@ Cambiar Clave
             </ul>
         </div>
         <div class="change-pass-content">
-            <form method="POST" id='passwordForm' >
+            <form method="POST" >
                 {% csrf_token %}
                 <!-- Bloque para mostrar mensajes de error -->
-               
                 {% if messages %}
                 <div class="error-message">
                     {% for message in messages %}
@@ -38,7 +37,7 @@ Cambiar Clave
                     <div class="error-message">
                         {% for field in form %}
                             {% for error in field.errors %}
-                                <p>{{ error }}</p>
+                                {{ error }}
                             {% endfor %}
                         {% endfor %}
                     </div>
