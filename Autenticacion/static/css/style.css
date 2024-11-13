@@ -9,16 +9,15 @@
     --arrow-hover-color: #12171e;
     --transition-speed: 0.5s;
 }
-html, body{
+
+body{
     overflow: hidden;
-    height: 100vh;
 }
 
 .content{
     display: flex;
     flex-direction: row;
 }
-
 
 .navbar{
     margin-left: 275px; 
