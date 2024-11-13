@@ -24,25 +24,17 @@
         {% endif %}
 
         <div class="container">
-            <div>
-                <div>
-                    {% block search %}
-                    <form action="{{ dir_search }}" method="GET">
-                        <div class="input-group container mb-3">
-                            <input type="text" name="query" value="{{ query }}" class="form-control"
-                                placeholder="Buscar cliente por nombre/apellido o cédula" id="idInputSearch"
-                                aria-describedby="basic-addon2" />
-                            <button type="submit" class="btn btn-primary mr-1" id="idSearchSp">Buscar</button>
-                        </div>
-                    </form>
-                    {% endblock %}
-                </div>
+            <div class="search-btn">
+                {% block search %}
+                
+                {% endblock %}
                 <!-- Botón para abrir el modal -->
                 <a class="btn btn-dark btn-add" onclick="abrir_modal('{{ dirurl }}')">
                     {% block btnTitle %}
                     {% endblock %}
                 </a>
             </div>
+
             <div class="table-container table-responsive">
                 <h5 class="text-center bg-dark text-white p-3">{{ title_table }}</h5>
                 <table class="table">

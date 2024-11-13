@@ -5,6 +5,15 @@
 Módulo Personal
 {% endblock %}
 
+{% block search %}
+<form action="{{ dir_search }}" method="GET">
+    <div class="input-group">
+        <input type="text" name="query" value="{{ query }}"
+        placeholder = "Filtrar por Nombre y/o Apellido" aria-describedby="basic-addon2" />
+        <button type="submit" class="btn btn-primary mr-1" id="idSearchSp">Buscar</button>
+    </div>
+</form>
+{% endblock %}
 
 {% block btnTitle %}
 Registrar nuevo personal

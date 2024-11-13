@@ -20,7 +20,7 @@ from Modulos.Auditoria.models import AuditoriaUser
 from Modulos.Auditoria.utils import save_audit
 from Modulos.Login.forms import FormularioLogin, FormularioRegistro, CambiarPasswordForm, ForgetPasswordForm, FormularioEditarPersonal, Rol_Form
 from Modulos.Login.models import Usuario, Rol
-
+from django.db.models import Q
 
 class Login(FormView):
     template_name = 'login.html'
@@ -354,8 +354,15 @@ class Usuario_view(LoginRequiredMixin,ListView):
     paginate_by = 5
     
 
-    def get_queryset(self):       
-        # Filtrar usuarios con is_superuser=False
+    def get_queryset(self):
+        query = self.request.GET.get('query')
+        if query:
+            return self.model.objects.filter(
+            Q(nombre__icontains=query) |  # Filtra por nombre
+            Q(apellido__icontains=query) |  # Filtra por apellido
+            (Q(nombre__icontains=query) & Q(apellido__icontains=query))  # Filtra por ambos, nombre y apellido
+        )
+            return self.model.objects.all()       
         return Usuario.objects.filter(is_superuser=False)
         
     
@@ -363,16 +370,12 @@ class Usuario_view(LoginRequiredMixin,ListView):
         context = super().get_context_data(**kwargs)
         context['dirurl'] = reverse('login:registro')
         context['title_table'] = 'Listado de Personal'
-        
+        context['dir_search'] = self.request.path
+        context['query'] = self.request.GET.get('query', '')
     
         return context
     
-    
-    
-    
-    
-    
-    
+
 class Usuario_update(LoginRequiredMixin, UpdateView):
     model = Usuario
     form_class = FormularioEditarPersonal
