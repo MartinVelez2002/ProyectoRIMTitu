@@ -6,7 +6,9 @@ from django.core.mail import send_mail
 from django.contrib import messages
 from django.conf import settings
 from django.template.loader import render_to_string 
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
+from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.cache import never_cache
 from django.http import  HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
@@ -16,6 +18,7 @@ from django.contrib.sessions.models import Session
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, CreateView, ListView, UpdateView
 from django.views.generic.edit import FormView
+from django.utils.decorators import method_decorator
 from Modulos.Auditoria.models import AuditoriaUser
 from Modulos.Auditoria.utils import save_audit
 from Modulos.Login.forms import FormularioLogin, FormularioRegistro, CambiarPasswordForm, ForgetPasswordForm, FormularioEditarPersonal, Rol_Form
@@ -51,7 +54,7 @@ class Login(FormView):
 
         # Validación: Verificar si el usuario está activo
         if not user.estado:
-            form.add_error(None, 'Tu cuenta se encuentra inactiva. No es posible iniciar sesión.')
+            messages.error(self.request, 'Tu cuenta se encuentra inactiva. No es posible iniciar sesión.')
             return self.render_to_response(self.get_context_data(form=form))  # Renderiza el formulario con el mensaje
 
         # Si todo es correcto, iniciar sesión
@@ -63,10 +66,9 @@ class Login(FormView):
         return super().form_valid(form)
 
     def form_invalid(self, form):
-        # Aquí puedes manejar los errores y mensajes adicionales
+        # Agregar un mensaje general de error
         messages.error(self.request, "Por favor, verifica los datos ingresados.")
         return super().form_invalid(form)
-
 
 
 def LogoutUsuario(request):
@@ -97,6 +99,8 @@ class RegistroView(LoginRequiredMixin, CreateView):
         context['titulo'] = 'Crear Personal'
         context['action_save'] = self.request.path
         return context
+    
+    
     
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)    
@@ -198,6 +202,9 @@ class ForgetPassword(FormView):
         return super().form_invalid(form)
 
 
+
+import logging
+logger = logging.getLogger(__name__)
 
 
 class ChangePasswordFirstSession(LoginRequiredMixin, FormView):
@@ -387,11 +394,8 @@ class Usuario_update(LoginRequiredMixin, UpdateView):
 
 
     def form_valid(self, form):
-        # Primero, guarda la novedad llamando a form_valid del padre
         response = super().form_valid(form) 
-        # Ahora `self.object` está disponible y se puede usar
         rol = self.object 
-        # Registrar en auditoría la acción de creación
         save_audit(self.request, rol, action=AuditoriaUser.AccionChoices.MODIFICAR)  
         return response
 
@@ -424,14 +428,12 @@ class Rol_Create(LoginRequiredMixin, CreateView):
         
         return context
     
-    def form_valid(self, form):
-        # Primero, guarda la novedad llamando a form_valid del padre
+    def form_valid(self, form):   
         response = super().form_valid(form) 
-        # Ahora `self.object` está disponible y se puede usar
         rol = self.object 
-        # Registrar en auditoría la acción de creación
         save_audit(self.request, rol, action=AuditoriaUser.AccionChoices.CREAR)  
         return response
+
 
 class Rol_Update(LoginRequiredMixin, UpdateView):
     template_name = 'rol/crear_rol.html'
@@ -448,22 +450,28 @@ class Rol_Update(LoginRequiredMixin, UpdateView):
         return context
 
 
+    def form_valid(self, form):
+        response = super().form_valid(form) 
+        rol = self.object 
+        save_audit(self.request, rol, action=AuditoriaUser.AccionChoices.CREAR)  
+        return response
+    
+    
 class CambiarEstadoMixin(View):
-    model = None  # Este atributo debe ser sobrescrito en cada vista hija
-    redirect_url = None   # URL de redirección según el modelo
+    model = None  
+    redirect_url = None  
 
     def post(self, request, pk):
         if not self.model or not self.redirect_url:
-            return redirect('')   # Si no se ha definido un modelo, redirigir
+            return redirect('')  
 
         # Obtener el objeto según el modelo y pk
         objeto = get_object_or_404(self.model, pk=pk)
 
-        # Cambiar el estado (si está activo, se inactiva; si está inactivo, se activa)
         if objeto.estado:
-            objeto.estado = False  # Inactiva el objeto
+            objeto.estado = False 
         else:
-            objeto.estado = True  # Activa el objeto
+            objeto.estado = True
         objeto.save()
       
         return redirect(self.redirect_url)
@@ -473,6 +481,9 @@ class CambiarEstadoMixin(View):
 class InactivarActivarUsuarioView(CambiarEstadoMixin):
     model = Usuario
     redirect_url = 'login:personal'
+
+
+
 
 class InactivarActivarRolView(CambiarEstadoMixin):
     model = Rol
