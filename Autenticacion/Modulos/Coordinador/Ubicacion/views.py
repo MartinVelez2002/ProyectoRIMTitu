@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, ListView, UpdateView
 from django.urls import reverse_lazy, reverse
 from django.conf import settings
-
+from django.db.models import Q
 from Modulos.Coordinador.Novedad.views import CambiarEstadoMixin
 from Modulos.Coordinador.Ubicacion.models import Ubicacion_Model
 from Modulos.Coordinador.Ubicacion.forms import Ubicacion_Form
@@ -18,7 +18,18 @@ class Ubicacion_View(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['dirurl'] = reverse('ubicacion:crear_ubicacion')
         context['title_table'] = 'Listado de Ubicaciones'
+        context['dir_search'] = self.request.path
+        context['query'] = self.request.GET.get('query', '')
         return context
+
+    def get_queryset(self):
+        query = self.request.GET.get('query')
+        if query:
+            return self.model.objects.filter(
+                Q(Lugar__icontains = query) |
+                Q(Sector__icontains = query)
+            )
+        return self.model.objects.all()
 
 class Ubicacion_Create(LoginRequiredMixin, CreateView):
     model = Ubicacion_Model

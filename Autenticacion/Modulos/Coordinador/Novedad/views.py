@@ -9,7 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.shortcuts import redirect, get_object_or_404
 from django.views import View
-
+from django.db.models import Q
 
 class Novedad_View(LoginRequiredMixin, ListView):
     template_name = 'novedad.html'
@@ -21,7 +21,19 @@ class Novedad_View(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['dirurl'] = reverse('novedad:crear_novedad')
         context['title_table'] = 'Listado de Novedades'
+        context['dir_search'] = self.request.path
+        context['query'] = self.request.GET.get('query', '')
         return context
+    
+    def get_queryset(self):
+        query = self.request.GET.get("query")
+        if query:
+            return self.model.objects.filter(
+                Q(Descripcion__icontains=query) |
+                Q(TipoNovedad__Descripcion__icontains=query)  # Reemplaza "tipo_novedad" con el nombre del campo de relación.
+            )
+        return self.model.objects.all()
+
     
 class Novedad_Create(LoginRequiredMixin, CreateView):
     model = Novedad_Model
@@ -34,6 +46,7 @@ class Novedad_Create(LoginRequiredMixin, CreateView):
         context['titulo'] = 'Formulario: Novedad'
         context['cancelar'] = reverse('novedad:inicio')
         context['action_save'] = self.request.path
+        
         return context
 
         
@@ -65,8 +78,17 @@ class TipoNovedad_View(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['dirurl'] = reverse('novedad:crear_tipNov')
         context['title_table'] = 'Listado Tipo de Novedades'
+        context['dir_search'] = self.request.path
+        context['query'] = self.request.GET.get('query','')
                 
         return context
+    
+    def get_queryset(self):
+        query = self.request.GET.get("query")
+        if query:
+            return self.model.objects.filter(Descripcion__icontains=query)
+        else:
+            return self.model.objects.all()
     
 class TipoNovedad_Create(LoginRequiredMixin, CreateView):
     model = TipoNovedad_Model
