@@ -29,122 +29,138 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="icon" href="{% static 'img/logo_alcaldia_milagro_ico.ico' %}" type="image/x-icon">
 
+
+
+
+
+
+
+
 </head>
 
 <body>
+    <div style="display: flex; flex-direction: column;">
+        <div class="header">
+            {% block header %}
+            <header>
+                {% include 'navbar.html' %}
+            </header>
+            {% endblock %}
+        </div>
 
-    <header>
-        {% include 'navbar.html' %}
-    </header>
 
-    {% block main %}
-    <div class="cards-container">
-        <main class="cards">
-            <a href="#">
-                <div class="card">
-                    <div class="img-container">
-                        <img class="img" src="{% static 'img/modulos/Reportesdelpersonal.png' %}"
-                            alt="ReportesPersonal">
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text"> Reportes del personal </p>
-                    </div>
-                </div>
-            </a>
-            <a href="{% url 'login:listar_rol' %}">
-                <div class="card">
-                    <div class="img-container">
-                        <img class="img" src="{% static 'img/modulos/Rol.png' %}" alt="RolImg">
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text"> Rol </p>
-                    </div>
-                </div>
-            </a>
+        {% block main %}
 
-            <a href="{% url 'turno:listar_turno' %}">
-                <div class="card">
-                    <div class="img-container">
-                        <img class="img" src="{% static 'img/modulos/Turno.png' %}" alt="TurnoImg">
+
+        <div class="cards-container">
+            <main class="cards">
+                <a href="#">
+                    <div class="card">
+                        <div class="img-container">
+                            <img class="img" src="{% static 'img/modulos/Reportesdelpersonal.png' %}"
+                                alt="ReportesPersonal">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"> Reportes del personal </p>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <p class="card-text"> Turno </p>
+                </a>
+                <a href="{% url 'login:listar_rol' %}">
+                    <div class="card">
+                        <div class="img-container">
+                            <img class="img" src="{% static 'img/modulos/Rol.png' %}" alt="RolImg">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"> Rol </p>
+                        </div>
                     </div>
-                </div>
-            </a>
-            <a href="{% url 'login:personal' %}">
-                <div class="card">
-                    <div class="img-container">
-                        <img class="img" src="{% static 'img/modulos/Registrodelpersonal.png' %}" alt="RegPersonalImg">
+                </a>
+
+                <a href="{% url 'turno:listar_turno' %}">
+                    <div class="card">
+                        <div class="img-container">
+                            <img class="img" src="{% static 'img/modulos/Turno.png' %}" alt="TurnoImg">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"> Turno </p>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <p class="card-text"> Registro de personal </p>
+                </a>
+                <a href="{% url 'login:personal' %}">
+                    <div class="card">
+                        <div class="img-container">
+                            <img class="img" src="{% static 'img/modulos/Registrodelpersonal.png' %}"
+                                alt="RegPersonalImg">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"> Registro de personal </p>
+                        </div>
                     </div>
-                </div>
-            </a>
-            <a href="{% url 'novedad:inicio_tipoNov' %}">
-                <div class="card">
-                    <div class="img-container">
-                        <img class="img" src="{% static 'img/modulos/TipoNovedad.png' %}" alt="TipoNovImg">
+                </a>
+                <a href="{% url 'novedad:inicio_tipoNov' %}">
+                    <div class="card">
+                        <div class="img-container">
+                            <img class="img" src="{% static 'img/modulos/TipoNovedad.png' %}" alt="TipoNovImg">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"> Tipo de Novedades </p>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <p class="card-text"> Tipo de Novedades </p>
+                </a>
+                <a href="{% url 'novedad:inicio' %}">
+                    <div class="card">
+                        <div class="img-container">
+                            <img class="img" src="{% static 'img/modulos/Novedad.png' %}" alt="NovedadImg">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"> Novedades </p>
+                        </div>
                     </div>
-                </div>
-            </a>
-            <a href="{% url 'novedad:inicio' %}">
-                <div class="card">
-                    <div class="img-container">
-                        <img class="img" src="{% static 'img/modulos/Novedad.png' %}" alt="NovedadImg">
+                </a>
+                <a href="{% url 'ubicacion:inicio' %}">
+                    <div class="card">
+                        <div class="img-container">
+                            <img class="img" src="{% static 'img/modulos/Ubicacion.png' %}" alt="UbicacionImg">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"> Lugares de Guardia </p>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <p class="card-text"> Novedades </p>
+                </a>
+                <a href="{% url 'calendario:listado_calendario' %}">
+                    <div class="card">
+                        <div class="img-container">
+                            <img class="img" src="{% static 'img/modulos/Calendario.png' %}" alt="CalendarioImg">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"> Periodo </p>
+                        </div>
                     </div>
-                </div>
-            </a>
-            <a href="{% url 'ubicacion:inicio' %}">
-                <div class="card">
-                    <div class="img-container">
-                        <img class="img" src="{% static 'img/modulos/Ubicacion.png' %}" alt="UbicacionImg">
+                </a>
+                <a href="{% url 'calendario:listar_planificacion' %}">
+                    <div class="card">
+                        <div class="img-container">
+                            <img class="img" src="{% static 'img/modulos/Planificacion.png' %}" alt="PlanificacionImg">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"> Planificación </p>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <p class="card-text"> Lugares de Guardia </p>
+                </a>
+                <a href="{% url 'auditoria:listar_auditoria' %}">
+                    <div class="card">
+                        <div class="img-container">
+                            <img class="img" src="{% static 'img/modulos/Auditoria.png' %}" alt="PlanificacionImg">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"> Auditoría </p>
+                        </div>
                     </div>
-                </div>
-            </a>
-            <a href="{% url 'calendario:listado_calendario' %}">
-                <div class="card">
-                    <div class="img-container">
-                        <img class="img" src="{% static 'img/modulos/Calendario.png' %}" alt="CalendarioImg">
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text"> Periodo </p>
-                    </div>
-                </div>
-            </a>
-            <a href="{% url 'calendario:listar_planificacion' %}">
-                <div class="card">
-                    <div class="img-container">
-                        <img class="img" src="{% static 'img/modulos/Planificacion.png' %}" alt="PlanificacionImg">
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text"> Planificación </p>
-                    </div>
-                </div>
-            </a>
-            <a href="{% url 'auditoria:listar_auditoria' %}">
-                <div class="card">
-                    <div class="img-container">
-                        <img class="img" src="{% static 'img/modulos/Auditoria.png' %}" alt="PlanificacionImg">
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text"> Auditoría </p>
-                    </div>
-                </div>
-            </a>
-        </main>
+                </a>
+            </main>
+        </div>
+        {% endblock %}
     </div>
-    {% endblock %}
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/1a76f9833f.js" crossorigin="anonymous"></script>
     <!-- JS - Bootstrap -->
