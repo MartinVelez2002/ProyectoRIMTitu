@@ -104,8 +104,8 @@
 
 .main-content {
     position: relative;
-    top:100px;
-    margin-left: 400px; /* Margen para evitar superposición con el sidebar */
+    top:70px;
+    margin-left: 300px; /* Margen para evitar superposición con el sidebar */
     flex: 1;
     padding: 20px 10px;
     background-color: var(--bg-color);
