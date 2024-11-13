@@ -496,3 +496,4 @@ class InactivarActivarUsuarioView(CambiarEstadoMixin):
 class InactivarActivarRolView(CambiarEstadoMixin):
     model = Rol
     redirect_url = 'login:listar_rol'
+
