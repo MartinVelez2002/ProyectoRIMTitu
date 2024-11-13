@@ -34,15 +34,7 @@ Modulo Auditoría
 <tr>
     <td> {{ i.tabla }} </td>
     <td> {{ i.registro_id }} </td>
-    {% if i.descripcion == 'M' %}
-    <td> Modificar </td>
-    {% elif i.descripcion == 'C' %}
-    <td> Crear </td>
-    {% elif i.descripcion == 'A' %}
-    <td> Activar </td>
-    {% elif i.descripcion == 'I' %}
-    <td> Inactivar </td>
-    {% endif %}
+    <td> {{ i.descripcion }} </td>
     <td> {{ i.fecha }} </td>
     <td> {{ i.hora }} </td>
     <td> {{ i.nombre_maquina }} </td>
