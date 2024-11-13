@@ -497,3 +497,6 @@ class InactivarActivarRolView(CambiarEstadoMixin):
     model = Rol
     redirect_url = 'login:listar_rol'
 
+
+class Acceso_Restringido(LoginRequiredMixin, TemplateView):
+        template_name = 'acceso_restringido.html'

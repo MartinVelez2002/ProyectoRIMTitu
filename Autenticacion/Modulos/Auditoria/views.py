@@ -18,4 +18,4 @@ class Auditoria_View(LoginRequiredMixin, ListView):
         return context
     
 
-# Create your views here.
+

@@ -9,10 +9,7 @@
     --arrow-hover-color: #12171e;
     --transition-speed: 0.5s;
 }
-html, body{
-    overflow: hidden;
-    height: 100vh;
-}
+
 
 .content{
     display: flex;
@@ -20,9 +17,6 @@ html, body{
 }
 
 
-.navbar{
-    margin-left: 275px; 
-}
 
 .side-bar {
     padding: 40px 0px;
@@ -118,7 +112,6 @@ html, body{
     margin-left: 275px; /* Margen para evitar superposición con el sidebar */
     flex: 1;
     padding: 20px 10px;
-    overflow-y: auto;
     background-color: var(--bg-color);
     transition: margin-left var(--transition-speed) ease;
 }

@@ -41,6 +41,8 @@ urlpatterns = [
 
     path('editar_rol/<int:pk>', Rol_Update.as_view(), name = 'editar_rol' ),
 
+
+    path('acceso_restringido/',Acceso_Restringido.as_view(), name = 'acceso_restringido')
 ]
     
     
