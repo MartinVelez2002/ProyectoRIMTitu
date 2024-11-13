@@ -39,7 +39,10 @@ urlpatterns = [
     
     path('crear_rol/', Rol_Create.as_view(), name = 'crear_rol'),
 
-    path('editar_rol/<int:pk>', Rol_Update.as_view(), name = 'editar_rol' )
+    path('editar_rol/<int:pk>', Rol_Update.as_view(), name = 'editar_rol' ),
+
 ]
+    
+    
 
 
