@@ -29,10 +29,9 @@
                 
                 {% endblock %}
                 <!-- Botón para abrir el modal -->
-                <a class="btn btn-dark btn-add" onclick="abrir_modal('{{ dirurl }}')">
-                    {% block btnTitle %}
-                    {% endblock %}
-                </a>
+                {% block btnTitle %}
+                
+                {% endblock %}
             </div>
 
             <div class="table-container table-responsive">
