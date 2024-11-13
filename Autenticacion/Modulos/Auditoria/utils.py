@@ -23,7 +23,6 @@ def save_audit(request, model, action):
     tabla_auditoria.save()
 
 def get_action_description(model, action):
-    """Obtiene una descripción más detallada de la acción según el modelo y la acción."""
     if action == AuditoriaUser.AccionChoices.MODIFICAR:
         return f"Modificó un registro en la tabla {model.__class__.__name__} con ID {model.id}."
     elif action == AuditoriaUser.AccionChoices.CREAR:
