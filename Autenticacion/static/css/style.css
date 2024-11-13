@@ -11,25 +11,27 @@
 }
 
 
-.content{
-    display: flex;
-    flex-direction: row;
-}
-
 
 
 .side-bar {
-    padding: 40px 0px;
+    position: fixed;
+    top: 70px;
+    left: 0;
+    height: 100%;
+    width: 250px; /* Adjust as needed */
+    z-index: 500; /* Lower than the navbar's z-index */
+    background-color: #f8f9fa;
+}
+
+.side-bar {
+    padding: 20px;
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     width: 275px;
-    height: 100vh;
-    position: fixed;
-    top: 0;
     background-color: var(--sidebar-bg);
     transition: width var(--transition-speed) ease;
-    overflow-y: auto; /* Agrega scroll vertical si el contenido sobrepasa el espacio */
-    z-index: 1000; /* Asegura que el sidebar esté sobre el contenido principal */
+    overflow-y: scroll; /* Agrega scroll vertical si el contenido sobrepasa el espacio */
+   
 }
 
 .side-bar .nav {
@@ -98,18 +100,12 @@
     width: 80px;
 }
 
-.side-bar.active .tooltip {
-    display: block;
-    position: absolute;
-    left: 80px;
-    background-color: var(--sidebar-hover-bg);
-    padding: 5px;
-    border-radius: 4px;
-    white-space: nowrap;
-}
+
 
 .main-content {
-    margin-left: 275px; /* Margen para evitar superposición con el sidebar */
+    position: relative;
+    top:100px;
+    margin-left: 400px; /* Margen para evitar superposición con el sidebar */
     flex: 1;
     padding: 20px 10px;
     background-color: var(--bg-color);
