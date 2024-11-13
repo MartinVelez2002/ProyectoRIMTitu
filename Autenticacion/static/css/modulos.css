@@ -49,6 +49,16 @@
 
 
 
+/* Navbar */
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure this is higher than the sidebar's z-index */
+    
+}
+
+
 .container-x {
     margin-top: 200px;
     text-align: center;
