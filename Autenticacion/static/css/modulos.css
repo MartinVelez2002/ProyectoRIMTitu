@@ -1,18 +1,8 @@
-/* .cards-container {
+.cards-container {
     display: flex;
     justify-content: center;
     padding: 50px 20px;
     align-items: center;
-} */
-
-.cards-container {
-    display: flex;
-    justify-content: center;
-    height: 100vh;
-    overflow-y: auto; /* Habilita el scroll vertical si el contenido excede la altura */
-    padding: 50px 20px;
-    margin: auto;
-    box-sizing: border-box;
 }
 
 .cards {
