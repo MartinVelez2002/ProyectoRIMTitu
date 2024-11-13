@@ -11,6 +11,7 @@ class Auditoria_View(LoginRequiredMixin, ListView):
     paginate_by = 10
     
     def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         context['dir_search'] = self.request.path
         context['query'] = self.request.GET.get('query', '')
     

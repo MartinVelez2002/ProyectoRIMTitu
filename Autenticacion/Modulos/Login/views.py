@@ -369,8 +369,7 @@ class Usuario_view(LoginRequiredMixin,ListView):
             # Aplicar el filtro final a la queryset
             return self.model.objects.filter(filter_conditions)
         
-        return self.model.objects.all()  # Si no hay query, devuelve todos los resultados
-        
+        return Usuario.objects.filter(is_superuser=False) # Si no hay query, devuelve todos los resultados
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -378,6 +377,8 @@ class Usuario_view(LoginRequiredMixin,ListView):
         context['title_table'] = 'Listado de Personal'
         context['dir_search'] = self.request.path
         context['query'] = self.request.GET.get('query', '')
+
+        return context
    
     
 

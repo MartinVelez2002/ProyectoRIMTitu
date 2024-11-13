@@ -29,6 +29,7 @@ urlpatterns = [
     path('ubicacion/', include('Modulos.Coordinador.Ubicacion.urls')),
     path('turno/', include('Modulos.Coordinador.Turno.urls')),
     path('calendario/', include('Modulos.Coordinador.Calendario.urls')),
+    path('auditoria/', include('Modulos.Auditoria.urls'))
 ]   
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
