@@ -1,0 +1,26 @@
+{% extends 'modulos.html' %}
+{% load static %}
+
+{% block title %}
+Modulo Auditoría
+{% endblock %}
+
+{% block search %}
+<form action="{{ dir_search }}" method="GET">
+    <div class="input-group">
+        <input type="text" name="query" value="{{ query }}" placeholder="Filtra por Tabla o Acción"
+            aria-describedby="basic-addon2" />
+        <button type="submit" class="btn btn-primary mr-1" id="idSearchSp">Buscar</button>
+    </div>
+</form>
+{% endblock %}
+
+{% block thead %}
+<th> Tabla </th>
+<th> Id de Registro </th>
+<th> Acción </th>
+<th> Fecha de la acción </th>
+<th> Hora </th>
+<th> Nombre de la máquina </th>
+<th> Estación </th>
+{% endblock %}

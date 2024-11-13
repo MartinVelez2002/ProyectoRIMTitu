@@ -357,13 +357,19 @@ class Usuario_view(LoginRequiredMixin,ListView):
     def get_queryset(self):
         query = self.request.GET.get('query')
         if query:
-            return self.model.objects.filter(
-            Q(nombre__icontains=query) |  # Filtra por nombre
-            Q(apellido__icontains=query) |  # Filtra por apellido
-            (Q(nombre__icontains=query) & Q(apellido__icontains=query))  # Filtra por ambos, nombre y apellido
-        )
-            return self.model.objects.all()       
-        return Usuario.objects.filter(is_superuser=False)
+            # Divide el término de búsqueda en palabras
+            query_parts = query.split()  # Divide el query en una lista de palabras
+            
+            # Crear un filtro que busque cualquier parte del nombre o apellido
+            filter_conditions = Q()
+            for part in query_parts:
+                # Añadir a la condición para cada palabra
+                filter_conditions |= Q(nombre__icontains=part) | Q(apellido__icontains=part)
+
+            # Aplicar el filtro final a la queryset
+            return self.model.objects.filter(filter_conditions)
+        
+        return self.model.objects.all()  # Si no hay query, devuelve todos los resultados
         
     
     def get_context_data(self, **kwargs):
@@ -372,8 +378,7 @@ class Usuario_view(LoginRequiredMixin,ListView):
         context['title_table'] = 'Listado de Personal'
         context['dir_search'] = self.request.path
         context['query'] = self.request.GET.get('query', '')
-    
-        return context
+   
     
 
 class Usuario_update(LoginRequiredMixin, UpdateView):
