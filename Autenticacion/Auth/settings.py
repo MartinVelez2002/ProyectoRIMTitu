@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 import os
+from django.contrib.messages import constants as messages
+from django.urls import reverse_lazy
 from dotenv import load_dotenv
 from pathlib import Path
 load_dotenv()
@@ -152,7 +154,9 @@ MEDIA_URL = '/media/'
 
 AUTH_USER_MODEL = 'Login.Usuario'
 
+LOGIN_URL = reverse_lazy('login')  # Reemplaza 'login' con el nombre que uses en urls.py
 
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 # Configuración de tiempo de inactividad
 

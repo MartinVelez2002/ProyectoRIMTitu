@@ -6,15 +6,13 @@ from django.core.mail import send_mail
 from django.contrib import messages
 from django.conf import settings
 from django.template.loader import render_to_string 
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import login, logout
 from django.http import  HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
-from django.utils.decorators import method_decorator
+from django.contrib.auth.hashers import check_password
 from django.views import View
 from django.contrib.sessions.models import Session
-from django.views.decorators.csrf import csrf_protect
-from django.views.decorators.cache import never_cache
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, CreateView, ListView, UpdateView
 from django.views.generic.edit import FormView
@@ -24,53 +22,50 @@ from Modulos.Login.forms import FormularioLogin, FormularioRegistro, CambiarPass
 from Modulos.Login.models import Usuario, Rol
 
 
-
-
 class Login(FormView):
     template_name = 'login.html'
     form_class = FormularioLogin
     success_url = reverse_lazy('login:index')
     change_password_url = reverse_lazy('login:cambiar_clave')
-    
-    
-    @method_decorator(csrf_protect)
-    @method_decorator(never_cache)
+
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return HttpResponseRedirect(self.get_success_url())
-        else:
-            return super(Login,self).dispatch(request,*args,**kwargs)
-
+        return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
-        username = form.cleaned_data['username']
-        password = form.cleaned_data['password']
-        
-        user = authenticate(request=self.request, username=username, password=password)
-        
-        if user is not None:
-            # Verificar si el usuario está activo
-            if not user.estado:
-                messages.error(self.request, "Tu cuenta está inactiva. Contacta al administrador.")
-                return self.form_invalid(form)
-            
-            # Iniciar sesión si el usuario está activo
-            login(self.request, user)
-                
-            
-            if user.primera_sesion:
-                return HttpResponseRedirect(self.change_password_url)
-            return super().form_valid(form)
-        
-        
-        return self.form_invalid(form)
-        
-  
-        
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password')
+
+        # Validación: Verificar si el usuario existe
+        try:
+            user = Usuario.objects.get(username=username)
+        except Usuario.DoesNotExist:
+            form.add_error(None, 'El usuario ingresado no existe.')
+            return self.form_invalid(form)
+
+        # Validación: Verificar si la contraseña es correcta
+        if not check_password(password, user.password):
+            form.add_error(None, 'Contraseña incorrecta.')
+            return self.form_invalid(form)
+
+        # Validación: Verificar si el usuario está activo
+        if not user.estado:
+            form.add_error(None, 'Tu cuenta se encuentra inactiva. No es posible iniciar sesión.')
+            return self.render_to_response(self.get_context_data(form=form))  # Renderiza el formulario con el mensaje
+
+        # Si todo es correcto, iniciar sesión
+        login(self.request, user)
+
+        # Redirigir si es su primera sesión
+        if user.primera_sesion:
+            return HttpResponseRedirect(self.change_password_url)
+        return super().form_valid(form)
+
     def form_invalid(self, form):
+        # Aquí puedes manejar los errores y mensajes adicionales
+        messages.error(self.request, "Por favor, verifica los datos ingresados.")
         return super().form_invalid(form)
-
-
 
 
 
