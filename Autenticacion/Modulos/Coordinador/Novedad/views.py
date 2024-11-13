@@ -103,21 +103,20 @@ class TipoNovedad_Update(LoginRequiredMixin, UpdateView):
 
 
 class CambiarEstadoMixin(View):
-    model = None  # Este atributo debe ser sobrescrito en cada vista hija
-    redirect_url = None   # URL de redirección según el modelo
+    model = None  
+    redirect_url = None   
 
     def post(self, request, pk):
         if not self.model or not self.redirect_url:
-            return redirect('')   # Si no se ha definido un modelo, redirigir
+            return redirect('')   
 
         # Obtener el objeto según el modelo y pk
         objeto = get_object_or_404(self.model, pk=pk)
-
-        # Cambiar el estado (si está activo, se inactiva; si está inactivo, se activa)
+        
         if objeto.Estado:
-            objeto.Estado = False  # Inactiva el objeto
+            objeto.Estado = False 
         else:
-            objeto.Estado = True  # Activa el objeto
+            objeto.Estado = True  
         objeto.save()
       
         return redirect(self.redirect_url)
@@ -127,8 +126,8 @@ class CambiarEstadoMixin(View):
     
 class InactivarActivarTipoNovedadView(CambiarEstadoMixin):
     model = TipoNovedad_Model
-    redirect_url = 'novedad:inicio_tipoNov'  # Redirección específica para TipoNovedad_Model
+    redirect_url = 'novedad:inicio_tipoNov'  
 
 class InactivarActivarNovedadView(CambiarEstadoMixin):
     model = Novedad_Model
-    redirect_url = 'novedad:inicio'  # Redirección específica para Novedad_Model
+    redirect_url = 'novedad:inicio' 

@@ -62,4 +62,4 @@ class Turno_Update(LoginRequiredMixin, UpdateView):
     
 class InactivarActivarTurnoView(CambiarEstadoMixin):
     model = Turno_Model
-    redirect_url = 'turno:listar_turno'  # Redirección específica para TipoNovedad_Model
+    redirect_url = 'turno:listar_turno'  

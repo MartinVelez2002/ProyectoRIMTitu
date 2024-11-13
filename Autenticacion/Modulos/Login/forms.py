@@ -2,6 +2,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django import forms
 from django.core.exceptions import ValidationError
 from Modulos.Login.models import Usuario, Rol
+from django.contrib.auth.hashers import check_password
 
 class Rol_Form(forms.ModelForm):
     class Meta: 
@@ -13,12 +14,16 @@ class Rol_Form(forms.ModelForm):
             })
         }
 
-class FormularioLogin(AuthenticationForm):
+class FormularioLogin(forms.Form):
+    username = forms.CharField(max_length=15)
+    password = forms.CharField(widget=forms.PasswordInput)
+
     def __init__(self, *args, **kwargs):
         super(FormularioLogin, self).__init__(*args, **kwargs)
         self.fields['username'].widget.attrs['class'] = 'input'
         self.fields['password'].widget.attrs.update({'class': 'input', 'id': 'contraseña'})
 
+    
 
 
 class FormularioRegistro(forms.ModelForm):

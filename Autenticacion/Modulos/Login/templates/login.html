@@ -25,7 +25,17 @@
 		<div class="login-content">
 			<form method="POST">
 				{% csrf_token %}
-
+				
+				<div style='font-size: 1.2em'>
+                    {% if form.non_field_errors %}
+                        <div class="message" style="padding: 10px; margin: 10px 0; border-radius: 5px; background-color: #ffcccc; color: #d8000c;">
+                            {% for error in form.non_field_errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+				
 				<div style='font-size: 1.2em'>
 				{% if messages %}
 					{% for message in messages %}
@@ -37,6 +47,7 @@
 					{% endfor %}
 				{% endif %}
 				</div>
+
 				<h2 class="title">Bienvenido</h2>
 				<div class="input-div one">
 					<div class="i">
