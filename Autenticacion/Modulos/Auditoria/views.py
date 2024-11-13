@@ -14,6 +14,8 @@ class Auditoria_View(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['dir_search'] = self.request.path
         context['query'] = self.request.GET.get('query', '')
+        context['title_table'] = 'Tabla de Auditoría'
+        return context
     
 
 # Create your views here.

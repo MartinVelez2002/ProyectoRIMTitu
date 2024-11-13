@@ -5,6 +5,9 @@
 Modulo Auditoría
 {% endblock %}
 
+{% block btnTitle %}
+{% endblock %}
+
 {% block search %}
 <form action="{{ dir_search }}" method="GET">
     <div class="input-group">
@@ -28,20 +31,22 @@ Modulo Auditoría
 
 {% block tbody %}
 {% for i in auditoria %}
-<th> {{ i.tabla }} </th>
-<th> {{ i.registro_id }} </th>
-{% if i.descripcion == 'M' %}
-<th> Modificar </th>
-{% elif i.descripcion == 'C' %}
-<th> Crear </th>
-{% elif i.descripcion == 'A' %}
-<th> Activar </th>
-{% elif i.descripcion == 'I' %}
-<th> Inactivar </th>
-{% endif %}
-<th> {{ i.fecha }} </th>
-<th> {{ i.hora }} </th>
-<th> {{ i.nombre_maquina }} </th>
-<th> {{ i.estacion }} </th>
+<tr>
+    <td> {{ i.tabla }} </td>
+    <td> {{ i.registro_id }} </td>
+    {% if i.descripcion == 'M' %}
+    <td> Modificar </td>
+    {% elif i.descripcion == 'C' %}
+    <td> Crear </td>
+    {% elif i.descripcion == 'A' %}
+    <td> Activar </td>
+    {% elif i.descripcion == 'I' %}
+    <td> Inactivar </td>
+    {% endif %}
+    <td> {{ i.fecha }} </td>
+    <td> {{ i.hora }} </td>
+    <td> {{ i.nombre_maquina }} </td>
+    <td> {{ i.estacion }} </td>
+</tr>
 {% endfor %}
 {% endblock %}
