@@ -35,9 +35,10 @@ Registrar un nuevo rol
             {% csrf_token %}
 
             {% if i.estado %}
-            <button type="submit" class="btn btn-success">Inactivar</button> <!-- Verde para Activo -->
+            <button type="submit" class="btn btn-danger">Inactivar</button> 
             {% else %}
-            <button type="submit" class="btn btn-danger">Activar</button> <!-- Rojo para Inactivo -->
+            <button type="submit" class="btn btn-success">Activar</button> 
+           
             {% endif %}
         </form>
 

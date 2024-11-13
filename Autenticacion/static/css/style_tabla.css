@@ -24,6 +24,10 @@ body {
     width: 100%;
 }
 
+.table td, .table th {
+    vertical-align: middle; /* Alinea el contenido verticalmente al centro */
+}
+
 thead {
     background-color: #12171e;
     color: #fff;

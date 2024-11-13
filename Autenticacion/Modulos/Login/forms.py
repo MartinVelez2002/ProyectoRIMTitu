@@ -7,7 +7,7 @@ from django.contrib.auth.hashers import check_password
 class Rol_Form(forms.ModelForm):
     class Meta: 
         model = Rol
-        fields = '__all__'
+        fields = ['name']
         widgets = {
             'name': forms.TextInput(attrs={
                 'class':'input'
@@ -114,21 +114,36 @@ class FormularioEditarPersonal(FormularioRegistro):
         if 'password2' in self.fields:
             del self.fields['password2']
     
-    
-    """
-        Validar contraseñas
-        Método que valida que ambas contraseñas sean iguales, antes de ser encriptadas y guardadas
-        en la base de datos. Se retorna la clave válida.
-    """
-    
-    def clean(self):
-        cleaned_data = super().clean()
-        password1 = cleaned_data.get('password1')
-        password2 = cleaned_data.get('password2')
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        user = self.instance  # Obtiene el usuario actual que se está editando
 
-        if password1 and password2 and password1 != password2:
-            self.add_error('password2', 'Las contraseñas no coinciden.')
-        return cleaned_data
+        # Si el username no ha cambiado, no validamos la unicidad
+        if username != user.username and Usuario.objects.filter(username=username).exists():
+            raise ValidationError("El usuario ya está registrado.")
+        
+        return username
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        user = self.instance  # Obtiene el usuario actual que se está editando
+
+        # Si el email no ha cambiado, no validamos la unicidad
+        if email != user.email and Usuario.objects.filter(email=email).exists():
+            raise ValidationError("El correo ya está registrado.")
+        
+        return email
+
+    def clean_cedula(self):
+        cedula = self.cleaned_data['cedula']
+        user = self.instance  # Obtiene el usuario actual que se está editando
+
+        # Si la cédula no ha cambiado, no validamos la unicidad
+        if cedula != user.cedula and Usuario.objects.filter(cedula=cedula).exists():
+            raise ValidationError("La cédula ya está registrada.")
+        
+        return cedula
+   
     
 
 

@@ -6,9 +6,7 @@ from django.core.mail import send_mail
 from django.contrib import messages
 from django.conf import settings
 from django.template.loader import render_to_string 
-from django.contrib.auth import login, logout, authenticate
-from django.views.decorators.csrf import csrf_protect
-from django.views.decorators.cache import never_cache
+from django.contrib.auth import login, logout
 from django.http import  HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
@@ -18,7 +16,6 @@ from django.contrib.sessions.models import Session
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, CreateView, ListView, UpdateView
 from django.views.generic.edit import FormView
-from django.utils.decorators import method_decorator
 from Modulos.Auditoria.models import AuditoriaUser
 from Modulos.Auditoria.utils import save_audit
 from Modulos.Login.forms import FormularioLogin, FormularioRegistro, CambiarPasswordForm, ForgetPasswordForm, FormularioEditarPersonal, Rol_Form
@@ -141,6 +138,9 @@ class RegistroView(LoginRequiredMixin, CreateView):
                 html_message=html_message
             )
             
+             
+            # Llamar a la auditoría después de crear el usuario
+            save_audit(request, nuevo_usuario, action=AuditoriaUser.AccionChoices.CREAR)
             
             messages.success(request, 'Usuario registrado con éxito.')
             return redirect(self.success_url)
@@ -201,10 +201,6 @@ class ForgetPassword(FormView):
         messages.error(self.request, 'Por favor, ingrese un correo válido.')
         return super().form_invalid(form)
 
-
-
-import logging
-logger = logging.getLogger(__name__)
 
 
 class ChangePasswordFirstSession(LoginRequiredMixin, FormView):
@@ -473,7 +469,10 @@ class CambiarEstadoMixin(View):
         else:
             objeto.estado = True
         objeto.save()
-      
+
+         # Registrar la auditoría para el cambio de estado
+        save_audit(request, objeto, action=AuditoriaUser.AccionChoices.INACTIVAR if objeto.estado == False else AuditoriaUser.AccionChoices.ACTIVAR)
+        
         return redirect(self.redirect_url)
 
     
