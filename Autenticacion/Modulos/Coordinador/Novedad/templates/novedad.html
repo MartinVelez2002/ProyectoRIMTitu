@@ -6,13 +6,23 @@
 Modulo Novedad
 {% endblock %}
 
+{% block search %}
+<form action="{{ dir_search }}" method="GET">
+    <div class="input-group">
+        <input type="text" name="query" value="{{ query }}"
+        placeholder = "Filtra por Tipos de Novedades o Novedades" aria-describedby="basic-addon2" />
+        <button type="submit" class="btn btn-primary mr-1" id="idSearchSp">Buscar</button>
+    </div>
+</form>
+{% endblock %}
+
 {% block btnTitle %}
 Registrar nueva novedad
 {% endblock %}
 
 {% block thead %}
 <th> Tipo de Novedad </th>
-<th> Descripción </th>
+<th> Novedad </th>
 <th> Estado </th>
 <th> Acciones </th>
 {% endblock %}

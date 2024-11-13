@@ -20,7 +20,9 @@ class Turn_View(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['dirurl'] = reverse('turno:crear_turno')
         context['title_table'] = 'Listado de turnos'
-
+        context['dir_search'] = self.request.path
+        context['placeholder'] = 'Filtre por tipos de novedades'
+        
         return context
     
 

@@ -35,7 +35,6 @@ thead {
     border-bottom: 1px solid #ddd;
 }
 
-
 .table tbody tr:nth-child(even) {
     background-color: #f9f9f9;
 }
@@ -64,15 +63,40 @@ thead {
     opacity: 0.85;
 }
 
+/* CSS DE BUSCADOR */
+.search-btn{
+    display: grid;
+    grid-template-columns: repeat(1, 60% 40%);
+    column-gap: 5px;
+}
 
-.btn-add{
-    position: relative;
-    left: 65%;
+.search-btn input{
+    width: 400px;
+    border-width: 1px;
+    border-color: gainsboro;
+    border-radius: 10px;
+    color: gray;
+    padding: 10px;
+
+}
+.search-btn form{
+    margin: auto;
+}
+.search-btn .btn-add{
+    margin: auto;
+    display: flex;
+    align-items: center;
+}
+
+@media (width < 1025) {
+    .search-btn{
+        grid-template-columns: repeat(2, auto);
+    }
 }
 
 @media (width < 875px) {
     .btn-add{
-        left: 30%;
+        
     }
 }
 
