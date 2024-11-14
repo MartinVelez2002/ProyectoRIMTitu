@@ -8,7 +8,7 @@
 
 .cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
     gap: 80px; 
     width: 100%;
     max-width: 1200px;
@@ -26,12 +26,13 @@
     cursor: pointer;
 }
 
+
 .cards > a{
     color: inherit;
     text-decoration: none;
     display: block;
-    height: 100%;
-    width: 100%;
+    width: 200px;
+    justify-self: center;
 }
 
 .card .img-container{
