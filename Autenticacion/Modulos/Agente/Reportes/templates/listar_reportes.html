@@ -1,0 +1,38 @@
+{% extends 'modulos.html '%}
+{% load static %}
+
+{% block title %}
+Módulo Reportes
+{% endblock %}
+
+
+{% block btnTitle %}
+<a class="btn btn-dark btn-add" onclick="abrir_modal('{{ dirurl }}')">
+    Registrar un nuevo turno
+</a>
+{% endblock %}
+
+
+{% block thead %}
+<th> Fecha </th>
+<th> Hora </th>
+<th> Novedad </th>
+<th> Prioridad </th>
+<th> Estado del incidente </th>
+<th> Evidencia </th>
+<th> Descripción </th>
+{% endblock %}
+
+{% block tbody %}
+{% if rep %}
+{% for i in rep %}
+<tr>
+    <td> {{ i.fecha }} </td>
+    <td> {{ i.hora }} </td>
+    <td> {{ i.novedad }} </td>
+    <td> {{ i.prioridad }} </td>
+    <td> {{ i.estado_incidente }} </td>
+    <td> {{ i.evidencia }} </td>
+    <td> {{ i.descripcion }} </td>
+</tr>
+{% endblock %}
