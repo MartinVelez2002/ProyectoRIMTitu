@@ -35,13 +35,10 @@ class Login(FormView):
         if request.user.is_authenticated:
             return HttpResponseRedirect(self.get_success_url())
         
-        # Si no está autenticado, redirige al login con 'next' para volver a esta vista
-        if not request.user.is_authenticated:
-            return redirect(f'/accounts/login/?next={request.path}')
-        
-        # Si no hubo redirección, ejecuta la lógica de dispatch normal
+        # Renderiza la vista si ninguna redirección fue ejecutada
         return super().dispatch(request, *args, **kwargs)
-
+    
+    
     def form_valid(self, form):
         username = form.cleaned_data.get('username')
         password = form.cleaned_data.get('password')
