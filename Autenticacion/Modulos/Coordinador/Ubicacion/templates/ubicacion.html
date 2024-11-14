@@ -51,7 +51,7 @@ Módulo Ubicación
         <form action="{% url 'ubicacion:inactivar_activar_ubicacion' i.id %}" method="post" style="display: inline;">
             {% csrf_token %}
 
-            {% if i.Estado %}
+            {% if i.estado %}
             <button type="submit" class="btn btn-danger">Inactivar</button> 
             {% else %}
             <button type="submit" class="btn btn-success">Activar</button> 

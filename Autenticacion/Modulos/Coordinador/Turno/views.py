@@ -4,10 +4,11 @@ from django.views.generic import CreateView, ListView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
 from django.contrib import messages
-from Modulos.Coordinador.Novedad.views import CambiarEstadoMixin
+
 from Modulos.Coordinador.Turno.models import *
 from Modulos.Coordinador.Turno.forms import *
-from Modulos.Login.views import RoleRequiredMixin
+from Modulos.Login.mixin import CambiarEstadoMixin, RoleRequiredMixin
+
 # Create your views here.
 
 class Turn_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
