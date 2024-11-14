@@ -48,12 +48,10 @@
             {% endblock %}
         </div>
 
-
         {% block main %}
-
-
         <div class="cards-container">
             <main class="cards">
+                {% if es_coordinador %}
                 <a href="#">
                     <div class="card">
                         <div class="img-container">
@@ -157,6 +155,20 @@
                         </div>
                     </div>
                 </a>
+                {% endif %}
+                {% if es_agente %}
+                <a href="#">
+                    <div class="card">
+                        <div class="img-container">
+                            <img class="img" src="{% static 'img/modulos/Auditoria.png' %}" alt="PlanificacionImg">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"> Realizar un reporte </p>
+                        </div>
+                    </div>
+                </a>
+                
+                {% endif %}
             </main>
         </div>
         {% endblock %}

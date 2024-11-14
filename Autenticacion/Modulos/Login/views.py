@@ -83,7 +83,15 @@ def LogoutUsuario(request):
 class MainView(LoginRequiredMixin, TemplateView):
     template_name = 'index.html'
 
-
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Agrega el rol del usuario actual al contexto
+        context['is_superuser'] = self.request.user.is_superuser
+        user_role = self.request.user.rol.name if hasattr(self.request.user, 'rol') else None
+        # Agrega variables de contexto según el rol
+        context['es_coordinador'] = (user_role == 'Coordinador')
+        context['es_agente'] = (user_role == 'Agente')
+        return context
 
 class RegistroView(LoginRequiredMixin, CreateView):
     template_name = 'personal/registro.html'
@@ -355,21 +363,24 @@ class Usuario_view(LoginRequiredMixin,ListView):
     
 
     def get_queryset(self):
-        query = self.request.GET.get('query')
+        query = self.request.GET.get("query")
         if query:
-            # Divide el término de búsqueda en palabras
-            query_parts = query.split()  # Divide el query en una lista de palabras
+            parts = query.split()
+            if len(parts) > 1:
+                nombre = parts[0]
+                apellido = ' '.join(parts[1:])
+                return self.model.objects.filter(
+                    nombre__icontains=nombre, apellido__icontains=apellido
+                )
+            else:
+                return self.model.objects.filter(
+                    Q(nombre__icontains=query) | Q(apellido__icontains=query)
+                ) | self.model.objects.filter(cedula__icontains=query)
+        else:
             
-            # Crear un filtro que busque cualquier parte del nombre o apellido
-            filter_conditions = Q()
-            for part in query_parts:
-                # Añadir a la condición para cada palabra
-                filter_conditions |= Q(nombre__icontains=part) | Q(apellido__icontains=part)
-
-            # Aplicar el filtro final a la queryset
-            return self.model.objects.filter(filter_conditions)
+            return Usuario.objects.filter(is_superuser=False) 
         
-        return Usuario.objects.filter(is_superuser=False) # Si no hay query, devuelve todos los resultados
+        
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
