@@ -51,7 +51,7 @@
         {% block main %}
         <div class="cards-container">
             <main class="cards">
-                {% if es_coordinador %}
+                {% if is_coordinador_or_superuser %}
                 <a href="#">
                     <div class="card">
                         <div class="img-container">

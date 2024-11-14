@@ -29,8 +29,8 @@ class Novedad_View(LoginRequiredMixin, ListView):
         query = self.request.GET.get("query")
         if query:
             return self.model.objects.filter(
-                Q(Descripcion__icontains=query) |
-                Q(TipoNovedad__Descripcion__icontains=query)  # Reemplaza "tipo_novedad" con el nombre del campo de relación.
+                Q(descripcion__icontains=query) |
+                Q(tiponovedad__descripcion__icontains=query)  # Reemplaza "tipo_novedad" con el nombre del campo de relación.
             )
         return self.model.objects.all()
 
@@ -86,7 +86,7 @@ class TipoNovedad_View(LoginRequiredMixin, ListView):
     def get_queryset(self):
         query = self.request.GET.get("query")
         if query:
-            return self.model.objects.filter(Descripcion__icontains=query)
+            return self.model.objects.filter(descripcion__icontains=query)
         else:
             return self.model.objects.all()
     

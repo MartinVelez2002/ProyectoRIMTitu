@@ -3,14 +3,14 @@ from django.db import models
 # Create your models here.
 
 class Turno_Model(models.Model):
-    Hora_inicio = models.TimeField(auto_now = False, auto_now_add= False)
-    Hora_fin = models.TimeField(auto_now = False, auto_now_add= False)
-    Estado = models.BooleanField(default = True)
+    hora_inicio = models.TimeField(auto_now = False, auto_now_add= False)
+    hora_fin = models.TimeField(auto_now = False, auto_now_add= False)
+    estado = models.BooleanField(default = True)
     
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['Hora_inicio', 'Hora_fin'], name='unique_hora_inicio_hora_fin')
+            models.UniqueConstraint(fields=['hora_inicio', 'hora_fin'], name='unique_hora_inicio_hora_fin')
         ]
         
     def __str__(self):
-        return f'{self.Hora_inicio} hasta {self.Hora_fin}'
+        return f'{self.hora_inicio} hasta {self.hora_fin}'

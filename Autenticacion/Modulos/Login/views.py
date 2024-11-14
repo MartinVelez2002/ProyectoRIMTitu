@@ -85,13 +85,23 @@ class MainView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Agrega el rol del usuario actual al contexto
-        context['is_superuser'] = self.request.user.is_superuser
+        user = self.request.user
+        # Verifica si el usuario es superuser o tiene el rol 'Coordinador'
+        context['is_coordinador_or_superuser'] = (
+            user.is_superuser or 
+            user.rol_set.filter(name='Coordinador').exists()
+        )
         user_role = self.request.user.rol.name if hasattr(self.request.user, 'rol') else None
-        # Agrega variables de contexto según el rol
-        context['es_coordinador'] = (user_role == 'Coordinador')
         context['es_agente'] = (user_role == 'Agente')
         return context
+    
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['is_superuser'] = self.request.user.is_superuser
+    #     user_role = self.request.user.rol.name if hasattr(self.request.user, 'rol') else None
+    #     context['es_coordinador'] = (user_role == 'Coordinador')
+    #     context['es_agente'] = (user_role == 'Agente')
+    #     return context
 
 class RegistroView(LoginRequiredMixin, CreateView):
     template_name = 'personal/registro.html'

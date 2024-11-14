@@ -26,8 +26,8 @@ class Ubicacion_View(LoginRequiredMixin, ListView):
         query = self.request.GET.get('query')
         if query:
             return self.model.objects.filter(
-                Q(Lugar__icontains = query) |
-                Q(Sector__icontains = query)
+                Q(lugar__icontains = query) |
+                Q(sector__icontains = query)
             )
         return self.model.objects.all()
 
