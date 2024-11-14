@@ -48,8 +48,9 @@ class UsuarioManager(BaseUserManager):
         )
         
         usuario.is_staff = True
+        usuario.primera_sesion = False
         usuario.is_superuser = True
-        usuario.save(using=self._db)
+        usuario.save()
         return usuario
 
 

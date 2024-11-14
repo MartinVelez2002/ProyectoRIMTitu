@@ -11,10 +11,13 @@ from django.shortcuts import redirect, get_object_or_404
 from django.views import View
 from django.db.models import Q
 
-class Novedad_View(LoginRequiredMixin, ListView):
+from Modulos.Login.views import RoleRequiredMixin
+
+class Novedad_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
     template_name = 'novedad.html'
     context_object_name = 'novedad'
     model = Novedad_Model
+    required_role = 'Coordinador'
     paginate_by = 5
 
     def get_context_data(self, **kwargs):
@@ -35,8 +38,9 @@ class Novedad_View(LoginRequiredMixin, ListView):
         return self.model.objects.all()
 
     
-class Novedad_Create(LoginRequiredMixin, CreateView):
+class Novedad_Create(LoginRequiredMixin, RoleRequiredMixin,CreateView):
     model = Novedad_Model
+    required_role = 'Coordinador'
     template_name = 'registrar_novedad.html'
     form_class = Novedad_form
     success_url = reverse_lazy('novedad:inicio')
@@ -54,8 +58,9 @@ class Novedad_Create(LoginRequiredMixin, CreateView):
         messages.error(self.request, "Favor llenar el formulario")
         return super().form_invalid(form)
 
-class Novedad_Update(LoginRequiredMixin, UpdateView):
+class Novedad_Update(LoginRequiredMixin, RoleRequiredMixin, UpdateView):
     model = Novedad_Model
+    required_role = 'Coordinador'
     template_name = 'registrar_novedad.html'
     success_url = reverse_lazy('novedad:inicio')
     form_class = Novedad_form
@@ -68,9 +73,10 @@ class Novedad_Update(LoginRequiredMixin, UpdateView):
         
         return context
     
-class TipoNovedad_View(LoginRequiredMixin, ListView):
+class TipoNovedad_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
     template_name = 'tipNov.html'
     model = TipoNovedad_Model
+    required_role = 'Coordinador'
     context_object_name = 'tipNov'
     paginate_by = 5
 
@@ -90,8 +96,9 @@ class TipoNovedad_View(LoginRequiredMixin, ListView):
         else:
             return self.model.objects.all()
     
-class TipoNovedad_Create(LoginRequiredMixin, CreateView):
+class TipoNovedad_Create(LoginRequiredMixin, RoleRequiredMixin, CreateView):
     model = TipoNovedad_Model
+    required_role = 'Coordinador'
     template_name = 'registrar_tipNovedad.html'
     form_class = TipoNovedad_form
     success_url = reverse_lazy('novedad:inicio_tipoNov')
@@ -106,8 +113,9 @@ class TipoNovedad_Create(LoginRequiredMixin, CreateView):
 
 
 
-class TipoNovedad_Update(LoginRequiredMixin, UpdateView):
+class TipoNovedad_Update(LoginRequiredMixin, RoleRequiredMixin, UpdateView):
     model = TipoNovedad_Model
+    required_role = 'Coordinador'
     template_name = 'registrar_tipNovedad.html'
     success_url = reverse_lazy("novedad:inicio_tipoNov")
     form_class = TipoNovedad_form
@@ -131,8 +139,7 @@ class CambiarEstadoMixin(View):
     def post(self, request, pk):
         if not self.model or not self.redirect_url:
             return redirect('')   
-
-        # Obtener el objeto según el modelo y pk
+        
         objeto = get_object_or_404(self.model, pk=pk)
         
         if objeto.Estado:

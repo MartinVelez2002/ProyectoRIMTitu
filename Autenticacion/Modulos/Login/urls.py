@@ -11,28 +11,33 @@ urlpatterns = [
     
     path('',MainView.as_view(),name = 'index'),
     
+    #Autenticación
     path('accounts/login/',Login.as_view(), name='login'),
     
     path('logout/',login_required(LogoutUsuario),name = 'logout'),
     
     path('registro/',RegistroView.as_view(), name = 'registro'),
     
-    path('personal/', Usuario_view.as_view(), name = 'personal'),
-    
-
-
-    # Inactivar objeto
-    path('inactivar/<int:pk>', InactivarActivarUsuarioView.as_view(), name='inactivar_objeto'),
-
-    path('inactivar_rol/<int:pk>', InactivarActivarRolView.as_view(), name='inactivar_rol'),
-
-    path('editar_personal/<int:pk>', Usuario_update.as_view(), name='editar_personal'),
-    
     path('clave_olvidar',ForgetPassword.as_view(),name='olvidar_clave'),
     
     path('restablecer_clave/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='restablecer_clave'),
     
     path('cambiar_clave/',ChangePasswordFirstSession.as_view(), name = 'cambiar_clave'),
+    
+    # Lista de personal
+    path('personal/', Usuario_view.as_view(), name = 'personal'),
+    
+    path('editar_personal/<int:pk>', Usuario_update.as_view(), name='editar_personal'),
+
+
+    #Accion de inactivar
+    path('inactivar/<int:pk>', InactivarActivarUsuarioView.as_view(), name='inactivar_objeto'),
+
+    path('inactivar_rol/<int:pk>', InactivarActivarRolView.as_view(), name='inactivar_rol'),
+
+    
+    
+    
 
     # Rol
     path('listar_rol/', Rol_View.as_view(), name = 'listar_rol'),
@@ -41,7 +46,7 @@ urlpatterns = [
 
     path('editar_rol/<int:pk>', Rol_Update.as_view(), name = 'editar_rol' ),
 
-
+    #Página de prohibición 
     path('acceso_restringido/',Acceso_Restringido.as_view(), name = 'acceso_restringido')
 ]
     

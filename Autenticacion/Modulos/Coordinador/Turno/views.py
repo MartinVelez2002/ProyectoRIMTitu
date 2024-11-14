@@ -7,10 +7,12 @@ from django.contrib import messages
 from Modulos.Coordinador.Novedad.views import CambiarEstadoMixin
 from Modulos.Coordinador.Turno.models import *
 from Modulos.Coordinador.Turno.forms import *
+from Modulos.Login.views import RoleRequiredMixin
 # Create your views here.
 
-class Turn_View(LoginRequiredMixin, ListView):
+class Turn_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
     model = Turno_Model
+    required_role = 'Coordinador'
     context_object_name = 'turno'
     template_name = 'listado_turno.html'
     paginate_by = 5
@@ -26,8 +28,9 @@ class Turn_View(LoginRequiredMixin, ListView):
         return context
     
 
-class Turn_Create(LoginRequiredMixin, CreateView):
+class Turn_Create(LoginRequiredMixin, RoleRequiredMixin, CreateView):
     model = Turno_Model
+    required_role = 'Coordinador'
     template_name = 'crear_turno.html'
     form_class = Turno_Form 
     success_url = reverse_lazy('turno:listar_turno')
@@ -45,8 +48,9 @@ class Turn_Create(LoginRequiredMixin, CreateView):
         return super().form_invalid(form)
 
 
-class Turno_Update(LoginRequiredMixin, UpdateView):
+class Turno_Update(LoginRequiredMixin, RoleRequiredMixin, UpdateView):
     model = Turno_Model
+    required_role = 'Coordinador'
     template_name = 'crear_turno.html'
     form_class = Turno_Form
     success_url = reverse_lazy('turno:listar_turno')

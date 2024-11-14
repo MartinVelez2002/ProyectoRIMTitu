@@ -437,6 +437,9 @@ class Rol_Create(LoginRequiredMixin, CreateView):
         response = super().form_valid(form) 
         rol = self.object 
         save_audit(self.request, rol, action=AuditoriaUser.AccionChoices.CREAR)  
+        
+        messages.success(self.request,"Rol registrado con éxito.")
+        
         return response
 
 
@@ -459,6 +462,9 @@ class Rol_Update(LoginRequiredMixin, UpdateView):
         response = super().form_valid(form) 
         rol = self.object 
         save_audit(self.request, rol, action=AuditoriaUser.AccionChoices.CREAR)  
+        
+        messages.success(self.request, 'El rol se ha actualizado con éxito.')
+        
         return response
     
     
@@ -498,5 +504,15 @@ class InactivarActivarRolView(CambiarEstadoMixin):
     redirect_url = 'login:listar_rol'
 
 
+
 class Acceso_Restringido(LoginRequiredMixin, TemplateView):
-        template_name = 'acceso_restringido.html'
+    template_name = 'acceso_restringido.html'
+        
+
+class RoleRequiredMixin:
+    required_role = None  
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.rol or request.user.rol.name != self.required_role:
+            return redirect(reverse('login:acceso_restringido'))
+        return super().dispatch(request, *args, **kwargs)

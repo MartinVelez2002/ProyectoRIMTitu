@@ -4,11 +4,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
 from Modulos.Coordinador.Calendario.models import *
 from Modulos.Coordinador.Calendario.forms import *
-from Modulos.Coordinador.Novedad.views import CambiarEstadoMixin 
+from Modulos.Coordinador.Novedad.views import CambiarEstadoMixin
+from Modulos.Login.views import RoleRequiredMixin 
 # Create your views here.
 
-class Calendario_View(LoginRequiredMixin, ListView):
+class Calendario_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
     model = Calendario_Model
+    required_role = 'Coordinador'
     template_name = 'listado_calendario.html'
     context_object_name = 'calendario'
     paginate_by = 5
@@ -22,8 +24,9 @@ class Calendario_View(LoginRequiredMixin, ListView):
         return context
     
     
-class Calendario_Create(LoginRequiredMixin, CreateView):
+class Calendario_Create(LoginRequiredMixin, RoleRequiredMixin, CreateView):
     model = Calendario_Model
+    required_role = 'Coordinador'
     template_name = 'crear_calendario.html'
     success_url = reverse_lazy('calendario:listado_calendario')
     form_class = Calendario_Form
@@ -35,8 +38,9 @@ class Calendario_Create(LoginRequiredMixin, CreateView):
         context['action_save'] = self.request.path
         return context
 
-class Calendario_Update(LoginRequiredMixin, UpdateView):
+class Calendario_Update(LoginRequiredMixin, RoleRequiredMixin, UpdateView ):
     model = Calendario_Model
+    required_role = 'Coordinador'
     template_name = 'crear_calendario.html'
     success_url = reverse_lazy('calendario:listado_calendario')
     form_class = Calendario_Form
@@ -48,13 +52,15 @@ class Calendario_Update(LoginRequiredMixin, UpdateView):
         context['action_save'] = self.request.path
         return context
 
-class InactivarActivarCalendario(CambiarEstadoMixin):
+class InactivarActivarCalendario(CambiarEstadoMixin, RoleRequiredMixin):
     model = Calendario_Model
+    required_role = 'Coordinador'
     redirect_url = 'calendario:listado_calendario'
 
 
-class CalendarioUsuario_View(LoginRequiredMixin, ListView):
+class CalendarioUsuario_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
     model = TurnUsuario_Model
+    required_role = 'Coordinador'
     template_name = 'listado_planificacion.html'
     context_object_name = 'calendarioUs'
     
@@ -65,8 +71,9 @@ class CalendarioUsuario_View(LoginRequiredMixin, ListView):
         
         return context
 
-class CalendarioUsuario_Create(LoginRequiredMixin, CreateView):
+class CalendarioUsuario_Create(LoginRequiredMixin, RoleRequiredMixin, CreateView):
     model = Turno_Model
+    required_role = 'Coordinador'
     template_name = 'crear_planificacion.html'
     form_class = TurnUsuarioUbicacion_Form
     success_url = reverse_lazy('calendario:listar_planificacion')
