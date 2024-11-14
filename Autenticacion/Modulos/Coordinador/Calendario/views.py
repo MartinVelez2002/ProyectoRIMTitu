@@ -22,8 +22,7 @@ class Calendario_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
         context['title_table'] = 'Listado del Calendario'
         
         return context
-    
-    
+
 class Calendario_Create(LoginRequiredMixin, RoleRequiredMixin, CreateView):
     model = Calendario_Model
     required_role = 'Coordinador'
@@ -36,6 +35,7 @@ class Calendario_Create(LoginRequiredMixin, RoleRequiredMixin, CreateView):
         context['titulo'] = 'Formulario: Calendario'
         context['cancelar'] = reverse('calendario:listado_calendario')
         context['action_save'] = self.request.path
+        
         return context
 
 class Calendario_Update(LoginRequiredMixin, RoleRequiredMixin, UpdateView ):
@@ -58,11 +58,15 @@ class InactivarActivarCalendario(CambiarEstadoMixin, RoleRequiredMixin):
     redirect_url = 'calendario:listado_calendario'
 
 
+
+
+
 class CalendarioUsuario_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
     model = TurnUsuario_Model
     required_role = 'Coordinador'
     template_name = 'listado_planificacion.html'
     context_object_name = 'calendarioUs'
+    paginate_by = 5
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -75,14 +79,15 @@ class CalendarioUsuario_Create(LoginRequiredMixin, RoleRequiredMixin, CreateView
     model = Turno_Model
     required_role = 'Coordinador'
     template_name = 'crear_planificacion.html'
-    form_class = TurnUsuarioUbicacion_Form
     success_url = reverse_lazy('calendario:listar_planificacion')
+    form_class = TurnUsuarioUbicacion_Form
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Formulario: Planificación'
         context['cancelar'] = reverse('calendario:listar_planificacion')
         context['action_save'] = self.request.path
+        
         return context
     
     def get_form(self, form_class=None):
