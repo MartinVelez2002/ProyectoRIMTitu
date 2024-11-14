@@ -11,7 +11,7 @@ from django.shortcuts import redirect, get_object_or_404
 from django.views import View
 from django.db.models import Q
 
-from Modulos.Login.views import RoleRequiredMixin
+from Modulos.Login.mixin import RoleRequiredMixin
 
 class Novedad_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
     template_name = 'novedad.html'

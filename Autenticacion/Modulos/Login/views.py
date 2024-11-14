@@ -8,7 +8,7 @@ from django.conf import settings
 from django.template.loader import render_to_string 
 from django.contrib.auth import login, logout
 from django.http import  HttpResponseRedirect
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.hashers import check_password
 from django.views import View
@@ -19,6 +19,8 @@ from django.views.generic.edit import FormView
 from Modulos.Auditoria.models import AuditoriaUser
 from Modulos.Auditoria.utils import save_audit
 from Modulos.Login.forms import FormularioLogin, FormularioRegistro, CambiarPasswordForm, ForgetPasswordForm, FormularioEditarPersonal, Rol_Form
+from Modulos.Login.mixin import *
+from Modulos.Login.mixin import CambiarEstadoMixin
 from Modulos.Login.models import Usuario, Rol
 from django.db.models import Q
 
@@ -31,6 +33,8 @@ class Login(FormView):
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return HttpResponseRedirect(self.get_success_url())
+        else:
+            return redirect(f'/accounts/login/?next={request.path}')
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
@@ -83,15 +87,7 @@ def LogoutUsuario(request):
 class MainView(LoginRequiredMixin, TemplateView):
     template_name = 'index.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # Agrega el rol del usuario actual al contexto
-        context['is_superuser'] = self.request.user.is_superuser
-        user_role = self.request.user.rol.name if hasattr(self.request.user, 'rol') else None
-        # Agrega variables de contexto según el rol
-        context['es_coordinador'] = (user_role == 'Coordinador')
-        context['es_agente'] = (user_role == 'Agente')
-        return context
+  
 
 class RegistroView(LoginRequiredMixin, CreateView):
     template_name = 'personal/registro.html'
@@ -104,9 +100,7 @@ class RegistroView(LoginRequiredMixin, CreateView):
         context['titulo'] = 'Crear Personal'
         context['action_save'] = self.request.path
         return context
-    
-    
-    
+  
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)    
         if form.is_valid():
@@ -479,27 +473,6 @@ class Rol_Update(LoginRequiredMixin, UpdateView):
         return response
     
     
-class CambiarEstadoMixin(View):
-    model = None  
-    redirect_url = None  
-
-    def post(self, request, pk):
-        if not self.model or not self.redirect_url:
-            return redirect('')  
-
-        # Obtener el objeto según el modelo y pk
-        objeto = get_object_or_404(self.model, pk=pk)
-
-        if objeto.estado:
-            objeto.estado = False 
-        else:
-            objeto.estado = True
-        objeto.save()
-
-         # Registrar la auditoría para el cambio de estado
-        save_audit(request, objeto, action=AuditoriaUser.AccionChoices.INACTIVAR if objeto.estado == False else AuditoriaUser.AccionChoices.ACTIVAR)
-        
-        return redirect(self.redirect_url)
 
     
     
@@ -509,21 +482,12 @@ class InactivarActivarUsuarioView(CambiarEstadoMixin):
 
 
 
-
 class InactivarActivarRolView(CambiarEstadoMixin):
     model = Rol
     redirect_url = 'login:listar_rol'
-
 
 
 class Acceso_Restringido(LoginRequiredMixin, TemplateView):
     template_name = 'acceso_restringido.html'
         
 
-class RoleRequiredMixin:
-    required_role = None  
-
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.rol or request.user.rol.name != self.required_role:
-            return redirect(reverse('login:acceso_restringido'))
-        return super().dispatch(request, *args, **kwargs)

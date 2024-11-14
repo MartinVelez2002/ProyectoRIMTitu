@@ -7,7 +7,7 @@ from Modulos.Login.views import RoleRequiredMixin
 from .models import AuditoriaUser
 
 
-class Auditoria_View(LoginRequiredMixin, RoleRequiredMixin, ListView ):
+class Auditoria_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
     template_name = 'listar_auditoria.html'
     context_object_name = 'auditoria'
     model = AuditoriaUser

@@ -39,7 +39,7 @@
 </head>
 
 <body>
-    <div style="display: flex; flex-direction: column;">
+   
         <div class="header">
             {% block header %}
             <header>
@@ -51,7 +51,31 @@
         {% block main %}
         <div class="cards-container">
             <main class="cards">
-                {% if es_coordinador %}
+                {% if request.user.is_superuser or request.user.rol and request.user.rol.name == 'Coordinador'%}
+                <a href="{% url 'login:listar_rol' %}">
+                    <div class="card">
+                        <div class="img-container">
+                            <img class="img" src="{% static 'img/modulos/Rol.png' %}" alt="RolImg">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"> Rol </p>
+                        </div>
+                    </div>
+                </a>
+               
+                <a href="{% url 'login:personal' %}">
+                    <div class="card">
+                        <div class="img-container">
+                            <img class="img" src="{% static 'img/modulos/Registrodelpersonal.png' %}"
+                                alt="RegPersonalImg">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"> Registro de personal </p>
+                        </div>
+                    </div>
+                </a>
+                {% endif %}
+                {% if request.user.rol and request.user.rol.name == 'Coordinador' %}
                 <a href="#">
                     <div class="card">
                         <div class="img-container">
@@ -63,17 +87,6 @@
                         </div>
                     </div>
                 </a>
-                <a href="{% url 'login:listar_rol' %}">
-                    <div class="card">
-                        <div class="img-container">
-                            <img class="img" src="{% static 'img/modulos/Rol.png' %}" alt="RolImg">
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text"> Rol </p>
-                        </div>
-                    </div>
-                </a>
-
                 <a href="{% url 'turno:listar_turno' %}">
                     <div class="card">
                         <div class="img-container">
@@ -81,17 +94,6 @@
                         </div>
                         <div class="card-body">
                             <p class="card-text"> Turno </p>
-                        </div>
-                    </div>
-                </a>
-                <a href="{% url 'login:personal' %}">
-                    <div class="card">
-                        <div class="img-container">
-                            <img class="img" src="{% static 'img/modulos/Registrodelpersonal.png' %}"
-                                alt="RegPersonalImg">
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text"> Registro de personal </p>
                         </div>
                     </div>
                 </a>
@@ -156,7 +158,7 @@
                     </div>
                 </a>
                 {% endif %}
-                {% if es_agente %}
+                {% if request.user.rol and request.user.rol.name == 'Agente' %}
                 <a href="#">
                     <div class="card">
                         <div class="img-container">
@@ -172,7 +174,7 @@
             </main>
         </div>
         {% endblock %}
-    </div>
+    
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/1a76f9833f.js" crossorigin="anonymous"></script>
     <!-- JS - Bootstrap -->
