@@ -6,10 +6,10 @@ from .models import Turno_Model
 class Turno_Form (ModelForm):
     class Meta:
         model = Turno_Model
-        fields = ['Hora_inicio','Hora_fin']
+        fields = ['hora_inicio','hora_fin']
         widgets = {
-            'Hora_inicio': forms.TimeInput(attrs={'type': 'time'}),
-            'Hora_fin': forms.TimeInput(attrs={'type': 'time'}),        
+            'hora_inicio': forms.TimeInput(attrs={'type': 'time'}),
+            'hora_fin': forms.TimeInput(attrs={'type': 'time'}),        
         }
     
     def __init__(self, *args, **kwargs):

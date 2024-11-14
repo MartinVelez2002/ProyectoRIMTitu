@@ -4,9 +4,9 @@ from Modulos.Coordinador.Novedad.models import Novedad_Model, TipoNovedad_Model
 class TipoNovedad_form(forms.ModelForm):
     class Meta:
         model = TipoNovedad_Model
-        fields = ['Descripcion']
+        fields = ['descripcion']
         widgets = {
-            'Descripcion': forms.TextInput(
+            'descripcion': forms.TextInput(
                 attrs={'class': 'input'}
             )
         }
@@ -14,10 +14,10 @@ class TipoNovedad_form(forms.ModelForm):
 class Novedad_form(forms.ModelForm):
     class Meta:
         model = Novedad_Model
-        fields = ['TipoNovedad', 'Descripcion']
+        fields = ['tiponovedad', 'descripcion']
         widgets = {
-            'Descripcion': forms.TextInput(),
-            'TipoNovedad': forms.Select(),
+            'descripcion': forms.TextInput(),
+            'tipoNovedad': forms.Select(),
         }
 
     def __init__(self, *args, **kwargs):

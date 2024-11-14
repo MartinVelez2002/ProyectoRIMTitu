@@ -7,12 +7,12 @@ from Modulos.Coordinador.Calendario.models import Calendario_Model, TurnUsuario_
 class Calendario_Form (ModelForm):
     class Meta:
         model = Calendario_Model
-        fields = ['Fecha_inicio','Fecha_fin']
+        fields = ['fecha_inicio','fecha_fin']
         widgets = {
-            'Fecha_inicio': forms.TimeInput(
+            'fecha_inicio': forms.TimeInput(
                 attrs={
                     'type': 'date'}),
-            'Fecha_fin': forms.TimeInput(
+            'fecha_fin': forms.TimeInput(
                 attrs={
                     'type': 'date'}),
         }
@@ -28,23 +28,23 @@ class Calendario_Form (ModelForm):
             
     def clean(self):
         cleaned_data = super().clean()
-        fecha_inicio = cleaned_data.get("Fecha_inicio")
-        fecha_fin = cleaned_data.get("Fecha_fin")
+        fecha_inicio = cleaned_data.get("fecha_inicio")
+        fecha_fin = cleaned_data.get("fecha_fin")
 
         if fecha_fin and fecha_inicio and fecha_fin <= fecha_inicio:
-            self.add_error('Fecha_fin', "La fecha fin debe ser posterior a la fecha de inicio.")
+            self.add_error('fecha_fin', "La fecha fin debe ser posterior a la fecha de inicio.")
 
         return cleaned_data  
 
 class TurnUsuarioUbicacion_Form (ModelForm):
     class Meta:
         model = TurnUsuario_Model
-        fields = ['Calendario', 'Turno', 'Usuario', 'Ubicacion']
+        fields = ['calendario', 'turno', 'usuario', 'ubicacion']
         widgets = {
-            'Usuario': forms.Select(),
-            'Calendario': forms.Select(),
-            'Turno': forms.Select(),
-            'Ubicacion': forms.Select(),
+            'usuario': forms.Select(),
+            'calendario': forms.Select(),
+            'turno': forms.Select(),
+            'ubicacion': forms.Select(),
         }
         
     def __init__(self, *args, **kwargs):

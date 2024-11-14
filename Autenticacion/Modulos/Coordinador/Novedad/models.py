@@ -2,16 +2,16 @@ from django.db import models
 # Create your models here.
 
 class TipoNovedad_Model(models.Model):
-    Descripcion = models.CharField(max_length = 50)
-    Estado = models.BooleanField(default = True)
+    descripcion = models.CharField(max_length = 50)
+    estado = models.BooleanField(default = True)
 
     def __str__(self):
-        return f'{self.Descripcion}'
+        return f'{self.descripcion}'
 
 class Novedad_Model(models.Model):
-    Descripcion = models.CharField(max_length = 50)
-    Estado = models.BooleanField(default = True)
-    TipoNovedad = models.ForeignKey(TipoNovedad_Model, on_delete=models.PROTECT)
+    descripcion = models.CharField(max_length = 50)
+    estado = models.BooleanField(default = True)
+    tiponovedad = models.ForeignKey(TipoNovedad_Model, on_delete=models.PROTECT)
 
     def __str__(self):
-        return f'{self.Descripcion}'
+        return f'{self.descripcion}'

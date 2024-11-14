@@ -87,7 +87,6 @@ def LogoutUsuario(request):
 class MainView(LoginRequiredMixin, TemplateView):
     template_name = 'index.html'
 
-  
 
 class RegistroView(LoginRequiredMixin, CreateView):
     template_name = 'personal/registro.html'
