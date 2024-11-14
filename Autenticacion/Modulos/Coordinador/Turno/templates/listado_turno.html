@@ -24,9 +24,9 @@ Módulo Turno
 {% if turno %}
 {% for i in turno %}
 <tr>
-    <td> {{ i.Hora_inicio }} </td>
-    <td> {{ i.Hora_fin }} </td>
-    {% if i.Estado == True %}
+    <td> {{ i.hora_inicio }} </td>
+    <td> {{ i.hora_fin }} </td>
+    {% if i.estado == True %}
     <td> Activo </td>
     {% else %}
     <td> Inactivo </td>

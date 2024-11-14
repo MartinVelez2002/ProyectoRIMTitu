@@ -33,9 +33,9 @@ Modulo Novedad
 {% if novedad %}
 {% for nov in novedad %}
 <tr>
-    <td>{{ nov.TipoNovedad }}</td>
-    <td>{{ nov.Descripcion }}</td>
-    {% if nov.Estado == True %}
+    <td>{{ nov.tiponovedad }}</td>
+    <td>{{ nov.descripcion }}</td>
+    {% if nov.estado == True %}
     <td>Activo</td>
     {% else %}
     <td>Inactivo</td>

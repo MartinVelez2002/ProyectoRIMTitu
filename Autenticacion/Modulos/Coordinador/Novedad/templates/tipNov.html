@@ -32,8 +32,8 @@ Modulo Tipo Novedad
 {% if tipNov %}
     {% for tpn in tipNov %}
     <tr>
-        <td> {{ tpn.Descripcion }} </td>
-        {% if tpn.Estado == True %}
+        <td> {{ tpn.descripcion }} </td>
+        {% if tpn.estado == True %}
             <td> Activo </td>
         {% else %}
             <td> Inactivo </td>

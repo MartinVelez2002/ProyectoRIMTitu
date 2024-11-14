@@ -23,9 +23,9 @@ Modulo Calendario
 {% if calendario %}
 {% for i in calendario %}
 <tr>
-    <td> {{ i.Fecha_inicio }} </td>
-    <td> {{ i.Fecha_fin }} </td>
-    {% if i.Estado == True %}
+    <td> {{ i.fecha_inicio }} </td>
+    <td> {{ i.fecha_fin }} </td>
+    {% if i.estado == True %}
     <td> Activo </td>
     {% else %}
     <td> Inactivo </td>

@@ -25,11 +25,11 @@ Modulo Planificación
 {% if calendarioUs %}
 {% for i in calendarioUs %}
 <tr>
-    <td> {{i.Usuario}} </td>
-    <td> {{i.Calendario}} </td>
-    <td> {{i.Turno}} </td>
-    <td> {{i.Ubicacion}} </td>
-    {% if i.Estado == True %}
+    <td> {{i.usuario}} </td>
+    <td> {{i.calendario}} </td>
+    <td> {{i.turno}} </td>
+    <td> {{i.ubicacion}} </td>
+    {% if i.estado == True %}
     <td> Activo </td>
     {% else %}
     <td> Inactivo </td>
