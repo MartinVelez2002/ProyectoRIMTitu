@@ -6,10 +6,12 @@ from django.db.models import Q
 from Modulos.Coordinador.Novedad.views import CambiarEstadoMixin
 from Modulos.Coordinador.Ubicacion.models import Ubicacion_Model
 from Modulos.Coordinador.Ubicacion.forms import Ubicacion_Form
+from Modulos.Login.views import RoleRequiredMixin
 
 
-class Ubicacion_View(LoginRequiredMixin, ListView):
+class Ubicacion_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
     model = Ubicacion_Model
+    required_role = 'Coordinador'
     template_name = 'ubicacion.html'
     context_object_name = 'ubicacion'
     paginate_by = 5
@@ -31,8 +33,9 @@ class Ubicacion_View(LoginRequiredMixin, ListView):
             )
         return self.model.objects.all()
 
-class Ubicacion_Create(LoginRequiredMixin, CreateView):
+class Ubicacion_Create(LoginRequiredMixin, RoleRequiredMixin, CreateView):
     model = Ubicacion_Model
+    required_role = 'Coordinador'
     template_name = 'registrar_ubicacion.html'
     form_class = Ubicacion_Form
     success_url = reverse_lazy('ubicacion:inicio')
@@ -45,8 +48,9 @@ class Ubicacion_Create(LoginRequiredMixin, CreateView):
         context['google_maps_api_key'] = settings.GOOGLE_API_KEY
         return context
     
-class Ubicacion_Update(LoginRequiredMixin, UpdateView):
+class Ubicacion_Update(LoginRequiredMixin, RoleRequiredMixin, UpdateView):
     model = Ubicacion_Model
+    required_role = 'Coordinador'
     template_name = 'registrar_ubicacion.html'
     form_class = Ubicacion_Form
     success_url = reverse_lazy('ubicacion:inicio')

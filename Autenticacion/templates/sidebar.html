@@ -1,12 +1,7 @@
 <aside class="side-bar bg-dark">
     <div>
         <ul class="nav">
-            <li>
-                <a class="nav-link active" href="#">
-                    <i class="fa-solid fa-box-tissue"></i>
-                    <span class="nav-item"> Reportes del Personal </span>
-                </a>
-            </li>
+            {% if request.user.is_superuser or request.user.rol and request.user.rol.name == 'Coordinador'%}
             <li>
                 <a class="nav-link active" href="{% url 'login:listar_rol' %}">
                     <i class="fa-sharp fa-solid fa-address-book"></i>
@@ -14,15 +9,23 @@
                 </a>
             </li>
             <li>
-                <a class="nav-link active" href="{% url 'turno:listar_turno' %}">
-                    <i class="fa-sharp fa-solid fa-code-compare"></i>
-                    <span class="nav-item"> Turno </span>
-                </a>
-            </li>
-            <li>
                 <a class="nav-link active" href="{% url 'login:personal' %}">
                     <i class="fa-solid fa-users"></i>
                     <span class="nav-item"> Registro de personal </span>
+                </a>
+            </li>
+            {% endif %}
+            {% if request.user.rol and request.user.rol.name == 'Coordinador' %}
+            <li>
+                <a class="nav-link active" href="#">
+                    <i class="fa-solid fa-box-tissue"></i>
+                    <span class="nav-item"> Reportes del Personal </span>
+                </a>
+            </li>
+            <li>
+                <a class="nav-link active" href="{% url 'turno:listar_turno' %}">
+                    <i class="fa-sharp fa-solid fa-code-compare"></i>
+                    <span class="nav-item"> Turno </span>
                 </a>
             </li>
             <li>
@@ -61,6 +64,7 @@
                     <span class="nav-item"> Auditoría </span>
                 </a>
             </li>
+            {% endif %}
         </ul>
     </div>
     <div class="logout">

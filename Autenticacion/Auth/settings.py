@@ -155,7 +155,7 @@ MEDIA_URL = '/media/'
 AUTH_USER_MODEL = 'Login.Usuario'
 
 LOGIN_URL = reverse_lazy('login')  # Reemplaza 'login' con el nombre que uses en urls.py
-
+LOGIN_REDIRECT_URL = '/'
 
 # Configuración de tiempo de inactividad
 
