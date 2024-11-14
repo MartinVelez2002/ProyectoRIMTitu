@@ -1,2 +1,16 @@
 
 Autenticacion/db.sqlite3
+Autenticacion/Auth/__pycache__/__init__.cpython-312.pyc
+Autenticacion/Auth/__pycache__/settings.cpython-312.pyc
+Autenticacion/Auth/__pycache__/urls.cpython-312.pyc
+Autenticacion/Auth/__pycache__/wsgi.cpython-312.pyc
+Autenticacion/Modulos/__pycache__/__init__.cpython-312.pyc
+Autenticacion/Modulos/Login/__pycache__/__init__.cpython-312.pyc
+Autenticacion/Modulos/Login/__pycache__/admin.cpython-312.pyc
+Autenticacion/Modulos/Login/__pycache__/apps.cpython-312.pyc
+Autenticacion/Modulos/Login/__pycache__/forms.cpython-312.pyc
+Autenticacion/Modulos/Login/__pycache__/models.cpython-312.pyc
+Autenticacion/Modulos/Login/__pycache__/urls.cpython-312.pyc
+Autenticacion/Modulos/Login/__pycache__/views.cpython-312.pyc
+Autenticacion/Modulos/Login/migrations/__pycache__/0001_initial.cpython-312.pyc
+Autenticacion/Modulos/Login/migrations/__pycache__/__init__.cpython-312.pyc
