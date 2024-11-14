@@ -2,7 +2,7 @@ from django.forms import ModelForm
 from django import forms
 from django.core.exceptions import ValidationError
 from Modulos.Coordinador.Calendario.models import Calendario_Model, TurnUsuario_Model
-
+from Modulos.Login.models import Usuario
 
 class Calendario_Form (ModelForm):
     class Meta:
@@ -48,11 +48,18 @@ class TurnUsuarioUbicacion_Form (ModelForm):
         }
         
     def __init__(self, *args, **kwargs):
-        super(TurnUsuarioUbicacion_Form, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
+        
+        # Filtrar usuarios para mostrar solo los que no son superusuarios y tienen el rol de "Agente"
+        self.fields['usuario'].queryset = Usuario.objects.filter(
+            rol__name="Agente"
+        )
+        
+        # Aplicar atributos comunes a todos los campos
         for field in self.fields.values():
             field.widget.attrs.update({
-            'class': 'input',
-            'required': 'required'
-        })
+                'class': 'input',
+                'required': 'required'
+            })
 
 

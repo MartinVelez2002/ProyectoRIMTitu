@@ -35,10 +35,10 @@ Módulo Ubicación
 {% if ubicacion %}
 {% for i in ubicacion %}
 <tr>
-    <td> {{i.Lugar}} </td>
-    <td> {{i.Sector}} </td>
-    <td> {{ i.CallePrincipal}} </td>
-    {% if i.Estado == True %}
+    <td> {{i.lugar}} </td>
+    <td> {{i.sector}} </td>
+    <td> {{ i.calleprincipal}} </td>
+    {% if i.estado == True %}
     <td> Activo </td>
     {% else %}
     <td> Inactivo </td>

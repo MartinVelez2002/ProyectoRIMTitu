@@ -47,7 +47,7 @@ Modulo Tipo Novedad
             <form action="{% url 'novedad:inactivar_activar_tipo_novedad' tpn.id %}" method="post" style="display: inline;">
                 {% csrf_token %}
     
-                {% if tpn.Estado %}
+                {% if tpn.estado %}
                 <button type="submit" class="btn btn-danger">Inactivar</button> 
                 {% else %}
                 <button type="submit" class="btn btn-success">Activar</button> 

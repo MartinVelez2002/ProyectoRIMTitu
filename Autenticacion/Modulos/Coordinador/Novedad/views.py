@@ -142,10 +142,10 @@ class CambiarEstadoMixin(View):
         
         objeto = get_object_or_404(self.model, pk=pk)
         
-        if objeto.Estado:
-            objeto.Estado = False 
+        if objeto.estado:
+            objeto.estado = False 
         else:
-            objeto.Estado = True  
+            objeto.estado = True  
         objeto.save()
       
         return redirect(self.redirect_url)

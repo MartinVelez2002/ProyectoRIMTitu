@@ -76,7 +76,7 @@ class CalendarioUsuario_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
         return context
 
 class CalendarioUsuario_Create(LoginRequiredMixin, RoleRequiredMixin, CreateView):
-    model = Turno_Model
+    model = TurnUsuario_Model
     required_role = 'Coordinador'
     template_name = 'crear_planificacion.html'
     success_url = reverse_lazy('calendario:listar_planificacion')
@@ -93,7 +93,7 @@ class CalendarioUsuario_Create(LoginRequiredMixin, RoleRequiredMixin, CreateView
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
         # Filtrar solo usuarios válidos para el select
-        form.fields['Usuario'].queryset = Usuario.objects.filter(is_superuser=False)
+        form.fields['usuario'].queryset = Usuario.objects.filter(is_superuser=False)
         return form
     
 class InactivarActivarPlanificacion(CambiarEstadoMixin):
