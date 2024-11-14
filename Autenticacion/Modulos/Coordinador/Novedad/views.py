@@ -3,15 +3,11 @@ from Modulos.Coordinador.Novedad.models import TipoNovedad_Model, Novedad_Model
 from Modulos.Coordinador.Novedad.forms import Novedad_form, TipoNovedad_form
 from django.views.generic import CreateView, ListView, UpdateView
 from django.urls import reverse_lazy, reverse
-from Modulos.Auditoria.models import AuditoriaUser
-from Modulos.Auditoria.utils import save_audit
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
-from django.shortcuts import redirect, get_object_or_404
-from django.views import View
 from django.db.models import Q
 
-from Modulos.Login.mixin import RoleRequiredMixin
+from Modulos.Login.mixin import CambiarEstadoMixin, RoleRequiredMixin
 
 class Novedad_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
     template_name = 'novedad.html'
@@ -132,24 +128,7 @@ class TipoNovedad_Update(LoginRequiredMixin, RoleRequiredMixin, UpdateView):
     
 
 
-class CambiarEstadoMixin(View):
-    model = None  
-    redirect_url = None   
 
-    def post(self, request, pk):
-        if not self.model or not self.redirect_url:
-            return redirect('')   
-        
-        objeto = get_object_or_404(self.model, pk=pk)
-        
-        if objeto.Estado:
-            objeto.Estado = False 
-        else:
-            objeto.Estado = True  
-        objeto.save()
-      
-        return redirect(self.redirect_url)
- 
     
     
     

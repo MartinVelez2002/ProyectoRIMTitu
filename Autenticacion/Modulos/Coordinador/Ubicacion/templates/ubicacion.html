@@ -35,10 +35,10 @@ Módulo Ubicación
 {% if ubicacion %}
 {% for i in ubicacion %}
 <tr>
-    <td> {{i.Lugar}} </td>
-    <td> {{i.Sector}} </td>
-    <td> {{ i.CallePrincipal}} </td>
-    {% if i.Estado == True %}
+    <td> {{i.lugar}} </td>
+    <td> {{i.sector}} </td>
+    <td> {{ i.calleprincipal}} </td>
+    {% if i.estado == True %}
     <td> Activo </td>
     {% else %}
     <td> Inactivo </td>
@@ -51,7 +51,7 @@ Módulo Ubicación
         <form action="{% url 'ubicacion:inactivar_activar_ubicacion' i.id %}" method="post" style="display: inline;">
             {% csrf_token %}
 
-            {% if i.Estado %}
+            {% if i.estado %}
             <button type="submit" class="btn btn-danger">Inactivar</button> 
             {% else %}
             <button type="submit" class="btn btn-success">Activar</button> 

@@ -4,8 +4,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
 from Modulos.Coordinador.Calendario.models import *
 from Modulos.Coordinador.Calendario.forms import *
-from Modulos.Coordinador.Novedad.views import CambiarEstadoMixin
-from Modulos.Login.views import RoleRequiredMixin 
+
+from Modulos.Login.mixin import CambiarEstadoMixin, RoleRequiredMixin
+
 # Create your views here.
 
 class Calendario_View(LoginRequiredMixin, RoleRequiredMixin, ListView):

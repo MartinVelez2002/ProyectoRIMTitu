@@ -3,10 +3,10 @@ from django.views.generic import CreateView, ListView, UpdateView
 from django.urls import reverse_lazy, reverse
 from django.conf import settings
 from django.db.models import Q
-from Modulos.Coordinador.Novedad.views import CambiarEstadoMixin
 from Modulos.Coordinador.Ubicacion.models import Ubicacion_Model
 from Modulos.Coordinador.Ubicacion.forms import Ubicacion_Form
-from Modulos.Login.views import RoleRequiredMixin
+from Modulos.Login.mixin import CambiarEstadoMixin, RoleRequiredMixin
+
 
 
 class Ubicacion_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
