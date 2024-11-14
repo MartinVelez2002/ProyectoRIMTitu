@@ -23,7 +23,5 @@ class TurnUsuario_Model(models.Model):
     ubicacion = models.ForeignKey(Ubicacion_Model, on_delete= models.PROTECT)
     estado = models.BooleanField(default = True)
     
-    def get_queryset(self):
-        # Filtrar el queryset de TurnUsuario_Model, incluyendo solo los registros donde el usuario no es superusuario
-        return TurnUsuario_Model.objects.filter(usuario__is_superuser=False)
+    
     
