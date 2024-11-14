@@ -33,9 +33,9 @@ class Login(FormView):
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return HttpResponseRedirect(self.get_success_url())
-        else:
-            return redirect(f'/accounts/login/?next={request.path}')
-        return super().dispatch(request, *args, **kwargs)
+    
+        return redirect(f'/accounts/login/?next={request.path}')
+       
 
     def form_valid(self, form):
         username = form.cleaned_data.get('username')
