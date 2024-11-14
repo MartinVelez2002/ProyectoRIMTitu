@@ -65,6 +65,14 @@
                 </a>
             </li>
             {% endif %}
+            {% if request.user.rol and request.user.rol.name == 'Agente' %}
+            <li>
+                <a class="nav-link active" href="{% url 'reportes:listar_reportes' %}">
+                    <i class="fa-sharp fa-solid fa-rectangle-list"></i>
+                    <span class="nav-item"> Reportes </span>
+                </a>
+            </li>
+            {% endif %}
         </ul>
     </div>
     <div class="logout">

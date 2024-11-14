@@ -10,5 +10,15 @@ class Reportes_Form_C(forms.ModelForm):
         super(Reportes_Form_C, self).__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs.update({
-                'class': 'input'
+                'class': 'input',
+                'required': True
             })
+    def clean_evidencia(self):
+        evidencia = self.cleaned_data.get('evidencia')
+
+        # Verifica el tipo MIME (opcional)
+        valid_mimetypes = ['image/jpeg', 'image/png', 'image/gif', 'video/mp4', 'video/quicktime', 'video/x-msvideo']
+        if evidencia and evidencia.content_type not in valid_mimetypes:
+            self.add_error("Tipo de archivo no permitido.")
+        
+        return evidencia

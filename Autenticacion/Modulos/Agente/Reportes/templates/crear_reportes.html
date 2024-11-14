@@ -1,0 +1,45 @@
+{% extends 'form.html' %}
+{% load static %}
+
+{% block controls %}
+<div class="form-grid">
+    <div class="input-div one">
+        <div class="i">
+            <i class="fa-sharp fa-solid fa-window-maximize"></i>
+        </div>
+        <div class="div">
+            <h5>Novedad</h5>
+            {{ form.novedad }}
+        </div>
+    </div>
+
+    <div class="input-div one">
+        <div class="i">
+            <i class="fa-sharp fa-solid fa-whiskey-glass"></i>
+        </div>
+        <div class="div">
+            <h5>Prioridad</h5>
+            {{ form.prioridad }}
+        </div>
+    </div>
+    <div class="input-div one">
+        <div class="i">
+            <i class="fa-sharp fa-solid fa-whiskey-glass"></i>
+        </div>
+        <div class="div">
+            <h5>Evidencia</h5>
+            {{ form.evidencia }}
+        </div>
+    </div>
+    <div class="input-div one">
+        <div class="i">
+            <i class="fa-sharp fa-solid fa-whiskey-glass"></i>
+        </div>
+        <div class="div">
+            <h5>Descripción</h5>
+            {{ form.descripcion }}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
