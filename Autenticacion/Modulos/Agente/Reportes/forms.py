@@ -5,14 +5,19 @@ class Reportes_Form_C(forms.ModelForm):
     class Meta:
         model = Reportes_Model
         fields = ['novedad', 'prioridad', 'evidencia', 'descripcion']
-    
+        # widgets = {
+        #     'descripcion': forms.Textarea(),
+        # }
     def __init__(self, *args, **kwargs):
         super(Reportes_Form_C, self).__init__(*args, **kwargs)
         for field in self.fields.values():
-            field.widget.attrs.update({
-                'class': 'input',
-                'required': True
-            })
+            if field.name != 'descripcion':
+                field.widget.attrs.update({
+                    'class': 'input',
+                    'required': True
+                })
+
+
     def clean_evidencia(self):
         evidencia = self.cleaned_data.get('evidencia')
 

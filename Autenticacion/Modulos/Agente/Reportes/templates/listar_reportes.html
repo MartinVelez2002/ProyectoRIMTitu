@@ -35,4 +35,10 @@ Módulo Reportes
     <td> {{ i.evidencia }} </td>
     <td> {{ i.descripcion }} </td>
 </tr>
+{% endfor %}
+{% else %}
+<tr>
+    <td colspan="7"> Aún no se han realizado reportes</td>
+</tr>
+{% endif %}
 {% endblock %}

@@ -14,7 +14,7 @@ class Reportes_View(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['dirurl'] = reverse('reportes:crear_reportes')
+        context['dirurl'] = reverse('reportes:crear_reporte')
         context['title_table'] = 'Listado de mis Reportes'
         return context
 
