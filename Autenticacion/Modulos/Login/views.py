@@ -33,9 +33,7 @@ class Login(FormView):
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return HttpResponseRedirect(self.get_success_url())
-    
-        return redirect(f'/accounts/login/?next={request.path}')
-       
+        return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         username = form.cleaned_data.get('username')
@@ -87,6 +85,7 @@ def LogoutUsuario(request):
 class MainView(LoginRequiredMixin, TemplateView):
     template_name = 'index.html'
 
+  
 
 class RegistroView(LoginRequiredMixin, CreateView):
     template_name = 'personal/registro.html'
