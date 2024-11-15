@@ -1,6 +1,11 @@
 from django.core.exceptions import ValidationError
 
 
+# Validador personalizado para permitir solo letras mayúsculas
+def validar_campo(value):
+    if not value.isalpha():
+        raise ValidationError('El nombre del rol solo puede contener letras sin caracteres especiales ni números.')
+
 
 
 def validar_cedula(cedula):

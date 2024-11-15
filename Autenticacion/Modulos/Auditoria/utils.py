@@ -23,6 +23,7 @@ def save_audit(request, model, action):
     tabla_auditoria.save()
 
 def get_action_description(model, action):
+    # Aquí se agregan las nuevas acciones
     if action == AuditoriaUser.AccionChoices.MODIFICAR:
         return f"Modificó un registro en la tabla {model.__class__.__name__} con ID {model.id}."
     elif action == AuditoriaUser.AccionChoices.CREAR:
@@ -33,7 +34,12 @@ def get_action_description(model, action):
         return f"Inactivó el registro con ID {model.id} de la tabla {model.__class__.__name__}."
     elif action == AuditoriaUser.AccionChoices.ACTIVAR:
         return f"Activó el registro con ID {model.id} de la tabla {model.__class__.__name__}."
+    elif action == AuditoriaUser.AccionChoices.BLOQUEO:
+        return f"Intentó realizar una acción bloqueada en la tabla {model.__class__.__name__} con ID {model.id}."
+    elif action == AuditoriaUser.AccionChoices.ADVERTENCIA:
+        return f"Recibió una advertencia al intentar realizar una acción en la tabla {model.__class__.__name__} con ID {model.id}."
     return ""
+
 
 # Obtener el IP desde donde se esta accediendo
 def ip_client_address(request):

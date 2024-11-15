@@ -1,32 +1,120 @@
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+from django.contrib import messages
 from django.views import View
 from Modulos.Auditoria.models import AuditoriaUser
 from Modulos.Auditoria.utils import save_audit
+from Modulos.Login.models import Rol, Usuario
+from django.contrib import messages
+from django.shortcuts import redirect, get_object_or_404
+from django.views import View
 
 
+   
 class CambiarEstadoMixin(View):
     model = None  
     redirect_url = None  
 
     def post(self, request, pk):
         if not self.model or not self.redirect_url:
-            return redirect('')  
+            return redirect('login:index')  # Redirecciona si faltan parámetros obligatorios
+
+        # Verificar si el usuario tiene rol asignado
+        if request.user.rol is None:
+            messages.error(request, "No tienes autorización para realizar esta operación. El único permiso disponible es para el registro.")
+            return redirect(self.redirect_url)
 
         # Obtener el objeto según el modelo y pk
         objeto = get_object_or_404(self.model, pk=pk)
 
-        if objeto.estado:
-            objeto.estado = False 
-        else:
-            objeto.estado = True
+        # Verificar si el objeto es de tipo Usuario o Rol y si es un Coordinador
+        is_coordinador = objeto.rol.name == 'Coordinador' if isinstance(objeto, Usuario) else objeto.name == 'Coordinador'
+        is_current_user = objeto == request.user
+
+        # Verificar si el rol del objeto es "Coordinador" y si el usuario actual tiene el rol de Coordinador
+        if is_coordinador:
+            if is_current_user:
+                # No permitir que el usuario inactiva su propia cuenta
+                messages.error(request, "No puedes inactivar tu propia cuenta.")
+                action = AuditoriaUser.AccionChoices.BLOQUEO 
+                save_audit(request, objeto, action=action)
+                return redirect(self.redirect_url)  # Redirige a la vista de confirmación
+
+            if isinstance(objeto, Rol):
+                # No se puede eliminar el rol Coordinador
+                messages.error(request, "No es posible eliminar el rol Coordinador.")
+                action = AuditoriaUser.AccionChoices.BLOQUEO 
+                save_audit(request, objeto, action=action)
+                return redirect(self.redirect_url)  # Redirige a la vista de confirmación
+
+            if isinstance(objeto, Usuario):
+                # Advertencia si el usuario tiene el rol Coordinador
+                messages.warning(request, "Estás a punto de cambiar el estado de un Coordinador, ¿estás seguro?")
+                action = AuditoriaUser.AccionChoices.ADVERTENCIA 
+                save_audit(request, objeto, action=action)
+                return redirect('login:confirmar_accion_usuario', pk=objeto.pk)  # Redirige a la vista de confirmación del usuario
+
+
+        # Cambiar el estado del objeto
+        objeto.estado = not objeto.estado
         objeto.save()
 
-         # Registrar la auditoría para el cambio de estado
-        save_audit(request, objeto, action=AuditoriaUser.AccionChoices.INACTIVAR if objeto.estado == False else AuditoriaUser.AccionChoices.ACTIVAR)
+        # Registrar la auditoría para el cambio de estado
+        action = AuditoriaUser.AccionChoices.INACTIVAR if not objeto.estado else AuditoriaUser.AccionChoices.ACTIVAR
+        save_audit(request, objeto, action=action)
+                        
+            
+        messages.success(request, f"El estado del registro ha sido cambiado correctamente a {'Inactivo' if not objeto.estado else 'Activo'}.")
         
         return redirect(self.redirect_url)
+
+
+
+
+
+class ConfirmarCambioEstadoView(View):
+    model = None  
+    redirect_url = None  
+
+    def get(self, request, pk):
+        # Verificar que el modelo esté definido
+        if not self.model:
+            messages.error(request, "No se ha especificado un modelo válido.")
+            return redirect(self.redirect_url)  # Redirige a un listado por defecto si falta el URL
+
+        # Obtener el objeto según el modelo y pk
+        objeto = get_object_or_404(self.model, pk=pk)
+        
+        # Renderizar la plantilla de confirmación
+        return render(request, 'confirmar_accion.html', {'objeto': objeto})
+
+    def post(self, request, pk):
+        # Verificar que el modelo esté definido
+        if not self.model:
+            messages.error(request, "No se ha especificado un modelo válido.")
+            return redirect(self.redirect_url)
+
+        # Obtener el objeto según el modelo y pk
+        objeto = get_object_or_404(self.model, pk=pk)
+
+        # Cambiar el estado del objeto
+        objeto.estado = not objeto.estado
+        objeto.save()
+
+        # Registrar la auditoría para el cambio de estado
+        action = AuditoriaUser.AccionChoices.INACTIVAR if not objeto.estado else AuditoriaUser.AccionChoices.ACTIVAR
+        save_audit(request, objeto, action=action)
+        
+        # Mostrar el mensaje adecuado según el modelo
+        mensaje_objeto = objeto.rol.name if self.model == Usuario else objeto.name
+        messages.success(request, f"El estado de {'usuario' if self.model == Usuario else 'rol'} {mensaje_objeto} ha sido cambiado correctamente a {'Inactivo' if not objeto.estado else 'Activo'}.")
+
+        # Redirigir a la URL especificada o al listado por defecto
+        return redirect(self.redirect_url)
     
+
+
+
 
 class RoleRequiredMixin:
     required_role = None  

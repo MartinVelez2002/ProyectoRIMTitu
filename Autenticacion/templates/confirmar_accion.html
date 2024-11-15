@@ -1,0 +1,48 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}
+Acceso Restringido
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/modulos.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="container-y">
+    <div>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message" style="padding: 10px; margin: 10px 0; border-radius: 5px;
+                            {% if message.tags == 'warning' %} background-color: #ffcc00; color: #6e4a00; {% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <div>
+       
+    
+       
+    
+        {% if objeto.estado %}
+            <h3>¿Deseas inactivar a <strong>{{ objeto.nombre}} {{ objeto.apellido}}</strong>  con rol <strong>{{ objeto.rol.name }}</strong>?</h3>
+        {% else %}
+            <h3>¿Deseas activar a <strong>{{ objeto.nombre}} {{ objeto.apellido}}</strong>  con rol <strong>{{ objeto.rol.name }}</strong>?</h3>
+        {% endif %}
+
+
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Confirmar</button>
+    
+             <a href="{% url 'login:personal' %}" class="btn btn-secondary">Cancelar</a>  
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/ocultar_mensajes.js' %}"></script>
+{% endblock %}

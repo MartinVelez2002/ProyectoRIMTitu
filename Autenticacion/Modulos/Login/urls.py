@@ -30,12 +30,13 @@ urlpatterns = [
     path('editar_personal/<int:pk>', Usuario_update.as_view(), name='editar_personal'),
 
 
-    #Accion de inactivar
-    path('inactivar/<int:pk>', InactivarActivarUsuarioView.as_view(), name='inactivar_objeto'),
+    #Inactivar/activar rol - usuario
+    path('inactivar_usuario/<int:pk>', InactivarActivarUsuarioView.as_view(), name='inactivar_usuario'),
 
     path('inactivar_rol/<int:pk>', InactivarActivarRolView.as_view(), name='inactivar_rol'),
 
-    
+
+    path('confirmar_inactivacion_usuario/<int:pk>/', ConfirmarAccionUsuarioView.as_view(), name='confirmar_accion_usuario'),
     
     
 
