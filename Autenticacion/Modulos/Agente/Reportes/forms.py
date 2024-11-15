@@ -11,10 +11,11 @@ class Reportes_Form_C(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(Reportes_Form_C, self).__init__(*args, **kwargs)
         for field in self.fields.values():
-            field.widget.attrs.update({
-                'class': 'input',
-                'required': True
-            })
+            if field.name != 'evidencia':
+                field.widget.attrs.update({
+                    'class': 'input',
+                    'required': True
+                })
 
 
     def clean_evidencia(self):

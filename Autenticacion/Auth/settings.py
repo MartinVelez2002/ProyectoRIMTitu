@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'Modulos.Coordinador.Turno',
     'Modulos.Coordinador.Novedad',
     'Modulos.Coordinador.Calendario',
-    'Modulos.Coordinador.Incidente',
+    'Modulos.Agente.Incidente',
     'Modulos.Auditoria',
     'Modulos.Agente.Reportes'
 ]
