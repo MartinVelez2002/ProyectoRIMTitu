@@ -1,5 +1,9 @@
 {% extends 'modulos.html '%}
+
 {% load static %}
+
+{% load custom_filters %}
+
 
 {% block title %}
 Módulo Reportes
@@ -46,17 +50,18 @@ Módulo Reportes
     {% endif %}
     <td> {{ i.descripcion }} </td>
     <td>
-        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalLabel-{{ i.id }}">
             <i class="fa-sharp fa-solid fa-eye"></i>
         </button>
     </td>
 </tr>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalLabel-{{ i.id }}" tabindex="-1" aria-labelledby="modalLabel-{{ i.id }}"
+    aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5 text-center" id="exampleModalLabel">
+                <h1 class="modal-title fs-5 text-center" id="modalLabel-{{ i.id }}">
                     Detalle del reporte con fecha: {{ i.fecha }}</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -81,7 +86,15 @@ Módulo Reportes
                         {% endif %}
                     </div>
 
-                    <img width="100px" src="{% static 'img/modulos/Reportes.png' %}" alt="hola">
+                    {% if i.evidencia %}
+                    {% if i.evidencia.url|is_image %}
+                    <img width="200px" src="{{ i.evidencia.url }}" alt="Evidencia" class="img-fluid">
+                    {% elif i.evidencia.url|is_video %}
+                    <video width="350px" src="{{ i.evidencia.url }}" controls class="img-fluid"></video>
+                    {% endif %}
+                    {% else %}
+                    <p>No hay evidencia disponible.</p>
+                    {% endif %}
 
                 </div>
 
