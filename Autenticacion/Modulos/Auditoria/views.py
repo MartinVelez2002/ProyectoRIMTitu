@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from Modulos.Login.views import RoleRequiredMixin
+from Modulos.Login.mixin import RoleRequiredMixin
 from .models import AuditoriaUser
 
 
@@ -12,7 +12,7 @@ class Auditoria_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
     context_object_name = 'auditoria'
     model = AuditoriaUser
     required_role = 'Coordinador'
-    paginate_by = 5
+    paginate_by = 3
     
     
     def get_context_data(self, **kwargs):

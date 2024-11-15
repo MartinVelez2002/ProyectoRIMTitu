@@ -19,8 +19,7 @@ from django.views.generic.edit import FormView
 from Modulos.Auditoria.models import AuditoriaUser
 from Modulos.Auditoria.utils import save_audit
 from Modulos.Login.forms import FormularioLogin, FormularioRegistro, CambiarPasswordForm, ForgetPasswordForm, FormularioEditarPersonal, Rol_Form
-from Modulos.Login.mixin import *
-from Modulos.Login.mixin import CambiarEstadoMixin
+from Modulos.Login.mixin import CambiarEstadoMixin, ConfirmarCambioEstadoView
 from Modulos.Login.models import Usuario, Rol
 from django.db.models import Q
 
@@ -476,9 +475,14 @@ class Rol_Update(LoginRequiredMixin, UpdateView):
     
     
 
-    
+
     
 class InactivarActivarUsuarioView(CambiarEstadoMixin):
+    model = Usuario
+    redirect_url = 'login:personal'
+
+
+class ConfirmarAccionUsuarioView(ConfirmarCambioEstadoView):
     model = Usuario
     redirect_url = 'login:personal'
 
@@ -487,6 +491,9 @@ class InactivarActivarUsuarioView(CambiarEstadoMixin):
 class InactivarActivarRolView(CambiarEstadoMixin):
     model = Rol
     redirect_url = 'login:listar_rol'
+
+
+
 
 
 class Acceso_Restringido(LoginRequiredMixin, TemplateView):

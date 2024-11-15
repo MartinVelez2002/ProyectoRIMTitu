@@ -8,14 +8,16 @@ class AuditoriaUser(models.Model):
         ELIMINAR = 'E', 'Eliminar'
         INACTIVAR = 'I', 'Inactivar'
         ACTIVAR = 'A', 'Activar'
-
+        BLOQUEO = 'B', 'Bloqueo'
+        ADVERTENCIA = 'ADV', 'Advertencia'
+        
     usuario = models.ForeignKey(
         Usuario,
         on_delete=models.PROTECT,
         verbose_name='Usuario'
     )
     accion = models.CharField(
-        max_length=1,
+        max_length=3,
         choices=AccionChoices.choices,
         verbose_name='Acción'
     )

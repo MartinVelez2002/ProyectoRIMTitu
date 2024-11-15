@@ -14,8 +14,10 @@ Acceso Restringido
 
 {% block main %}
 <div class="container-x">
-    <h1 class="h1-x">Acceso Restringido</h1>
-    <p class="p-x">No tienes permisos para acceder a esta página.</p>
-    <a href="{% url 'login:index' %}" class="btn-x">Ir al Menú Principal</a>
+    <div>
+        <h1 class="h1-x">Acceso Restringido</h1>
+        <p class="p-x">No tienes permisos para acceder a esta página.</p>
+        <a href="{% url 'login:index' %}" class="btn-x">Ir al Menú Principal</a>
+    </div>
 </div>
 {% endblock %}

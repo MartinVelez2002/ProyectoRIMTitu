@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
-from Modulos.Login.utils import validar_cedula
+from Modulos.Login.utils import validar_campo, validar_cedula
 
 # Create your models here.
 
@@ -10,7 +10,7 @@ from Modulos.Login.utils import validar_cedula
 
 # Modelo de Rol
 class Rol(models.Model):
-    name = models.CharField(max_length=25, unique=True,  verbose_name="Nombre del rol")
+    name = models.CharField(max_length=25, unique=True,  verbose_name="Nombre del rol",  validators=[validar_campo])
     estado = models.BooleanField(default=True)
     def __str__(self):
         return self.name
@@ -59,7 +59,7 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True, max_length=50)
     nombre = models.CharField(max_length = 15, blank = True, null = True)
     apellido = models.CharField(max_length = 15, blank = True, null = True)
-    cedula = models.CharField(unique=True, max_length=10 ,validators=[validar_cedula], null=True)
+    cedula = models.CharField(unique=True, max_length=10, validators=[validar_cedula], null=True)
     estado = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)  # Permitir el acceso al admin
     is_superuser = models.BooleanField(default=False)  #Acceso completo y sin restricciones, permitiendo cualquier acción.
