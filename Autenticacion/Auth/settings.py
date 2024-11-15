@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'Modulos.Coordinador.Turno',
     'Modulos.Coordinador.Novedad',
     'Modulos.Coordinador.Calendario',
-    'Modulos.Coordinador.Incidente',
+    'Modulos.Agente.Incidente',
     'Modulos.Auditoria',
     'Modulos.Agente.Reportes'
 ]
@@ -159,8 +159,6 @@ LOGIN_URL = reverse_lazy('login')  # Reemplaza 'login' con el nombre que uses en
 LOGIN_REDIRECT_URL = '/'
 
 # Configuración de tiempo de inactividad
-
-
 SESSION_COOKIE_AGE = 150000  # Tiempo en segundos (3 minutos)
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # Cierra la sesión al cerrar el navegador

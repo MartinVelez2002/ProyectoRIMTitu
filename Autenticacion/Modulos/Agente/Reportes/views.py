@@ -3,7 +3,7 @@ from .models import Reportes_Model
 from .forms import Reportes_Form_C
 from django.views.generic import ListView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.conf import settings
 
 # Create your views here.
 class Reportes_View(LoginRequiredMixin, ListView):
