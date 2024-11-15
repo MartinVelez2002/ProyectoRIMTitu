@@ -84,13 +84,18 @@ Módulo Reportes
                         {% elif i.estado_incidente == 'E' %}
                         <p> <strong> Estado del Incidente: </strong> En proceso </p>
                         {% endif %}
+
+                        <p> <strong>Descripción del reporte:</strong> {{ i.descripcion }}  </p>
+                    
+                        <p> <strong> Novedad reportada: </strong> {{i.novedad}} </p>
+                    
                     </div>
 
                     {% if i.evidencia %}
                     {% if i.evidencia.url|is_image %}
-                    <img width="200px" src="{{ i.evidencia.url }}" alt="Evidencia" class="img-fluid">
+                    <img width="300px" src="{{ i.evidencia.url }}" alt="Evidencia" class="img-fluid">
                     {% elif i.evidencia.url|is_video %}
-                    <video width="350px" src="{{ i.evidencia.url }}" controls class="img-fluid"></video>
+                    <video width="400px" src="{{ i.evidencia.url }}" controls class="img-fluid"></video>
                     {% endif %}
                     {% else %}
                     <p>No hay evidencia disponible.</p>

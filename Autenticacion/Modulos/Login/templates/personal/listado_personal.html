@@ -48,10 +48,11 @@ Módulo Personal
     {% endif %}
 
     <td>
+        {% if request.user.rol is not None %}
         <a class="btn btn-dark" onclick="abrir_modal_editar('{% url 'login:editar_personal' i.id %}')"> 
             Editar
         </a>
-    
+        {% endif %}
         <form action="{% url 'login:inactivar_usuario' pk=i.id %}" method="post" style="display: inline;">
             {% csrf_token %}
 

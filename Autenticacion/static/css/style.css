@@ -11,7 +11,7 @@
 }
 
 .modal {
-    --bs-modal-width: 700px !important; /* Cambia el ancho del modal */
+    --bs-modal-width: 800px !important; /* Cambia el ancho del modal */
     --bs-modal-bg: #f8f9fa !important; /* Cambia el fondo del modal */
     --bs-modal-border-color: #dee2e6 !important; /* Cambia el color del borde */
     --bs-modal-border-width: 2px !important; /* Cambia el grosor del borde */
