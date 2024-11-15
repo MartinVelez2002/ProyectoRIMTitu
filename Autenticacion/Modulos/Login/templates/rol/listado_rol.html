@@ -32,9 +32,7 @@ Módulo roles
     </td>
     <td>
         
-        {% comment %} <form action="{% url 'login:editar_rol' i.id %}" method="get" style="display: inline;">
-            <button type="submit" class="btn btn-dark">Editar</button>
-        </form> {% endcomment %}
+    
         <a class="btn btn-dark" onclick="abrir_modal_editar('{% url 'login:editar_rol' i.id %}')">
             Editar
         </a>
