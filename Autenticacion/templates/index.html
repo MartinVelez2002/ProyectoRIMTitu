@@ -159,16 +159,17 @@
                 </a>
                 {% endif %}
                 {% if request.user.rol and request.user.rol.name == 'Agente' %}
-                <a href="#">
+                <a href="{% url 'reportes:listar_reportes' %}">
                     <div class="card">
                         <div class="img-container">
-                            <img class="img" src="{% static 'img/modulos/Auditoria.png' %}" alt="PlanificacionImg">
+                            <img class="img" src="{% static 'img/modulos/Reportes.png' %}" alt="PlanificacionImg">
                         </div>
                         <div class="card-body">
                             <p class="card-text"> Realizar un reporte </p>
                         </div>
                     </div>
                 </a>
+
                 
                 {% endif %}
             </main>
