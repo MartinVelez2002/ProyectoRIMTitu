@@ -455,6 +455,15 @@ class Rol_Update(LoginRequiredMixin, UpdateView):
     form_class = Rol_Form
     success_url = reverse_lazy('login:listar_rol')
 
+    # def dispatch(self, request, *args, **kwargs):
+    #     # Check if the user has no role
+    #     if request.user.rol is None:
+    #         messages.error(request, "No tienes autorización para editar roles. Por favor, contacta al administrador.")
+    #         return redirect(self.success_url)  # Redirect to the roles listing page
+        
+    #     return super().dispatch(request, *args, **kwargs)
+    
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Edición de rol'
