@@ -19,8 +19,8 @@ Módulo Reportes
 <th> Novedad </th>
 <th> Prioridad </th>
 <th> Estado del incidente </th>
-<th> Evidencia </th>
 <th> Descripción </th>
+<th> Ver más detalle </th>
 {% endblock %}
 
 {% block tbody %}
@@ -30,11 +30,68 @@ Módulo Reportes
     <td> {{ i.fecha }} </td>
     <td> {{ i.hora }} </td>
     <td> {{ i.novedad }} </td>
-    <td> {{ i.prioridad }} </td>
-    <td> {{ i.estado_incidente }} </td>
-    <td> {{ i.evidencia }} </td>
+    {% if i.prioridad == "M" %}
+    <td> Media </td>
+    {% elif i.prioridad == "B" %}
+    <td> Baja </td>
+    {% elif i.prioridad == "A" %}
+    <td> Alta </td>
+    {% endif %}
+    {% if i.estado_incidente == "N" %}
+    <td> Notificado </td>
+    {% elif i.estado_incidente == "R" %}
+    <td> Resuelto </td>
+    {% elif i.estado_incidente == "E" %}
+    <td> En proceso </td>
+    {% endif %}
     <td> {{ i.descripcion }} </td>
+    <td>
+        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <i class="fa-sharp fa-solid fa-eye"></i>
+        </button>
+    </td>
 </tr>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5 text-center" id="exampleModalLabel">
+                    Detalle del reporte con fecha: {{ i.fecha }}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body flex ">
+                <div class="d-flex flex-row justify-content-evenly">
+                    <div>
+                        <p> <strong> Hora del reporte: </strong> {{i.hora}} </p>
+                        {% if i.prioridad == 'M' %}
+                        <p> <strong> Prioridad del reporte: </strong> Medio </p>
+                        {% elif i.prioridad == 'B' %}
+                        <p> <strong> Prioridad del reporte: </strong> Bajo </p>
+                        {% elif i.prioridad == 'A' %}
+                        <p> <strong> Prioridad del reporte: </strong> Alto </p>
+                        {% endif %}
+
+                        {% if i.estado_incidente == 'N' %}
+                        <p> <strong> Estado del Incidente: </strong> Notificado </p>
+                        {% elif i.estado_incidente == 'R' %}
+                        <p> <strong> Estado del Incidente: </strong> Resuelto </p>
+                        {% elif i.estado_incidente == 'E' %}
+                        <p> <strong> Estado del Incidente: </strong> En proceso </p>
+                        {% endif %}
+                    </div>
+
+                    <img width="100px" src="{% static 'img/modulos/Reportes.png' %}" alt="hola">
+
+                </div>
+
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endfor %}
 {% else %}
 <tr>
