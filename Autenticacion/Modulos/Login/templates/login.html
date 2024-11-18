@@ -68,6 +68,10 @@
 						<span id="toggleBtn"></span>
 					</div>
 				</div>
+				<!-- Campo reCAPTCHA -->
+				<div class="captcha">
+					{{ form.captcha }}
+				</div> 
 				<a href="{% url 'login:olvidar_clave' %}">¿Olvidó su contraseña?</a>
 				<input type="submit" class="btn" value="Iniciar Sesión">
 			</form>
@@ -81,7 +85,7 @@
 		<script src="https://kit.fontawesome.com/6f24398be6.js" crossorigin="anonymous"></script>
 		<script src="{% static 'js/ocultar_mensajes.js'%}"></script>
 		<script src="{% static 'js/hide_show_passw.js' %}"></script>
-		<script src="{% static "js/parametros_clave.js" %}"></script>
+		<script src="{% static 'js/parametros_clave.js' %}"></script>
 	{% endblock %}
 
 </body>

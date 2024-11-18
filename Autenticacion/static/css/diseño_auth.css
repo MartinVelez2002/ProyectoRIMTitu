@@ -9,6 +9,8 @@ body{
 	overflow: hidden;
 }
 
+
+
 .wave {
 	position: fixed;
 	height: 100vh;
@@ -251,8 +253,9 @@ a{
 	display: block;
 	text-align: right;
 	text-decoration: none;
-	color: #999;
-	font-size: 0.9rem;
+	color: #797878;
+    margin-top: 10px;
+	font-size: rem;
 	transition: .3s;
 }
 

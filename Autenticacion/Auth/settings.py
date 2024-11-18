@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 import os
-from django.contrib.messages import constants as messages
 from django.urls import reverse_lazy
 from dotenv import load_dotenv
 from pathlib import Path
@@ -43,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_recaptcha',
     'Modulos.Login',
     'Modulos.Coordinador.Ubicacion',
     'Modulos.Coordinador.Turno',
@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'Modulos.Agente.Incidente',
     'Modulos.Auditoria',
     'Modulos.Agente.Reportes'
+
 ]
 
 MIDDLEWARE = [
@@ -153,9 +154,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 MEDIA_URL = '/media/'
 
-AUTH_USER_MODEL = 'Login.Usuario'
 
-LOGIN_URL = reverse_lazy('login')  # Reemplaza 'login' con el nombre que uses en urls.py
+
+AUTH_USER_MODEL = 'Login.Usuario'
+LOGIN_URL = reverse_lazy('login') 
 LOGIN_REDIRECT_URL = '/'
 
 # Configuración de tiempo de inactividad
@@ -171,3 +173,8 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+
+# Claves de reCAPTCHA
+RECAPTCHA_TESTING = True
+RECAPTCHA_PUBLIC_KEY = os.getenv("RECAPTCHA_PUBLIC_KEY")
+RECAPTCHA_PRIVATE_KEY = os.getenv("RECAPTCHA_PRIVATE_KEY")
