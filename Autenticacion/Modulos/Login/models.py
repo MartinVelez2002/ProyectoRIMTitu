@@ -20,7 +20,7 @@ class Rol(models.Model):
 
 
 class UsuarioManager(BaseUserManager):
-    def create_user(self, email, username, password=None, cedula=None, rol = None, nombre = None, apellido = None):
+    def create_user(self, username, email, password=None, cedula=None, rol = None, nombre = None, apellido = None):
 
         usuario = self.model(
             username=username,
@@ -40,9 +40,10 @@ class UsuarioManager(BaseUserManager):
 
     
 
-    def create_superuser(self, email, username, password=None, cedula=None, rol=None, nombre=None, apellido=None):
-        usuario = self.create_user(email,
-        username, 
+    def create_superuser(self, username, email=None,  password=None, cedula=None, rol=None, nombre=None, apellido=None):
+        usuario = self.create_user(
+        username,
+        email, 
         password
         )
         
@@ -71,7 +72,7 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
 
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email']
+  
 
     def __str__(self):
         return f'{self.nombre} {self.apellido}'
