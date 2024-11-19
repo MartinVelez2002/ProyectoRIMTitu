@@ -19,9 +19,11 @@ from django.views.generic.edit import FormView
 from Modulos.Auditoria.models import AuditoriaUser
 from Modulos.Auditoria.utils import save_audit
 from Modulos.Login.forms import FormularioLogin, FormularioRegistro, CambiarPasswordForm, ForgetPasswordForm, FormularioEditarPersonal, Rol_Form
-from Modulos.Login.mixin import CambiarEstadoMixin, ConfirmarCambioEstadoView
+from Modulos.Login.mixin import CambiarEstadoMixin, ConfirmarCambioEstadoView, RoleRequiredMixin
 from Modulos.Login.models import Usuario, Rol
 from django.db.models import Q
+
+from Modulos.Login.utils import configuracion_completa, inactivar_superusuario
 
 class Login(FormView):
     template_name = 'login.html'
@@ -350,7 +352,7 @@ class PasswordResetConfirmView(View):
 
 
 
-class Usuario_view(LoginRequiredMixin,ListView):
+class Usuario_view(LoginRequiredMixin ,ListView):
     template_name = 'personal/listado_personal.html'
     model = Usuario
     context_object_name = 'personal'
@@ -388,8 +390,9 @@ class Usuario_view(LoginRequiredMixin,ListView):
    
     
 
-class Usuario_update(LoginRequiredMixin, UpdateView):
+class Usuario_update(LoginRequiredMixin, RoleRequiredMixin, UpdateView):
     model = Usuario
+    required_role = 'Coordinador'
     form_class = FormularioEditarPersonal
     success_url = reverse_lazy('login:personal')
     template_name = 'personal/editar_personal.html'
@@ -449,8 +452,9 @@ class Rol_Create(LoginRequiredMixin, CreateView):
         return response
 
 
-class Rol_Update(LoginRequiredMixin, UpdateView):
+class Rol_Update(LoginRequiredMixin, RoleRequiredMixin, UpdateView):
     template_name = 'rol/crear_rol.html'
+    required_role = 'Coordinador'
     model = Rol
     form_class = Rol_Form
     success_url = reverse_lazy('login:listar_rol')
@@ -475,8 +479,6 @@ class Rol_Update(LoginRequiredMixin, UpdateView):
         return response
     
     
-
-
     
 class InactivarActivarUsuarioView(CambiarEstadoMixin):
     model = Usuario
@@ -488,16 +490,27 @@ class ConfirmarAccionUsuarioView(ConfirmarCambioEstadoView):
     redirect_url = 'login:personal'
 
 
-
 class InactivarActivarRolView(CambiarEstadoMixin):
     model = Rol
     redirect_url = 'login:listar_rol'
-
-
-
 
 
 class Acceso_Restringido(LoginRequiredMixin, TemplateView):
     template_name = 'acceso_restringido.html'
         
 
+class ConfiguracionInicialView(LoginRequiredMixin, TemplateView):
+    template_name = 'configuracion_inicial.html'
+    
+    def get(self, request):
+        # Verifica si la configuración inicial ya está completa
+        if configuracion_completa():
+            # Si la configuración está completa, inactivamos el superusuario
+            inactivar_superusuario()
+             # Cierra la sesión del usuario actual
+            logout(request)
+            messages.success(request, "La configuración inicial ha sido completada y las credenciales utilizadas han sido desactivadas.")
+            return redirect('login:login') 
+        else:
+            messages.error(request, "La configuración inicial no está completa. Asegúrese de registrar el rol y usuario de Administrador.")
+            return render(request, self.template_name)

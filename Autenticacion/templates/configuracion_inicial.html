@@ -1,0 +1,62 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}
+Bienvenida
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/modulos.css' %}">
+{% endblock %}
+
+
+
+{% block main %}
+    {% block sidebar %}
+    {% include 'sidebar.html' %}
+    {% endblock %}
+<div class="container-y">
+    
+    <div>
+        {% if messages %}
+        {% for message in messages %}
+            <div class="message" style="padding: 10px; margin: 10px 0; border-radius: 5px; right: 30%; 
+                {% if message.tags == 'error' %} background-color: #ffcccc; color: #d8000c; {% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+
+ 
+    <div class="welcome-container">
+        <h2 class="welcome-title">¡Bienvenido/a!</h2>
+        <p class="welcome-description">
+            En las siguientes páginas, accesibles desde el menú lateral, podrás realizar lo siguiente:
+        </p>
+        <ul class="welcome-list">
+            <li>Registrar el rol <strong>"Coordinador"</strong>.</li>
+            <li>Registrar al primer usuario con ese rol en el sistema.</li>
+        </ul>
+        <p class="welcome-description">
+            Este proceso es fundamental para dejar el sistema completamente operativo. 
+            Una vez finalizado estos pasos, las credenciales actuales que utilizaste para llevar a cabo
+            esta configuración inicial serán desactivadas, para proteger el acceso.
+        </p>
+        <p class="welcome-footer">¡Gracias por tu colaboración!</p>
+           
+        
+    </div>
+</div>
+
+    {% if logout %}
+        <script>
+            //Redireccionar al Login inmediatamente después de cerrar sesión
+            window.location.href ="{% url 'login:login' %}";
+        </script>
+    {% endif%}
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/ocultar_mensajes.js' %}"></script>
+{% endblock %}

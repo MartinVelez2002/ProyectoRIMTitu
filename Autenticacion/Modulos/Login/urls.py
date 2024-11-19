@@ -48,8 +48,15 @@ urlpatterns = [
     path('editar_rol/<int:pk>', Rol_Update.as_view(), name = 'editar_rol' ),
 
     #Página de prohibición 
-    path('acceso_restringido/',Acceso_Restringido.as_view(), name = 'acceso_restringido')
+    path('acceso_restringido/',Acceso_Restringido.as_view(), name = 'acceso_restringido'),
+    
+
+    #Página de primer acceso al sistema
+    path('configuracion_inicial/', ConfiguracionInicialView.as_view(), name='configuracion_inicial'),
+    # Otras rutas...
 ]
+
+
     
     
 

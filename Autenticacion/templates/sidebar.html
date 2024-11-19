@@ -1,6 +1,14 @@
 <aside class="side-bar bg-dark">
     <div>
         <ul class="nav">
+            {% if request.user.is_superuser %}
+            <li>
+                <a class="nav-link active" href="{% url 'login:configuracion_inicial' %}">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <span class="nav-item"> Información </span>
+                </a>
+            </li>
+            {% endif %}
             {% if request.user.is_superuser or request.user.rol and request.user.rol.name == 'Coordinador'%}
             <li>
                 <a class="nav-link active" href="{% url 'login:listar_rol' %}">

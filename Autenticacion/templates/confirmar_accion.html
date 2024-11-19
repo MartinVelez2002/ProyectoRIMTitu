@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-Acceso Restringido
+Confirmación Acción
 {% endblock %}
 
 {% block css %}
@@ -22,14 +22,11 @@ Acceso Restringido
         {% endif %}
     </div>
     <div>
-       
-    
-       
     
         {% if objeto.estado %}
-            <h3>¿Deseas inactivar a <strong>{{ objeto.nombre}} {{ objeto.apellido}}</strong>  con rol <strong>{{ objeto.rol.name }}</strong>?</h3>
+            <h3>¿Deseas inactivar a <strong>{{ objeto.nombre}} {{ objeto.apellido}}</strong> con rol <strong>{{ objeto.rol.name }}</strong>?</h3>
         {% else %}
-            <h3>¿Deseas activar a <strong>{{ objeto.nombre}} {{ objeto.apellido}}</strong>  con rol <strong>{{ objeto.rol.name }}</strong>?</h3>
+            <h3>¿Deseas activar a <strong>{{ objeto.nombre}} {{ objeto.apellido}}</strong> con rol <strong>{{ objeto.rol.name }}</strong>?</h3>
         {% endif %}
 
 

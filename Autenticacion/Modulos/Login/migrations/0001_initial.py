@@ -35,7 +35,7 @@ class Migration(migrations.Migration):
                 ('email', models.EmailField(max_length=50, unique=True)),
                 ('nombre', models.CharField(blank=True, max_length=15, null=True)),
                 ('apellido', models.CharField(blank=True, max_length=15, null=True)),
-                ('cedula', models.CharField(max_length=10, null=True, unique=True, validators=[Modulos.Login.utils.validar_cedula])),
+                ('cedula', models.CharField(max_length=10, null=True, unique=True)),
                 ('estado', models.BooleanField(default=True)),
                 ('is_staff', models.BooleanField(default=False)),
                 ('is_superuser', models.BooleanField(default=False)),

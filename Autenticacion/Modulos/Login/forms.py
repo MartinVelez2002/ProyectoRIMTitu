@@ -10,13 +10,13 @@ class Rol_Form(forms.ModelForm):
     class Meta: 
         model = Rol
         fields = ['name']
-        widgets = {
-            'name': forms.TextInput(attrs={
-                'class':'input'
-            })
-        }
+        widgets = {'name': forms.TextInput(attrs={'class':'input'})}
 
-
+    def clean_rol(self):
+        rol = self.cleaned_data.get('name')
+        if not rol.isalpha():
+            raise ValidationError('El nombre del rol solo puede contener letras sin caracteres especiales ni números.')
+        return rol
 
 class FormularioLogin(forms.Form):
     username = forms.CharField(max_length=15)
@@ -29,7 +29,14 @@ class FormularioLogin(forms.Form):
         self.fields['password'].widget.attrs.update({'class': 'input', 'id': 'contraseña'})
 
     
-
+# class FormularioLogin(forms.Form):
+#     username = forms.CharField(max_length=15, widget=forms.TextInput(attrs={'class':'input'}))
+#     password = forms.CharField(widget=forms.PasswordInput(attrs={'type': 'password',
+#     'class': 'input', 
+#     'id':'contraseña'}))
+    
+#     captcha = ReCaptchaField()   
+    
 
 class FormularioRegistro(forms.ModelForm):
     password1 = forms.CharField(
@@ -92,7 +99,33 @@ class FormularioRegistro(forms.ModelForm):
         cedula = self.cleaned_data.get('cedula')
         if Usuario.objects.filter(cedula=cedula).exists():
             raise ValidationError("Este número de cédula ya está registrado.")
+        
+        
+        cedula = str(cedula)
+        if not cedula.isdigit():
+            raise ValidationError('La cédula debe contener solo datos numéricos.')
+        longitud = len(cedula)
+        if longitud != 10:
+            raise ValidationError('Cantidad de dígitos incorrecta.')
+        
+        coeficientes = [2, 1, 2, 1, 2, 1, 2, 1, 2]
+        total = 0
+        
+        for i in range(9):
+            digito = int(cedula[i])
+            coeficiente = coeficientes[i]
+            producto = digito * coeficiente
+            if producto > 9:
+                producto -= 9
+            total += producto
+        
+        digito_verificador = (total * 9) % 10
+        if digito_verificador != int(cedula[9]):
+            raise ValidationError('La cédula no es válida.')
+        
         return cedula
+        
+
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
@@ -145,8 +178,7 @@ class FormularioEditarPersonal(FormularioRegistro):
 
         # Si la cédula no ha cambiado, no validamos la unicidad
         if cedula != user.cedula and Usuario.objects.filter(cedula=cedula).exists():
-            raise ValidationError("La cédula ya está registrada.")
-        
+            raise ValidationError("La cédula ya está registrada.") 
         return cedula
    
     

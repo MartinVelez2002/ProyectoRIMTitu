@@ -28,7 +28,7 @@
     <!-- CSS - Boxicons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="icon" href="{% static 'img/logo_alcaldia_milagro_ico.ico' %}" type="image/x-icon">
-
+    
 </head>
 
 <body>
@@ -44,7 +44,21 @@
         {% block main %}
         <div class="cards-container">
             <main class="cards">
-                {% if request.user.is_superuser or request.user.rol and request.user.rol.name == 'Coordinador'%}
+                {% if request.user.is_superuser %}
+                <a href="{% url 'login:configuracion_inicial' %}">
+                    <div class="card">
+                        <div class="img-container">
+                            <img class="img" src="{% static 'img/modulos/user_role.png' %}" alt="User_RoleImg">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"> Configuración Inicial </p>
+                        </div>
+                    </div>
+                </a>
+               {% endif %}
+
+                
+                {% if request.user.rol and request.user.rol.name == 'Coordinador'%}
                 <a href="{% url 'login:listar_rol' %}">
                     <div class="card">
                         <div class="img-container">
@@ -67,8 +81,7 @@
                         </div>
                     </div>
                 </a>
-                {% endif %}
-                {% if request.user.rol and request.user.rol.name == 'Coordinador' %}
+            
                 <a href="#">
                     <div class="card">
                         <div class="img-container">

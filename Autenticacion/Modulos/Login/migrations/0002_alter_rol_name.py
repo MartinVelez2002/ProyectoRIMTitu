@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='rol',
             name='name',
-            field=models.CharField(max_length=25, unique=True, validators=[Modulos.Login.utils.validar_campo], verbose_name='Nombre del rol'),
+            field=models.CharField(max_length=25, unique=True, verbose_name='Nombre del rol'),
         ),
     ]
