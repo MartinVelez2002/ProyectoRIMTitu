@@ -503,15 +503,5 @@ class ConfiguracionInicialView(LoginRequiredMixin, TemplateView):
     template_name = 'configuracion_inicial.html'
     
     def get(self, request):
-        # Verifica si la configuración inicial ya está completa
-        if configuracion_completa():
-            # Si la configuración está completa, inactivamos el superusuario
-            inactivar_superusuario()
-             # Cierra la sesión del usuario actual
-            logout(request)
-            messages.success(request, "La configuración inicial ha sido completada y las credenciales utilizadas han sido desactivadas.")
-             # Agrega una variable al contexto para indicar el logout
-            return render(request, self.template_name, {'logout': True})
-        else:
-            messages.error(request, "La configuración inicial no está completa. Asegúrese de registrar el rol y usuario de Administrador.")
-            return render(request, self.template_name)
+        messages.error(request, "La configuración inicial no está completa. Asegúrese de registrar el rol y usuario de Administrador.")
+        return render(request, self.template_name)

@@ -51,13 +51,6 @@ Bienvenida
         
     </div>
 </div>
-
-    {% if logout %}
-        <script>
-            //Redireccionar al Login inmediatamente después de cerrar sesión
-            window.location.href ="{% url 'login:login' %}";
-        </script>
-    {% endif%}
 {% endblock %}
 
 {% block js %}

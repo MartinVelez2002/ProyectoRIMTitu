@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 import os
-from django.urls import reverse_lazy
+
+from django.contrib.messages import constants as messages
 from dotenv import load_dotenv
 from pathlib import Path
 load_dotenv()
@@ -64,6 +65,19 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+MIDDLEWARE += ['Modulos.Login.middleware.ConfiguracionInicialMiddleware']
+
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
+
+# Opcional: Personaliza los niveles de los mensajes
+MESSAGE_TAGS = {
+    messages.DEBUG: 'debug',
+    messages.INFO: 'info',
+    messages.SUCCESS: 'success',
+    messages.WARNING: 'warning',
+    messages.ERROR: 'error',
+}
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
