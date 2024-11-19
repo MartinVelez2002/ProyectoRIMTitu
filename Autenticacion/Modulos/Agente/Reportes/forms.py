@@ -1,23 +1,37 @@
+from django.forms import ModelForm
 from django import forms
-from .models import Reportes_Model
+from .models import CabIncidente_Model, DetIncidente_Model
 
-class Reportes_Form_C(forms.ModelForm):
+
+class CabIncidente_Form(ModelForm):
     class Meta:
-        model = Reportes_Model
-        fields = ['novedad', 'prioridad', 'evidencia', 'descripcion']
+        model = CabIncidente_Model
+        fields = ['novedad', 'fecha', 'prioridad']
         widgets = {
-            'descripcion': forms.TextInput(),
+            'fecha': forms.DateInput(attrs={'type': 'date'})
         }
+    
     def __init__(self, *args, **kwargs):
-        super(Reportes_Form_C, self).__init__(*args, **kwargs)
+        super(CabIncidente_Form, self).__init__(*args, **kwargs)
         for field in self.fields.values():
-            if field.name != 'evidencia':
-                field.widget.attrs.update({
-                    'class': 'input',
-                    'required': True
-                })
+            field.widget.attrs.update({
+            'class': 'input',
+            'required': 'required'
+        })
+            
+class DetalleIncidente_Form(ModelForm):
+    class Meta:
+        model = DetIncidente_Model
+        fields = ['estado_incidente', 'evidencia','descripcion']
 
-
+    def __init__(self, *args, **kwargs):
+        super(DetalleIncidente_Form, self).__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.update({
+            'class': 'input',
+            'required': 'required'
+        })
+            
     def clean_evidencia(self):
         evidencia = self.cleaned_data.get('evidencia')
 
