@@ -1,7 +1,6 @@
 from django.db import models
 from Modulos.Coordinador.Calendario.models import TurnUsuario_Model
 from Modulos.Coordinador.Novedad.models import Novedad_Model
-from Modulos.Agente.Reportes.models import Reportes_Model
 from django.core.validators import FileExtensionValidator
 from Auth.constantes import Opciones
 
