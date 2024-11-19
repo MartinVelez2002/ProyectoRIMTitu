@@ -157,7 +157,8 @@ MEDIA_URL = '/media/'
 
 
 AUTH_USER_MODEL = 'Login.Usuario'
-LOGIN_URL = reverse_lazy('login') 
+
+LOGIN_URL = 'accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 
 # Configuración de tiempo de inactividad
@@ -165,7 +166,6 @@ SESSION_COOKIE_AGE = 150000  # Tiempo en segundos (3 minutos)
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # Cierra la sesión al cerrar el navegador
 
-LOGIN_URL = 'accounts/login/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'

@@ -67,27 +67,28 @@ header {
 
 
 .welcome-container {
-    background-color: #d2d4aa; /* Fondo suave (verde pastel claro) */
-    padding: 25px;
-    border-radius: 20px;
+    background-color: #e1e2c7; /* Fondo suave (verde pastel claro) */
+    padding: 20px;
+    border-radius: 15px;
     box-shadow: 30px 20px 10px rgba(0, 0, 0, 0.1); /* Sombra más definida */
-    max-width: 60%;
+    max-width: 70%;
     text-align: left;
+    position: relative;
+    top: 5%;
+    left: 9%;
     line-height: 1.8; /* Espaciado óptimo */
     font-family: "Arial", sans-serif;
     font-size: 1.2rem;
 }
 
 .welcome-title {
-    font-size: 1.8rem; /* Tamaño mayor para resaltar */
-    font-weight: 700; /* Negrita */
+    font-size: 1.6rem; /* Tamaño mayor para resaltar */
+    font-weight: 600; /* Negrita */
     text-align: justify;
     margin-bottom: 10px;
 }
 
-.welcome-description {
-    margin: 15px 0;
-}
+
 
 .welcome-list {
     list-style-type: disc;
@@ -103,7 +104,7 @@ header {
 .welcome-footer {
     font-style: italic;
     text-align: center;
-    color: #2e7d32; /* Verde más oscuro para el cierre */
+    color: #050505; /* Verde más oscuro para el cierre */
     margin-top: 20px;
 }
 
