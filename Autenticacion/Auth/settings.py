@@ -64,7 +64,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-MIDDLEWARE += ['Modulos.Login.middleware.ConfiguracionInicialMiddleware']
+
+MIDDLEWARE += [
+    'Modulos.Login.middleware.ConfiguracionInicialMiddleware',
+    'Modulos.Login.middleware.SessionTimeoutMiddleware',
+    'Modulos.Login.middleware.LoginAttemptMiddleware',
+]
+
 
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
@@ -174,10 +180,18 @@ AUTH_USER_MODEL = 'Login.Usuario'
 LOGIN_URL = 'accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 
-# Configuración de tiempo de inactividad
-SESSION_COOKIE_AGE = 150000  # Tiempo en segundos (3 minutos)
 
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # Cierra la sesión al cerrar el navegador
+
+
+# Tiempo de inactividad permitido en segundos (e.g., 300 segundos = 5 minutos)
+SESSION_TIMEOUT = 300
+
+# Número máximo de intentos fallidos de inicio de sesión
+MAX_LOGIN_ATTEMPTS = 1
+
+# Tiempo de bloqueo después de demasiados intentos fallidos (en segundos)
+LOCKOUT_TIME = 300
+
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -188,6 +202,5 @@ EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 
 # Claves de reCAPTCHA
-RECAPTCHA_TESTING = True
 RECAPTCHA_PUBLIC_KEY = os.getenv("RECAPTCHA_PUBLIC_KEY")
 RECAPTCHA_PRIVATE_KEY = os.getenv("RECAPTCHA_PRIVATE_KEY")

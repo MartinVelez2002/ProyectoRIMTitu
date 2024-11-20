@@ -35,12 +35,11 @@ class Login(FormView):
         # Si el usuario está autenticado, redirige a la URL de éxito
         if request.user.is_authenticated:
             return HttpResponseRedirect(self.get_success_url())
-        
-        # Renderiza la vista si ninguna redirección fue ejecutada
         return super().dispatch(request, *args, **kwargs)
     
     
     def form_valid(self, form):
+
         username = form.cleaned_data.get('username')
         password = form.cleaned_data.get('password')
 
@@ -48,19 +47,26 @@ class Login(FormView):
         try:
             user = Usuario.objects.get(username=username)
         except Usuario.DoesNotExist:
+            self.request.session['login_failed'] = True
             form.add_error(None, 'El usuario ingresado no existe.')
             return self.form_invalid(form)
 
         # Validación: Verificar si la contraseña es correcta
         if not check_password(password, user.password):
+            self.request.session['login_failed'] = True
             form.add_error(None, 'Contraseña incorrecta.')
             return self.form_invalid(form)
 
         # Validación: Verificar si el usuario está activo
         if not user.estado:
+            self.request.session['login_failed'] = True
             messages.error(self.request, 'Tu cuenta se encuentra inactiva. No es posible iniciar sesión.')
             return self.render_to_response(self.get_context_data(form=form))  # Renderiza el formulario con el mensaje
 
+        # Resetea el indicador de fallos al iniciar sesión correctamente
+        self.request.session['login_failed'] = False
+        
+        
         # Si todo es correcto, iniciar sesión
         login(self.request, user)
 
@@ -70,7 +76,7 @@ class Login(FormView):
         return super().form_valid(form)
 
     def form_invalid(self, form):
-        # Agregar un mensaje general de error
+        self.request.session['login_failed'] = True
         messages.error(self.request, "Por favor, verifica los datos ingresados.")
         return super().form_invalid(form)
 
