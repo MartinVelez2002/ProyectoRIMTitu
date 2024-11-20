@@ -1,43 +1,45 @@
-{% extends 'form.html' %}
+{% extends 'form_agente.html' %}
 {% load static %}
 
 {% block controls %}
-<div class="form-grid">
-    <div class="input-div one">
-        <div class="i">
-            <i class="fa-sharp fa-solid fa-window-maximize"></i>
+<div class="container mt-4">
+    <!-- Cabecera de Formulario (Fecha, Hora, Agente y Novedad) -->
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <h5>Fecha</h5>
+            {{ form.fecha }}
         </div>
-        <div class="div">
+
+        <div class="col-md-4">
+            <h5>Hora</h5>
+            {{ detalle_form.hora }}
+        </div>
+
+        <div class="col-md-4">
             <h5>Novedad</h5>
             {{ form.novedad }}
         </div>
     </div>
 
-    <div class="input-div one">
-        <div class="i">
-            <i class="fa-sharp fa-solid fa-whiskey-glass"></i>
-        </div>
-        <div class="div">
+    <hr>
+
+    <!-- Detalle del Formulario -->
+    <div class="row mb-3">
+
+        <div class="col-md-4">
             <h5>Prioridad</h5>
             {{ form.prioridad }}
         </div>
-    </div>
-    <div class="input-div one">
-        <div class="i">
-            <i class="fa-sharp fa-solid fa-whiskey-glass"></i>
-        </div>
-        <div class="div">
-            <h5>Descripción</h5>
-            {{ form.descripcion }}
-        </div>
-    </div>
-    <div class="input-div one">
-        <div class="i">
-            <i class="fa-sharp fa-solid fa-whiskey-glass"></i>
-        </div>
-        <div class="div">
+
+        <div class="col-md-4">
             <h5>Evidencia</h5>
-            {{ form.evidencia }}
+            {{ detalle_form.evidencia }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h5>Descripción</h5>
+            {{ detalle_form.descripcion }}
         </div>
     </div>
 </div>

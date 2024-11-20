@@ -1,0 +1,71 @@
+{% extends 'modulos.html' %}
+{% load static %}
+
+{% block header %}
+{% endblock %}
+
+{% block sidebar %}
+{% endblock %}
+
+
+{% block forms %}
+<form class="container text-dark" method="POST" action="{{ action_save }}" enctype="multipart/form-data"
+    name="registro">
+    {% csrf_token %}
+
+    <div class="modal-dialog mod modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-dark">
+                <h2 class="title text-center text-white">
+                    {{ titulo }}
+                </h2>
+            </div>
+            <div class="modal-body">
+                
+                <div class="container-regist">
+                    {% if messages %}
+                        <div class="error-message">
+                            {% for message in messages %}
+                                {{ message }} 
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% if form.errors %}
+                        <div class="error-message">
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    {{ error }} <br>
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <div class="regist-content">
+                        {% block controls %}
+
+
+                        {% endblock %}
+                    </div>
+                </div>
+
+                <div class="div-btn">
+
+                    <button type="submit" class="btn align-items-center ">
+                        Guardar registro
+                    </button>
+                    <a href="{{cancelar}}" class="btn nav-link text-center align-items-center">
+                        Cancelar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</form>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/hide_show_passw.js' %}"></script>
+<script src="{% static 'js/input_effect.js' %}"></script>
+<script src="{% static 'js/ocultar_mensajes.js'%}"></script>
+{% endblock %}
