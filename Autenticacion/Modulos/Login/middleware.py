@@ -15,10 +15,12 @@ class ConfiguracionInicialMiddleware:
              # Antes de cerrar la sesión, persiste el mensaje de éxito
             messages.success(request, "La configuración inicial ha sido completada y las credenciales utilizadas han sido desactivadas.")
             
-            # Cierra la sesión
+            inactivar_superusuario()
+            
+            messages.success(request, "La configuración inicial ha sido completada y las credenciales utilizadas han sido desactivadas.")            
+            
             logout(request)
 
-            # Redirige al login
             return redirect('login:login')
 
         response = self.get_response(request)

@@ -1,12 +1,12 @@
 from django.urls import reverse_lazy, reverse
-
+from .models import CabIncidente_Model, DetIncidente_Model
 from django.views.generic import ListView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.conf import settings
 
 # Create your views here.
 class Reportes_View(LoginRequiredMixin, ListView):
-
+    
     template_name = 'listar_reportes.html'
     paginate_by = 5
     context_object_name = 'rep'
