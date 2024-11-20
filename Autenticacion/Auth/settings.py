@@ -147,7 +147,7 @@ GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
 
 LANGUAGE_CODE = 'es-ec'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Guayaquil'
 
 USE_I18N = True
 

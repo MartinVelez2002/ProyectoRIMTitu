@@ -8,7 +8,7 @@ class ConfiguracionInicialMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        if configuracion_completa() and request.user.is_authenticated:
+        if configuracion_completa() and request.user.is_superuser:
             
             inactivar_superusuario()
             
