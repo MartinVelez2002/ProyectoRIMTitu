@@ -99,7 +99,7 @@ class LoginAttemptMiddleware:
 
                 # Si el tiempo de bloqueo no ha expirado y los intentos han sido superados
                 if elapsed_time < lockout_time and login_attempts >= max_attempts:
-                    messages.error(request, f"El tiempo de bloqueo no ha expirado todavía, sea paciente.")
+                    messages.error(request, f"El tiempo de bloqueo no ha expirado, por favor, sea paciente.")
                     return redirect('login:login')  # Redirige a la página de inicio de sesión
                 
                 
@@ -112,13 +112,13 @@ class LoginAttemptMiddleware:
         
             
 
-            # Incrementar intentos solo si el intento falló
+            # Incrementar intentos solo si hubo un fallo en la autenticación
             if request.session.get('login_failed', False):
                 login_attempts += 1
                 request.session['login_attempts'] = login_attempts
                 request.session['last_attempt_time'] = now().isoformat()
 
-                  # Si se ha superado el número máximo de intentos
+                # Si se ha superado el número máximo de intentos
                 if login_attempts >= max_attempts:
                     messages.error(request, f"Superaste el número de intentos para iniciar sesión. Intenta de nuevo en {int(lockout_time / 60)} minutos.")
                     return redirect('login:login')

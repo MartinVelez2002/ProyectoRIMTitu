@@ -190,7 +190,7 @@ SESSION_TIMEOUT = 300
 MAX_LOGIN_ATTEMPTS = 2
 
 # Tiempo de bloqueo después de demasiados intentos fallidos (en segundos)
-LOCKOUT_TIME = 10
+LOCKOUT_TIME = 120
 
 
 
