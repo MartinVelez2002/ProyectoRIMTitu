@@ -1,14 +1,20 @@
 
-{% extends 'login.html' %}
+{% extends 'index.html' %}
 {% load static %}
 
 {% block title %}
 Cambiar Clave
 {% endblock %}
 
+{% block css %}
+    
+    <link rel="stylesheet" href="{% static 'css/diseño_auth.css' %}">
+    {% endblock %}
 
 {% block main %}
-
+{% block sidebar %}
+{% include 'sidebar.html' %}
+{% endblock %}
 <div class="container-change-pass">
     <div class="container-grid">
         <div class="validacion form">

@@ -187,13 +187,13 @@ LOGIN_REDIRECT_URL = '/'
 SESSION_TIMEOUT = 300
 
 # Número máximo de intentos fallidos de inicio de sesión
-MAX_LOGIN_ATTEMPTS = 2
+MAX_LOGIN_ATTEMPTS = 3
 
 # Tiempo de bloqueo después de demasiados intentos fallidos (en segundos)
 LOCKOUT_TIME = 120
 
 
-
+#Parámetros para configuración del servicio de correo
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
