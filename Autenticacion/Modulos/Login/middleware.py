@@ -8,7 +8,8 @@ class ConfiguracionInicialMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        if configuracion_completa() and request.user.is_authenticated:
+        
+        if configuracion_completa() and request.user.is_superuser:
             # Inactivamos al superusuario globalmente si es necesario
             inactivar_superusuario()
              # Antes de cerrar la sesión, persiste el mensaje de éxito
