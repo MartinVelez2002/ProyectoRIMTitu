@@ -63,38 +63,67 @@ class SessionTimeoutMiddleware:
 
 
 
+from django.utils.timezone import now
+from django.shortcuts import redirect
+from django.contrib import messages
+from datetime import datetime, timedelta
+from django.conf import settings
 
 class LoginAttemptMiddleware:
+    """
+    Middleware para bloquear intentos de inicio de sesión después de varios fallos consecutivos.
+    """
     def __init__(self, get_response):
         self.get_response = get_response
 
     def __call__(self, request):
-        # Solo afecta a la vista de login
+        # Bloquear solo en la vista de inicio de sesión
         if request.path == '/accounts/login/' and request.method == 'POST':
+            
+            # Número máximo de intentos permitidos
             max_attempts = settings.MAX_LOGIN_ATTEMPTS
+            # Tiempo de bloqueo en segundos
             lockout_time = settings.LOCKOUT_TIME
 
+            # Obtén el contador de intentos fallidos y el timestamp del último intento fallido
             login_attempts = request.session.get('login_attempts', 0)
             last_attempt_time = request.session.get('last_attempt_time')
 
+           
+                
+            # Se verifica si hay un tiempo de bloqueo almacenado
             if last_attempt_time:
+                # Convertimos el timestamp almacenado en sesión a un objeto datetime
                 last_attempt_time = datetime.fromisoformat(last_attempt_time)
                 elapsed_time = (now() - last_attempt_time).total_seconds()
 
-                if elapsed_time < lockout_time:
-                    messages.error(request, f"Demasiados intentos fallidos. Intenta de nuevo en {int(lockout_time / 60)} minutos.")
-                    return redirect('login:login')
+                # Si el tiempo de bloqueo no ha expirado y los intentos han sido superados
+                if elapsed_time < lockout_time and login_attempts >= max_attempts:
+                    messages.error(request, f"El tiempo de bloqueo no ha expirado todavía, sea paciente.")
+                    return redirect('login:login')  # Redirige a la página de inicio de sesión
+                
+                
+                if elapsed_time >= lockout_time:
+                     # Restablecer los intentos después del período de bloqueo
+                    login_attempts = 0  # Restablecer la variable local
+                    request.session['login_attempts'] = login_attempts  # Restablecer el valor en la sesión
+                 
 
-            # Incrementar intentos solo si hubo un error en la autenticación
+        
+            
+
+            # Incrementar intentos solo si el intento falló
             if request.session.get('login_failed', False):
                 login_attempts += 1
                 request.session['login_attempts'] = login_attempts
                 request.session['last_attempt_time'] = now().isoformat()
 
+                  # Si se ha superado el número máximo de intentos
                 if login_attempts >= max_attempts:
-                    messages.error(request, f"Demasiados intentos fallidos. Bloqueando por {int(lockout_time / 60)} minutos.")
+                    messages.error(request, f"Superaste el número de intentos para iniciar sesión. Intenta de nuevo en {int(lockout_time / 60)} minutos.")
                     return redirect('login:login')
 
+                
         # Continúa con la solicitud normalmente
         response = self.get_response(request)
         return response

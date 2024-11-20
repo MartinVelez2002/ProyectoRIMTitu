@@ -23,7 +23,6 @@ from Modulos.Login.mixin import CambiarEstadoMixin, ConfirmarCambioEstadoView, R
 from Modulos.Login.models import Usuario, Rol
 from django.db.models import Q
 
-from Modulos.Login.utils import configuracion_completa, inactivar_superusuario
 
 class Login(FormView):
     template_name = 'login.html'
@@ -39,7 +38,7 @@ class Login(FormView):
     
     
     def form_valid(self, form):
-
+       
         username = form.cleaned_data.get('username')
         password = form.cleaned_data.get('password')
 
@@ -47,19 +46,18 @@ class Login(FormView):
         try:
             user = Usuario.objects.get(username=username)
         except Usuario.DoesNotExist:
-            self.request.session['login_failed'] = True
             form.add_error(None, 'El usuario ingresado no existe.')
+            self.request.session['login_failed'] = True
             return self.form_invalid(form)
 
         # Validación: Verificar si la contraseña es correcta
         if not check_password(password, user.password):
-            self.request.session['login_failed'] = True
             form.add_error(None, 'Contraseña incorrecta.')
+            self.request.session['login_failed'] = True
             return self.form_invalid(form)
 
         # Validación: Verificar si el usuario está activo
         if not user.estado:
-            self.request.session['login_failed'] = True
             messages.error(self.request, 'Tu cuenta se encuentra inactiva. No es posible iniciar sesión.')
             return self.render_to_response(self.get_context_data(form=form))  # Renderiza el formulario con el mensaje
 
