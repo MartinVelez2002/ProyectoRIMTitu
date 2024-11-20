@@ -42,19 +42,12 @@ body{
     grid-template-columns: repeat(2, 1fr);
     gap: 100px; /* Espacio entre las columnas */
     align-items: center; /* Alinea los elementos verticalmente al centro */
-    width: 80%; /* Ancho del contenedor grid */
+    width: 60%; /* Ancho del contenedor grid */
 	
 }
 
 
-
-.title-container {
-    display: flex;
-    align-items: center; /* Alinea verticalmente el icono con el texto */
-    gap: 5px; /* Espacio entre el icono y el título */
-}
-
-.title-container i, h3 {
+h3 {
     font-size: 1rem; /* Tamaño del icono */
 }
 
