@@ -11,8 +11,8 @@ Módulo Reportes
 
 
 {% block btnTitle %}
-<a class="btn btn-dark btn-add" onclick="abrir_modal('{{ dirurl }}')">
-    Registrar un nuevo turno
+<a class="btn btn-dark btn-add" href="{% url 'reportes:crear_reporte' %}">
+    Registrar un nuevo reporte
 </a>
 {% endblock %}
 
