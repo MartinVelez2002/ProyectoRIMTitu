@@ -6,7 +6,7 @@ from .models import CabIncidente_Model, DetIncidente_Model
 class CabIncidente_Form(ModelForm):
     class Meta:
         model = CabIncidente_Model
-        fields = ['novedad', 'prioridad', 'fecha']  # Agrega 'fecha'
+        fields = ['novedad', 'prioridad']  # Agrega 'fecha'
 
     def __init__(self, *args, **kwargs):
         super(CabIncidente_Form, self).__init__(*args, **kwargs)
@@ -15,14 +15,13 @@ class CabIncidente_Form(ModelForm):
                 'class':'form-control',
                 'required': 'required'
             })
-        # Haz el campo 'fecha' solo de lectura
-        self.fields['fecha'].widget.attrs['readonly'] = 'readonly'
+
 
             
 class DetalleIncidente_Form(ModelForm):
     class Meta:
         model = DetIncidente_Model
-        fields = ['estado_incidente', 'evidencia', 'descripcion', 'hora']  # Agrega 'hora'
+        fields = ['evidencia', 'descripcion']  
         widgets = {
             'descripcion': forms.Textarea(attrs={'class': 'input', 'required': 'required'}),
         }
@@ -34,8 +33,7 @@ class DetalleIncidente_Form(ModelForm):
                 'class':'form-control',
                 'required': 'required'
             })
-        # Haz el campo 'hora' solo de lectura
-        self.fields['hora'].widget.attrs['readonly'] = 'readonly'
+
 
             
     def clean_evidencia(self):
