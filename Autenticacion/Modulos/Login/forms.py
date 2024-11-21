@@ -11,7 +11,7 @@ class Rol_Form(forms.ModelForm):
         fields = ['name']
         widgets = {'name': forms.TextInput(attrs={'class':'input'})}
 
-    def clean_rol(self):
+    def clean_name(self):  # Cambiar a clean_name
         rol = self.cleaned_data.get('name')
         if not rol.isalpha():
             raise ValidationError('El nombre del rol solo puede contener letras sin caracteres especiales ni números.')
@@ -28,14 +28,7 @@ class FormularioLogin(forms.Form):
         self.fields['password'].widget.attrs.update({'class': 'input', 'id': 'contraseña'})
 
     
-# class FormularioLogin(forms.Form):
-#     username = forms.CharField(max_length=15, widget=forms.TextInput(attrs={'class':'input'}))
-#     password = forms.CharField(widget=forms.PasswordInput(attrs={'type': 'password',
-#     'class': 'input', 
-#     'id':'contraseña'}))
-    
-#     captcha = ReCaptchaField()   
-    
+
 
 class FormularioRegistro(forms.ModelForm):
     password1 = forms.CharField(
@@ -63,7 +56,7 @@ class FormularioRegistro(forms.ModelForm):
         widgets = {
             'username': forms.TextInput(),
             'email': forms.EmailInput(),
-            'cedula': forms.TextInput(),
+            'cedula': forms.TextInput(attrs={'id':'id_cedula'}),
             'nombre': forms.TextInput(),
             'apellido': forms.TextInput(),
             'rol': forms.Select()

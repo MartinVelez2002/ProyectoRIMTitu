@@ -16,7 +16,7 @@ Módulo Personal
 {% endblock %}
 
 {% block btnTitle %}
-<a class="btn btn-dark btn-add" onclick="abrir_modal('{{ dirurl }}')">
+<a class="btn btn-dark btn-add" href="{{ dirurl }}">
     Registrar nuevo personal
 </a>
 {% endblock %}
@@ -49,7 +49,7 @@ Módulo Personal
 
     <td>
         {% if request.user.rol is not None %}
-        <a class="btn btn-dark" onclick="abrir_modal_editar('{% url 'login:editar_personal' i.id %}')"> 
+        <a class="btn btn-dark" href="{% url 'login:editar_personal' i.id %}"> 
             Editar
         </a>
         {% endif %}
@@ -73,3 +73,5 @@ Módulo Personal
     </tr>
 {% endif %}
 {% endblock %}
+
+

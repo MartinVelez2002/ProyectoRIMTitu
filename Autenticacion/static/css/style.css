@@ -17,6 +17,7 @@
     --bs-modal-border-width: 2px !important; /* Cambia el grosor del borde */
 }
 
+
 .side-bar {
     position: fixed;
     top: 70px;

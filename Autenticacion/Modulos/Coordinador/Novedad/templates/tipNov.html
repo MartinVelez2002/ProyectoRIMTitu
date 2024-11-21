@@ -17,7 +17,7 @@ Modulo Tipo Novedad
 {% endblock %}
 
 {% block btnTitle %}
-<a class="btn btn-dark btn-add" onclick="abrir_modal('{{ dirurl }}')">
+<a class="btn btn-dark btn-add" href="{{ dirurl }}">
     Registrar nuevo tipo de Novedad
 </a>
 {% endblock %}
@@ -39,7 +39,7 @@ Modulo Tipo Novedad
             <td> Inactivo </td>
         {% endif %}
         <td>
-            <a class="btn btn-dark" onclick="abrir_modal_editar('{% url 'novedad:editar_tipNov' tpn.id %}')">
+            <a class="btn btn-dark" onclick="{% url 'novedad:editar_tipNov' tpn.id %}">
                 Editar
             </a>
             

@@ -17,7 +17,7 @@ Modulo Novedad
 {% endblock %}
 
 {% block btnTitle %}
-<a class="btn btn-dark btn-add" onclick="abrir_modal('{{ dirurl }}')">
+<a class="btn btn-dark btn-add" href="{{ dirurl }}">
     Registrar nueva novedad
 </a>
 {% endblock %}
@@ -41,7 +41,7 @@ Modulo Novedad
     <td>Inactivo</td>
     {% endif %}
     <td>
-        <a class="btn btn-dark" onclick="abrir_modal_editar('{% url 'novedad:editar_nov' nov.id %}')">
+        <a class="btn btn-dark" href="{% url 'novedad:editar_nov' nov.id %}">
             Editar
         </a>
         <form action="{% url 'novedad:inactivar_activar_novedad' pk=nov.id %}" method="post" style="display: inline;">

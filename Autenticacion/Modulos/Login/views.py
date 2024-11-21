@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.conf import settings
 from django.template.loader import render_to_string 
 from django.contrib.auth import login, logout
-from django.http import  HttpResponseRedirect
+from django.http import  HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.hashers import check_password
@@ -105,6 +105,7 @@ class RegistroView(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Crear Personal'
+        context['cancelar'] = reverse('login:personal')
         context['action_save'] = self.request.path
         return context
   
@@ -431,30 +432,31 @@ class Rol_View(LoginRequiredMixin, ListView):
     
         return context
     
-    
+
+
 class Rol_Create(LoginRequiredMixin, CreateView):
     template_name = 'rol/crear_rol.html'
     model = Rol
     form_class = Rol_Form
-    success_url = reverse_lazy('login:listar_rol')
-    
+    success_url = reverse_lazy('login:listar_rol')  # Esto se usará solo si el formulario es válido
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Formulario: Rol'
         context['cancelar'] = reverse('login:listar_rol')
         context['action_save'] = self.request.path
-        
         return context
-    
-    def form_valid(self, form):   
-        response = super().form_valid(form) 
-        rol = self.object 
-        save_audit(self.request, rol, action=AuditoriaUser.AccionChoices.CREAR)  
-        
-        messages.success(self.request,"Rol registrado con éxito.")
-        
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        rol = self.object
+        save_audit(self.request, rol, action=AuditoriaUser.AccionChoices.CREAR)
+        messages.success(self.request, "Rol registrado con éxito.")
         return response
 
+    
+
+    
 
 class Rol_Update(LoginRequiredMixin, RoleRequiredMixin, UpdateView):
     template_name = 'rol/crear_rol.html'
