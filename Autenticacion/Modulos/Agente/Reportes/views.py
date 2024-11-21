@@ -14,8 +14,8 @@ class Reportes_View(LoginRequiredMixin, ListView):
     context_object_name = 'rep'
     
     def get_queryset(self):
-        # Usamos prefetch_related para traer detalles relacionados en una sola consulta
-        return CabIncidente_Model.objects.prefetch_related('detalles')
+        usuario_id = self.request.user.id  # Obtenemos el ID del usuario logueado
+        return CabIncidente_Model.objects.filter(agente__usuario__id=usuario_id).prefetch_related('detalles')
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

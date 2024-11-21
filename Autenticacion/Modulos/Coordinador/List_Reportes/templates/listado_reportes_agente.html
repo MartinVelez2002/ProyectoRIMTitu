@@ -7,12 +7,6 @@
 Módulo Reportes
 {% endblock %}
 
-{% block btnTitle %}
-<a class="btn btn-dark btn-add" href="{% url 'reportes:crear_reporte' %}">
-    Registrar un nuevo reporte
-</a>
-{% endblock %}
-
 {% block thead %}
 <th> Fecha </th>
 <th> Hora </th>
@@ -107,7 +101,7 @@ Módulo Reportes
     {% endfor %}
 {% else %}
 <tr>
-    <td colspan="7">Aún no se han realizado reportes</td>
+    <td colspan="9">Aún no se han realizado reportes</td>
 </tr>
 {% endif %}
 {% endblock %}
