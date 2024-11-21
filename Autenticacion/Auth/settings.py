@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'Modulos.Coordinador.Novedad',
     'Modulos.Coordinador.Calendario',
     'Modulos.Auditoria',
-    'Modulos.Agente.Reportes'
+    'Modulos.Agente.Reportes',
+    'Modulos.Coordinador.List_Reportes'
 
 ]
 

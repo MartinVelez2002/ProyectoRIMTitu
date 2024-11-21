@@ -1,4 +1,4 @@
-{% extends 'modulos.html' %}
+{% extends 'form.html' %}
 {% load static %}
 
 {% block header %}
@@ -7,7 +7,7 @@
 {% block sidebar %}
 {% endblock %}
 
-{% block forms %}
+{% block controls %}
 <div class="container mt-5">
     {% if messages %}
     <div class="error-message">
@@ -26,9 +26,9 @@
     </div>
     {% endif %}
     <!-- Encabezado del formulario -->
-    <div class="text-center mb-4 p-4" style="background-color: #12171e; color: white; border-radius: 8px 8px 0px 0px;">
+    <!-- <div class="text-center mb-4 p-4" style="background-color: #12171e; color: white; border-radius: 8px 8px 0px 0px;">
         <h2 class="fw-bold">Formulario de Reporte</h2>
-    </div>
+    </div> -->
 
 
     <!-- Formulario -->
@@ -77,33 +77,17 @@
                 </div>
             </div>
         </div>
-        <div class="div-btn">
-
-            <button type="submit" class="btn align-items-center ">
-                Guardar registro
-            </button>
-            <a href="{{cancelar}}" class="btn nav-link text-center align-items-center">
-                Cancelar
-            </a>
-        </div>
     </form>
 
     <script>
         // Obtener la fecha y hora actuales
         const now = new Date();
-
-        year = date.getFullYear();
-        month = date.getMonth() + 1;
-        day = date.getDate();
-
-        // Obtener la hora en formato HH:MM
-        const hora = ecuadorTime.toTimeString().split(' ')[0].substring(0, 5); // Solo la parte de la hora (HH:MM)
+        const fecha = now.toISOString().split('T')[0]; // Solo la parte de la fecha (YYYY-MM-DD)
+        const hora = now.toTimeString().split(' ')[0].substring(0, 5); // Solo la parte de la hora (HH:MM)
 
         // Asignar la fecha y la hora a los inputs
-        document.getElementById('fecha').value = day + "-" + month + "-" + year;
+        document.getElementById('fecha').value = fecha;
         document.getElementById('hora').value = hora;
-        console.log(hora)
-        
     </script>
 </div>
 {% endblock %}

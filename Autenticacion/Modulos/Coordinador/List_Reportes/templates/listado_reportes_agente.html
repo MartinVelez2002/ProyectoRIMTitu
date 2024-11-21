@@ -1,0 +1,113 @@
+{% extends 'modulos.html '%}
+
+{% load static %}
+{% load custom_filters %}
+
+{% block title %}
+Módulo Reportes
+{% endblock %}
+
+{% block btnTitle %}
+<a class="btn btn-dark btn-add" href="{% url 'reportes:crear_reporte' %}">
+    Registrar un nuevo reporte
+</a>
+{% endblock %}
+
+{% block thead %}
+<th> Fecha </th>
+<th> Hora </th>
+<th> Turno </th>
+<th> Lugar </th>
+<th> Reporta </th>
+<th> Novedad </th>
+<th> Prioridad </th>
+<th> Estado Incidente </th>
+<th> Descripción </th>
+{% endblock %}
+
+{% block tbody %}
+{% if rep %}
+    {% for cab in rep %}
+    <tr>
+        <td>{{ cab.fecha }}</td>
+        <td>
+            {# Mostramos la hora del primer detalle como ejemplo, pero puedes personalizar según tu lógica #}
+            {{ cab.detalles.first.hora|default:"-" }}
+        </td>
+        <td> {{ cab.agente.turno|default:"-" }} </td>
+        <td> {{ cab.agente.ubicacion|default:"-" }} </td>
+        <td> {{ cab.agente.usuario.nombre|default:"-" }} {{ cab.agente.usuario.apellido|default:"-" }}</td>
+        <td>{{ cab.novedad }}</td>
+        <td>
+            {% if cab.prioridad == "M" %} Media
+            {% elif cab.prioridad == "B" %} Baja
+            {% elif cab.prioridad == "A" %} Alta
+            {% endif %}
+        </td>
+        <td>
+            {% if cab.detalles.first.estado_incidente == "N" %} Notificado
+            {% elif cab.detalles.first.estado_incidente == "R" %} Resuelto
+            {% elif cab.detalles.first.estado_incidente == "E" %} En proceso
+            {% endif %}
+        </td>
+        <td>{{ cab.detalles.first.descripcion|default:"-" }}</td>
+        <td>
+            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalLabel-{{ cab.id }}">
+                <i class="fa-sharp fa-solid fa-eye"></i>
+            </button>
+        </td>
+    </tr>
+
+    <!-- Modal para detalles -->
+    <div class="modal fade" id="modalLabel-{{ cab.id }}" tabindex="-1" aria-labelledby="modalLabel-{{ cab.id }}"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 text-center" id="modalLabel-{{ cab.id }}">Detalles del reporte</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body flex">
+                    {% for det in cab.detalles.all %}
+                    <div class="d-flex flex-row justify-content-evenly">
+                        <div>
+                            <p><strong>Hora:</strong> {{ det.hora }}</p>
+                            <p><strong>Prioridad:</strong> 
+                                {% if cab.prioridad == "M" %} Medio
+                                {% elif cab.prioridad == "B" %} Bajo
+                                {% elif cab.prioridad == "A" %} Alto
+                                {% endif %}
+                            </p>
+                            <p><strong>Estado:</strong> 
+                                {% if det.estado_incidente == "N" %} Notificado
+                                {% elif det.estado_incidente == "R" %} Resuelto
+                                {% elif det.estado_incidente == "E" %} En proceso
+                                {% endif %}
+                            </p>
+                            <p><strong>Descripción:</strong> {{ det.descripcion }}</p>
+                        </div>
+                        {% if det.evidencia %}
+                        {% if det.evidencia.url|is_image %}
+                        <img width="300px" src="{{ det.evidencia.url }}" alt="Evidencia" class="img-fluid">
+                        {% elif det.evidencia.url|is_video %}
+                        <video width="400px" src="{{ det.evidencia.url }}" controls class="img-fluid"></video>
+                        {% endif %}
+                        {% else %}
+                        <p>No hay evidencia disponible.</p>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+<tr>
+    <td colspan="7">Aún no se han realizado reportes</td>
+</tr>
+{% endif %}
+{% endblock %}
