@@ -87,26 +87,23 @@
             </a>
         </div>
     </form>
-    
+
     <script>
         // Obtener la fecha y hora actuales
         const now = new Date();
-    
-        // Convertir la hora a UTC y luego ajustar a Ecuador (UTC-5)
-        const utcOffset = -5; // Ecuador está en UTC-5
-    
-        // Crear un nuevo objeto Date con la hora UTC y ajustar a la zona horaria de Ecuador (UTC-5)
-        const ecuadorTime = new Date(now.toLocaleString("en-US", { timeZone: "America/Guayaquil" }));
-    
-        // Obtener la fecha en formato YYYY-MM-DD
-        const fecha = ecuadorTime.toISOString().split('T')[0];  // Solo la fecha (YYYY-MM-DD)
-    
+
+        year = date.getFullYear();
+        month = date.getMonth() + 1;
+        day = date.getDate();
+
         // Obtener la hora en formato HH:MM
         const hora = ecuadorTime.toTimeString().split(' ')[0].substring(0, 5); // Solo la parte de la hora (HH:MM)
-    
+
         // Asignar la fecha y la hora a los inputs
-        document.getElementById('fecha').value = fecha;
-        document.getElementById('hora').value = hora;
+        document.getElementById('fecha').value = day + "-" + month + "-" + year;
+        document.getElementById('hora').value = hora;
+        console.log(hora)
+        
     </script>
 </div>
 {% endblock %}
