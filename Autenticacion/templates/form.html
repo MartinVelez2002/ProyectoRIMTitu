@@ -14,9 +14,10 @@
     name="registro">
     {% csrf_token %}
 
-    <div class="modal-dialog mod modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-dark">
+    <div class="modal-dialog mod modal-lg" role="document" style="display: flex; justify-content: center; align-items: center;
+    height: 100vh;">
+    <div class="modal-content" style="border: 10px solid #12171e; border-radius: 12px; box-shadow: 0 6px 12px rgba(0, 51, 102, 0.2); padding: 30px;">
+            <div class="modal-header bg-dark" style="padding: 5px; border-radius: 10px; display: flex; align-items: center;">
                 <h2 class="title text-center text-white">
                     {{ titulo }}
                 </h2>
@@ -66,7 +67,8 @@
 {% endblock %}
 
 {% block js %}
-<script src="{% static 'js/hide_show_passw.js' %}"></script>
+<script src="{% static 'js/autocomplete_input.js' %}"></script>
 <script src="{% static 'js/input_effect.js' %}"></script>
+<script src="{% static 'js/hide_show_passw.js' %}"></script>
 <script src="{% static 'js/ocultar_mensajes.js'%}"></script>
 {% endblock %}

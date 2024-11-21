@@ -6,7 +6,7 @@ Módulo roles
 {% endblock %}
 
 {% block btnTitle %}
-<a class="btn btn-dark btn-add" onclick="abrir_modal('{{ dirurl }}')">
+<a class="btn btn-dark btn-add" href="{{ dirurl }}">
     Registrar un nuevo rol
 </a>
 {% endblock %}
@@ -33,7 +33,7 @@ Módulo roles
     <td>
         
     {% if request.user.rol is not None %}
-        <a class="btn btn-dark" onclick="abrir_modal_editar('{% url 'login:editar_rol' i.id %}')">
+        <a class="btn btn-dark" href="{% url 'login:editar_rol' i.id %}">
             Editar
         </a>
     {%endif %}

@@ -14,6 +14,10 @@ let clave_actual = document.getElementById('passw_actual');
 let clave_nueva = document.getElementById('passw_new'); 
 let clave_nueva_conf = document.getElementById('passw_new_conf'); 
 
+
+
+
+
 // Función para alternar la visibilidad de la contraseña
 function togglePasswordVisibility(inputField, toggleButton) {
 

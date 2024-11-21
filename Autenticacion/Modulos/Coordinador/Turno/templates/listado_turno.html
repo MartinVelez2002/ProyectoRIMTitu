@@ -8,7 +8,7 @@ Módulo Turno
 
 
 {% block btnTitle %}
-<a class="btn btn-dark btn-add" onclick="abrir_modal('{{ dirurl }}')">
+<a class="btn btn-dark btn-add" href="{{ dirurl }}">
     Registrar un nuevo turno
 </a>
 {% endblock %}
@@ -32,7 +32,7 @@ Módulo Turno
     <td> Inactivo </td>
     {% endif %}
     <td>
-        <a class="btn btn-dark" onclick="abrir_modal_editar('{% url 'turno:editar_turno' i.id %}')">
+        <a class="btn btn-dark" href="{% url 'turno:editar_turno' i.id %}">
             Editar
         </a>
         <form action="{% url 'turno:inactivar_activar_turno' i.id %}" method="post" style="display: inline;">

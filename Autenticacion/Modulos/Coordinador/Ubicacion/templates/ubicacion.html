@@ -16,7 +16,7 @@ Módulo Ubicación
 
 
 {% block btnTitle %}
-<a class="btn btn-dark btn-add" onclick="abrir_modal('{{ dirurl }}')">
+<a class="btn btn-dark btn-add" href="{{ dirurl }}">
     Registrar nueva Ubicación
 </a>
 {% endblock %}
@@ -44,7 +44,7 @@ Módulo Ubicación
     <td> Inactivo </td>
     {% endif %}
     <td>
-        <a class="btn btn-dark" onclick="abrir_modal_editar('{% url 'ubicacion:editar_ubicacion' i.id %}')">
+        <a class="btn btn-dark" onclick="{% url 'ubicacion:editar_ubicacion' i.id %}">
             Editar
         </a>
 
