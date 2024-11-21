@@ -27,9 +27,17 @@ class CambiarEstadoMixin(View):
         # Obtener el objeto según el modelo y pk
         objeto = get_object_or_404(self.model, pk=pk)
 
-        # Verificar si el objeto es de tipo Usuario o Rol y si es un Coordinador
-        is_coordinador = objeto.rol.name == 'Coordinador' if isinstance(objeto, Usuario) else objeto.name == 'Coordinador'
-        is_current_user = objeto == request.user
+        # Verificar si el objeto es un Usuario o un Rol
+        if isinstance(objeto, Usuario):
+            is_coordinador = objeto.rol and objeto.rol.name == 'Coordinador'
+            is_current_user = objeto == request.user
+        elif isinstance(objeto, Rol):
+            is_coordinador = objeto.name == 'Coordinador'
+            is_current_user = False  # Un rol no puede ser el usuario actual
+        else:
+            is_coordinador = False
+            is_current_user = False
+
 
         # Verificar si el rol del objeto es "Coordinador" y si el usuario actual tiene el rol de Coordinador
         if is_coordinador:

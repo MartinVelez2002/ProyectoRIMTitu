@@ -73,6 +73,14 @@
                 </a>
             </li>
             {% endif %}
+            {% if request.user.rol and request.user.rol.name == 'Agente' or request.user.rol.name == 'Coordinador'%}
+            <li>
+                <a class="nav-link active" href="{% url 'login:cambiar_clave' %}">
+                    <i class="fa-solid fa-key"></i>
+                    <span class="nav-item"> Cambio de Contraseña </span>
+                </a>
+            </li>
+            {% endif %}
             {% if request.user.rol and request.user.rol.name == 'Agente' %}
             <li>
                 <a class="nav-link active" href="{% url 'reportes:listar_reportes' %}">

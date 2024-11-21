@@ -507,5 +507,5 @@ class ConfiguracionInicialView(LoginRequiredMixin, TemplateView):
     template_name = 'configuracion_inicial.html'
     
     def get(self, request):
-        messages.error(request, "La configuración inicial no está completa. Asegúrese de registrar el rol y usuario de Administrador.")
+        messages.error(request, "La configuración inicial no está completa.")
         return render(request, self.template_name)

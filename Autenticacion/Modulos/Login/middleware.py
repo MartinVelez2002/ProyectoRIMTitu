@@ -63,11 +63,6 @@ class SessionTimeoutMiddleware:
 
 
 
-from django.utils.timezone import now
-from django.shortcuts import redirect
-from django.contrib import messages
-from datetime import datetime, timedelta
-from django.conf import settings
 
 class LoginAttemptMiddleware:
     """
