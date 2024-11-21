@@ -184,7 +184,7 @@ LOGIN_REDIRECT_URL = '/'
 
 
 # Tiempo de inactividad permitido en segundos (e.g., 300 segundos = 5 minutos)
-SESSION_TIMEOUT = 300
+SESSION_TIMEOUT = 3000
 
 # Número máximo de intentos fallidos de inicio de sesión
 MAX_LOGIN_ATTEMPTS = 2
