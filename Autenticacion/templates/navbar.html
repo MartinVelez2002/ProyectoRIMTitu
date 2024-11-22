@@ -3,8 +3,17 @@
 <nav class="navbar navbar-expand-lg bg-dark sticky-top">
     <div class="container-fluid">
         <a href="/">
-            <img src="{% static 'img/logo_alcaldia_milagro.png' %}" alt="MunicipioMilagro" class="p-1 mx-4" width="150px">
+            <img src="{% static 'img/logo_alcaldia_milagro.png' %}" alt="MunicipioMilagro" class="p-1 mx-4"
+                width="150px">
         </a>
-        <p class="text-white m-2">{{nombre}} {{apellido}}</p>
+        <div class="d-flex justify-content-evenly">
+            <div>
+                {% if turno and ubicacion %}
+                <p class="text-white">Turno asignado: {{ turno }}</p>
+                <p class="text-white" >Ubicación asignada: {{ ubicacion }}</p>
+                {% endif %}
+            </div>
+            <p class="text-white m-2">{{nombre}} {{apellido}}</p>
+        </div>
     </div>
 </nav>
