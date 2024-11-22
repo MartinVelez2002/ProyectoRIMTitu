@@ -85,9 +85,22 @@ class Reportes_Create(LoginRequiredMixin, CreateView):
         return self.render_to_response(context)
 
 
-class AdicionarDetalle(LoginRequiredMixin, CreateView):
-    model = DetIncidente_Model
-    form_class = DetalleIncidente_Form
-    success_url = reverse_lazy('reportes:listar_reportes')
+# class AdicionarDetalle(LoginRequiredMixin, CreateView):
+#     model = DetIncidente_Model
+#     form_class = DetalleIncidente_Form
+#     template_name = 'adicionar_detalle.html'
+#     success_url = reverse_lazy('reportes:listar_reportes')
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         # Pasar el ID de la cabecera al contexto
+#         context['cabecera_id'] = self.kwargs['cabecera_id']
+#         return context
+
+#     def form_valid(self, form):
+#         cabecera_id = self.kwargs['cabecera_id']
+#         form.instance.cabecera_id = cabecera_id
+#         return super().form_valid(form)
+
     
 
