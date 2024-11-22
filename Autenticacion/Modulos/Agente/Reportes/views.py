@@ -1,14 +1,16 @@
 from django.urls import reverse_lazy, reverse
-from .models import CabIncidente_Model, DetIncidente_Model
-from django.views.generic import ListView, CreateView, UpdateView
+
+from Modulos.Login.mixin import RoleRequiredMixin
+from .models import CabIncidente_Model
+from django.views.generic import ListView, CreateView
 from .forms import CabIncidente_Form, DetalleIncidente_Form
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.conf import settings
 from Modulos.Coordinador.Calendario.models import TurnUsuario_Model
 
 # Create your views here.
-class Reportes_View(LoginRequiredMixin, ListView):
+class Reportes_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
     model = CabIncidente_Model
+    required_role = 'Agente'
     template_name = 'listar_reportes.html'
     paginate_by = 5
     context_object_name = 'rep'
@@ -24,8 +26,9 @@ class Reportes_View(LoginRequiredMixin, ListView):
         
         return context
 
-class Reportes_Create(LoginRequiredMixin, CreateView):
+class Reportes_Create(LoginRequiredMixin, RoleRequiredMixin,CreateView):
     template_name = 'crear_reportes.html'
+    required_role = 'Agente'
     success_url = reverse_lazy('reportes:listar_reportes')
     model = CabIncidente_Model
     form_class = CabIncidente_Form

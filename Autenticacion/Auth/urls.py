@@ -32,6 +32,7 @@ urlpatterns = [
     path('auditoria/', include('Modulos.Auditoria.urls')),
     path('reportes/', include('Modulos.Agente.Reportes.urls')),
     path('reportesCoord/', include('Modulos.Coordinador.List_Reportes.urls')),
+   
 
 ]   
 
