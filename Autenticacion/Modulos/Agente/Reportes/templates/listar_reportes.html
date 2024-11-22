@@ -17,6 +17,7 @@ Módulo Reportes
 <th> Id </th>
 <th> Fecha </th>
 <th> Hora </th>
+<th> Lugar </th>
 <th> Novedad </th>
 <th> Prioridad </th>
 <th> Estado del incidente </th>
@@ -31,9 +32,9 @@ Módulo Reportes
     <td> {{cab.id}} </td>
     <td>{{ cab.fecha }}</td>
     <td>
-        {# Mostramos la hora del primer detalle como ejemplo, pero puedes personalizar según tu lógica #}
         {{ cab.detalles.first.hora|default:"-" }}
     </td>
+    <td> {{cab.agente.ubicacion}} </td>
     <td>{{ cab.novedad }}</td>
     <td>
         {% if cab.prioridad == "M" %} Media

@@ -51,7 +51,8 @@ class Reportes_Create(LoginRequiredMixin, CreateView):
 
         # Obtener el TurnUsuario_Model asociado al usuario
         try:
-            turn_usuario = TurnUsuario_Model.objects.get(usuario__id=current_user)
+            turn_usuario = TurnUsuario_Model.objects.get(usuario__id=current_user, estado=True)
+            print(turn_usuario)
         except TurnUsuario_Model.DoesNotExist:
             # Si no hay un TurnUsuario_Model para el usuario actual, manejar el error
             return self.form_invalid(form)

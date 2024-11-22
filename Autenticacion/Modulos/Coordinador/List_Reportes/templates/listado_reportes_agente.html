@@ -7,6 +7,23 @@
 Módulo Reportes
 {% endblock %}
 
+{% block search %}
+<form action="{{ dir_search }}" method="GET">
+    <div class="input-group">
+        <select name="query" class="form-select">
+            <option value="">-- Seleccionar Ubicación --</option>
+            {% for ubicacion in ubicaciones %}
+            <option value="{{ ubicacion.id }}" {% if query == ubicacion.id|stringformat:"s" %}selected{% endif %}>
+                {{ ubicacion.lugar }}
+            </option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-primary" id="idSearchSp">Buscar</button>
+    </div>
+</form>
+{% endblock %}
+
+
 {% block thead %}
 <th> Id </th>
 <th> Fecha </th>

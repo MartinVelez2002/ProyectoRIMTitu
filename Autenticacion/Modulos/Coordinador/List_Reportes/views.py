@@ -2,6 +2,7 @@ from django.shortcuts import render
 from Modulos.Agente.Reportes.models import CabIncidente_Model, DetIncidente_Model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView
+from Modulos.Coordinador.Ubicacion.models import Ubicacion_Model
 
 # Create your views here.
 
@@ -18,5 +19,10 @@ class ListarReportes_View(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title_table'] = 'Reportes de los Agentes'
+        context['dir_search'] = self.request.path
+        context['ubicaciones'] = Ubicacion_Model.objects.all()
+        
         
         return context
+
+    print(Ubicacion_Model.objects.all(), "----------------")
