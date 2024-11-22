@@ -10,7 +10,9 @@ Cambiar Clave
 {% block main %}
 
 <div class="container-change-pass">
+    
     <div class="container-grid">
+        
         <div class="validacion form">
                  
             <h3> La contraseña nueva debe cumplir con los siguientes parámetros:</h3>
@@ -26,13 +28,20 @@ Cambiar Clave
             <form method="POST" >
                 {% csrf_token %}
                 <!-- Bloque para mostrar mensajes de error -->
-                {% if messages %}
-                <div class="error-message">
-                    {% for message in messages %}
-                        {{ message }}<br>
-                    {% endfor %}
+                <div style='font-size: 1.2em'>
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="message" style="padding: 10px; margin: 10px 0; border-radius: 5px; 
+                                        {% if message.tags == 'error' %} background-color: #ffcccc; color: #d8000c; {% endif %}
+                                        {% if message.tags == 'success' %} background-color: #aee17a; color: #005700; {% endif %}
+                                        {% if message.tags == 'warning' %} background-color: #ffcc00; color: #6e4a00; {% endif %}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
                 </div>
-                {% endif %}
+                
+               
                 {% if form.errors %}
                     <div class="error-message">
                         {% for field in form %}

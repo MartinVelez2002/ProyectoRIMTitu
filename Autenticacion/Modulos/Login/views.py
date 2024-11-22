@@ -70,6 +70,7 @@ class Login(FormView):
 
         # Redirigir si es su primera sesión
         if user.primera_sesion:
+            messages.warning(self.request, 'Como medida de seguridad, se necesita que cambies la contraseña actual.')
             return HttpResponseRedirect(self.change_password_url)
         return super().form_valid(form)
 
@@ -181,7 +182,7 @@ class ForgetPassword(FormView):
                 "domain": self.request.META['HTTP_HOST'],
                 "site_name": 'Municipio de Milagro',
                 "uid": urlsafe_base64_encode(force_bytes(usuario.pk)),
-                "user": usuario,
+                "nombre": usuario.nombre,
                 "token": default_token_generator.make_token(usuario),
                 "protocol": 'https' if self.request.is_secure() else 'http',
             }
