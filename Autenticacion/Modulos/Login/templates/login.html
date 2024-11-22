@@ -16,6 +16,11 @@
 </head>
 
 <body>
+	<header>
+		{% block header %}
+		
+		{% endblock %}
+	</header>
 	{% block main %}
 	<img class="wave" src="{% static 'img/wave.png' %}">
 	<div class="container">
@@ -68,8 +73,9 @@
 						<span id="toggleBtn"></span>
 					</div>
 				</div>
-		
-				<a href="{% url 'login:olvidar_clave' %}">¿Olvidó su contraseña?</a>
+				<div class="align-r">
+					<a href="{% url 'login:olvidar_clave' %}">¿Olvidó su contraseña?</a>
+				</div>
 				<input type="submit" class="btn" value="Iniciar Sesión">
 			</form>
 		</div>
@@ -77,6 +83,8 @@
 	{% endblock %}
 
 
+    
+   
 	{% block JS %}
 		<script src="{% static 'js/input_effect.js' %}"></script>
 		<script src="https://kit.fontawesome.com/6f24398be6.js" crossorigin="anonymous"></script>
@@ -84,7 +92,7 @@
 		<script src="{% static 'js/hide_show_passw.js' %}"></script>
 		<script src="{% static 'js/parametros_clave.js' %}"></script>
 	{% endblock %}
-
+	
 </body>
 
 </html>
