@@ -85,4 +85,9 @@ class Reportes_Create(LoginRequiredMixin, CreateView):
         return self.render_to_response(context)
 
 
+class AdicionarDetalle(LoginRequiredMixin, CreateView):
+    model = DetIncidente_Model
+    form_class = DetalleIncidente_Form
+    success_url = reverse_lazy('reportes:listar_reportes')
+    
 
