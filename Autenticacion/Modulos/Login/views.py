@@ -105,7 +105,7 @@ class RegistroView(LoginRequiredMixin, CreateView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Crear Personal'
+        context['titulo'] = 'Formulario: Personal'
         context['cancelar'] = reverse('login:personal')
         context['action_save'] = self.request.path
         return context
