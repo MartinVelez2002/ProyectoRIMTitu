@@ -10,8 +10,8 @@
             {% if request.user.rol and request.user.rol.name == 'Agente' %}
             <div class="mx-4 my-auto">
                 {% if turno and ubicacion %}
-                <p class="text-white">Turno asignado: {{ turno }}</p>
-                <p class="text-white">Ubicación asignada: {{ ubicacion }}</p>
+                <p class="text-white"><b> Turno asignado: </b> {{ turno }}</p>
+                <p class="text-white"><b> Ubicación asignada: </b> {{ ubicacion }}</p>
                 {% endif %}
             </div>
             {% endif %}
