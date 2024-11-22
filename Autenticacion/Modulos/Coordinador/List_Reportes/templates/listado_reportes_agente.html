@@ -8,6 +8,7 @@ Módulo Reportes
 {% endblock %}
 
 {% block thead %}
+<th> Id </th>
 <th> Fecha </th>
 <th> Hora </th>
 <th> Turno </th>
@@ -17,12 +18,14 @@ Módulo Reportes
 <th> Prioridad </th>
 <th> Estado Incidente </th>
 <th> Ver evidencia y descripción </th>
+
 {% endblock %}
 
 {% block tbody %}
 {% if rep %}
 {% for cab in rep %}
 <tr>
+    <td> {{ cab.id }} </td>
     <td>{{ cab.fecha }}</td>
     <td>
         {# Mostramos la hora del primer detalle como ejemplo, pero puedes personalizar según tu lógica #}
@@ -54,7 +57,9 @@ Módulo Reportes
         <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalLabel-{{ cab.id }}">
             <i class="fa-sharp fa-solid fa-eye"></i>
         </button>
+        <a href=""></a>
     </td>
+    
 </tr>
 
 <!-- Modal para detalles -->
@@ -63,9 +68,9 @@ Módulo Reportes
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-dark">
-                <h1 class="modal-title text-white fs-5 mx-auto" id="modalLabel-{{ cab.id }}">Visualización del reporte.
+                <h1 class="modal-title text-white fs-5 mx-auto" id="modalLabel-{{ cab.id }}">Visualización del reporte
                     <strong>
-                        Novedad: </strong>{{cab.novedad}}</h1>
+                        || Novedad: </strong>{{cab.novedad}} || <strong> Fecha: </strong> {{ cab.fecha }} </h1>
             </div>
             <div class="modal-body flex">
                 {% for det in cab.detalles.all %}
@@ -81,7 +86,7 @@ Módulo Reportes
                     {% else %}
                     <p>No hay evidencia disponible.</p>
                     {% endif %}
-                    <div class="d-flex flex-row">
+                    <div class="d-flex flex-row justify-content-evenly">
                         <p><strong>Hora:</strong> {{ det.hora }}</p>
                         <p><strong>Prioridad:</strong>
                             {% if cab.prioridad == "M" %} Medio
@@ -89,7 +94,7 @@ Módulo Reportes
                             {% elif cab.prioridad == "A" %} Alto
                             {% endif %}
                         </p>
-                        <p><strong>Descripción:</strong> {{ det.descripcion }}</p>
+                        <p> <strong>Descripción: </strong> {{det.descripcion}} </p>
                     </div>
 
                 </div>

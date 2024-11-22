@@ -9,7 +9,9 @@
     --arrow-hover-color: #12171e;
     --transition-speed: 0.5s;
 }
-
+.collapse {
+    transition: height 0.4s ease-out; /* Control de expansión */
+}
 .modal {
     --bs-modal-width: 600px !important; /* Cambia el ancho del modal */
     --bs-modal-bg: #f8f9fa !important; /* Cambia el fondo del modal */

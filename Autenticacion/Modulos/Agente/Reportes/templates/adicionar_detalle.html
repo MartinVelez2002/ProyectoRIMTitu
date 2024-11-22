@@ -26,47 +26,20 @@
     </div>
     {% endif %}
     <!-- Formulario -->
-    <form class="container text-dark" method="POST" action="{{ action_save }}" enctype="multipart/form-data"
+    <form class="container text-dark" method="POST" action="{% url 'adicionar_detalle' cabecera_id = cabecera_id %}" enctype="multipart/form-data"
         name="registro">
         {% csrf_token %}
 
         <div class="container mt-4">
-            <!-- Cabecera de Formulario (Fecha, Hora, Agente y Novedad) -->
-            <div class="row mb-3">
-                <div class="col-md-4">
-                    <h5>Fecha</h5>
-                    <input class="form-control" type="date" id="fecha" disabled>
-                </div>
-
-                <div class="col-md-4">
-                    <h5>Hora</h5>
-                    <input class="form-control" type="time" id="hora" disabled>
-                </div>
-
-                <div class="col-md-4">
-                    <h5>Novedad</h5>
-                    {{ form.novedad }}
-                </div>
-                <div class="col-md-4">
-                    <h5>Prioridad</h5>
-                    {{ form.prioridad }}
-                </div>
-            </div>
-
-            <hr>
 
             <!-- Detalle del Formulario -->
             <div class="row mb-3">
-                
-
                 <div class="col-md-4">
-                    <h5>Evidencia</h5>
+                    <h5> Evidencia </h5>
                     {{ detalle_form.evidencia }}
                 </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
+            
+                <div class="col-md-8">
                     <h5>Descripción</h5>
                     {{ detalle_form.descripcion }}
                 </div>

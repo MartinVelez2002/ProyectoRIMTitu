@@ -2,22 +2,44 @@
 
 <nav class="navbar navbar-expand-lg bg-dark sticky-top">
     <div class="container-fluid">
-        <a href="/">
-            <img src="{% static 'img/logo_alcaldia_milagro.png' %}" alt="MunicipioMilagro" class="p-1 mx-4"
-                width="150px">
+        <!-- Logo -->
+        <a href="/" class="navbar-brand">
+            <img src="{% static 'img/logo_alcaldia_milagro.png' %}" alt="MunicipioMilagro" class="p-1 mx-4" width="150px">
         </a>
-        <div class="d-flex justify-content-evenly">
-            {% if request.user.rol and request.user.rol.name == 'Agente' %}
-            <div class="mx-4 my-auto">
-                {% if turno and ubicacion %}
-                <p class="text-white"><b> Turno asignado: </b> {{ turno }}</p>
-                <p class="text-white"><b> Ubicación asignada: </b> {{ ubicacion }}</p>
+
+        <!-- Botón para colapsar el menú en pantallas móviles -->
+        <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" 
+                aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Contenido del navbar -->
+        <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
+            <ul class="navbar-nav mb-2 mb-lg-0">
+                <!-- Dropdown para el usuario -->
+                <li class="nav-item dropdown mx-3 my-auto">
+                    <a class="nav-link dropdown-toggle text-white d-flex align-items-center" href="#" role="button" 
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="me-2"><b>{{ nombre }} {{ apellido }}</b></span>
+                    </a>
+                    <ul class="dropdown-menu w-100">
+                        <li><a class="dropdown-item" href="/">Inicio</a></li>
+                        <li><a class="dropdown-item" href="{% url 'login:cambiar_clave' %}">Cambiar contraseña</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{% url 'login:logout' %}">Cerrar sesión</a></li>
+                    </ul>
+                </li>
+
+                <!-- Turno y ubicación solo si es agente -->
+                {% if request.user.rol and request.user.rol.name == 'Agente' %}
+                <li class="nav-item mx-4 my-auto">
+                    {% if turno and ubicacion %}
+                    <p class="text-white"><b>Turno asignado:</b> {{ turno }}</p>
+                    <p class="text-white"><b>Ubicación asignada:</b> {{ ubicacion }}</p>
+                    {% endif %}
+                </li>
                 {% endif %}
-            </div>
-            {% endif %}
-            <div class="mx-3 my-auto">
-                <p class="text-white m-2"><b> {{nombre}} {{apellido}} </b></p>
-            </div>
+            </ul>
         </div>
     </div>
 </nav>
