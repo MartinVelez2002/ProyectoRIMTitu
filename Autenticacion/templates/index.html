@@ -162,18 +162,6 @@
                     </div>
                 </a>
                 {% endif %}
-                {% if request.user.rol and request.user.rol.name == 'Agente' or request.user.rol.name == 'Coordinador'%}
-                <a href="{% url 'login:cambiar_clave' %}">
-                    <div class="card">
-                        <div class="img-container">
-                            <img class="img" src="{% static 'img/modulos/cambiar_contrasena.png' %}" alt="CambioContrasenaImg">
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text"> Cambio de Contraseña </p>
-                        </div>
-                    </div>
-                </a>
-                {% endif %}
                 {% if request.user.rol and request.user.rol.name == 'Agente' %}
                 <a href="{% url 'reportes:listar_reportes' %}">
                     <div class="card">
