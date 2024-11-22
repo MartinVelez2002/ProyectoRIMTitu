@@ -20,7 +20,7 @@ Módulo Reportes
 <th> Prioridad </th>
 <th> Estado del incidente </th>
 <th> Descripción </th>
-<th> Ver más detalle </th>
+<th> Ver evidencia </th>
 {% endblock %}
 
 {% block tbody %}
@@ -58,21 +58,24 @@ Módulo Reportes
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5 text-center" id="modalLabel-{{ cab.id }}">Detalles del reporte</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-header bg-dark">
+                    <h1 class="modal-title fs-5 text-white mx-auto" id="modalLabel-{{ cab.id }}"> Visualización de evidencia</h1>
+                    
                 </div>
                 <div class="modal-body flex">
                     {% for det in cab.detalles.all %}
-                    <div class="d-flex flex-row justify-content-evenly">
-                        <div>
+                    <div class="d-flex flex-column">
+                        {% if det.evidencia %}
+                        {% if det.evidencia.url|is_image %}
+                        <img width="500px" class="mx-auto my-auto" src="{{ det.evidencia.url }}" alt="Evidencia" class="img-fluid">
+                        {% elif det.evidencia.url|is_video %}
+                        <video width="400px" class="mx-auto my-auto" src="{{ det.evidencia.url }}" controls class="img-fluid"></video>
+                        {% endif %}
+                        {% else %}
+                        <p>No hay evidencia disponible.</p>
+                        {% endif %}
+                        <div class="p-2">
                             <p><strong>Hora:</strong> {{ det.hora }}</p>
-                            <p><strong>Prioridad:</strong> 
-                                {% if cab.prioridad == "M" %} Medio
-                                {% elif cab.prioridad == "B" %} Bajo
-                                {% elif cab.prioridad == "A" %} Alto
-                                {% endif %}
-                            </p>
                             <p><strong>Estado:</strong> 
                                 {% if det.estado_incidente == "N" %} Notificado
                                 {% elif det.estado_incidente == "R" %} Resuelto
@@ -80,16 +83,7 @@ Módulo Reportes
                                 {% endif %}
                             </p>
                             <p><strong>Descripción:</strong> {{ det.descripcion }}</p>
-                        </div>
-                        {% if det.evidencia %}
-                        {% if det.evidencia.url|is_image %}
-                        <img width="300px" src="{{ det.evidencia.url }}" alt="Evidencia" class="img-fluid">
-                        {% elif det.evidencia.url|is_video %}
-                        <video width="400px" src="{{ det.evidencia.url }}" controls class="img-fluid"></video>
-                        {% endif %}
-                        {% else %}
-                        <p>No hay evidencia disponible.</p>
-                        {% endif %}
+                        </div> 
                     </div>
                     {% endfor %}
                 </div>

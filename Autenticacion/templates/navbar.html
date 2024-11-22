@@ -7,13 +7,17 @@
                 width="150px">
         </a>
         <div class="d-flex justify-content-evenly">
-            <div>
+            {% if request.user.rol and request.user.rol.name == 'Agente' %}
+            <div class="mx-4 my-auto">
                 {% if turno and ubicacion %}
                 <p class="text-white">Turno asignado: {{ turno }}</p>
                 <p class="text-white">Ubicación asignada: {{ ubicacion }}</p>
                 {% endif %}
             </div>
-            <p class="text-white m-2">{{nombre}} {{apellido}}</p>
+            {% endif %}
+            <div class="mx-3 my-auto">
+                <p class="text-white m-2"><b> {{nombre}} {{apellido}} </b></p>
+            </div>
         </div>
     </div>
 </nav>
