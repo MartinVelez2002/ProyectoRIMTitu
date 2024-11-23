@@ -34,20 +34,22 @@
                 {% endblock %}
             </div>
 
-            <div class="table-container table-responsive">
+            <div class="table-container">
                 <h5 class="text-center bg-dark text-white p-3">{{ title_table }}</h5>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            {% block thead %}
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover rounded">
+                        <thead class="bg-dark text-white">
+                            <tr>
+                                {% block thead %}
+                                {% endblock %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% block tbody %}
                             {% endblock %}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% block tbody %}
-                        {% endblock %}
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             {% block pagination %}
             <!-- Paginación -->
