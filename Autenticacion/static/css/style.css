@@ -31,7 +31,7 @@
     padding: 30px 0;
     display: grid;
     grid-template-columns: repeat(1, 1fr);
-    width: 220px;
+    width: 250px;
     background-color: var(--sidebar-bg);
     transition: width var(--transition-speed) ease;
     overflow: auto; /* Agrega scroll vertical si el contenido sobrepasa el espacio */

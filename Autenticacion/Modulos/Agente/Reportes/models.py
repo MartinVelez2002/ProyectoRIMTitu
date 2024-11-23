@@ -9,7 +9,7 @@ class CabIncidente_Model(models.Model):
     agente = models.ForeignKey(TurnUsuario_Model, on_delete=models.PROTECT, related_name='agentes', help_text="Agente responsable del reporte")
     novedad = models.ForeignKey(Novedad_Model, on_delete=models.PROTECT, help_text="Novedad asociada al incidente")
     prioridad = models.CharField(max_length=1, choices=Opciones.prioridad(), help_text="Nivel de prioridad de la incidencia")
-    fecha = models.DateTimeField(auto_now_add=True, help_text="Fecha y hora de creación del reporte")   
+    fecha = models.DateField(auto_now_add=True, help_text="Fecha y hora de creación del reporte")   
     
     class Meta:
         verbose_name = "Cabecera de Incidente"

@@ -23,72 +23,82 @@
         {% endif %}
 
 
-        <div class="table-container">
-            <h5 class="text-center bg-dark text-white p-3">{{ title_table }}</h5>
-            <div class="table-responsive">
-                <table class="table table-bordered table-hover">
-                    <thead class="bg-dark text-white">
-                        <tr>
-                            {% block thead %}
-                            {% endblock %}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% block tbody %}
-                        {% endblock %}
-                    </tbody>
-                </table>
+        <div class="container">
+            <div class="search-btn">
+                {% block search %}
+
+                {% endblock %}
+                <!-- Botón para abrir el modal -->
+                {% block btnTitle %}
+
+                {% endblock %}
             </div>
-        </div>
 
-        {% block pagination %}
-        <!-- Paginación -->
-        <div class="d-flex justify-content-center mt-4">
-            {% if is_paginated %}
-            <nav aria-label="Page navigation">
-                <ul class="pagination">
-                    {% if page_obj.has_previous %}
-                    <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}&q={{ request.GET.q }}"
-                            aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    {% endif %}
-
-                    {% for num in paginator.page_range %}
-                    {% if num >= page_obj.number|add:-2 and num <= page_obj.number|add:2 %} <li
-                        class="page-item {% if num == page_obj.number %}active{% endif %}">
-                        <a class="page-link" href="?page={{ num }}&q={{ request.GET.q }}">{{ num }}</a>
-                        </li>
-                        {% elif num == 1 or num == paginator.num_pages %}
-                        <li class="page-item {% if num == page_obj.number %}active{% endif %}">
-                            <a class="page-link" href="?page={{ num }}&q={{ request.GET.q }}">{{ num }}</a>
-                        </li>
-                        {% elif num == page_obj.number|add:-3 or num == page_obj.number|add:3 %}
-                        <li class="page-item disabled">
-                            <a class="page-link">...</a>
-                        </li>
-                        {% endif %}
-                        {% endfor %}
-
-                        {% if page_obj.has_next %}
+            <div class="table-container">
+                <h5 class="text-center bg-dark text-white p-3">{{ title_table }}</h5>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover rounded">
+                        <thead class="bg-dark text-white">
+                            <tr>
+                                {% block thead %}
+                                {% endblock %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% block tbody %}
+                            {% endblock %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% block pagination %}
+            <!-- Paginación -->
+            <div class="d-flex justify-content-center mt-4">
+                {% if is_paginated %}
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        {% if page_obj.has_previous %}
                         <li class="page-item">
-                            <a class="page-link" href="?page={{ page_obj.next_page_number }}&q={{ request.GET.q }}"
-                                aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}&q={{ request.GET.q }}"
+                                aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
                         {% endif %}
-                </ul>
-            </nav>
-            {% endif %}
-        </div>
-        {% endblock %}
 
-</div>
-</main>
-{% endblock %}
+                        {% for num in paginator.page_range %}
+                        {% if num >= page_obj.number|add:-2 and num <= page_obj.number|add:2 %} <li
+                            class="page-item {% if num == page_obj.number %}active{% endif %}">
+                            <a class="page-link" href="?page={{ num }}&q={{ request.GET.q }}">{{ num }}</a>
+                            </li>
+                            {% elif num == 1 or num == paginator.num_pages %}
+                            <li class="page-item {% if num == page_obj.number %}active{% endif %}">
+                                <a class="page-link" href="?page={{ num }}&q={{ request.GET.q }}">{{ num }}</a>
+                            </li>
+                            {% elif num == page_obj.number|add:-3 or num == page_obj.number|add:3 %}
+                            <li class="page-item disabled">
+                                <a class="page-link">...</a>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+
+                            {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}&q={{ request.GET.q }}"
+                                    aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            {% endif %}
+                    </ul>
+                </nav>
+                {% endif %}
+            </div>
+            {% endblock %}
+
+        </div>
+    </main>
+    {% endblock %}
 </div>
 
 <div class="modal fade" id="insertar" role="dialog"></div>
