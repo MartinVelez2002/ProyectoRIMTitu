@@ -25,7 +25,6 @@ Módulo Ubicación
 {% block thead %}
 <th> Lugar </th>
 <th> Sector </th>
-<th> Calle principal </th>
 <th> Estado </th>
 <th> Acciones </th>
 {% endblock %}
@@ -37,7 +36,6 @@ Módulo Ubicación
 <tr>
     <td> {{i.lugar}} </td>
     <td> {{i.sector}} </td>
-    <td> {{ i.calleprincipal}} </td>
     {% if i.estado == True %}
     <td> Activo </td>
     {% else %}

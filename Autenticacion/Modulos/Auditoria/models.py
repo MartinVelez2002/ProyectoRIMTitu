@@ -21,6 +21,7 @@ class AuditoriaUser(models.Model):
         choices=AccionChoices.choices,
         verbose_name='Acción'
     )
+    
     tabla = models.CharField(max_length=100, verbose_name='Tabla')
     registro_id = models.IntegerField(verbose_name='ID de Registro')
     descripcion = models.TextField(verbose_name='Descripción de la Acción', null=True, blank=True)

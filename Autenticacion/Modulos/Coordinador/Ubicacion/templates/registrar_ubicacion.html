@@ -29,23 +29,13 @@
                 {{ form.sector }}
             </div>
         </div>
-
-        <div class="input-div one">
-            <div class="i">
-                <i class="fa-sharp fa-solid fa-road"></i>
-            </div>
-            <div class="div">
-                <h5> Calle Principal </h5>
-                {{ form.calleprincipal }}
-            </div>
-        </div>
     </div>
 </div>
 
 {% endblock %}
 
 {% block js %}
-<script src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&libraries=places&callback=initMap" loading="async" defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&libraries=drawing&callback=initMap" loading="async" defer></script>
 <script src="{% static 'js/map.js' %}"></script>
 <script src="{% static 'js/input_effect.js' %}"></script>
 {% endblock %}

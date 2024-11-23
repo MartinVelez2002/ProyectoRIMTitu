@@ -13,7 +13,7 @@ class Ubicacion_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
     model = Ubicacion_Model
     required_role = 'Coordinador'
     template_name = 'ubicacion.html'
-    context_object_name = 'ubicacion'
+    context_object_name = 'ubicacion'     
     paginate_by = 5
 
     def get_context_data(self, **kwargs):
