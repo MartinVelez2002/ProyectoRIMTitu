@@ -27,3 +27,4 @@ class Novedad_form(forms.ModelForm):
             'class': 'input',
             'required': 'required'
         })
+        self.fields['tiponovedad'].queryset = TipoNovedad_Model.objects.filter(estado=True)

@@ -24,5 +24,3 @@ class ListarReportes_View(LoginRequiredMixin, ListView):
         
         
         return context
-
-    print(Ubicacion_Model.objects.all(), "----------------")
