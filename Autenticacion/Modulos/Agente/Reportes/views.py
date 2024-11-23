@@ -51,10 +51,10 @@ class Reportes_Create(LoginRequiredMixin, RoleRequiredMixin, CreateView):
         return context
 
     def form_valid(self, form):
-        current_user = self.request.user
+        current_user = self.request.user.id
 
         # Intentar obtener o crear el TurnUsuario_Model del usuario actual
-        turn_usuario, created = TurnUsuario_Model.objects.get_or_create(usuario=current_user)
+        turn_usuario, created = TurnUsuario_Model.objects.get_or_create(usuario__id=current_user, estado = True)
 
         if not turn_usuario:
             # Si no se encuentra un TurnUsuario_Model válido, retorna como inválido

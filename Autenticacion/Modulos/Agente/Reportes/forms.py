@@ -7,14 +7,7 @@ from .models import CabIncidente_Model, DetIncidente_Model
 class CabIncidente_Form(ModelForm):
     class Meta:
         model = CabIncidente_Model
-        fields = ['novedad', 'prioridad', 'descripcion_breve']
-        widgets = {
-            'descripcion_breve': forms.Textarea(attrs={
-                'class': 'form-control',
-                'rows': 3,
-                'placeholder': 'Describe brevemente el problema (máx. 300 caracteres)'
-            }),
-        }
+        fields = ['novedad', 'prioridad']
 
     def __init__(self, *args, **kwargs):
         super(CabIncidente_Form, self).__init__(*args, **kwargs)
@@ -23,20 +16,13 @@ class CabIncidente_Form(ModelForm):
                 'class': 'form-control',
                 'required': 'required'
             })
-        self.fields['descripcion_breve'].widget.attrs.update({'maxlength': '300'})
 
-    def clean_descripcion_breve(self):
-        descripcion = self.cleaned_data.get('descripcion_breve')
-        if len(descripcion) > 300:
-            raise ValidationError("La descripción breve no puede exceder los 300 caracteres.")
-        return descripcion
-
-    def clean_prioridad(self):
-        prioridad = self.cleaned_data.get('prioridad')
-        valid_prioridades = [choice[0] for choice in self.fields['prioridad'].choices]
-        if prioridad not in valid_prioridades:
-            raise ValidationError("La prioridad seleccionada no es válida.")
-        return prioridad
+        def clean_prioridad(self):
+            prioridad = self.cleaned_data.get('prioridad')
+            valid_prioridades = [choice[0] for choice in self.fields['prioridad'].choices]
+            if prioridad not in valid_prioridades:
+                raise ValidationError("La prioridad seleccionada no es válida.")
+            return prioridad
 
 
 class DetalleIncidente_Form(ModelForm):

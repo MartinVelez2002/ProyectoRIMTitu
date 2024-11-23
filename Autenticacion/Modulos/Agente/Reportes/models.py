@@ -9,9 +9,7 @@ class CabIncidente_Model(models.Model):
     agente = models.ForeignKey(TurnUsuario_Model, on_delete=models.PROTECT, related_name='agentes', help_text="Agente responsable del reporte")
     novedad = models.ForeignKey(Novedad_Model, on_delete=models.PROTECT, help_text="Novedad asociada al incidente")
     prioridad = models.CharField(max_length=1, choices=Opciones.prioridad(), help_text="Nivel de prioridad de la incidencia")
-    fecha_hora = models.DateTimeField(auto_now_add=True, help_text="Fecha y hora de creación del reporte")   
-    estado_incidente = models.CharField(max_length=1, choices=Opciones.estado_incidente(), default='N',help_text="Estado actual del incidente")
-    descripcion_breve = models.CharField(max_length=300, help_text="Breve descripción del problema")
+    fecha = models.DateTimeField(auto_now_add=True, help_text="Fecha y hora de creación del reporte")   
     
     class Meta:
         verbose_name = "Cabecera de Incidente"
@@ -25,7 +23,7 @@ class CabIncidente_Model(models.Model):
 class DetIncidente_Model(models.Model):
     cabincidente = models.ForeignKey(CabIncidente_Model, on_delete=models.PROTECT, related_name="detalles", help_text="Referencia a la cabecera del incidente")
     estado_incidente = models.CharField(max_length=1,choices=Opciones.estado_incidente(), default='N', help_text="Estado actualizado de la incidencia")
-    fecha_hora = models.DateTimeField(auto_now_add=True,help_text="Fecha y hora de este detalle")
+    hora = models.TimeField(auto_now_add=True,help_text="Fecha y hora de este detalle")
     evidencia = models.FileField(upload_to='media/evidencias',validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'gif', 'mp4', 'mov', 'avi'])],blank=True,null=True,help_text="Evidencia adjunta (opcional)")
     descripcion = models.TextField(help_text="Descripción detallada del seguimiento del incidente")
     comentarios_adicionales = models.TextField(blank=True, null=True, help_text="Comentarios adicionales sobre el seguimiento")
