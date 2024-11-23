@@ -26,7 +26,10 @@ class Reportes_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
         
         return context
 
-class Reportes_Create(LoginRequiredMixin, RoleRequiredMixin,CreateView):
+
+
+
+class Reportes_Create(LoginRequiredMixin, RoleRequiredMixin, CreateView):
     template_name = 'crear_reportes.html'
     required_role = 'Agente'
     success_url = reverse_lazy('reportes:listar_reportes')
@@ -35,57 +38,66 @@ class Reportes_Create(LoginRequiredMixin, RoleRequiredMixin,CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Formulario de Reportes'
+        context['titulo'] = 'Reporte de Incidencia'
         context['cancelar'] = reverse('reportes:listar_reportes')
         context['action_save'] = self.request.path
-        # Instancia del formulario de detalle
+
+        # Añadir el formulario de detalle al contexto
         if self.request.POST:
             context['detalle_form'] = DetalleIncidente_Form(self.request.POST, self.request.FILES)
         else:
             context['detalle_form'] = DetalleIncidente_Form()
-    
 
         return context
 
-
     def form_valid(self, form):
-        # Recuperar el usuario actual
-        current_user = self.request.user.id
+        current_user = self.request.user
 
-        # Obtener el TurnUsuario_Model asociado al usuario
-        try:
-            turn_usuario = TurnUsuario_Model.objects.get(usuario__id=current_user)
-        except TurnUsuario_Model.DoesNotExist:
-            # Si no hay un TurnUsuario_Model para el usuario actual, manejar el error
+        # Intentar obtener o crear el TurnUsuario_Model del usuario actual
+        turn_usuario, created = TurnUsuario_Model.objects.get_or_create(usuario=current_user)
+
+        if not turn_usuario:
+            # Si no se encuentra un TurnUsuario_Model válido, retorna como inválido
             return self.form_invalid(form)
 
-        # Recuperar el contexto y el formulario de detalle
+        # Recuperar el formulario de detalle desde el contexto
         context = self.get_context_data()
         detalle_form = context['detalle_form']
 
-        # Verificar si el formulario de detalle es válido
+        # Validar el formulario de detalle
         if detalle_form.is_valid():
-            # Guardar el formulario de CabIncidente_Model
+            # Guardar la cabecera del incidente
             self.object = form.save(commit=False)
-            self.object.agente = turn_usuario  # Asignar el TurnUsuario_Model al campo agente
-            self.object.save()  # Asegúrate de guardar `self.object` antes de asociarlo a `detalle_instance`
+            self.object.agente = turn_usuario
+            self.object.save()
 
-            # Guardar la instancia de DetIncidente_Model asociada
+            # Guardar el detalle del incidente asociado a la cabecera
             detalle_instance = detalle_form.save(commit=False)
-            detalle_instance.cabincidente = self.object  # Asociar con la instancia de CabIncidente_Model
+            detalle_instance.cabincidente = self.object
             detalle_instance.save()
-            print("funcionando")
+
             return super().form_valid(form)
         else:
-            # Si el formulario de detalle no es válido
-            print("Errores en detalle_form:", detalle_form.errors)
+            # Si el formulario de detalle es inválido, re-renderizar el template con errores
             return self.form_invalid(form)
 
-
     def form_invalid(self, form):
-        print("FORMULARIO INVÁLIDO")
+        # Añadir los errores de ambos formularios al contexto
         context = self.get_context_data(form=form)
         return self.render_to_response(context)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # class AdicionarDetalle(LoginRequiredMixin, CreateView):

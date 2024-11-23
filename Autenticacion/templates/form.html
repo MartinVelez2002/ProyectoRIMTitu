@@ -11,12 +11,11 @@
 
 {% block forms %}
 <form class="container text-dark" method="POST" action="{{ action_save }}" enctype="multipart/form-data"
-    name="registro">
+    name="registro" style="display: flex; justify-content: center; align-items: center;">
     {% csrf_token %}
 
-    <div class="modal-dialog mod modal-lg" role="document" style="display: flex; justify-content: center; align-items: center;
-    height: 100vh;">
-    <div class="modal-content" style="border: 10px solid #12171e; border-radius: 12px; box-shadow: 0 6px 12px rgba(0, 51, 102, 0.2); padding: 30px;">
+    <div class="modal-dialog mod modal-lg"  role="document" >
+    <div class="modal-content"  style="border: 10px solid #12171e; border-radius: 12px; box-shadow: 0 6px 12px rgba(0, 51, 102, 0.2); padding: 30px;">
             <div class="modal-header bg-dark" style="padding: 5px; border-radius: 10px; display: flex; align-items: center;">
                 <h2 class="title text-center text-white">
                     {{ titulo }}

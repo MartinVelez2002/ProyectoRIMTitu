@@ -14,11 +14,15 @@ Cambiar Clave
 <div class="container-change-pass">
     
     <div class="container-grid">
-        {% if request.user.primera_sesion == False %}
+        
         <div class="enlace">
+            {% if request.user.primera_sesion == False %}
             <a href="{% url 'login:index' %}" class="btn-pass">Menú Principal</a>
+            {% else %}
+            <!-- Espacio vacío -->
+            {% endif %}
         </div>
-        {% endif %}
+       
         <div class="validacion form">
                  
             <h3> La contraseña nueva debe cumplir con los siguientes parámetros:</h3>

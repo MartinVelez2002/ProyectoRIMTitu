@@ -1,13 +1,15 @@
 * {
-    margin: 0;
     padding: 0;
+    margin: 0;
     box-sizing: border-box;
 }
 
 body{
     font-family: 'Arima', sans-serif;
-    
+	
 }
+
+
 
 .wave {
 	position: fixed;
@@ -31,6 +33,10 @@ body{
     align-items: center;
     height: 100vh;
 }
+
+
+
+
 
 
 .container-grid {
@@ -58,10 +64,7 @@ body{
 }
 
 
-.enlace {
-    display: flex;
-    align-items: center;
-}
+
 .enlace .btn-pass {
     display: inline-block; /* Solo ocupa el espacio del texto */
     padding: 10px 20px; /* Espaciado interno */
@@ -72,6 +75,8 @@ body{
 	border: none;
 	background-image: linear-gradient(to right, #314258, #425b70, rgb(34, 38, 46));	
     background-size: 200%;
+	margin: 1rem 0;
+    height: 50px;
 	cursor: pointer;
 	transition: .5s;
 }
@@ -290,6 +295,7 @@ form{
 
 a{
 	display: inline;
+	text-align: right;
 	text-decoration: none;
 	color: #797878;
     margin-top: 10px;

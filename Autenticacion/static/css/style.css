@@ -22,7 +22,7 @@
 
 .side-bar {
     position: fixed;
-    top: 40px;
+    top: 70px;
     left: 0;
     height: 100%;
     z-index: 500; /* Lower than the navbar's z-index */

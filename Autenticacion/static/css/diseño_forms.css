@@ -9,6 +9,11 @@ header {
 }
 
 
+
+
+
+
+
 .regist-content {
 	display: flex;
 	flex-direction: column;
@@ -22,7 +27,6 @@ header {
     gap: 5px 20px;
 	width: 700px;
 }
-
 
 
 

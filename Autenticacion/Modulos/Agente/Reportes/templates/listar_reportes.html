@@ -1,4 +1,4 @@
-{% extends 'modulos.html '%}
+{% extends 'modulos.html' %}
 
 {% load static %}
 {% load custom_filters %}
@@ -21,17 +21,16 @@ Módulo Reportes
 <th> Prioridad </th>
 <th> Estado del incidente </th>
 <th> Ver evidencia </th>
-<!-- <th> Adicionar detalle </th> -->
 {% endblock %}
 
 {% block tbody %}
 {% if rep %}
 {% for cab in rep %}
 <tr>
-    <td> {{cab.id}} </td>
+    <td> {{ cab.id }} </td>
     <td>{{ cab.fecha }}</td>
     <td>
-        {# Mostramos la hora del primer detalle como ejemplo, pero puedes personalizar según tu lógica #}
+        {# Mostrar la hora del primer detalle o "-" si no hay detalles #}
         {{ cab.detalles.first.hora|default:"-" }}
     </td>
     <td>{{ cab.novedad }}</td>
@@ -43,11 +42,11 @@ Módulo Reportes
     </td>
     <td>
         {% if cab.detalles.first.estado_incidente == "N" %}
-        <p class="btn btn-primary"> Notificado </p>
+            <p class="btn btn-primary">Notificado</p>
         {% elif cab.detalles.first.estado_incidente == "R" %}
-        <p class="btn btn-success"> Resuelto </p>
+            <p class="btn btn-success">Resuelto</p>
         {% elif cab.detalles.first.estado_incidente == "E" %}
-        <p class="btn btn-warning"> En proceso </p>
+            <p class="btn btn-warning">En proceso</p>
         {% endif %}
     </td>
     <td>
@@ -55,36 +54,28 @@ Módulo Reportes
             <i class="fa-sharp fa-solid fa-eye"></i>
         </button>
     </td>
-    <!-- <td>
-        <a href="">
-            <i class="fa-sharp fa-solid fa-plus btn btn-success"></i>
-        </a>
-    </td> -->
 </tr>
 
 <!-- Modal para detalles -->
-<div class="modal fade" id="modalLabel-{{ cab.id }}" tabindex="-1" aria-labelledby="modalLabel-{{ cab.id }}"
-    aria-hidden="true">
+<div class="modal fade" id="modalLabel-{{ cab.id }}" tabindex="-1" aria-labelledby="modalLabel-{{ cab.id }}" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-dark">
-                <h1 class="modal-title fs-5 text-white mx-auto" id="modalLabel-{{ cab.id }}"> Visualización de evidencia
-                </h1>
-
+                <h1 class="modal-title fs-5 text-white mx-auto" id="modalLabel-{{ cab.id }}">Visualización de evidencia</h1>
             </div>
-            <div class="modal-body flex">
+            <div class="modal-body">
                 {% for det in cab.detalles.all %}
                 <div class="d-flex flex-column">
                     {% if det.evidencia %}
                     {% if det.evidencia.url|is_image %}
-                    <img width="500px" class="mx-auto my-auto" src="{{ det.evidencia.url }}" alt="Evidencia"
-                        class="img-fluid">
+                        <img width="500px" class="mx-auto my-auto" src="{{ det.evidencia.url }}" alt="Evidencia" class="img-fluid">
                     {% elif det.evidencia.url|is_video %}
-                    <video width="400px" class="mx-auto my-auto" src="{{ det.evidencia.url }}" controls
-                        class="img-fluid"></video>
+                        <video width="400px" class="mx-auto my-auto" src="{{ det.evidencia.url }}" controls class="img-fluid"></video>
+                    {% else %}
+                        <p>No es un archivo compatible.</p>
                     {% endif %}
                     {% else %}
-                    <p>No hay evidencia disponible.</p>
+                        <p>No hay evidencia disponible.</p>
                     {% endif %}
                     <div class="p-2 d-flex flex-row justify-content-evenly">
                         <p><strong>Hora:</strong> {{ det.hora }}</p>
