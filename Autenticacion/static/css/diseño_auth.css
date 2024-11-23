@@ -1,15 +1,13 @@
 * {
-    padding: 0;
     margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
 body{
     font-family: 'Arima', sans-serif;
-	
+    
 }
-
-
 
 .wave {
 	position: fixed;
@@ -32,19 +30,63 @@ body{
     justify-content: center;
     align-items: center;
     height: 100vh;
-    margin: 20px;
-	
 }
 
 
 .container-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 100px; /* Espacio entre las columnas */
+    grid-template-rows: auto auto;/* Dos filas (altura automática) */
+    grid-template-areas:
+        "primera primera" /* El primer elemento ocupa ambas columnas */
+        "segunda tercera"; /* El segundo y tercer elemento ocupan columnas debajo */;
+    column-gap: 70px; /* Espacio entre las columnas */
     align-items: center; /* Alinea los elementos verticalmente al centro */
-    width: 60%; /* Ancho del contenedor grid */
-	
+    width: 60%; 
+  
 }
+
+.container-grid > div:nth-child(1) {
+    grid-area: primera;
+}
+
+.container-grid > div:nth-child(2) {
+    grid-area: segunda;
+}
+
+.container-grid > div:nth-child(3) {
+    grid-area: tercera;
+}
+
+
+.enlace {
+    display: flex;
+    align-items: center;
+}
+.enlace .btn-pass {
+    display: inline-block; /* Solo ocupa el espacio del texto */
+    padding: 10px 20px; /* Espaciado interno */
+    font-size: 1rem; /* Tamaño de la fuente */
+    color: white; /* Color del texto */
+    border-radius: 25px;
+	outline: none;
+	border: none;
+	background-image: linear-gradient(to right, #314258, #425b70, rgb(34, 38, 46));	
+    background-size: 200%;
+	cursor: pointer;
+	transition: .5s;
+}
+
+
+
+	
+
+
+.enlace .btn-pass:hover{
+	background-position: right;
+	color: #fff
+}
+
+
 
 
 h3 {
@@ -242,9 +284,12 @@ form{
 }
 
 
+.align-r {
+    text-align: right;
+}
+
 a{
-	display: block;
-	text-align: right;
+	display: inline;
 	text-decoration: none;
 	color: #797878;
     margin-top: 10px;
@@ -256,7 +301,7 @@ a:hover{
 	color: #12171e;
 }
 
-.btn{
+.btn {
 	display: block;
 	width: 100%;
 	height: 50px;
@@ -272,6 +317,7 @@ a:hover{
 	cursor: pointer;
 	transition: .5s;
 }
+
 .btn:hover{
 	background-position: right;
 	color: #fff

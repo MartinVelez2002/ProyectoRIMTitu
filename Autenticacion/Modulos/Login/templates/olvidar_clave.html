@@ -43,24 +43,14 @@ Olvidar Clave
                 </div>
             </div>
             <input type="submit" class="btn" value="Enviar correo">
-            
-            <a href="{% url 'login:login' %}" style="font-size:20px;">Regresar</a>
-            
+            <div class="align-r">
+                <a href="{% url 'login:login' %}" style="font-size: 20px;">Regresar</a>
+            </div>
         </form>
         
     </div>
 </div>
 
-{% comment %} <script>
-    // Espera 5 segundos y luego oculta el mensaje
-    setTimeout(function() {
-        const messages = document.querySelectorAll('.message');
-        messages.forEach(message => {
-            message.style.display = 'none';
-        });
-    }, 3000)
-
-</script> {% endcomment %}
 
 
 

@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <!-- Logo -->
         <a href="/" class="navbar-brand">
-            <img src="{% static 'img/logo_alcaldia_milagro.png' %}" alt="MunicipioMilagro" class="p-1 mx-4" width="150px">
+            <img src=""  class="p-1 mx-4" width="150px">
         </a>
 
         <!-- Botón para colapsar el menú en pantallas móviles -->
@@ -22,7 +22,7 @@
                        data-bs-toggle="dropdown" aria-expanded="false">
                         <span class="me-2"><b>{{ nombre }} {{ apellido }}</b></span>
                     </a>
-                    <ul class="dropdown-menu w-100">
+                    <ul class="dropdown-menu w-105">
                         <li><a class="dropdown-item" href="/">Inicio</a></li>
                         <li><a class="dropdown-item" href="{% url 'login:cambiar_clave' %}">Cambiar contraseña</a></li>
                         <li><hr class="dropdown-divider"></li>

@@ -10,10 +10,11 @@
         Inicio
         {% endblock %}
     </title>
-    <!-- Fuente de letra de google -->
-    <link href="https://fonts.googleapis.com/css2?family=Arima:wght@100..700&display=swap" rel="stylesheet">
+   
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
+  
+ 
+    <link href="https://fonts.googleapis.com/css2?family=Arima:wght@100..700&display=swap" rel="stylesheet">
 
     {% block css %}
     <link rel="stylesheet" href="{% static 'css/modulos.css' %}">
@@ -21,23 +22,20 @@
     <link rel="stylesheet" href="{% static 'css/style_tabla.css' %}">
     {% endblock %}
 
-
-    <!-- CSS - Bootstrap -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-
     <link rel="icon" href="{% static 'img/logo_alcaldia_milagro_ico.ico' %}" type="image/x-icon">
     
 </head>
 
 <body>
-   
-        <div class="header">
-            {% block header %}
-            <header>
-                {% include 'navbar.html' %}
-            </header>
-            {% endblock %}
-        </div>
+
+        <header>
+        {% block header %}
+       
+            {% include 'navbar.html' %}
+       
+        {% endblock %}
+        </header>
 
         {% block main %}
         <div class="cards-container">
@@ -199,13 +197,7 @@
 
 
 
-    {% comment %} {% block JS %}
-    <script src="{% static 'js/input_effect.js' %}"></script>
-
-    <script src="{% static 'js/ocultar_mensajes.js'%}"></script>
-    <script src="{% static 'js/hide_show_passw.js' %}"></script>
-    <script src="{% static 'js/parametros_clave.js' %}"></script>
-    {% endblock %} {% endcomment %}
+ 
 </body>
 
 </html>
