@@ -99,9 +99,9 @@ Módulo Reportes
                 <div class="d-flex flex-column">
                     {% if det.evidencia %}
                     {% if det.evidencia.url|is_image %}
-                        <img src="{{ det.evidencia.url }}" alt="Evidencia" class="img-fluid mx-auto">
+                        <img width="400px" height="500px" src="{{ det.evidencia.url }}" alt="Evidencia" class="mx-auto">
                     {% elif det.evidencia.url|is_video %}
-                        <video src="{{ det.evidencia.url }}" controls class="img-fluid mx-auto"></video>
+                        <video width="400px" height="500px" src=" {{det.evidencia.url }}" controls class="img-fluid mx-auto"></video>
                     {% else %}
                         <a href="{{ det.evidencia.url }}" class="btn btn-link">Descargar Evidencia</a>
                     {% endif %}
@@ -131,7 +131,7 @@ Módulo Reportes
 {% endfor %}
 {% else %}
 <tr>
-    <td colspan="7">Aún no se han realizado reportes.</td>
+    <td colspan="8">Aún no se han realizado reportes.</td>
 </tr>
 {% endif %}
 {% endblock %}

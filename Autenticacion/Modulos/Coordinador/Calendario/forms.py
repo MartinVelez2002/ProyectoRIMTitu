@@ -36,7 +36,7 @@ class Calendario_Form (ModelForm):
 
         return cleaned_data  
 
-class TurnUsuarioUbicacion_Form (ModelForm):
+class TurnUsuarioUbicacion_Form(ModelForm):
     class Meta:
         model = TurnUsuario_Model
         fields = ['calendario', 'turno', 'usuario', 'ubicacion']
@@ -46,13 +46,14 @@ class TurnUsuarioUbicacion_Form (ModelForm):
             'turno': forms.Select(),
             'ubicacion': forms.Select(),
         }
-        
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         
-        # Filtrar usuarios para mostrar solo los que no son superusuarios y tienen el rol de "Agente"
+        # Filtrar usuarios con el rol "Agente" y que no sean superusuarios
         self.fields['usuario'].queryset = Usuario.objects.filter(
-            rol__name="Agente"
+            rol__name="Agente",  # Usamos el campo name del modelo Rol 
+            estado=True  # Solo usuarios activos
         )
         
         # Aplicar atributos comunes a todos los campos
@@ -61,5 +62,7 @@ class TurnUsuarioUbicacion_Form (ModelForm):
                 'class': 'input',
                 'required': 'required'
             })
+
+
 
 
