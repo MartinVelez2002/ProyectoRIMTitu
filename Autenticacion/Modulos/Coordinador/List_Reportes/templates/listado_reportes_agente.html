@@ -36,25 +36,45 @@ Módulo Reportes
     <td> {{ cab.agente.usuario.nombre|default:"-" }} {{ cab.agente.usuario.apellido|default:"-" }}</td>
     <td>{{ cab.novedad }}</td>
     <td>
-        {% if cab.prioridad == "M" %} 
-        Media
-        {% elif cab.prioridad == "B" %} 
-        Baja
-        {% elif cab.prioridad == "A" %} 
-        Alta
-        {% endif %}
+        <span class="btn {% if cab.prioridad == 'M' %}btn-warning{% elif cab.prioridad == 'A' %}btn-danger{% else %}btn-success{% endif %}">
+            {{ cab.get_prioridad_display }}
+        </span>
     </td>
     <td>
-        {% if cab.detalles.first.estado_incidente == "N" %} 
-        <p class="btn btn-primary"> Notificado </p>
-        {% elif cab.detalles.first.estado_incidente == "R" %} 
-        <p class="btn btn-success"> Resuelto </p>
-        {% elif cab.detalles.first.estado_incidente == "E" %} 
-        <p class="btn btn-warning"> En proceso </p>
-        {% endif %}
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="incidente_id" value="{{ cab.id }}">
+            
+            <div class="form-group">
+                <label for="nuevo_estado">Nuevo Estado</label>
+                <select class="form-control" name="nuevo_estado" id="nuevo_estado" required>
+                    <option value="N" {% if nuevo_estado == 'N' or cab.estado_incidente == 'N' %}selected{% endif %}>Notificado</option>
+                    <option value="E" {% if nuevo_estado == 'E' or cab.estado_incidente == 'E' %}selected{% endif %}>En Proceso</option>
+                    <option value="A" {% if nuevo_estado == 'A' or cab.estado_incidente == 'A' %}selected{% endif %}>Atendido</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="descripcion">Descripción</label>
+                <textarea class="form-control" name="descripcion" id="descripcion" required></textarea>
+            </div>
+        
+            <div class="form-group">
+                <label for="evidencia">Evidencia (opcional)</label>
+                <input type="file" class="form-control" name="evidencia" id="evidencia">
+            </div>
+        
+            <button type="submit" class="btn btn-primary">Actualizar Estado</button>
+        </form>
     </td>
     <td>
-        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalLabel-{{ cab.id }}">
+        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalLabel-{{ cab.id }}">
+            <i class="fa-sharp fa-solid fa-eye"></i>
+        </button>
+    </td>
+    </td>
+    <td>
+        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalLabel-{{ cab.id }}">
             <i class="fa-sharp fa-solid fa-eye"></i>
         </button>
         
@@ -88,12 +108,7 @@ Módulo Reportes
                     {% endif %}
                     <div class="d-flex flex-row justify-content-evenly">
                         <p><strong>Hora:</strong> {{ det.hora }}</p>
-                        <p><strong>Prioridad:</strong>
-                            {% if cab.prioridad == "M" %} Medio
-                            {% elif cab.prioridad == "B" %} Bajo
-                            {% elif cab.prioridad == "A" %} Alto
-                            {% endif %}
-                        </p>
+                        <p><strong>Prioridad:</strong> {{ det.get_prioridad_display }}</p>
                         <p> <strong>Descripción: </strong> {{det.descripcion}} </p>
                     </div>
 
@@ -112,4 +127,5 @@ Módulo Reportes
     <td colspan="10">Aún no se han realizado reportes</td>
 </tr>
 {% endif %}
+
 {% endblock %}

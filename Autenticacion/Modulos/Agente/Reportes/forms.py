@@ -17,12 +17,12 @@ class CabIncidente_Form(ModelForm):
                 'required': 'required'
             })
 
-        def clean_prioridad(self):
-            prioridad = self.cleaned_data.get('prioridad')
-            valid_prioridades = [choice[0] for choice in self.fields['prioridad'].choices]
-            if prioridad not in valid_prioridades:
-                raise ValidationError("La prioridad seleccionada no es válida.")
-            return prioridad
+    def clean_prioridad(self):
+        prioridad = self.cleaned_data.get('prioridad')
+        valid_prioridades = [choice[0] for choice in self.fields['prioridad'].choices]
+        if prioridad not in valid_prioridades:
+            raise ValidationError("La prioridad seleccionada no es válida.")
+        return prioridad
 
 
 class DetalleIncidente_Form(ModelForm):

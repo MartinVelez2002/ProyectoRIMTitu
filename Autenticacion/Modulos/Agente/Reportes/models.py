@@ -16,7 +16,7 @@ class CabIncidente_Model(models.Model):
         verbose_name_plural = "Cabeceras de Incidentes"
     
     def __str__(self):
-        return f"Reporte {self.id} - {self.get_estado_display()}"
+        return f"Reporte {self.id} - {self.get_prioridad_display()}"
 
     
 
@@ -34,5 +34,5 @@ class DetIncidente_Model(models.Model):
         verbose_name_plural = "Detalles de Incidentes"
     
     def __str__(self):
-        return f"Detalle {self.id} - Incidente {self.cabincidente.id}"
+        return f"Detalle {self.id} - Incidente {self.cabincidente.id} - {self.get_estado_incidente_display()}"
 

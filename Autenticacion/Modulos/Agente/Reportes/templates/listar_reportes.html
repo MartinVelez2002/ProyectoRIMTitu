@@ -20,74 +20,106 @@ Módulo Reportes
 <th> Novedad </th>
 <th> Prioridad </th>
 <th> Estado del incidente </th>
-<th> Ver evidencia </th>
+<th> Actualizar estado de incidente </th>
+<th> Ver Detalle </th>
+
 {% endblock %}
 
 {% block tbody %}
 {% if rep %}
 {% for cab in rep %}
 <tr>
-    <td> {{ cab.id }} </td>
+    <td>{{ cab.id }}</td>
     <td>{{ cab.fecha }}</td>
-    <td>
-        {# Mostrar la hora del primer detalle o "-" si no hay detalles #}
-        {{ cab.detalles.first.hora|default:"-" }}
-    </td>
+    <td>{{ cab.detalles.first.hora|default:"-" }}</td>
     <td>{{ cab.novedad }}</td>
     <td>
-        {% if cab.prioridad == "M" %} Media
-        {% elif cab.prioridad == "B" %} Baja
-        {% elif cab.prioridad == "A" %} Alta
-        {% endif %}
+        <span class="btn {% if cab.prioridad == 'M' %}btn-warning{% elif cab.prioridad == 'A' %}btn-danger{% else %}btn-success{% endif %}">
+            {{ cab.get_prioridad_display }}
+        </span>
     </td>
     <td>
-        {% if cab.detalles.first.estado_incidente == "N" %}
-            <p class="btn btn-primary">Notificado</p>
-        {% elif cab.detalles.first.estado_incidente == "R" %}
-            <p class="btn btn-success">Resuelto</p>
-        {% elif cab.detalles.first.estado_incidente == "E" %}
-            <p class="btn btn-warning">En proceso</p>
+         <!-- Aquí solo se muestra el estado actual del incidente -->
+        
+                <!-- Mostrar el estado del último detalle asociado a la cabecera -->
+            {% if cab.detalles.all %}
+            {% with ultimo_detalle=cab.detalles.last %}
+                <span class="btn {% if ultimo_detalle.estado_incidente == 'N' %}btn-info{% elif ultimo_detalle.estado_incidente == 'E' %}btn-warning{% elif ultimo_detalle.estado_incidente == 'A' %}btn-success{% else %}btn-secondary{% endif %}">
+                    {{ ultimo_detalle.get_estado_incidente_display }}
+                </span>
+            {% endwith %}
+        {% else %}
+            <span class="btn btn-secondary">Sin detalles</span>
         {% endif %}
+        
     </td>
     <td>
-        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalLabel-{{ cab.id }}">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="incidente_id" value="{{ cab.id }}">
+            
+            <div class="form-group">
+                <label for="nuevo_estado">Nuevo Estado</label>
+                <select class="form-control" name="nuevo_estado" id="nuevo_estado" required>
+                    <option value="N" {% if nuevo_estado == 'N' or cab.estado_incidente == 'N' %}selected{% endif %}>Notificado</option>
+                    <option value="E" {% if nuevo_estado == 'E' or cab.estado_incidente == 'E' %}selected{% endif %}>En Proceso</option>
+                    <option value="A" {% if nuevo_estado == 'A' or cab.estado_incidente == 'A' %}selected{% endif %}>Atendido</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="descripcion">Descripción</label>
+                <textarea class="form-control" name="descripcion" id="descripcion" required></textarea>
+            </div>
+        
+            <div class="form-group">
+                <label for="evidencia">Evidencia (opcional)</label>
+                <input type="file" class="form-control" name="evidencia" id="evidencia">
+            </div>
+        
+            <button type="submit" class="btn btn-primary">Actualizar Estado</button>
+        </form>
+    </td>
+    <td>
+        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalLabel-{{ cab.id }}">
             <i class="fa-sharp fa-solid fa-eye"></i>
         </button>
     </td>
 </tr>
 
-<!-- Modal para detalles -->
+<!-- Modal -->
 <div class="modal fade" id="modalLabel-{{ cab.id }}" tabindex="-1" aria-labelledby="modalLabel-{{ cab.id }}" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-dark">
-                <h1 class="modal-title fs-5 text-white mx-auto" id="modalLabel-{{ cab.id }}">Visualización de evidencia</h1>
+                <h1 class="modal-title fs-5 text-white mx-auto" id="modalLabel-{{ cab.id }}">Detalles de la Incidencia</h1>
             </div>
             <div class="modal-body">
                 {% for det in cab.detalles.all %}
                 <div class="d-flex flex-column">
                     {% if det.evidencia %}
                     {% if det.evidencia.url|is_image %}
-                        <img width="500px" class="mx-auto my-auto" src="{{ det.evidencia.url }}" alt="Evidencia" class="img-fluid">
+                        <img src="{{ det.evidencia.url }}" alt="Evidencia" class="img-fluid mx-auto">
                     {% elif det.evidencia.url|is_video %}
-                        <video width="400px" class="mx-auto my-auto" src="{{ det.evidencia.url }}" controls class="img-fluid"></video>
+                        <video src="{{ det.evidencia.url }}" controls class="img-fluid mx-auto"></video>
                     {% else %}
-                        <p>No es un archivo compatible.</p>
+                        <a href="{{ det.evidencia.url }}" class="btn btn-link">Descargar Evidencia</a>
                     {% endif %}
                     {% else %}
                         <p>No hay evidencia disponible.</p>
                     {% endif %}
-                    <div class="p-2 d-flex flex-row justify-content-evenly">
+                    <div class="p-2 d-flex flex-column">
                         <p><strong>Hora:</strong> {{ det.hora }}</p>
-                        <p><strong>Estado:</strong>
-                            {% if det.estado_incidente == "N" %} Notificado
-                            {% elif det.estado_incidente == "R" %} Resuelto
-                            {% elif det.estado_incidente == "E" %} En proceso
-                            {% endif %}
+                        <p><strong>Estado:</strong> 
+                            <span class="btn {% if det.estado_incidente == 'N' %}btn-info{% elif det.estado_incidente == 'E' %}btn-warning{% elif det.estado_incidente == 'A' %}btn-success{% else %}btn-secondary{% endif %}">
+                                {{ det.get_estado_incidente_display }}
+                            </span>
                         </p>
                         <p><strong>Descripción:</strong> {{ det.descripcion }}</p>
+                        <p><strong>Comentarios Adicionales:</strong> {{ det.comentarios_adicionales|default:"-" }}</p>
                     </div>
                 </div>
+                <hr>
                 {% endfor %}
             </div>
             <div class="modal-footer justify-content-center">
@@ -99,7 +131,7 @@ Módulo Reportes
 {% endfor %}
 {% else %}
 <tr>
-    <td colspan="7">Aún no se han realizado reportes</td>
+    <td colspan="7">Aún no se han realizado reportes.</td>
 </tr>
 {% endif %}
 {% endblock %}

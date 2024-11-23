@@ -1,7 +1,9 @@
+from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
-
+from django.db import transaction
+from django.contrib import messages
 from Modulos.Login.mixin import RoleRequiredMixin
-from .models import CabIncidente_Model
+from .models import CabIncidente_Model, DetIncidente_Model
 from django.views.generic import ListView, CreateView
 from .forms import CabIncidente_Form, DetalleIncidente_Form
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -15,21 +17,69 @@ class Reportes_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
     paginate_by = 5
     context_object_name = 'rep'
     
+    def post(self, request, *args, **kwargs):
+        incidente_id = request.POST.get('incidente_id')  # Obtener el ID del incidente (de un campo oculto o similar)
+        try:
+            incidente = CabIncidente_Model.objects.get(id=incidente_id)  # Obtener el incidente
+        except CabIncidente_Model.DoesNotExist:
+            messages.error(request, "El incidente especificado no existe.")
+            return redirect('reportes:listar_reportes')  # Redirigir si no se encuentra el incidente
+        
+        
+        
+        incidente = CabIncidente_Model.objects.get(id=incidente_id)  # Obtener el incidente
+
+        nuevo_estado = request.POST.get("nuevo_estado")
+        descripcion = request.POST.get("descripcion")
+        evidencia = request.FILES.get("evidencia")  # Obtener archivo de evidencia (si se carga)
+
+        # Verifica si se cambió el estado y si hay una nueva descripción
+        if nuevo_estado:
+            # Crear un nuevo detalle con el cambio de estado y la posible evidencia
+            DetIncidente_Model.objects.create(
+                cabincidente=incidente,
+                estado_incidente=nuevo_estado,
+                descripcion=descripcion,  # Descripción opcional sobre el cambio
+                evidencia=evidencia,  # Si se adjuntó una evidencia, se guarda
+                
+            )
+        
+
+            # Actualizar el estado del incidente
+            incidente.estado_incidente = nuevo_estado
+            incidente.save()
+            
+            messages.success(request, "Estado del incidente actualizado correctamente.")
+        else:
+            messages.error(request, "Debe seleccionar un nuevo estado para el incidente.")
+
+        return redirect('reportes:listar_reportes')  # Asegúrate de que la URL esté correcta
+    
     def get_queryset(self):
         usuario_id = self.request.user.id  # Obtenemos el ID del usuario logueado
-        return CabIncidente_Model.objects.filter(agente__usuario__id=usuario_id).prefetch_related('detalles')
-    
+        try:
+            return CabIncidente_Model.objects.filter(
+                agente__usuario__id=usuario_id
+            ).select_related('agente').prefetch_related('detalles').order_by('-fecha', '-id')
+        except Exception as e:
+            messages.error(self.request, f"Error al cargar reportes: {e}")
+            return CabIncidente_Model.objects.none()
+        
+        
+        
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['dirurl'] = reverse('reportes:crear_reporte')
         context['title_table'] = 'Listado de mis Reportes'
-        
+         # Pasar el estado del incidente al template
+        context['nuevo_estado'] = self.request.POST.get('nuevo_estado', None)
         return context
 
 
 
 
-class Reportes_Create(LoginRequiredMixin, RoleRequiredMixin, CreateView):
+
+class IncidenteCreateView(LoginRequiredMixin, RoleRequiredMixin,CreateView):
     template_name = 'crear_reportes.html'
     required_role = 'Agente'
     success_url = reverse_lazy('reportes:listar_reportes')
@@ -50,7 +100,9 @@ class Reportes_Create(LoginRequiredMixin, RoleRequiredMixin, CreateView):
 
         return context
 
+
     def form_valid(self, form):
+        """Maneja la lógica de guardado para ambos formularios."""
         current_user = self.request.user.id
 
         # Intentar obtener o crear el TurnUsuario_Model del usuario actual
@@ -60,31 +112,36 @@ class Reportes_Create(LoginRequiredMixin, RoleRequiredMixin, CreateView):
             # Si no se encuentra un TurnUsuario_Model válido, retorna como inválido
             return self.form_invalid(form)
 
-        # Recuperar el formulario de detalle desde el contexto
+
         context = self.get_context_data()
         detalle_form = context['detalle_form']
 
-        # Validar el formulario de detalle
         if detalle_form.is_valid():
-            # Guardar la cabecera del incidente
-            self.object = form.save(commit=False)
-            self.object.agente = turn_usuario
-            self.object.save()
+            try:
+                with transaction.atomic():
+                    # Guardar cabecera del incidente
+                    cab_incidente = form.save(commit=False)
+                    cab_incidente.agente = turn_usuario  # Suponiendo que el agente es el usuario actual
+                    cab_incidente.save()
 
-            # Guardar el detalle del incidente asociado a la cabecera
-            detalle_instance = detalle_form.save(commit=False)
-            detalle_instance.cabincidente = self.object
-            detalle_instance.save()
+                    # Guardar detalle del incidente
+                    detalle = detalle_form.save(commit=False)
+                    detalle.cabincidente = cab_incidente
+                    detalle.save()
 
-            return super().form_valid(form)
+                    messages.success(self.request, "Reporte creado exitosamente.")
+                    return super().form_valid(form)
+            except Exception as e:
+                messages.error(self.request, f"Error al guardar el reporte: {e}")
+                return self.form_invalid(form)
         else:
-            # Si el formulario de detalle es inválido, re-renderizar el template con errores
+            messages.error(self.request, "Corrige los errores en el formulario de detalle.")
             return self.form_invalid(form)
 
     def form_invalid(self, form):
-        # Añadir los errores de ambos formularios al contexto
-        context = self.get_context_data(form=form)
-        return self.render_to_response(context)
+        """Muestra errores cuando alguno de los formularios no es válido."""
+        messages.error(self.request, "Corrige los errores en el formulario.")
+        return super().form_invalid(form)
 
 
 
@@ -92,30 +149,6 @@ class Reportes_Create(LoginRequiredMixin, RoleRequiredMixin, CreateView):
 
 
 
-
-
-
-
-
-
-
-
-# class AdicionarDetalle(LoginRequiredMixin, CreateView):
-#     model = DetIncidente_Model
-#     form_class = DetalleIncidente_Form
-#     template_name = 'adicionar_detalle.html'
-#     success_url = reverse_lazy('reportes:listar_reportes')
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         # Pasar el ID de la cabecera al contexto
-#         context['cabecera_id'] = self.kwargs['cabecera_id']
-#         return context
-
-#     def form_valid(self, form):
-#         cabecera_id = self.kwargs['cabecera_id']
-#         form.instance.cabecera_id = cabecera_id
-#         return super().form_valid(form)
 
     
 

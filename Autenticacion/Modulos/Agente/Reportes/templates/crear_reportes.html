@@ -50,11 +50,13 @@
             margin-top: 20px;
         }
 
-        /* Mejorar el diseño de los mensajes */
-        .alert {
-            font-size: 0.9rem;
-            padding: 10px 20px;
-            margin-bottom: 20px;
+        .error-message {
+            background-color: #ffcccc;
+            color: #d8000c;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 1.2em;
+            border-radius: 5px;
         }
 
         /* Estilo para el botón cancelar */
@@ -104,14 +106,14 @@
 
     <!-- Manejo de Mensajes -->
     {% if messages %}
-    <div class="alert alert-warning">
-        {% for message in messages %}
-        {{ message }}
-        {% endfor %}
-    </div>
+        <div class="error-message">
+            {% for message in messages %}
+                {{ message }} 
+            {% endfor %}
+        </div>
     {% endif %}
     {% if form.errors or detalle_form.errors %}
-    <div class="alert alert-danger">
+    <div class="error-message">
         {% for field in form %}
         {% for error in field.errors %}
         <strong>{{ field.label }}:</strong> {{ error }} <br>
@@ -197,6 +199,16 @@
         });
     </script>
 </div>
+
+
+{% block JS %}
+		<script src="{% static 'js/input_effect.js' %}"></script>
+		<script src="https://kit.fontawesome.com/6f24398be6.js" crossorigin="anonymous"></script>
+		<script src="{% static 'js/ocultar_mensajes.js'%}"></script>
+		<script src="{% static 'js/hide_show_passw.js' %}"></script>
+		<script src="{% static 'js/parametros_clave.js' %}"></script>
+	{% endblock %}
+	
 {% endblock %}
 </body>
 

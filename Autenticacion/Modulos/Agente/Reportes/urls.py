@@ -8,7 +8,7 @@ app_name = 'reportes'
 urlpatterns =[
     path('listar_reportes/', Reportes_View.as_view(), name = 'listar_reportes'),
 
-    path('crear_reporte/', Reportes_Create.as_view(), name = 'crear_reporte'),
+    path('crear_reporte/', IncidenteCreateView.as_view(), name = 'crear_reporte'),
 
     # path('adicionar_detalle/<int:pk>/', AdicionarDetalle.as_view(), name = 'adicionar_detalle'),
 ]
