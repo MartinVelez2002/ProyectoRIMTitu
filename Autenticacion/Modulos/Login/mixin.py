@@ -8,16 +8,16 @@ from Modulos.Login.models import Rol, Usuario
 from django.contrib import messages
 from django.shortcuts import redirect, get_object_or_404
 from django.views import View
+from Modulos.Coordinador.Novedad.models import *
 
 
-   
 class CambiarEstadoMixin(View):
     model = None  
     redirect_url = None  
 
     def post(self, request, pk):
         if not self.model or not self.redirect_url:
-            return redirect('login:index')  # Redirecciona si faltan parámetros obligatorios
+            return redirect('login:index')  # Redirige si faltan parámetros obligatorios
 
         # Verificar si el usuario tiene rol asignado
         if request.user.rol is None:
@@ -37,7 +37,6 @@ class CambiarEstadoMixin(View):
         else:
             is_coordinador = False
             is_current_user = False
-
 
         # Verificar si el rol del objeto es "Coordinador" y si el usuario actual tiene el rol de Coordinador
         if is_coordinador:
@@ -62,8 +61,36 @@ class CambiarEstadoMixin(View):
                 save_audit(request, objeto, action=action)
                 return redirect('login:confirmar_accion_usuario', pk=objeto.pk)  # Redirige a la vista de confirmación del usuario
 
+        # Manejo específico para TipoNovedad_Model
+        if isinstance(objeto, TipoNovedad_Model):
+            # Cambiar el estado del tipo de novedad
+            objeto.estado = not objeto.estado
+            objeto.save()
 
-        # Cambiar el estado del objeto
+            # Si se inactiva el tipo, inactivar sus novedades relacionadas
+            if not objeto.estado:
+                relacionadas = Novedad_Model.objects.filter(tiponovedad=objeto, estado=True)
+                relacionadas.update(estado=False)
+
+            messages.success(request, f"El estado del Tipo de Novedad ha sido cambiado a {'Inactivo' if not objeto.estado else 'Activo'}.")
+            return redirect(self.redirect_url)
+
+        # Manejo específico para Novedad_Model
+        if isinstance(objeto, Novedad_Model):
+            if not objeto.estado:  # Intentando activar la novedad
+                # Verificar si el TipoNovedad asociado está activo
+                if not objeto.tiponovedad.estado:
+                    messages.error(request, "Primero debe activar el Tipo de Novedad asociado para activar esta Novedad.")
+                    return redirect(self.redirect_url)
+
+            # Cambiar el estado de la novedad
+            objeto.estado = not objeto.estado
+            objeto.save()
+
+            messages.success(request, f"El estado de la Novedad ha sido cambiado a {'Inactivo' if not objeto.estado else 'Activo'}.")
+            return redirect(self.redirect_url)
+
+        # Cambiar el estado del objeto para casos generales
         objeto.estado = not objeto.estado
         objeto.save()
 
@@ -71,10 +98,9 @@ class CambiarEstadoMixin(View):
         action = AuditoriaUser.AccionChoices.INACTIVAR if not objeto.estado else AuditoriaUser.AccionChoices.ACTIVAR
         save_audit(request, objeto, action=action)
                         
-            
         messages.success(request, f"El estado del registro ha sido cambiado correctamente a {'Inactivo' if not objeto.estado else 'Activo'}.")
-        
         return redirect(self.redirect_url)
+
 
 
 
