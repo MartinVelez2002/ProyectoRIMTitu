@@ -102,12 +102,12 @@
 .main-content {
     position: relative;
     top:70px;
-    margin-left: 300px; /* Margen para evitar superposición con el sidebar */
+    margin-left: 250px; /* Margen para evitar superposición con el sidebar */
     flex: 1;
     padding: 20px 10px;
     background-color: var(--bg-color);
     transition: margin-left var(--transition-speed) ease;
-    box-shadow: -2px 0px 5px 0px #ABA9AD;
+    
 }
 
 @media (max-width: 875px) {

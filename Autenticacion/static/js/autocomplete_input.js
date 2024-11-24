@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Obtener los elementos de los campos
+    
     const cedulaInput = document.getElementById('id_cedula');
     const password1Input = document.getElementById('passw1');
     const password2Input = document.getElementById('passw2');

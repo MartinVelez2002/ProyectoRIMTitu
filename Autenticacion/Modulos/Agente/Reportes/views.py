@@ -25,23 +25,30 @@ class Reportes_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
             messages.error(request, "El incidente especificado no existe.")
             return redirect('reportes:listar_reportes')  # Redirigir si no se encuentra el incidente
         
-        
+       
         
         incidente = CabIncidente_Model.objects.get(id=incidente_id)  # Obtener el incidente
-
         nuevo_estado = request.POST.get("nuevo_estado")
         descripcion = request.POST.get("descripcion")
-        evidencia = request.FILES.get("evidencia")  # Obtener archivo de evidencia (si se carga)
+        evidencia = request.FILES.get("evidencia")
+        comentarios = request.POST.get("comentarios")# Obtener archivo de evidencia (si se carga)
 
+
+        # Validar que el estado ya no exista en los detalles del incidente
+        if incidente.detalles.filter(estado_incidente=nuevo_estado).exists():
+            messages.error(request, "No es posible cambiar el estado del incidente a un estado pasado.")
+            return redirect('reportes:listar_reportes')
+        
+        
         # Verifica si se cambió el estado y si hay una nueva descripción
         if nuevo_estado:
             # Crear un nuevo detalle con el cambio de estado y la posible evidencia
             DetIncidente_Model.objects.create(
                 cabincidente=incidente,
                 estado_incidente=nuevo_estado,
-                descripcion=descripcion,  # Descripción opcional sobre el cambio
+                descripcion=descripcion,  # Descripción sobre el estado del incidente
                 evidencia=evidencia,  # Si se adjuntó una evidencia, se guarda
-                
+                comentarios_adicionales= comentarios 
             )
         
 

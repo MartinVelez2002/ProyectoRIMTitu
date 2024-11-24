@@ -49,7 +49,7 @@ class CambiarEstadoMixin(View):
 
             if isinstance(objeto, Rol):
                 # No se puede eliminar el rol Coordinador
-                messages.error(request, "No es posible eliminar el rol Coordinador.")
+                messages.error(request, "No es posible inactivar el rol Coordinador.")
                 action = AuditoriaUser.AccionChoices.BLOQUEO 
                 save_audit(request, objeto, action=action)
                 return redirect(self.redirect_url)  # Redirige a la vista de confirmación
