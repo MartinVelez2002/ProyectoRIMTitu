@@ -20,7 +20,7 @@ Módulo Reportes
 <th> Novedad </th>
 <th> Prioridad </th>
 <th> Estado del incidente </th>
-<th> Actualizar estado de incidente </th>
+<th> Actualizar estado del incidente </th>
 <th> Ver Detalle </th>
 
 {% endblock %}
@@ -39,47 +39,86 @@ Módulo Reportes
         </span>
     </td>
     <td>
-         <!-- Aquí solo se muestra el estado actual del incidente -->
-        
-                <!-- Mostrar el estado del último detalle asociado a la cabecera -->
-            {% if cab.detalles.all %}
-            {% with ultimo_detalle=cab.detalles.last %}
-                <span class="btn {% if ultimo_detalle.estado_incidente == 'N' %}btn-info{% elif ultimo_detalle.estado_incidente == 'E' %}btn-warning{% elif ultimo_detalle.estado_incidente == 'A' %}btn-success{% else %}btn-secondary{% endif %}">
-                    {{ ultimo_detalle.get_estado_incidente_display }}
-                </span>
-            {% endwith %}
-        {% else %}
-            <span class="btn btn-secondary">Sin detalles</span>
-        {% endif %}
+        <!--Se muestra el estado actual del incidente -->
+    
+        <!-- Mostrar el estado del último detalle asociado a la cabecera -->
+        {% if cab.detalles.all %}
+        {% with ultimo_detalle=cab.detalles.last %}
+            <span class="btn {% if ultimo_detalle.estado_incidente == 'N' %}btn-info{% elif ultimo_detalle.estado_incidente == 'E' %}btn-warning{% elif ultimo_detalle.estado_incidente == 'A' %}btn-success{% else %}btn-secondary{% endif %}">
+                {{ ultimo_detalle.get_estado_incidente_display }}
+            </span>
+        {% endwith %}
+    {% else %}
+        <span class="btn btn-secondary">Sin detalles</span>
+    {% endif %}
         
     </td>
     <td>
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <input type="hidden" name="incidente_id" value="{{ cab.id }}">
-            
-            <div class="form-group">
-                <label for="nuevo_estado">Nuevo Estado</label>
-                <select class="form-control" name="nuevo_estado" id="nuevo_estado" required>
-                    <option value="N" {% if nuevo_estado == 'N' or cab.estado_incidente == 'N' %}selected{% endif %}>Notificado</option>
-                    <option value="E" {% if nuevo_estado == 'E' or cab.estado_incidente == 'E' %}selected{% endif %}>En Proceso</option>
-                    <option value="A" {% if nuevo_estado == 'A' or cab.estado_incidente == 'A' %}selected{% endif %}>Atendido</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="descripcion">Descripción</label>
-                <textarea class="form-control" name="descripcion" id="descripcion" required></textarea>
-            </div>
-        
-            <div class="form-group">
-                <label for="evidencia">Evidencia (opcional)</label>
-                <input type="file" class="form-control" name="evidencia" id="evidencia">
-            </div>
-        
-            <button type="submit" class="btn btn-primary">Actualizar Estado</button>
-        </form>
+        <!-- Botón para abrir el modal -->
+        <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#modalFormulario-{{ cab.id }}">
+            Actualizar
+        </button>
     </td>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="modalFormulario-{{ cab.id }}" tabindex="-1" aria-labelledby="modalFormularioLabel-{{ cab.id }}" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <!-- Encabezado del Modal -->
+                <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title mx-auto" id="modalFormularioLabel-{{ cab.id }}">
+                        Actualizar Estado del Incidente
+                    </h5>
+                    <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                
+                <!-- Contenido del Modal -->
+                <div class="modal-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" name="incidente_id" value="{{ cab.id }}">
+                        
+                        <!-- Campo: Nuevo Estado -->
+                        <div class="mb-3">
+                            <label for="nuevo_estado-{{ cab.id }}" class="form-label fw-bold">Nuevo Estado</label>
+                            <select class="form-select" name="nuevo_estado" id="nuevo_estado-{{ cab.id }}" required>
+                                <option value="" disabled selected>Selecciona un estado</option>
+                                <option value="E" {% if nuevo_estado == 'E' or cab.estado_incidente == 'E' %}selected{% endif %}>En Proceso</option>
+                                <option value="A" {% if nuevo_estado == 'A' or cab.estado_incidente == 'A' %}selected{% endif %}>Atendido</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Campo: Descripción -->
+                        <div class="mb-3">
+                            <label for="descripcion-{{ cab.id }}" class="form-label fw-bold">Descripción</label>
+                            <textarea class="form-control" name="descripcion" id="descripcion-{{ cab.id }}" rows="3" required placeholder="Agrega una descripción del cambio..."></textarea>
+                        </div>
+                        
+                        <!-- Campo: Evidencia -->
+                        <div class="mb-3">
+                            <label for="evidencia-{{ cab.id }}" class="form-label fw-bold">Evidencia (opcional)</label>
+                            <input type="file" class="form-control" name="evidencia" id="evidencia-{{ cab.id }}" accept="image/*;capture=camera">
+                            <small class="form-text text-muted">Puedes subir imágenes o videos que respalden el cambio de estado.</small>
+                        </div>
+                        
+                        <!-- Campo: Comentarios -->
+                        <div class="mb-3">
+                            <label for="comentarios-{{ cab.id }}" class="form-label fw-bold">Comentarios adicionales</label>
+                            <textarea class="form-control" name="comentarios" id="comentarios-{{ cab.id }}" rows="2" placeholder="Escribe comentarios adicionales..."></textarea>
+                        </div>
+                        
+                        <!-- Botones -->
+                        <div class="d-flex justify-content-center" style="justify-content: space-around !important;">
+                            <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
     <td>
         <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalLabel-{{ cab.id }}">
             <i class="fa-sharp fa-solid fa-eye"></i>
@@ -93,13 +132,14 @@ Módulo Reportes
         <div class="modal-content">
             <div class="modal-header bg-dark">
                 <h1 class="modal-title fs-5 text-white mx-auto" id="modalLabel-{{ cab.id }}">Detalles de la Incidencia</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 {% for det in cab.detalles.all %}
                 <div class="d-flex flex-column">
                     {% if det.evidencia %}
                     {% if det.evidencia.url|is_image %}
-                        <img width="400px" height="500px" src="{{ det.evidencia.url }}" alt="Evidencia" class="mx-auto">
+                        <img width="400px" height="400px" src="{{ det.evidencia.url }}" alt="Evidencia" class="mx-auto">
                     {% elif det.evidencia.url|is_video %}
                         <video width="400px" height="500px" src=" {{det.evidencia.url }}" controls class="img-fluid mx-auto"></video>
                     {% else %}
