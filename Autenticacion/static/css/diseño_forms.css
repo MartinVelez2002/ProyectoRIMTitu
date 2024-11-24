@@ -8,12 +8,6 @@ header {
 	font-family: 'Arima',sans-serif;
 }
 
-
-
-
-
-
-
 .regist-content {
 	display: flex;
 	flex-direction: column;
@@ -152,9 +146,29 @@ header {
     font-family: 'Arima', sans-serif;
 }
 
+/* .btn-cancel, .btn-save{
+	color: white;
+	padding: 0.4rem;
+} */
 
+.btn.btn-save{
+	background: rgb(39, 41, 150);
+}
 
-.modal-content .div-btn .btn{
+.btn.btn-cancel{
+	background-color: rgb(238, 56, 93);
+}
+
+.btn.btn-save:hover{
+	color: white;
+	background: rgb(74, 77, 236);
+}
+.btn.btn-cancel:hover{
+	color: white;
+	background-color: rgb(226, 88, 116);
+}
+
+.modal-content .btn{
 	display: flex;
 	justify-content: space-around;
 	width: 30%;
@@ -162,20 +176,13 @@ header {
 	border-radius: 20px;
 	outline: none;
 	border: none;
-	background-image: linear-gradient(to right, #1e2835, #425b70, rgb(34, 38, 46));
-	background-size: 200%;
 	font-size: 1rem;
 	color: #fff;
 	font-family: 'Arima', sans-serif;
 	margin: 1rem 0;
 	cursor: pointer;
-	transition: .5s;
 }
 
-.regist-content .btn:hover{
-	background-position: right;
-	color: #fff
-}
 
 .div-btn{
 	display: flex;

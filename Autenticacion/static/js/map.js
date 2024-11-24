@@ -1,11 +1,10 @@
 let map;
 let drawingManager;
-let selectedShape; // Forma seleccionada
-let shapeLabel; // Etiqueta visible asociada a la figura
-let geocoder; // Geocodificador
+let selectedShape;
+let shapeLabel;
+let geocoder;
 
 function initMap() {
-    // Inicializa el mapa
     map = new google.maps.Map(document.getElementById("map"), {
         center: { lat: -2.13396, lng: -79.59337 },
         zoom: 14,
@@ -13,44 +12,39 @@ function initMap() {
 
     geocoder = new google.maps.Geocoder();
 
-    // Configura el Drawing Manager
     drawingManager = new google.maps.drawing.DrawingManager({
-        drawingMode: google.maps.drawing.OverlayType.POLYGON, // Polígono por defecto
+        drawingMode: google.maps.drawing.OverlayType.POLYGON,
         drawingControl: true,
         drawingControlOptions: {
             position: google.maps.ControlPosition.TOP_CENTER,
-            drawingModes: ["polygon", "rectangle"], // Permite polígonos y rectángulos
+            drawingModes: ["polygon"],
         },
         polygonOptions: {
             fillColor: "#FF0000",
             fillOpacity: 0.5,
             strokeWeight: 2,
             clickable: true,
-            editable: true, // Permite editar la forma
+            editable: true,
         },
     });
 
-    // Muestra las herramientas de dibujo
     drawingManager.setMap(map);
 
-    // Escucha cuando se termina de dibujar
     google.maps.event.addListener(drawingManager, "overlaycomplete", (event) => {
         if (selectedShape) {
-            selectedShape.setMap(null); // Borra la forma anterior si existe
-            if (shapeLabel) shapeLabel.setMap(null); // Elimina la etiqueta anterior
+            selectedShape.setMap(null);
+            if (shapeLabel) shapeLabel.setMap(null);
         }
 
-        selectedShape = event.overlay; // Guarda la nueva forma
-        selectedShape.type = event.type; // Guarda el tipo
+        selectedShape = event.overlay;
+        selectedShape.type = event.type;
 
-        // Coloca la etiqueta inicial (vacía)
         shapeLabel = new google.maps.InfoWindow({
-            content: "Sin título", // Valor por defecto hasta que el usuario escriba
-            position: getShapeCenter(selectedShape), // Centro del área dibujada
+            content: "Sin título",
+            position: getShapeCenter(selectedShape),
         });
         shapeLabel.open(map);
 
-        // Detecta cuando se edita la forma y actualiza la posición de la etiqueta
         google.maps.event.addListener(selectedShape.getPath(), "set_at", () => {
             shapeLabel.setPosition(getShapeCenter(selectedShape));
         });
@@ -58,23 +52,35 @@ function initMap() {
             shapeLabel.setPosition(getShapeCenter(selectedShape));
         });
 
-        // Geocodifica la ubicación del centro del área dibujada
         const center = getShapeCenter(selectedShape);
         if (center) {
             geocodeLatLng(center);
         }
     });
 
-    // Escucha cambios en el input de "Lugar"
     document.querySelector("[name='lugar']").addEventListener("input", (event) => {
-        const inputValue = event.target.value; // Obtiene el valor ingresado
+        const inputValue = event.target.value;
         if (shapeLabel) {
-            shapeLabel.setContent(inputValue || "Sin título"); // Actualiza la etiqueta
+            shapeLabel.setContent(inputValue || "Sin título");
+        }
+    });
+
+    // Detecta tecla Esc para cancelar dibujo
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+            drawingManager.setDrawingMode(null);
+            if (selectedShape) {
+                selectedShape.setMap(null);
+                selectedShape = null;
+            }
+            if (shapeLabel) {
+                shapeLabel.setMap(null);
+                shapeLabel = null;
+            }
         }
     });
 }
 
-// Calcula el centro de una forma (polígono o rectángulo)
 function getShapeCenter(shape) {
     if (shape.type === "polygon") {
         const bounds = new google.maps.LatLngBounds();
@@ -86,7 +92,6 @@ function getShapeCenter(shape) {
     return null;
 }
 
-// Geocodifica la ubicación y actualiza el campo de "Sector"
 function geocodeLatLng(latLng) {
     geocoder.geocode({ location: latLng }, (results, status) => {
         if (status === "OK") {
@@ -94,7 +99,6 @@ function geocodeLatLng(latLng) {
                 const addressComponents = results[0].address_components;
                 let sector = "";
 
-                // Extrae el valor del sector
                 addressComponents.forEach((component) => {
                     const types = component.types;
 
@@ -103,7 +107,6 @@ function geocodeLatLng(latLng) {
                     }
                 });
 
-                // Actualiza el input de "Sector" con ID sector_input
                 const sectorInput = document.getElementById("sector_input");
                 if (sectorInput) {
                     sectorInput.value = sector || "No identificado";
@@ -122,7 +125,6 @@ function geocodeLatLng(latLng) {
         }
     });
 }
-
 
 
 
