@@ -39,7 +39,7 @@ Modulo Tipo Novedad
             <td> Inactivo </td>
         {% endif %}
         <td>
-            <a class="btn btn-dark" onclick="{% url 'novedad:editar_tipNov' tpn.id %}">
+            <a class="btn btn-dark" href="{% url 'novedad:editar_tipNov' tpn.id %}">
                 Editar
             </a>
             

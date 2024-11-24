@@ -10,13 +10,6 @@
     --transition-speed: 0.5s;
 }
 
-.modal {
-    --bs-modal-width: 600px !important; /* Cambia el ancho del modal */
-    --bs-modal-bg: #f8f9fa !important; /* Cambia el fondo del modal */
-    --bs-modal-border-color: #dee2e6 !important; /* Cambia el color del borde */
-    --bs-modal-border-width: 2px !important; /* Cambia el grosor del borde */
-}
-
 
 .side-bar {
     position: fixed;
@@ -114,6 +107,7 @@
     padding: 20px 10px;
     background-color: var(--bg-color);
     transition: margin-left var(--transition-speed) ease;
+    box-shadow: -2px 0px 5px 0px #ABA9AD;
 }
 
 @media (max-width: 875px) {

@@ -10,5 +10,7 @@ urlpatterns=[
 
     path('editar_ubicacion/<int:pk>', Ubicacion_Update.as_view(), name = 'editar_ubicacion'),
 
-    path('inactivar_ubicacion/<int:pk>/', InactivarActivarUbicacionView.as_view(), name='inactivar_activar_ubicacion')
+    path('inactivar_ubicacion/<int:pk>/', InactivarActivarUbicacionView.as_view(), name='inactivar_activar_ubicacion'),
+
+
 ]

@@ -42,7 +42,7 @@ Módulo Ubicación
     <td> Inactivo </td>
     {% endif %}
     <td>
-        <a class="btn btn-dark" onclick="{% url 'ubicacion:editar_ubicacion' i.id %}">
+        <a class="btn btn-dark" href="{% url 'ubicacion:editar_ubicacion' i.id %}">
             Editar
         </a>
 

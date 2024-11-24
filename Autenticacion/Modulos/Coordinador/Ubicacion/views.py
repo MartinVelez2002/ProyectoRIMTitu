@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import CreateView, ListView, UpdateView
+from django.views.generic import CreateView, ListView, UpdateView, TemplateView
 from django.urls import reverse_lazy, reverse
 from django.conf import settings
 from django.db.models import Q
@@ -63,6 +63,10 @@ class Ubicacion_Update(LoginRequiredMixin, RoleRequiredMixin, UpdateView):
         context['google_maps_api_key'] = settings.GOOGLE_API_KEY
 
         return context
+
+
+
+    
     
 class InactivarActivarUbicacionView(CambiarEstadoMixin):
     model = Ubicacion_Model
