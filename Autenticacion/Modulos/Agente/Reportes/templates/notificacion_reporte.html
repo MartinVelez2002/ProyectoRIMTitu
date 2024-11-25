@@ -1,19 +1,96 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Nuevo Reporte de Incidencia</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte de Incidencia</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid #ddd;
+        }
+        .email-header {
+            background-color: #007bff;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+        }
+        .email-body {
+            padding: 20px;
+            color: #333;
+        }
+        .email-footer {
+            text-align: center;
+            background-color: #f8f9fa;
+            padding: 10px;
+            font-size: 12px;
+            color: #666;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            color: #ffffff;
+            background-color: #007bff;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .highlight {
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-    <h2>Nuevo Reporte de Incidencia Creado</h2>
-    <p><strong>Novedad:</strong> {{ novedad }}</p>
-    <p><strong>Prioridad:</strong> {{ prioridad }}</p>
-    <p><strong>Fecha:</strong> {{ fecha }}</p>
-    <p><strong>Agente Responsable:</strong> {{ agente }}</p>
-    
-    <h3>Último Seguimiento</h3>
-    <p><strong>Hora:</strong> {{ hora }}</p>
-    <p><strong>Estado:</strong> {{ estado }}</p>
-    <p><strong>Descripción:</strong> {{ descripcion }}</p>
-    <p><strong>Comentarios Adicionales:</strong> {{ comentarios }}</p>
+    <div class="email-container">
+        <!-- Header -->
+        <div class="email-header">
+            <h1>Nuevo Reporte de Incidencia</h1>
+        </div>
+        <!-- Body -->
+        <div class="email-body">
+            <p>Estimado/a Coordinador/a,</p>
+            <p>Se ha generado un nuevo reporte de incidencia en el sistema. A continuación, se detalla la información del incidente:</p>
+            <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                <tr>
+                    <td style="padding: 8px; border-bottom: 1px solid #ddd;">Novedad:</td>
+                    <td style="padding: 8px; border-bottom: 1px solid #ddd;" class="highlight">{{ novedad }}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border-bottom: 1px solid #ddd;">Prioridad:</td>
+                    <td style="padding: 8px; border-bottom: 1px solid #ddd;" class="highlight">{{ prioridad }}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border-bottom: 1px solid #ddd;">Fecha:</td>
+                    <td style="padding: 8px; border-bottom: 1px solid #ddd;" class="highlight">{{ fecha }}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border-bottom: 1px solid #ddd;">Agente Responsable:</td>
+                    <td style="padding: 8px; border-bottom: 1px solid #ddd;" class="highlight">{{ agente }}</td>
+                </tr>
+            </table>
+            
+            <p style="margin-top: 20px;">Por favor, ingrese al sistema para revisar más detalles y gestionar el incidente.</p>
+            
+        </div>
+        <!-- Footer -->
+        <div class="email-footer">
+            Este es un mensaje generado automáticamente. Por favor, no responda a este correo.
+        </div>
+    </div>
 </body>
 </html>
+

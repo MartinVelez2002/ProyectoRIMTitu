@@ -140,7 +140,7 @@ Módulo Reportes
                     <!-- Evidencia con marco y centrado -->
                     <div class="mb-3 d-flex justify-content-center">
                         {% if det.evidencia %}
-                        <div class="border border-2 p-2 rounded">
+                        <div class="border border-2 p-2 rounded ">
                             {% if det.evidencia.url|is_image %}
                                 <img  width="400px" height="400px" src="{{ det.evidencia.url }}" alt="Evidencia" class="mx-auto d-block">
                             {% elif det.evidencia.url|is_video %}
@@ -163,7 +163,7 @@ Módulo Reportes
                     <div class="p-3 bg-light rounded flex-column">
                         <p><strong>Hora:</strong> {{ det.hora }}</p>
                         <p><strong>Estado:</strong>
-                            <span class="btn {% if det.estado_incidente == 'N' %}btn-info{% elif det.estado_incidente == 'E' %}btn-warning{% elif det.estado_incidente == 'A' %}btn-success{% else %}btn-secondary{% endif %}">
+                            <span class="btn {% if det.estado_incidente == 'N' %}btn-info{% elif det.estado_incidente == 'E' %}btn-warning{% elif det.estado_incidente == 'A' %}btn-success{% else %}btn-secondary{% endif %}" id='btn-m'>
                                 {{ det.get_estado_incidente_display }}
                             </span>
                         </p>
