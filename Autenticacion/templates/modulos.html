@@ -24,25 +24,37 @@
 
 
         <div class="container">
-            <div class="search-btn">
-                {% block search %}
-
-                {% endblock %}
-                {% block btnTitle %}
-
-                {% endblock %}
+           
+                <!-- Botón y título en la primera fila -->
+            <div class="row">
+                <div class="col-12">
+                    {% block btnTitle %}
+                    {% endblock %}
+                </div>
             </div>
 
-            
-            <div>
-                {% block filtros %}
-                
-                {% endblock %}
+            <!-- Barra de búsqueda en la segunda fila -->
+            <div class="row justify-content-center mb-3">
+                <div class="col-lg-10">
+                    {% block search %}
+                    {% endblock %}
+                </div>
             </div>
-            <div>
-                {% block metricas %}
 
-                {% endblock %}
+            <!-- Filtros en la tercera fila -->
+            <div class="row justify-content-center mb-3">
+                <div class="col-lg-10">
+                    {% block filtros %}
+                    {% endblock %}
+                </div>
+            </div>
+
+            <!-- Métricas en la cuarta fila -->
+            <div class="row justify-content-center">
+                <div class=" col-lg-12">
+                    {% block metricas %}
+                    {% endblock %}
+                </div>
             </div>
             <div class="table-container">
                 <h5 class="text-center bg-dark text-white p-3">{{ title_table }}</h5>
