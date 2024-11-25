@@ -8,5 +8,5 @@ class Opciones:
     
     @staticmethod
     def estado_incidente():
-        Estados = (('R','Resuelto'),('E','En Proceso'),('N','Notificado'),('A','Atendido')) 
+        Estados = (('C','Cerrado'),('E','En Proceso'),('N','Notificado'),('A','Atendido')) 
         return Estados

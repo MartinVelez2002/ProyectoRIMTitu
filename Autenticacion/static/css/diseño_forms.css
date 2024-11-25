@@ -148,9 +148,13 @@ header {
 
 /* .btn-cancel, .btn-save{
 	color: white;
-	padding: 0.4rem;
-} */
+	padding: 0.4rem;} */
 
+.div-btn{
+	display: flex;
+	justify-content: space-evenly;
+}
+	
 .btn.btn-save{
 	background: rgb(39, 41, 150);
 }
@@ -168,9 +172,11 @@ header {
 	background-color: rgb(226, 88, 116);
 }
 
+
+
 .modal-content .btn{
-	display: flex;
-	justify-content: space-around;
+	display: inline-flex;
+	justify-content: center;
 	width: 30%;
 	height: 40px;
 	border-radius: 20px;
@@ -183,11 +189,11 @@ header {
 	cursor: pointer;
 }
 
-
-.div-btn{
-	display: flex;
-	justify-content: space-evenly;
+.modal-content #btn-m{
+	display: inline;
+	border-radius: 7px;
 }
+
 
 /* Estilos adicionales para el campo select de rol */
 .input-div select {

@@ -9,40 +9,32 @@ from .models import  CabIncidente_Model, DetIncidente_Model
 
 
 from django.template.loader import render_to_string
-@receiver(post_save, sender=DetIncidente_Model)
+@receiver(post_save, sender=CabIncidente_Model)
 def enviar_notificacion_al_crear_detalle(sender, instance, created, **kwargs):
     if created:
         # Obtener la cabecera del incidente asociada al detalle
-        cabecera = instance.cabincidente
+        #cabecera = instance.cabincidente
         
         # Obtener al coordinador
         coordinador = Usuario.objects.filter(rol__name='Coordinador').first()
 
         if coordinador:
             # Obtener los datos necesarios
-            novedad = cabecera.novedad  # Asegúrate de que `Novedad_Model` tiene un campo `nombre`
-            prioridad = cabecera.get_prioridad_display()
-            fecha = cabecera.fecha
-            agente = cabecera.agente.usuario.nombre # Asume que `TurnUsuario_Model` tiene una relación a `Usuario` a través de `usuario`
+            novedad = instance.novedad  # Asegúrate de que `Novedad_Model` tiene un campo `nombre`
+            prioridad = instance.get_prioridad_display()
+            fecha = instance.fecha
+            agente = instance.agente.usuario.nombre  
 
-            # Datos del último seguimiento
-            hora = instance.hora
-            estado = instance.get_estado_incidente_display()
-            descripcion = instance.descripcion or "Sin descripción proporcionada."
-            comentarios = instance.comentarios_adicionales or "Sin comentarios adicionales."
+    
 
             # Renderizar el mensaje en HTML
-            subject = f'Nuevo Reporte de Incidencia Creado: {cabecera.id}'
+            subject = f'Nuevo Reporte de Incidencia Creado: {instance.id}'
             email_template_name = "notificacion_reporte.html"
             context = {
                 'novedad': novedad,
                 'prioridad': prioridad,
                 'fecha': fecha,
                 'agente': agente,
-                'hora': hora,
-                'estado': estado,
-                'descripcion': descripcion,
-                'comentarios': comentarios,
             }
 
             html_message = render_to_string(email_template_name, context)
