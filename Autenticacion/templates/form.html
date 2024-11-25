@@ -14,9 +14,9 @@
     name="registro">
     {% csrf_token %}
     <div class="modal-dialog modal-lg my-auto" role="document">
-        <div class="modal-content shadow my-auto mx-auto rounded-3"> <!-- Clase aplicada aquí -->
-            <div class="modal-header bg-dark text-white">
-                <h2 class="modal-title text-center w-100">{{ titulo }}</h2>
+        <div class="modal-content shadow my-auto mx-auto"> <!-- Clase aplicada aquí -->
+            <div class="modal-header bg-dark text-white rounded-top-3">
+                <h2 class="modal-title text-center w-100 p-2">{{ titulo }}</h2>
             </div>
             <div class="modal-body m-4">
                 {% if messages %}
@@ -44,8 +44,10 @@
                 </div>
             </div>
             <div class="div-btn">
-                <button type="submit" class="btn align-items-center">Guardar registro</button>
-                <a href="{{ cancelar }}" class="btn nav-link text-center align-items-center">Cancelar</a>
+                <button type="submit" class="btn btn-save align-items-center">Guardar registro</button>
+                <a href="{{ cancelar }}" class="btn btn-cancel nav-link text-center align-items-center">
+                    Cancelar
+                </a>
             </div>
         </div>
     </div>
