@@ -10,6 +10,10 @@
     --transition-speed: 0.5s;
 }
 
+.accordion-button {
+    border: none;
+    box-shadow: none; /* También elimina el efecto de sombra */
+}
 
 .side-bar {
     position: fixed;
@@ -57,8 +61,8 @@
 
 .side-bar .nav-link {
     color: var(--sidebar-text-color);
-    padding: 5px;
-    margin: 10px 20px;
+    padding: 10px;
+    margin: 5px 20px;
     transition: all 0.5s ease;
     white-space: nowrap;
     overflow: hidden;
@@ -66,7 +70,7 @@
 
 .side-bar .nav-link:hover {
     color: var(--sidebar-hover-text);
-    background-color: var(--sidebar-hover-bg);
+    background-color: rgb(212, 209, 209);
     border-radius: 10px;
 }
 

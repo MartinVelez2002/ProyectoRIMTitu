@@ -1,83 +1,155 @@
-<aside class="side-bar bg-dark">
-    <div>
-        <ul class="nav">
+<aside class="side-bar bg-dark text-white">
+    <div class="accordion" id="asideAccordion">
+        <ul class="nav flex-column p-2">
             {% if request.user.is_superuser %}
-            <li>
-                <a class="nav-link active" href="{% url 'login:configuracion_inicial' %}">
-                    <i class="fa-solid fa-circle-info"></i>
-                    <span class="nav-item"> Información </span>
+            <li class="nav-item mb-2">
+                <a class="nav-link text-white active d-flex align-items-center"
+                    href="{% url 'login:configuracion_inicial' %}">
+                    <i class="fa-solid fa-circle-info me-2"></i>
+                    <span>Información</span>
                 </a>
             </li>
             {% endif %}
-            {% if request.user.is_superuser or request.user.rol and request.user.rol.name == 'Coordinador'%}
-            <li>
-                <a class="nav-link active" href="{% url 'login:listar_rol' %}">
-                    <i class="fa-sharp fa-solid fa-address-book"></i>
-                    <span class="nav-item"> Rol </span>
-                </a>
-            </li>
-            <li>
-                <a class="nav-link active" href="{% url 'login:personal' %}">
-                    <i class="fa-solid fa-users"></i>
-                    <span class="nav-item"> Registro de personal </span>
-                </a>
+            {% if request.user.is_superuser or request.user.rol and request.user.rol.name == 'Coordinador' %}
+            <li class="nav-item">
+                <div class="accordion-item bg-dark border-0">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button bg-dark text-white border-0 shadow-none collapsed" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#collapseAdmin" aria-expanded="false"
+                            aria-controls="collapseAdmin">
+                            <i class="fa-sharp fa-solid fa-users me-2"></i> Administración del personal
+                        </button>
+                    </h2>
+                    <div id="collapseAdmin" class="accordion-collapse collapse" data-bs-parent="#asideAccordion">
+                        <ul class="list-unstyled accordion-body p-2">
+                            <li class="mb-2">
+                                <a class="nav-link text-white active d-flex align-items-center"
+                                    href="{% url 'login:listar_rol' %}">
+                                    <i class="fa-sharp fa-solid fa-address-book me-2"></i>
+                                    <span>Rol</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="nav-link text-white active d-flex align-items-center"
+                                    href="{% url 'login:personal' %}">
+                                    <i class="fa-solid fa-users me-2"></i>
+                                    <span>Registro de personal</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </li>
             {% endif %}
             {% if request.user.rol and request.user.rol.name == 'Coordinador' %}
-            <li>
-                <a class="nav-link active" href="{% url 'reportesCoord:listado_reportes_agente' %}">
-                    <i class="fa-solid fa-box-tissue"></i>
-                    <span class="nav-item"> Reportes del Personal </span>
-                </a>
+            <li class="nav-item">
+                <div class="accordion-item bg-dark border-0">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button bg-dark text-white border-0 shadow-none collapsed" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#collapsePlanning" aria-expanded="false"
+                            aria-controls="collapsePlanning">
+                            <i class="fa-sharp fa-solid fa-calendar-alt me-2"></i> Planificación
+                        </button>
+                    </h2>
+                    <div id="collapsePlanning" class="accordion-collapse collapse" data-bs-parent="#asideAccordion">
+                        <ul class="list-unstyled accordion-body p-2">
+                            <li class="mb-2">
+                                <a class="nav-link text-white active d-flex align-items-center"
+                                    href="{% url 'turno:listar_turno' %}">
+                                    <i class="fa-sharp fa-solid fa-code-compare me-2"></i>
+                                    <span>Turno</span>
+                                </a>
+                            </li>
+                            <li class="mb-2">
+                                <a class="nav-link text-white active d-flex align-items-center"
+                                    href="{% url 'calendario:listado_calendario' %}">
+                                    <i class="fa-sharp fa-solid fa-calendar-days me-2"></i>
+                                    <span>Periodo</span>
+                                </a>
+                            </li>
+                            <li class="mb-2">
+                                <a class="nav-link text-white active d-flex align-items-center"
+                                    href="{% url 'ubicacion:inicio' %}">
+                                    <i class="fa-solid fa-map-location-dot me-2"></i>
+                                    <span>Lugares de Guardia</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="nav-link text-white active d-flex align-items-center"
+                                    href="{% url 'calendario:listar_planificacion' %}">
+                                    <i class="fa-solid fa-calendar me-2"></i>
+                                    <span>Planificación</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </li>
-            <li>
-                <a class="nav-link active" href="{% url 'turno:listar_turno' %}">
-                    <i class="fa-sharp fa-solid fa-code-compare"></i>
-                    <span class="nav-item"> Turno </span>
-                </a>
+            <li class="nav-item">
+                <div class="accordion-item bg-dark border-0">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button bg-dark text-white border-0 shadow-none collapsed" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#collapseNews" aria-expanded="false"
+                            aria-controls="collapseNews">
+                            <i class="fa-solid fa-list me-2"></i> Novedades
+                        </button>
+                    </h2>
+                    <div id="collapseNews" class="accordion-collapse collapse" data-bs-parent="#asideAccordion">
+                        <ul class="list-unstyled accordion-body p-2">
+                            <li class="mb-2">
+                                <a class="nav-link text-white active d-flex align-items-center"
+                                    href="{% url 'novedad:inicio_tipoNov' %}">
+                                    <i class="fa-solid fa-list-ul me-2"></i>
+                                    <span>Tipo de Novedades</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="nav-link text-white active d-flex align-items-center"
+                                    href="{% url 'novedad:inicio' %}">
+                                    <i class="fa-solid fa-list-check me-2"></i>
+                                    <span>Novedades</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </li>
-            <li>
-                <a class="nav-link active" href="{% url 'novedad:inicio_tipoNov' %}">
-                    <i class="fa-solid fa-list-ul"></i>
-                    <span class="nav-item"> Tipo de Novedades </span>
-                </a>
-            </li>
-            <li>
-                <a class="nav-link active" href="{% url 'novedad:inicio' %}">
-                    <i class="fa-solid fa-list-check"></i>
-                    <span class="nav-item"> Novedades </span>
-                </a>
-            </li>
-            <li>
-                <a class="nav-link active" href="{% url 'ubicacion:inicio' %}">
-                    <i class="fa-solid fa-map-location-dot"></i>
-                    <span class="nav-item"> Lugares de Guardia </span>
-                </a>
-            </li>
-            <li>
-                <a class="nav-link active" href="{% url 'calendario:listado_calendario' %}">
-                    <i class="fa-sharp fa-solid fa-calendar-days"></i>
-                    <span class="nav-item"> Periodo </span>
-                </a>
-            </li>
-            <li>
-                <a class="nav-link active" href="{% url 'calendario:listar_planificacion' %}">
-                    <i class="fa-solid fa-calendar"></i>
-                    <span class="nav-item"> Planificación </span>
-                </a>
-            </li>
-            <li>
-                <a class="nav-link active" href="{% url 'auditoria:listar_auditoria' %}">
-                    <i class="fa-sharp fa-solid fa-folder"></i>
-                    <span class="nav-item"> Auditoría </span>
-                </a>
+            <li class="nav-item">
+                <div class="accordion-item bg-dark border-0">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button bg-dark text-white border-0 shadow-none collapsed" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#collapseReportes" aria-expanded="false"
+                            aria-controls="collapseReportes">
+                            <i class="fa-solid fa-list me-2"></i> Gestión de Reportes
+                        </button>
+                    </h2>
+                    <div id="collapseReportes" class="accordion-collapse collapse" data-bs-parent="#asideAccordion">
+                        <ul class="list-unstyled accordion-body p-2">
+                            <li class="mb-2">
+                                <a class="nav-link text-white active d-flex align-items-center"
+                                    href="{% url 'reportesCoord:listado_reportes_agente' %}">
+                                    <i class="fa-solid fa-box-tissue me-2"></i>
+                                    <span class="nav-item"> Reportes del Personal </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="nav-link text-white active d-flex align-items-center"
+                                    href="{% url 'auditoria:listar_auditoria' %}">
+                                    <i class="fa-sharp fa-solid fa-folder me-2"></i>
+                                    <span class="nav-item"> Auditoría </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </li>
             {% endif %}
             {% if request.user.rol and request.user.rol.name == 'Agente' %}
-            <li>
-                <a class="nav-link active" href="{% url 'reportes:listar_reportes' %}">
-                    <i class="fa-sharp fa-solid fa-rectangle-list"></i>
-                    <span class="nav-item"> Reportes de Incidentes</span>
+            <li class="nav-item mb-2">
+                <a class="nav-link text-white active d-flex align-items-center"
+                    href="{% url 'reportes:listar_reportes' %}">
+                    <i class="fa-sharp fa-solid fa-rectangle-list me-2"></i>
+                    <span>Reportes de Incidentes</span>
                 </a>
             </li>
             {% endif %}
@@ -86,13 +158,13 @@
     <div class="logout">
         <a class="active" href="{% url 'login:logout' %}">
             <button class="Btn">
-
-                <div class="sign"><svg viewBox="0 0 512 512">
+                <div class="sign">
+                    <svg viewBox="0 0 512 512">
                         <path
                             d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z">
                         </path>
-                    </svg></div>
-
+                    </svg>
+                </div>
                 <span class="text"> Cerrar sesión </span>
             </button>
             <span class="tooltip"> Cerrar sesión </span>
