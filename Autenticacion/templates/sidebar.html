@@ -1,11 +1,15 @@
-<aside class="side-bar bg-dark text-white">
-    <i class="fa-solid align-items-center d-flex fa-angles-left justify-content-center" id="btn"></i>
+
+
+<aside class="side-bar d-flex flex-column bg-dark text-white">
+    <div class="justify-content-end d-flex align-items-center mx-3">
+        <i class="fa-solid d-flex justify-content-center align-items-center fa-angles-left btn-toggle" id="btn"></i>
+    </div>
+    <!-- <i class="fa-solid align-items-center d-flex fa-angles-left justify-content-center" id="btn"></i> -->
     <div class="accordion" id="asideAccordion">
         <ul class="nav flex-column p-2">
             {% if request.user.is_superuser %}
             <li class="nav-item mb-2">
-                <a class="nav-link text-white d-flex align-items-center"
-                    href="{% url 'login:configuracion_inicial' %}">
+                <a class="nav-link text-white d-flex align-items-center" href="{% url 'login:configuracion_inicial' %}">
                     <i class="fa-solid fa-circle-info me-2"></i>
                     <span>Información</span>
                 </a>
@@ -18,23 +22,24 @@
                         <button class="accordion-button bg-dark text-white border-0 collapsed" type="button"
                             data-bs-toggle="collapse" data-bs-target="#collapseAdmin" aria-expanded="false"
                             aria-controls="collapseAdmin">
-                            <i class="fa-sharp fa-solid fa-users me-2"></i> Administración del personal
+                            <i class="fa-sharp fa-solid fa-users me-2"></i>
+                            <span class="nav-text">Administración del personal</span>
                         </button>
                     </h2>
                     <div id="collapseAdmin" class="accordion-collapse collapse" data-bs-parent="#asideAccordion">
                         <ul class="list-unstyled accordion-body p-2">
                             <li class="mb-2">
-                                <a class="nav-link text-white active d-flex align-items-center"
+                                <a class="nav-link text-white d-flex align-items-center"
                                     href="{% url 'login:listar_rol' %}">
                                     <i class="fa-sharp fa-solid fa-address-book me-2"></i>
-                                    <span>Rol</span>
+                                    <span class="nav-text">Rol</span>
                                 </a>
                             </li>
                             <li>
-                                <a class="nav-link text-white active d-flex align-items-center"
+                                <a class="nav-link text-white d-flex align-items-center"
                                     href="{% url 'login:personal' %}">
                                     <i class="fa-solid fa-users me-2"></i>
-                                    <span>Registro de personal</span>
+                                    <span class="nav-text">Registro de personal</span>
                                 </a>
                             </li>
                         </ul>
@@ -49,38 +54,39 @@
                         <button class="accordion-button bg-dark text-white border-0 collapsed" type="button"
                             data-bs-toggle="collapse" data-bs-target="#collapsePlanning" aria-expanded="false"
                             aria-controls="collapsePlanning">
-                            <i class="fa-sharp fa-solid fa-calendar-alt me-2"></i> Planificación
-                            
+                            <i class="fa-sharp fa-solid fa-calendar-alt me-2"> </i>
+                            <span class="nav-text">Planificación</span>
+
                         </button>
                     </h2>
                     <div id="collapsePlanning" class="accordion-collapse collapse" data-bs-parent="#asideAccordion">
                         <ul class="list-unstyled accordion-body p-2">
                             <li class="mb-2">
-                                <a class="nav-link text-white active d-flex align-items-center"
+                                <a class="nav-link text-white d-flex align-items-center"
                                     href="{% url 'turno:listar_turno' %}">
                                     <i class="fa-sharp fa-solid fa-code-compare me-2"></i>
-                                    <span>Turno</span>
+                                    <span class="nav-text">Turno</span>
                                 </a>
                             </li>
                             <li class="mb-2">
-                                <a class="nav-link text-white active d-flex align-items-center"
+                                <a class="nav-link text-white d-flex align-items-center"
                                     href="{% url 'calendario:listado_calendario' %}">
                                     <i class="fa-sharp fa-solid fa-calendar-days me-2"></i>
-                                    <span>Periodo</span>
+                                    <span class="nav-text">Periodo</span>
                                 </a>
                             </li>
                             <li class="mb-2">
-                                <a class="nav-link text-white active d-flex align-items-center"
+                                <a class="nav-link text-white d-flex align-items-center"
                                     href="{% url 'ubicacion:inicio' %}">
                                     <i class="fa-solid fa-map-location-dot me-2"></i>
-                                    <span>Lugares de Guardia</span>
+                                    <span class="nav-text">Lugares de Guardia</span>
                                 </a>
                             </li>
                             <li>
-                                <a class="nav-link text-white active d-flex align-items-center"
+                                <a class="nav-link text-white  d-flex align-items-center"
                                     href="{% url 'calendario:listar_planificacion' %}">
                                     <i class="fa-solid fa-calendar me-2"></i>
-                                    <span>Planificación</span>
+                                    <span class="nav-text">Planificación</span>
                                 </a>
                             </li>
                         </ul>
@@ -93,23 +99,24 @@
                         <button class="accordion-button bg-dark text-white border-0 collapsed" type="button"
                             data-bs-toggle="collapse" data-bs-target="#collapseNews" aria-expanded="false"
                             aria-controls="collapseNews">
-                            <i class="fa-solid fa-list me-2"></i> Novedades
+                            <i class="fa-solid fa-list me-2"></i>
+                            <span class="nav-text">Novedades</span>
                         </button>
                     </h2>
                     <div id="collapseNews" class="accordion-collapse collapse" data-bs-parent="#asideAccordion">
                         <ul class="list-unstyled accordion-body p-2">
                             <li class="mb-2">
-                                <a class="nav-link text-white active d-flex align-items-center"
+                                <a class="nav-link text-white d-flex align-items-center"
                                     href="{% url 'novedad:inicio_tipoNov' %}">
                                     <i class="fa-solid fa-list-ul me-2"></i>
-                                    <span>Tipo de Novedades</span>
+                                    <span class="nav-text">Tipo de Novedades</span>
                                 </a>
                             </li>
                             <li>
-                                <a class="nav-link text-white active d-flex align-items-center"
+                                <a class="nav-link text-white d-flex align-items-center"
                                     href="{% url 'novedad:inicio' %}">
                                     <i class="fa-solid fa-list-check me-2"></i>
-                                    <span>Novedades</span>
+                                    <span class="nav-text">Novedades</span>
                                 </a>
                             </li>
                         </ul>
@@ -122,23 +129,24 @@
                         <button class="accordion-button bg-dark text-white border-0 collapsed" type="button"
                             data-bs-toggle="collapse" data-bs-target="#collapseReportes" aria-expanded="false"
                             aria-controls="collapseReportes">
-                            <i class="fa-sharp fa-solid fa-folder-open me-2"></i> Gestión de Reportes
+                            <i class="fa-sharp fa-solid fa-folder-open me-2"></i> 
+                            <span class="nav-text" >Gestión de Reportes</span>
                         </button>
                     </h2>
                     <div id="collapseReportes" class="accordion-collapse collapse" data-bs-parent="#asideAccordion">
                         <ul class="list-unstyled accordion-body p-2">
                             <li class="mb-2">
-                                <a class="nav-link text-white active d-flex align-items-center"
+                                <a class="nav-link text-white d-flex align-items-center"
                                     href="{% url 'reportesCoord:listado_reportes_agente' %}">
                                     <i class="fa-solid fa-box-tissue me-2"></i>
-                                    <span class="nav-item"> Reportes del Personal </span>
+                                    <span class="nav-text"> Reportes del Personal </span>
                                 </a>
                             </li>
                             <li>
-                                <a class="nav-link text-white active d-flex align-items-center"
+                                <a class="nav-link text-white d-flex align-items-center"
                                     href="{% url 'auditoria:listar_auditoria' %}">
                                     <i class="fa-sharp fa-solid fa-folder me-2"></i>
-                                    <span class="nav-item"> Auditoría </span>
+                                    <span class="nav-text"> Auditoría </span>
                                 </a>
                             </li>
                         </ul>
@@ -148,7 +156,7 @@
             {% endif %}
             {% if request.user.rol and request.user.rol.name == 'Agente' %}
             <li class="nav-item mb-2">
-                <a class="nav-link text-white active d-flex align-items-center"
+                <a class="nav-link text-white d-flex align-items-center"
                     href="{% url 'reportes:listar_reportes' %}">
                     <i class="fa-sharp fa-solid fa-rectangle-list me-2"></i>
                     <span>Reportes de Incidentes</span>
@@ -157,8 +165,8 @@
             {% endif %}
         </ul>
     </div>
-    <div class="logout">
-        <a class="active" href="{% url 'login:logout' %}">
+    <div class="logout d-flex justify-content-center align-items-center">
+        <a  class=" d-flex justify-content-center" href="{% url 'login:logout' %}">
             <button class="Btn">
                 <div class="sign">
                     <svg viewBox="0 0 512 512">
@@ -169,7 +177,6 @@
                 </div>
                 <span class="text"> Cerrar sesión </span>
             </button>
-            <span class="tooltip"> Cerrar sesión </span>
         </a>
     </div>
 </aside>
