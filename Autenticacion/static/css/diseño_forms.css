@@ -152,6 +152,37 @@ header {
     font-family: 'Arima', sans-serif;
 }
 
+.image-container {
+    position: relative;
+    text-align: center;
+    overflow: hidden; /* Asegura que la imagen no se desborde */
+    display: block;
+    margin-bottom: 15px; /* Separación entre imagen y control de zoom */
+}
+
+.zoomable-image {
+    transition: transform 0.25s ease;
+    max-width: 100%; /* Limita el tamaño máximo de la imagen */
+    max-height: 100%; /* Limita el tamaño máximo de la imagen */
+    display: block;
+    margin: 0 auto; /* Centra la imagen dentro del contenedor */
+}
+
+.zoom-container {
+    text-align: center; /* Centra el control */
+    margin-top: 10px; /* Espacio entre imagen y slider */
+}
+
+.zoom-slider {
+    width: 80%; /* Ajusta el tamaño del control */
+    margin: 0 auto; /* Centra el control */
+    display: block;
+}
+
+.zoom-slider:focus {
+    outline: none; /* Elimina el borde del control al estar seleccionado */
+}
+
 
 
 .modal-content .div-btn .btn{

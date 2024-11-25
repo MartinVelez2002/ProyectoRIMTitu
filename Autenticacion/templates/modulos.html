@@ -108,6 +108,28 @@
 {% endblock %}
 
 {% block js %}
-
+<script>
+    // JavaScript para manejar el zoom con el slider
+    document.addEventListener('DOMContentLoaded', function () {
+        // Encontrar todos los sliders de zoom
+        const zoomSliders = document.querySelectorAll('.zoom-slider');
+        
+        zoomSliders.forEach(slider => {
+            slider.addEventListener('input', function () {
+                const imageId = slider.id.split('-')[2];  // Obtener ID de la imagen correspondiente
+                const image = document.getElementById('zoomable-image-' + imageId);
+                const scaleValue = slider.value;  // Obtener el valor del slider
+                
+                // Aplicar zoom solo a la imagen seleccionada
+                image.style.transform = `scale(${scaleValue})`;
+            });
+        });
+    });
+    
+    
+    
+    
+    
+</script>
 <script src="{% static 'js/ocultar_mensajes.js'%}"></script>
 {% endblock %}
