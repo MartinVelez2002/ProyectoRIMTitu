@@ -18,19 +18,22 @@ class ListarReportes_View(LoginRequiredMixin, ListView):
     context_object_name = 'rep'
     
     
-
-    
-    
     def get_queryset(self):
           
         # Obtener los valores de los filtros
         ubicacion_query = self.request.GET.get('query')  # Filtro por ubicación
         prioridad_query = self.request.GET.get('prioridad')  # Filtro por prioridad
-        
+        estado_query = self.request.GET.get('estado')
        
+         # Anotar el estado más reciente de cada incidente
+        subquery_estado = DetIncidente_Model.objects.filter(
+            cabincidente=OuterRef('id')
+        ).order_by('-hora').values('estado_incidente')[:1]  # Obtener el estado más reciente
+
         
-        # Asignar valores numéricos a cada prioridad para el orden personalizado
         queryset = CabIncidente_Model.objects.annotate(
+            estado_actual=Subquery(subquery_estado)
+        ).annotate(
             prioridad_orden=Case(
                 When(prioridad='A', then=Value(1)),  # Alto tiene mayor prioridad
                 When(prioridad='M', then=Value(2)),  # Medio
@@ -38,7 +41,10 @@ class ListarReportes_View(LoginRequiredMixin, ListView):
                 default=Value(4),
                 output_field=IntegerField(),
             )
-        ).prefetch_related('detalles').order_by('prioridad_orden')  # Ordenar por prioridad, fecha y ID
+        ).prefetch_related('detalles').order_by('prioridad_orden', '-fecha', 'id')  # Orden personalizado
+        
+        
+    
         
         # Aplicar los filtros si están definidos
         if ubicacion_query:
@@ -47,9 +53,13 @@ class ListarReportes_View(LoginRequiredMixin, ListView):
         if prioridad_query:
             queryset = queryset.filter(prioridad=prioridad_query)
         
+        if estado_query:
+            # Filtrar por el estado más reciente anotado
+            queryset = queryset.filter(estado_actual=estado_query)
+        
 
 
-        return queryset.distinct()  
+        return queryset 
     
 
         
@@ -82,8 +92,10 @@ class ListarReportes_View(LoginRequiredMixin, ListView):
         context['title_table'] = 'Reportes de los Agentes'
         context['ubicaciones'] = Ubicacion_Model.objects.all()
         context['query'] = self.request.GET.get('query', '')  # Retener el valor seleccionado
+        context['action_save'] = self.request.path
         context['prioridad'] = self.request.GET.get('prioridad', '')
         context['estado'] = self.request.GET.get('estado', '')
+     
        
 
         

@@ -8,11 +8,12 @@ Módulo Reportes
 {% endblock %}
 
 
-{% block filtros %}
-<form action="{{ dir_search }}" method="GET" class="row g-3 align-items-center">
-    <div class="col-md-4">
+{% block search %}
+<form action="{{ action_save }}" method="GET" class="row g-3 align-items-center">
+    <div class="col-md-6">
+        <label for="estado" class="form-label fw-bold">Filtro por estado</label>
         <select name="query" class="form-select">
-            <option value="">-- Seleccionar por Lugar --</option>
+            <option value="" disabled selected>-- Seleccione --</option>
             {% for ubicacion in ubicaciones %}
             <option value="{{ ubicacion.id }}" {% if query == ubicacion.id|stringformat:"s" %}selected{% endif %}>
                 {{ ubicacion.lugar }}
@@ -24,18 +25,29 @@ Módulo Reportes
         <button type="submit" class="btn btn-primary" id="idSearchSp">Buscar</button>
     </div>
 </form>
+{% endblock %}
 
+{% block filtros %}
 <form method="get" class="row g-3 align-items-center mt-3">
     <div class="col-md-3">
-        <label for="prioridad" class="form-label fw-bold">Prioridad</label>
+        <label for="prioridad" class="form-label fw-bold">Filtro por prioridad</label>
         <select id="prioridad" name="prioridad" class="form-select">
-            <option value="" disabled selected>Seleccione...</option>
-            <option value="A" {% if request.GET.prioridad == "A" %}selected{% endif %}>Alto</option>
-            <option value="M" {% if request.GET.prioridad == "M" %}selected{% endif %}>Medio</option>
-            <option value="B" {% if request.GET.prioridad == "B" %}selected{% endif %}>Bajo</option>
+            <option value="" disabled selected>-- Seleccione --</option>
+            <option value="A" {% if prioridad == "A" %}selected{% endif %}>Alto</option>
+            <option value="M" {% if prioridad == "M" %}selected{% endif %}>Medio</option>
+            <option value="B" {% if prioridad == "B" %}selected{% endif %}>Bajo</option>
         </select>
     </div>
-
+    <div class="col-md-3">
+        <label for="estado" class="form-label fw-bold">Filtro por estado</label>
+        <select id="estado" name="estado" class="form-select">
+            <option value="" disabled selected>Seleccione...</option>
+            <option value="N" {% if estado == "N" %}selected{% endif %}>Notificado</option>
+            <option value="E" {% if estado == "E" %}selected{% endif %}>En Proceso</option>
+            <option value="A" {% if estado == "A" %}selected{% endif %}>Atendido</option>
+            <option value="C" {% if estado == "C" %}selected{% endif %}>Cerrado</option>
+        </select>
+    </div>
     <div class="col-md-2 text-end">
         <button type="submit" class="btn btn-primary">Filtrar</button>
     </div>
@@ -43,8 +55,8 @@ Módulo Reportes
         <a href="{% url 'reportesCoord:listado_reportes_agente' %}" class="btn btn-secondary">Limpiar</a>
     </div>
 </form>
-{% endblock %}
 
+{% endblock %}
 
 {% block metricas %}
 <div class="container mt-4">
@@ -119,7 +131,7 @@ Módulo Reportes
     
     <td> {{ cab.agente.ubicacion|default:"-" }} </td>
     <td> {{ cab.agente.usuario.nombre|default:"-" }} {{ cab.agente.usuario.apellido|default:"-" }}</td>
-    <td>{{ cab.novedad }}</td>
+    <td> {{ cab.novedad }}</td>
     <td>
         <span class="btn {% if cab.prioridad == 'M' %}btn-warning{% elif cab.prioridad == 'A' %}btn-danger{% else %}btn-success{% endif %}">
             {{ cab.get_prioridad_display }}
