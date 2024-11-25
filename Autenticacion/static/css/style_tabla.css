@@ -32,13 +32,13 @@
 
 /* CSS DE BUSCADOR */
 .search-btn{
-    display: grid;
-    grid-template-columns: repeat(1, 60% 40%);
-    column-gap: 5px;
+    position: relative;
+    left: 10%;
+    
 }
 
 .search-btn input{
-    width: 400px;
+    width: 250px;
     border-width: 1px;
     border-color: gainsboro;
     border-radius: 10px;
