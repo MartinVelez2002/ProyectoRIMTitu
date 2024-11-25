@@ -7,9 +7,10 @@
 Módulo Reportes
 {% endblock %}
 
-{% block search %}
-<form action="{{ dir_search }}" method="GET">
-    <div class="input-group">
+
+{% block filtros %}
+<form action="{{ dir_search }}" method="GET" class="row g-3 align-items-center">
+    <div class="col-md-4">
         <select name="query" class="form-select">
             <option value="">-- Seleccionar por Lugar --</option>
             {% for ubicacion in ubicaciones %}
@@ -18,10 +19,78 @@ Módulo Reportes
             </option>
             {% endfor %}
         </select>
+    </div>
+    <div class="col-md-2">
         <button type="submit" class="btn btn-primary" id="idSearchSp">Buscar</button>
     </div>
 </form>
+
+<form method="get" class="row g-3 align-items-center mt-3">
+    <div class="col-md-3">
+        <label for="prioridad" class="form-label fw-bold">Prioridad</label>
+        <select id="prioridad" name="prioridad" class="form-select">
+            <option value="" disabled selected>Seleccione...</option>
+            <option value="A" {% if request.GET.prioridad == "A" %}selected{% endif %}>Alto</option>
+            <option value="M" {% if request.GET.prioridad == "M" %}selected{% endif %}>Medio</option>
+            <option value="B" {% if request.GET.prioridad == "B" %}selected{% endif %}>Bajo</option>
+        </select>
+    </div>
+
+    <div class="col-md-2 text-end">
+        <button type="submit" class="btn btn-primary">Filtrar</button>
+    </div>
+    <div class="col-md-2 text-end">
+        <a href="{% url 'reportesCoord:listado_reportes_agente' %}" class="btn btn-secondary">Limpiar</a>
+    </div>
+</form>
 {% endblock %}
+
+
+{% block metricas %}
+<div class="container mt-4">
+   
+    <!-- Resumen de Reportes -->
+    <div class="row my-4">
+        <div class="col-md-3">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-header">Reportes Pendientes</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ resumen_estados.pendientes }}</h5>
+                    <p class="card-text">Reportes que necesitan ser atendidos.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-header">Reportes en Proceso</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ resumen_estados.en_proceso }}</h5>
+                    <p class="card-text">Reportes actualmente en seguimiento.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-header">Reportes Atendidos</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ resumen_estados.atendidos }}</h5>
+                    <p class="card-text">Reportes que ya fueron atendidos.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-secondary mb-3">
+                <div class="card-header">Reportes Cerrados</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ resumen_estados.cerrados }}</h5>
+                    <p class="card-text">Reportes que ya fueron cerrados.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
 
 {% block thead %}
 <th> Id </th>

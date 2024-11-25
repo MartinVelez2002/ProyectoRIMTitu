@@ -1,10 +1,13 @@
+from django.utils import timezone
+from django.db.models import Q
 from django.shortcuts import redirect
-from django.db.models import Case, When, Value, IntegerField
+from django.db.models import Case, When, Value, IntegerField, Count, Subquery, OuterRef
 from Modulos.Agente.Reportes.models import CabIncidente_Model, DetIncidente_Model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView
 from django.contrib import messages
 from Modulos.Coordinador.Ubicacion.models import *
+from Modulos.Login.models import Usuario
 
 # Create your views here.
 
@@ -14,10 +17,18 @@ class ListarReportes_View(LoginRequiredMixin, ListView):
     paginate_by = 5
     context_object_name = 'rep'
     
+    
+
+    
+    
     def get_queryset(self):
+          
         # Obtener los valores de los filtros
         ubicacion_query = self.request.GET.get('query')  # Filtro por ubicación
-
+        prioridad_query = self.request.GET.get('prioridad')  # Filtro por prioridad
+        
+       
+        
         # Asignar valores numéricos a cada prioridad para el orden personalizado
         queryset = CabIncidente_Model.objects.annotate(
             prioridad_orden=Case(
@@ -27,21 +38,57 @@ class ListarReportes_View(LoginRequiredMixin, ListView):
                 default=Value(4),
                 output_field=IntegerField(),
             )
-        ).prefetch_related('detalles').order_by('prioridad_orden', '-fecha', '-id')  # Ordenar por prioridad, fecha y ID
+        ).prefetch_related('detalles').order_by('prioridad_orden')  # Ordenar por prioridad, fecha y ID
         
         # Aplicar los filtros si están definidos
         if ubicacion_query:
             queryset = queryset.filter(agente__ubicacion__id=ubicacion_query)
 
-        return queryset
+        if prioridad_query:
+            queryset = queryset.filter(prioridad=prioridad_query)
+        
+
+
+        return queryset.distinct()  
     
 
         
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        
+        
+        # Obtener el último detalle para cada cabecera de incidente
+        ultimo_detalle = DetIncidente_Model.objects.filter(
+            cabincidente=OuterRef('id')
+        ).order_by('-hora')
+
+        # Consultar las cabeceras con el estado del último detalle
+        estados = CabIncidente_Model.objects.annotate(
+            estado_actual=Subquery(ultimo_detalle.values('estado_incidente')[:1])
+        ).values('estado_actual').annotate(total=Count('id'))
+
+        # Convertir los resultados en un diccionario
+        estados_dict = {item['estado_actual']: item['total'] for item in estados}
+
+        # Crear el resumen
+        resumen_estados = {
+            'pendientes': estados_dict.get('N', 0),  # Notificados
+            'en_proceso': estados_dict.get('E', 0), # En proceso
+            'atendidos': estados_dict.get('A', 0),  # Atendidos
+            'cerrados': estados_dict.get('C', 0) #Cerrados
+        }
+
+        context['resumen_estados'] = resumen_estados
         context['title_table'] = 'Reportes de los Agentes'
         context['ubicaciones'] = Ubicacion_Model.objects.all()
         context['query'] = self.request.GET.get('query', '')  # Retener el valor seleccionado
+        context['prioridad'] = self.request.GET.get('prioridad', '')
+        context['estado'] = self.request.GET.get('estado', '')
+       
+
+        
+        
+        
         return context
 
     def post(self, request, *args, **kwargs):

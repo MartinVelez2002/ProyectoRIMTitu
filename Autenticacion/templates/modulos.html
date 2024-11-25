@@ -28,12 +28,16 @@
                 {% block search %}
 
                 {% endblock %}
-                <!-- Botón para abrir el modal -->
-                {% block btnTitle %}
+                    
+            </div>
+                {% block filtros %}
+                
+                {% endblock %}
+            <div>
+                {% block metricas %}
 
                 {% endblock %}
             </div>
-
             <div class="table-container">
                 <h5 class="text-center bg-dark text-white p-3">{{ title_table }}</h5>
                 <div class="table-responsive">
@@ -95,7 +99,8 @@
                 {% endif %}
             </div>
             {% endblock %}
-
+            
+            
         </div>
     </main>
     {% endblock %}
