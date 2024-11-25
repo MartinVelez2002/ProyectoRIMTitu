@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.conf import settings
 from django.template.loader import render_to_string 
 from django.contrib.auth import login, logout
-from django.http import  HttpResponseRedirect, JsonResponse
+from django.http import  HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.hashers import check_password

@@ -55,7 +55,8 @@ Módulo Reportes
     </td>
     <td>
         <!-- Botón para abrir el modal -->
-        <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#modalFormulario-{{ cab.id }}">
+     
+        <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#modalFormulario-{{ cab.id }}"  {% if cab.detalles.last.estado_incidente == 'A' %}disabled{% endif %}>
             Actualizar
         </button>
     </td>
@@ -125,7 +126,6 @@ Módulo Reportes
         </button>
     </td>
 </tr>
-
 <!-- Modal -->
 <div class="modal fade" id="modalLabel-{{ cab.id }}" tabindex="-1" aria-labelledby="modalLabel-{{ cab.id }}" aria-hidden="true">
     <div class="modal-dialog">
@@ -136,21 +136,39 @@ Módulo Reportes
             </div>
             <div class="modal-body">
                 {% for det in cab.detalles.all %}
-                <div class="d-flex flex-column">
-                    {% if det.evidencia %}
-                    {% if det.evidencia.url|is_image %}
-                        <img width="400px" height="400px" src="{{ det.evidencia.url }}" alt="Evidencia" class="mx-auto">
-                    {% elif det.evidencia.url|is_video %}
-                        <video width="400px" height="500px" src=" {{det.evidencia.url }}" controls class="img-fluid mx-auto"></video>
-                    {% else %}
-                        <a href="{{ det.evidencia.url }}" class="btn btn-link">Descargar Evidencia</a>
-                    {% endif %}
-                    {% else %}
-                        <p>No hay evidencia disponible.</p>
-                    {% endif %}
-                    <div class="p-2 d-flex flex-column">
+                <div class="d-flex flex-column mb-3">
+                    <!-- Evidencia con marco y centrado -->
+                    <div class="mb-3 d-flex justify-content-center">
+                        {% if det.evidencia %}
+                        <div class="border border-2 p-2 rounded image-container">
+                            {% if det.evidencia.url|is_image %}
+                                <img id="zoomable-image-{{ det.id }}" class="zoomable-image" width="400px" height="400px" src="{{ det.evidencia.url }}" alt="Evidencia" class="mx-auto d-block">
+                            {% elif det.evidencia.url|is_video %}
+                                <video width="100%" height="auto" controls class="mx-auto d-block">
+                                    <source src="{{ det.evidencia.url }}" type="video/mp4">
+                                </video>
+                            {% else %}
+                                <a href="{{ det.evidencia.url }}" class="btn btn-link" target="_blank">Descargar Evidencia</a>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Control de zoom debajo de la imagen -->
+                        <div class="zoom-container">
+                            <label for="zoom-slider-{{ det.id }}">Zoom</label>
+                            <input type="range" id="zoom-slider-{{ det.id }}" class="zoom-slider" min="1" max="3" step="0.1" value="1">
+                        </div>
+                        
+                        {% else %}
+                            <p>No hay evidencia disponible.</p>
+                        {% endif %}
+                    </div>
+                    
+            
+                    
+                    <!-- Detalles del incidente -->
+                    <div class="p-3 bg-light rounded">
                         <p><strong>Hora:</strong> {{ det.hora }}</p>
-                        <p><strong>Estado:</strong> 
+                        <p><strong>Estado:</strong>
                             <span class="btn {% if det.estado_incidente == 'N' %}btn-info{% elif det.estado_incidente == 'E' %}btn-warning{% elif det.estado_incidente == 'A' %}btn-success{% else %}btn-secondary{% endif %}">
                                 {{ det.get_estado_incidente_display }}
                             </span>
@@ -159,7 +177,7 @@ Módulo Reportes
                         <p><strong>Comentarios Adicionales:</strong> {{ det.comentarios_adicionales|default:"-" }}</p>
                     </div>
                 </div>
-                <hr>
+                <hr class="my-3">
                 {% endfor %}
             </div>
             <div class="modal-footer justify-content-center">
@@ -168,6 +186,8 @@ Módulo Reportes
         </div>
     </div>
 </div>
+
+
 {% endfor %}
 {% else %}
 <tr>
@@ -175,3 +195,4 @@ Módulo Reportes
 </tr>
 {% endif %}
 {% endblock %}
+

@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.utils.timezone import now
 from django.conf import settings
 from datetime import datetime
+from Modulos.Login.models import Usuario
 from Modulos.Login.utils import configuracion_completa, inactivar_superusuario
 from Modulos.Login.models import Usuario
 
