@@ -63,12 +63,7 @@ class SessionTimeoutMiddleware:
     
 
 
-from django.utils.timezone import now
-from django.shortcuts import redirect
-from django.contrib import messages
-from django.conf import settings
-from datetime import datetime
-from django.contrib.auth.models import User
+
 
 class LoginAttemptMiddleware:
     """
@@ -101,7 +96,7 @@ class LoginAttemptMiddleware:
                 # Verificar si el nombre de usuario es válido
                 try:
                     user = Usuario.objects.get(username=username)
-                except User.DoesNotExist:
+                except Usuario.DoesNotExist:
                     # Si el nombre de usuario no existe, lo tratamos como un intento fallido
                     login_attempts += 1
                     request.session[login_attempts_key] = login_attempts
