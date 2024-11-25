@@ -193,7 +193,7 @@ LOGIN_REDIRECT_URL = '/'
 SESSION_TIMEOUT = 3000
 
 # Número máximo de intentos fallidos de inicio de sesión
-MAX_LOGIN_ATTEMPTS = 3
+MAX_LOGIN_ATTEMPTS = 4
 
 # Tiempo de bloqueo después de demasiados intentos fallidos (en segundos)
 LOCKOUT_TIME = 120

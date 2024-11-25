@@ -6,7 +6,7 @@ from django.conf import settings
 from datetime import datetime
 from Modulos.Login.models import Usuario
 from Modulos.Login.utils import configuracion_completa, inactivar_superusuario
-
+from Modulos.Login.models import Usuario
 
 
 class ConfiguracionInicialMiddleware:
@@ -61,8 +61,6 @@ class SessionTimeoutMiddleware:
         response = self.get_response(request)
         return response
     
-
-
 
 
 class LoginAttemptMiddleware:
@@ -130,7 +128,6 @@ class LoginAttemptMiddleware:
                     if login_attempts >= max_attempts:
                         messages.error(request, f"Superaste el número de intentos para iniciar sesión. Intenta de nuevo en {int(lockout_time / 60)} minutos.")
                         return redirect('login:login')
-
         # Continúa con la solicitud normalmente
         response = self.get_response(request)
         return response
