@@ -1,9 +1,10 @@
 <aside class="side-bar bg-dark text-white">
+    <i class="fa-solid align-items-center d-flex fa-angles-left justify-content-center" id="btn"></i>
     <div class="accordion" id="asideAccordion">
         <ul class="nav flex-column p-2">
             {% if request.user.is_superuser %}
             <li class="nav-item mb-2">
-                <a class="nav-link text-white active d-flex align-items-center"
+                <a class="nav-link text-white d-flex align-items-center"
                     href="{% url 'login:configuracion_inicial' %}">
                     <i class="fa-solid fa-circle-info me-2"></i>
                     <span>Información</span>
@@ -14,7 +15,7 @@
             <li class="nav-item">
                 <div class="accordion-item bg-dark border-0">
                     <h2 class="accordion-header">
-                        <button class="accordion-button bg-dark text-white border-0 shadow-none collapsed" type="button"
+                        <button class="accordion-button bg-dark text-white border-0 collapsed" type="button"
                             data-bs-toggle="collapse" data-bs-target="#collapseAdmin" aria-expanded="false"
                             aria-controls="collapseAdmin">
                             <i class="fa-sharp fa-solid fa-users me-2"></i> Administración del personal
@@ -45,10 +46,11 @@
             <li class="nav-item">
                 <div class="accordion-item bg-dark border-0">
                     <h2 class="accordion-header">
-                        <button class="accordion-button bg-dark text-white border-0 shadow-none collapsed" type="button"
+                        <button class="accordion-button bg-dark text-white border-0 collapsed" type="button"
                             data-bs-toggle="collapse" data-bs-target="#collapsePlanning" aria-expanded="false"
                             aria-controls="collapsePlanning">
                             <i class="fa-sharp fa-solid fa-calendar-alt me-2"></i> Planificación
+                            
                         </button>
                     </h2>
                     <div id="collapsePlanning" class="accordion-collapse collapse" data-bs-parent="#asideAccordion">
@@ -88,7 +90,7 @@
             <li class="nav-item">
                 <div class="accordion-item bg-dark border-0">
                     <h2 class="accordion-header">
-                        <button class="accordion-button bg-dark text-white border-0 shadow-none collapsed" type="button"
+                        <button class="accordion-button bg-dark text-white border-0 collapsed" type="button"
                             data-bs-toggle="collapse" data-bs-target="#collapseNews" aria-expanded="false"
                             aria-controls="collapseNews">
                             <i class="fa-solid fa-list me-2"></i> Novedades
@@ -117,10 +119,10 @@
             <li class="nav-item">
                 <div class="accordion-item bg-dark border-0">
                     <h2 class="accordion-header">
-                        <button class="accordion-button bg-dark text-white border-0 shadow-none collapsed" type="button"
+                        <button class="accordion-button bg-dark text-white border-0 collapsed" type="button"
                             data-bs-toggle="collapse" data-bs-target="#collapseReportes" aria-expanded="false"
                             aria-controls="collapseReportes">
-                            <i class="fa-solid fa-list me-2"></i> Gestión de Reportes
+                            <i class="fa-sharp fa-solid fa-folder-open me-2"></i> Gestión de Reportes
                         </button>
                     </h2>
                     <div id="collapseReportes" class="accordion-collapse collapse" data-bs-parent="#asideAccordion">

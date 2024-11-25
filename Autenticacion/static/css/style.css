@@ -10,9 +10,12 @@
     --transition-speed: 0.5s;
 }
 
-.accordion-button {
-    border: none;
-    box-shadow: none; /* También elimina el efecto de sombra */
+.accordion-button::after {
+    color: white; /* Cambia el color de la flecha a blanco */
+}
+
+.accordion-button:not(.collapsed)::after {
+    color: white; /* Asegura que la flecha sea blanca también cuando está expandida */
 }
 
 .side-bar {
@@ -81,14 +84,22 @@
 .side-bar .fa-angles-right,
 .side-bar .fa-angles-left {
     color: var(--sidebar-text-color);
-    padding: 10px;
-    margin: 10px;
     background-color: var(--arrow-bg);
-    border-radius: 10%;
+    margin-left: 80%;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
     transition: all 0.5s ease;
     cursor: pointer;
 }
 
+.side-bar.active .fa-angles-right{
+    margin-left: 10%;
+}
+
+.side-bar.active .nav-link{
+    display: none;
+}
 
 .side-bar .logout {
     display: flex;
