@@ -40,21 +40,27 @@
             </div>
 
 
-                <!-- Filtros en la tercera fila -->
-                <div class="row justify-content-center mb-3">
-                    <div class="col-lg-10">
-                        {% block filtros %}
-                        {% endblock %}
-                    </div>
+            <!-- Filtros en la tercera fila -->
+            <div class="row justify-content-center mb-3">
+                <div class="col-lg-10">
+                    {% block filtros %}
+                    {% endblock %}
                 </div>
+            </div>
 
-                <!-- Métricas en la cuarta fila -->
-                <div class="row justify-content-center">
-                    <div class="col-lg-12">
-                        {% block metricas %}
-                        {% endblock %}
-                    </div>
+            <!-- Métricas en la cuarta fila -->
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+                    {% block metricas %}
+                    {% endblock %}
                 </div>
+            </div>
+
+
+            <!-- Gráficos -->
+            {% block charts %}
+            <!-- Aquí se insertarán los gráficos en los templates específicos -->
+            {% endblock %}
             <div class="table-container">
                 <h5 class="text-center bg-dark text-white p-3">{{ title_table }}</h5>
                 <div class="table-responsive">

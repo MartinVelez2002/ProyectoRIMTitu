@@ -1,93 +1,161 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel del Coordinador</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        .chart-container {
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-    </style>
-</head>
-<body>
-    <h1>Panel del Coordinador</h1>
+{% extends 'modulos.html' %}
 
-    <!-- Reportes por Estado -->
-    <section>
-        <h2>Reportes por Estado</h2>
-        <div class="chart-container">
-            <canvas id="estadoChart"></canvas>
+{% block title %}
+Resumen de datos
+{% endblock %}
+
+
+{% block charts %}
+<div class="row justify-content-center">
+    <div class="col-lg-4 mb-4">
+        <!-- Gráfico de prioridades -->
+        <canvas id="prioridadChart"></canvas>
+    </div>
+    <div class="col-lg-4 mb-4">
+        <!-- Gráfico de incidencias por agente -->
+        <canvas id="agentesChart"></canvas>
+    </div>
+    <div class="col-lg-4 mb-4">
+        <!-- Gráfico de incidencias por ubicación -->
+        <canvas id="ubicacionChart"></canvas>
+    </div>
+</div>
+<div class="summary-container">
+    <h3>Resumen General de Incidencias</h3>
+    <div class="summary-content">
+        <div class="summary-item">
+            <h4>Total Incidencias:</h4>
+            <p>{{ total_incidencias }}</p>
         </div>
-    </section>
+    </div>
+</div>
+{% endblock %}
 
-    <!-- Reportes por Prioridad -->
-    <section>
-        <h2>Reportes por Prioridad</h2>
-        <div class="chart-container">
-            <canvas id="prioridadChart"></canvas>
-        </div>
-    </section>
 
-    <script>
-        const reportesPorEstado = {{ reportes_por_estado|safe }};
-        const reportesPorPrioridad = {{ reportes_por_prioridad|safe }};
 
-        // Chart para Reportes por Estado
-        const estadoCtx = document.getElementById('estadoChart').getContext('2d');
-        const estadoLabels = reportesPorEstado.map(item => item.estado_reciente);
-        const estadoData = reportesPorEstado.map(item => item.cantidad);
-        new Chart(estadoCtx, {
-            type: 'bar',
-            data: {
-                labels: estadoLabels,
-                datasets: [{
-                    label: 'Cantidad de Reportes',
-                    data: estadoData,
-                    backgroundColor: [
-                        '#36A2EB', '#FF6384', '#FFCE56', '#4BC0C0', '#9966FF'
-                    ],
-                    borderColor: '#ccc',
-                    borderWidth: 1,
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: { display: false },
+
+{% block js %}
+<script>
+    // Gráfico de prioridades (pie chart)
+    var ctx = document.getElementById('prioridadChart').getContext('2d');
+    var prioridadChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: {{ labels|safe }},
+            datasets: [{
+                label: 'Prioridades',
+                data: {{ data|safe }},
+                backgroundColor: [
+                    '#FF6384',
+                    '#36A2EB',
+                    '#FFCE56'
+                ],
+                borderColor: [
+                    '#FF6384',
+                    '#36A2EB',
+                    '#FFCE56'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
                 },
-                scales: {
-                    y: { beginAtZero: true }
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let total = context.dataset.data.reduce((a, b) => a + b, 0);
+                            let value = context.dataset.data[context.dataIndex];
+                            let percentage = ((value / total) * 100).toFixed(2);
+                            return `${context.label}: ${value} (${percentage}%)`;
+                        }
+                    }
                 }
             }
-        });
+        }
+    });
 
-        // Chart para Reportes por Prioridad
-        const prioridadCtx = document.getElementById('prioridadChart').getContext('2d');
-        const prioridadLabels = reportesPorPrioridad.map(item => item.prioridad);
-        const prioridadData = reportesPorPrioridad.map(item => item.cantidad);
-        new Chart(prioridadCtx, {
-            type: 'pie',
-            data: {
-                labels: prioridadLabels,
-                datasets: [{
-                    label: 'Cantidad de Reportes',
-                    data: prioridadData,
-                    backgroundColor: [
-                        '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'
-                    ],
-                }]
+    // Gráfico de incidencias por agente (bar chart)
+    var ctx2 = document.getElementById('agentesChart').getContext('2d');
+    var agentesChart = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: {{ agentes|safe }},
+            datasets: [{
+                label: 'Incidencias por Agente',
+                data: {{ incidencias|safe }},
+                backgroundColor: '#36A2EB',
+                borderColor: '#36A2EB',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    beginAtZero: true
+                },
+                y: {
+                    beginAtZero: true
+                }
             },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: { position: 'top' },
+            plugins: {
+                legend: {
+                    position: 'top',
                 }
             }
-        });
-    </script>
-</body>
-</html>
+        }
+    });
+
+    // Gráfico de incidencias por ubicación (line chart)
+    var ctx3 = document.getElementById('ubicacionChart').getContext('2d');
+    var ubicacionChart = new Chart(ctx3, {
+        type: 'line',
+        data: {
+            labels: {{ ubicaciones|safe }},
+            datasets: [{
+                label: 'Incidencias por Ubicación',
+                data: {{ incidencias_por_ubicacion|safe }},
+                borderColor: '#FF6384',
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let value = context.raw;
+                            return `${context.label}: ${value} incidencias`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Ubicación'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Número de Incidencias'
+                    },
+                    min: 0,
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}
