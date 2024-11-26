@@ -1,18 +1,19 @@
-from django.utils import timezone
-from django.db.models import Q
+from django.db.models.functions import Coalesce
 from django.shortcuts import redirect
-from django.db.models import Case, When, Value, IntegerField, Count, Subquery, OuterRef
+from django.db.models import Case, When, Value, IntegerField, Count, Subquery, OuterRef, Q
 from Modulos.Agente.Reportes.models import CabIncidente_Model, DetIncidente_Model
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView
 from django.contrib import messages
 from Modulos.Coordinador.Ubicacion.models import *
-from Modulos.Login.models import Usuario
+from Modulos.Login.mixin import RoleRequiredMixin
+
 
 # Create your views here.
 
-class ListarReportes_View(LoginRequiredMixin, ListView):
+class ListarReportes_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
     model = CabIncidente_Model
+    required_role = 'Coordinador'
     template_name = 'listado_reportes_agente.html'
     paginate_by = 5
     context_object_name = 'rep'
@@ -147,3 +148,46 @@ class ListarReportes_View(LoginRequiredMixin, ListView):
             messages.error(request, "Debe seleccionar un nuevo estado para el incidente.")
 
         return redirect('reportesCoord:listado_reportes_agente')  # Asegúrate de que la URL esté correcta
+    
+    
+from django.db.models import Count, OuterRef, Subquery, Value
+from django.db.models.functions import Coalesce
+
+class DashboardView(LoginRequiredMixin, RoleRequiredMixin, ListView):
+    template_name = 'dashboards.html'
+    required_role = 'Coordinador'
+    model = CabIncidente_Model
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Subquery para obtener el estado más reciente de cada incidente
+        subquery_estado = DetIncidente_Model.objects.filter(
+            cabincidente=OuterRef('id')
+        ).order_by('-hora').values('estado_incidente')[:1]
+
+        # Anotar el estado más reciente en cada CabIncidente_Model
+        incidentes_con_estado = CabIncidente_Model.objects.annotate(
+            estado_reciente=Coalesce(Subquery(subquery_estado), Value('N'))  # Default 'N' si no hay estado
+        )
+
+        # Gráficos por estado más reciente
+        reportes_por_estado = (
+            incidentes_con_estado
+            .values('estado_reciente')
+            .annotate(cantidad=Count('estado_reciente'))
+            .order_by('estado_reciente')
+        )
+
+        # Gráficos por prioridad
+        reportes_por_prioridad = (
+            CabIncidente_Model.objects
+            .values('prioridad')
+            .annotate(cantidad=Count('prioridad'))
+            .order_by('prioridad')
+        )
+
+        # Preparar los datos para la plantilla
+        context['reportes_por_estado'] = list(reportes_por_estado)
+        context['reportes_por_prioridad'] = list(reportes_por_prioridad)
+        return context
