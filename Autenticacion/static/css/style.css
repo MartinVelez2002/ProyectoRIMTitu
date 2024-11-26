@@ -23,15 +23,15 @@
     top: 70px;
     left: 0;
     height: 100%;
-    z-index: 500; /* Lower than the navbar's z-index */
+    z-index: 500;
     background-color: #f8f9fa;
 }
 
 .side-bar {
-    padding: 30px 0;
+    padding: 20px 0;
     display: grid;
     grid-template-columns: repeat(1, 1fr);
-    width: 250px;
+    width: 230px;
     background-color: var(--sidebar-bg);
     transition: width var(--transition-speed) ease;
     overflow: auto; /* Agrega scroll vertical si el contenido sobrepasa el espacio */
@@ -72,8 +72,7 @@
 }
 
 .side-bar .nav-link:hover {
-    color: var(--sidebar-hover-text);
-    background-color: rgb(212, 209, 209);
+    background-color: black;
     border-radius: 10px;
 }
 
@@ -81,11 +80,11 @@
     font-size: 16px;
 }
 
+
 .side-bar .fa-angles-right,
 .side-bar .fa-angles-left {
     color: var(--sidebar-text-color);
     background-color: var(--arrow-bg);
-    margin-left: 80%;
     width: 40px;
     height: 40px;
     border-radius: 10px;
@@ -94,44 +93,44 @@
 }
 
 .side-bar.active .fa-angles-right{
-    margin-left: 10%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.side-bar.active .nav-link{
+.side-bar.active .nav-item .accordion-item .nav-text{
     display: none;
 }
 
-.side-bar .logout {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-}
 
 .side-bar.active {
     width: 80px;
 }
 
 
-
 .main-content {
     position: relative;
-    top:70px;
+    top: 40px;
     margin-left: 250px; /* Margen para evitar superposición con el sidebar */
     flex: 1;
     padding: 20px 10px;
     background-color: var(--bg-color);
     transition: margin-left var(--transition-speed) ease;
-    
 }
+.side-bar.active + .main-content{
+    margin-left: 90px;
+}
+
 
 @media (max-width: 875px) {
     .side-bar {
-        display: none;
+        transform: translateX(-100%);
+        opacity: 0;
+        pointer-events: none; /* Evita interacción con el elemento */
+        transition: transform 0.3s ease, opacity 0.3s ease;
     }
-    .main-content{
+    .main-content {
         width: 100%;
-        margin:40px;
+        margin: 0px;
     }
 }
 
