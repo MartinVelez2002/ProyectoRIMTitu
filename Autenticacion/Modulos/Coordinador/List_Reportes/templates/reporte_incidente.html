@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-{% load custom_filters %}
 <html>
 
 <head>
@@ -10,7 +9,8 @@
             color: #34495e;
             line-height: 1.6;
         }
-        .encabezado{
+
+        .encabezado {
             display: flex;
             background-color: #12171e;
             border-bottom: 2px solid #ecf0f1;
@@ -21,8 +21,8 @@
         h1 {
             color: white;
             margin: auto;
+            font-size: 20px;
             padding: 10px;
-            font-size: 16px;
             justify-content: center;
             align-items: center;
         }
@@ -31,10 +31,11 @@
             color: #2980b9;
             margin-top: 30px;
             margin-bottom: 10px;
+            font-size: 18px;
         }
 
         p {
-            font-size: 14px;
+            font-size: 12px;
             margin: 5px 0;
         }
 
@@ -45,7 +46,8 @@
             background-color: #fdfefe;
         }
 
-        th, td {
+        th,
+        td {
             border: 1px solid #bdc3c7;
             padding: 4px 8px;
             text-align: left;
@@ -62,16 +64,6 @@
             background-color: #ffffff;
         }
 
-        td.evidencia {
-            text-align: center;
-        }
-
-        .evidencia img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 5px;
-        }
-
         a {
             color: #2980b9;
             text-decoration: none;
@@ -79,12 +71,6 @@
 
         a:hover {
             text-decoration: underline;
-        }
-
-        .no-detalles {
-            text-align: center;
-            color: #7f8c8d;
-            font-style: italic;
         }
     </style>
 </head>
@@ -101,44 +87,112 @@
     <p><strong>Fecha:</strong> {{ cabecera.fecha }}</p>
 
     <h2>Detalles del Incidente</h2>
+    {% for detalle in detalles %}
     <table>
         <thead>
             <tr>
-                <th>Hora</th>
-                <th>Estado</th>
-                <th>Descripción</th>
-                <th>Comentarios</th>
-                <th>Evidencia</th>
+                <th>
+                    <h4>Descripción</h4>
+                </th>
+                <th>
+                    <h4>Comentarios</h4>
+                </th>
+                <th>
+                    <h4>Evidencia</h4>
+                </th>
             </tr>
         </thead>
         <tbody>
-            {% for detalle in detalles %}
+            {% if detalle.estado_incidente == "N" %}
+            <p> <strong> Hora: </strong> {{detalle.hora}} </p>
+            <p> <strong> Estado del incidente: </strong> {{ detalle.get_estado_incidente_display }} </p>
             <tr>
-                <td>{{ detalle.hora }}</td>
-                <td>{{ detalle.get_estado_incidente_display }}</td>
-                <td>{{ detalle.descripcion }}</td>
-                <td>{{ detalle.comentarios_adicionales|default:"No existen comentarios adicionales" }}</td>
+                <td>
+                    <p>{{ detalle.descripcion }}</p>
+                </td>
+                <td>
+                    <p>{{ detalle.comentarios_adicionales|default:"No existen comentarios adicionales" }}</p>
+                </td>
                 <td class="evidencia">
                     {% if detalle.evidencia %}
-                    {% if detalle.evidencia.url|is_image %}
+                    {% if detalle.evidencia.url %}
                     <img src="{{ detalle.evidencia.url }}" alt="Evidencia">
-                    {% elif detalle.evidencia.url|is_video %}
-                    <a href="{{ detalle.evidencia.url }}">Ver video</a>
                     {% else %}
-                    <a href="{{ detalle.evidencia.url }}">Descargar archivo</a>
+                    Sin URL para la evidencia
                     {% endif %}
                     {% else %}
                     Sin evidencia
                     {% endif %}
                 </td>
+
             </tr>
-            {% empty %}
+            {% endif %}
+            {% if detalle.estado_incidente == "A" %}
+
             <tr>
-                <td colspan="5" class="no-detalles">No hay detalles disponibles.</td>
+                <h2>Resolución del incidente</h2>
+                <p> Estado modificado por el Agente </p>
+                <p> <strong> Fecha: </strong> {{cabecera.fecha}} </p>
+                <p> <strong> Hora: </strong> {{detalle.hora}} </p>
+                <p> <strong> Estado del incidente: </strong> {{ detalle.get_estado_incidente_display }} </p>
+                <td>
+                    <p> {{ detalle.descripcion }}</p>
+                </td>
+                <td>
+                    <p><strong>Comentarios adicionales:</strong>
+                        {{ detalle.comentarios_adicionales|default:"No hay comentarios adicionales" }}
+                    </p>
+                </td>
+                <td class="evidencia">
+                    {% if detalle.evidencia %}
+                    {% if detalle.evidencia.url %}
+                    <img src="{{ detalle.evidencia.url }}" alt="Evidencia">
+                    {% else %}
+                    Sin URL para la evidencia
+                    {% endif %}
+                    {% else %}
+                    Sin evidencia
+                    {% endif %}
+                </td>
+
             </tr>
-            {% endfor %}
+            {% endif %}
+
+            {% if detalle.estado_incidente == "C" %}
+
+            <tr>
+
+                <h2>Resolución del incidente</h2>
+                <p> Estado modificado por el Coordinador </p>
+                <p> <strong> Fecha: </strong> {{cabecera.fecha}} </p>
+                <p> <strong> Hora: </strong> {{detalle.hora}} </p>
+                <p> <strong> Estado del incidente: </strong> {{ detalle.get_estado_incidente_display }} </p>
+                <td>
+                    <p>{{ detalle.descripcion }}</p>
+                </td>
+                <td>
+                    <p><strong>Comentarios adicionales:</strong>
+                        {{ detalle.comentarios_adicionales|default:"No hay comentarios adicionales" }}
+                    </p>
+                </td>
+                <td class="evidencia">
+                    {% if detalle.evidencia %}
+                    {% if detalle.evidencia.url %}
+                    <img src="{{ detalle.evidencia.url }}" alt="Evidencia">
+                    {% else %}
+                    Sin URL para la evidencia
+                    {% endif %}
+                    {% else %}
+                    Sin evidencia
+                    {% endif %}
+                </td>
+
+            </tr>
+            {% endif %}
+
         </tbody>
     </table>
+    {% endfor %}
 </body>
 
 </html>

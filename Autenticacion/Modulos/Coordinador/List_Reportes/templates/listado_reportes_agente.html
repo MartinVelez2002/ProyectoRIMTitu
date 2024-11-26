@@ -216,7 +216,7 @@ Módulo Reportes
         </button>
     </td>
     <td>
-        <a href="{% url 'reportesCoord:reporte_incidente' cab.id %}">
+        <a target="_blank" href="{% url 'reportesCoord:reporte_incidente' cab.id %}">
             <i class="fa-sharp fa-solid fa-file-pdf"></i>
         </a>
     </td>
@@ -240,9 +240,9 @@ Módulo Reportes
                     <!-- Evidencia con marco y centrado -->
                     <div class="mb-3 d-flex justify-content-center">
                         {% if det.evidencia %}
-                        <div class="border border-2 p-2 rounded ">
+                        <div class="border border-0 p-2 rounded ">
                             {% if det.evidencia.url|is_image %}
-                                <img  width="400px" height="400px" src="{{ det.evidencia.url }}" alt="Evidencia" class="mx-auto d-block">
+                                <img  width="200px" height="200px" src="{{ det.evidencia.url }}" alt="Evidencia" class="mx-auto d-block">
                             {% elif det.evidencia.url|is_video %}
                                 <video width="100%" height="auto" controls class="mx-auto d-block">
                                     <source src="{{ det.evidencia.url }}" type="video/mp4">
