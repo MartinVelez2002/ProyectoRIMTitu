@@ -19,23 +19,31 @@
                 <h2 class="modal-title text-center w-100 p-2">{{ titulo }}</h2>
             </div>
             <div class="modal-body m-4">
-                {% if messages %}
-                <div class="alert alert-danger">
-                    {% for message in messages %}
-                    <p>{{ message }}</p>
-                    {% endfor %}
-                </div>
-                {% endif %}
+               <!-- Manejo de Mensajes -->
+            {% if messages %}
+            <div class="error-message">
+                {% for message in messages %}
+                {{ message }}
+                {% endfor %}
+            </div>
+            {% endif %}
 
-                {% if form.errors %}
-                <div class="alert alert-danger">
-                    {% for field in form %}
-                    {% for error in field.errors %}
-                    <p>{{ error }}</p>
-                    {% endfor %}
-                    {% endfor %}
-                </div>
-                {% endif %}
+
+
+            {% if form.errors or detalle_form.errors %}
+            <div class="error-message">
+                {% for field in form %}
+                {% for error in field.errors %}
+                <strong>{{ field.label }}:</strong> {{ error }} <br>
+                {% endfor %}
+                {% endfor %}
+                {% for field in detalle_form %}
+                {% for error in field.errors %}
+                <strong>{{ field.label }}:</strong> {{ error }} <br>
+                {% endfor %}
+                {% endfor %}
+            </div>
+            {% endif %}
 
                 <div class="regist-content">
                     {% block controls %}

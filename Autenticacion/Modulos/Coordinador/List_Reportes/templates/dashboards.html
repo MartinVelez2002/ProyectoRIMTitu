@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel del Coordinador</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .chart-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Panel del Coordinador</h1>
+
+    <!-- Reportes por Estado -->
+    <section>
+        <h2>Reportes por Estado</h2>
+        <div class="chart-container">
+            <canvas id="estadoChart"></canvas>
+        </div>
+    </section>
+
+    <!-- Reportes por Prioridad -->
+    <section>
+        <h2>Reportes por Prioridad</h2>
+        <div class="chart-container">
+            <canvas id="prioridadChart"></canvas>
+        </div>
+    </section>
+
+    <script>
+        const reportesPorEstado = {{ reportes_por_estado|safe }};
+        const reportesPorPrioridad = {{ reportes_por_prioridad|safe }};
+
+        // Chart para Reportes por Estado
+        const estadoCtx = document.getElementById('estadoChart').getContext('2d');
+        const estadoLabels = reportesPorEstado.map(item => item.estado_reciente);
+        const estadoData = reportesPorEstado.map(item => item.cantidad);
+        new Chart(estadoCtx, {
+            type: 'bar',
+            data: {
+                labels: estadoLabels,
+                datasets: [{
+                    label: 'Cantidad de Reportes',
+                    data: estadoData,
+                    backgroundColor: [
+                        '#36A2EB', '#FF6384', '#FFCE56', '#4BC0C0', '#9966FF'
+                    ],
+                    borderColor: '#ccc',
+                    borderWidth: 1,
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                },
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        // Chart para Reportes por Prioridad
+        const prioridadCtx = document.getElementById('prioridadChart').getContext('2d');
+        const prioridadLabels = reportesPorPrioridad.map(item => item.prioridad);
+        const prioridadData = reportesPorPrioridad.map(item => item.cantidad);
+        new Chart(prioridadCtx, {
+            type: 'pie',
+            data: {
+                labels: prioridadLabels,
+                datasets: [{
+                    label: 'Cantidad de Reportes',
+                    data: prioridadData,
+                    backgroundColor: [
+                        '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'
+                    ],
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'top' },
+                }
+            }
+        });
+    </script>
+</body>
+</html>

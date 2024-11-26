@@ -72,7 +72,7 @@ class CambiarEstadoMixin(View):
                 relacionadas = Novedad_Model.objects.filter(tiponovedad=objeto, estado=True)
                 relacionadas.update(estado=False)
 
-            messages.success(request, f"El estado del Tipo de Novedad ha sido cambiado a {'Inactivo' if not objeto.estado else 'Activo'}.")
+            messages.success(request, f"El estado del registro ha sido cambiado correctamente a {'Inactivo' if not objeto.estado else 'Activo'}.")
             return redirect(self.redirect_url)
 
         # Manejo específico para Novedad_Model
@@ -87,7 +87,7 @@ class CambiarEstadoMixin(View):
             objeto.estado = not objeto.estado
             objeto.save()
 
-            messages.success(request, f"El estado de la Novedad ha sido cambiado a {'Inactivo' if not objeto.estado else 'Activo'}.")
+            messages.success(request, f"El estado del registro ha sido cambiado correctamente a {'Inactivo' if not objeto.estado else 'Activo'}.")
             return redirect(self.redirect_url)
 
         # Cambiar el estado del objeto para casos generales

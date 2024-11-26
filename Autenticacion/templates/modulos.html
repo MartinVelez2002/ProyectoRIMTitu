@@ -24,16 +24,37 @@
 
 
         <div class="container">
-            <div class="search-btn">
-                {% block search %}
 
-                {% endblock %}
-                <!-- Botón para abrir el modal -->
-                {% block btnTitle %}
 
-                {% endblock %}
+            <div class="row justify-content-between align-items-center mb-3">
+                <!-- Search bar -->
+                <div class="col-lg-8 search-btn">
+                    {% block search %}
+                    {% endblock %}
+                </div>
+                <!-- Button -->
+                <div class="col-lg-4 text-end">
+                    {% block btnTitle %}
+                    {% endblock %}
+                </div>
             </div>
 
+
+                <!-- Filtros en la tercera fila -->
+                <div class="row justify-content-center mb-3">
+                    <div class="col-lg-10">
+                        {% block filtros %}
+                        {% endblock %}
+                    </div>
+                </div>
+
+                <!-- Métricas en la cuarta fila -->
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        {% block metricas %}
+                        {% endblock %}
+                    </div>
+                </div>
             <div class="table-container">
                 <h5 class="text-center bg-dark text-white p-3">{{ title_table }}</h5>
                 <div class="table-responsive">
@@ -95,7 +116,8 @@
                 {% endif %}
             </div>
             {% endblock %}
-
+            
+            
         </div>
     </main>
     {% endblock %}
@@ -108,5 +130,7 @@
 {% endblock %}
 
 {% block js %}
+
+
 <script src="{% static 'js/ocultar_mensajes.js'%}"></script>
 {% endblock %}

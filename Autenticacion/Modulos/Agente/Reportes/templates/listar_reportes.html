@@ -55,8 +55,12 @@ Módulo Reportes
     </td>
     <td>
         <!-- Botón para abrir el modal -->
-     
-        <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#modalFormulario-{{ cab.id }}"  {% if cab.detalles.last.estado_incidente == 'A' %}disabled{% endif %}>
+        <button 
+            type="button" 
+            class="btn btn-outline-dark" 
+            data-bs-toggle="modal" 
+            data-bs-target="#modalFormulario-{{ cab.id }}"  
+            {% if cab.detalles.last.estado_incidente == 'A' or cab.detalles.last.estado_incidente == 'C' %}disabled{% endif %}>
             Actualizar
         </button>
     </td>

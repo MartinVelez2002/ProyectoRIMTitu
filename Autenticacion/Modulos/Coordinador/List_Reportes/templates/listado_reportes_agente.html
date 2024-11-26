@@ -7,21 +7,95 @@
 Módulo Reportes
 {% endblock %}
 
-{% block search %}
-<form action="{{ dir_search }}" method="GET">
-    <div class="input-group">
+
+
+
+{% block filtros %}
+<form method="get" class="row g-3 align-items-center mt-3">
+    <div class="col-md-3">
+        <label for="prioridad" class="form-label fw-bold">Filtro por prioridad</label>
+        <select id="prioridad" name="prioridad" class="form-select">
+            <option value="" disabled selected>-- Seleccione --</option>
+            <option value="A" {% if prioridad == "A" %}selected{% endif %}>Alto</option>
+            <option value="M" {% if prioridad == "M" %}selected{% endif %}>Medio</option>
+            <option value="B" {% if prioridad == "B" %}selected{% endif %}>Bajo</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <label for="estado" class="form-label fw-bold">Filtro por estado</label>
+        <select id="estado" name="estado" class="form-select">
+            <option value="" disabled selected>Seleccione...</option>
+            <option value="N" {% if estado == "N" %}selected{% endif %}>Notificado</option>
+            <option value="E" {% if estado == "E" %}selected{% endif %}>En Proceso</option>
+            <option value="A" {% if estado == "A" %}selected{% endif %}>Atendido</option>
+            <option value="C" {% if estado == "C" %}selected{% endif %}>Cerrado</option>
+        </select>
+    </div>
+    <div class="col-md-6 d-flex flex-column">
+        <label for="estado" class="form-label fw-bold">Filtro por lugar</label>
         <select name="query" class="form-select">
-            <option value="">-- Seleccionar por Lugar --</option>
+            <option value="" disabled selected>-- Seleccione --</option>
             {% for ubicacion in ubicaciones %}
-            <option value="{{ ubicacion.id }}" {% if query == ubicacion.id|stringformat:"s" %}selected{% endif %}>
-                {{ ubicacion.lugar }}
-            </option>
+                <option value="{{ ubicacion.id }}" {% if query == ubicacion.id|stringformat:"s" %}selected{% endif %}>
+                    {{ ubicacion.lugar }}
+                </option>
             {% endfor %}
         </select>
-        <button type="submit" class="btn btn-primary" id="idSearchSp">Buscar</button>
+    </div>
+    <div class="col-12 text-center mt-3">
+        <!-- Botones centrados en una fila separada -->
+        <button type="submit" class="btn btn-primary me-2">Filtrar</button>
+        <a href="{% url 'reportesCoord:listado_reportes_agente' %}" class="btn btn-secondary">Limpiar</a>
     </div>
 </form>
+
 {% endblock %}
+
+{% block metricas %}
+<div class="container mt-4">
+   
+    <!-- Resumen de Reportes -->
+    <div class="row my-4">
+        <div class="col-md-3">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-header">Reportes Pendientes</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ resumen_estados.pendientes }}</h5>
+                    <p class="card-text">Reportes que necesitan ser atendidos.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-header">Reportes en Proceso</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ resumen_estados.en_proceso }}</h5>
+                    <p class="card-text">Reportes actualmente en seguimiento.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-header">Reportes Atendidos</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ resumen_estados.atendidos }}</h5>
+                    <p class="card-text">Reportes que ya fueron atendidos.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-secondary mb-3">
+                <div class="card-header">Reportes Cerrados</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ resumen_estados.cerrados }}</h5>
+                    <p class="card-text">Reportes que ya fueron cerrados.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
 
 {% block thead %}
 <th> Id </th>
@@ -50,7 +124,7 @@ Módulo Reportes
     
     <td> {{ cab.agente.ubicacion|default:"-" }} </td>
     <td> {{ cab.agente.usuario.nombre|default:"-" }} {{ cab.agente.usuario.apellido|default:"-" }}</td>
-    <td>{{ cab.novedad }}</td>
+    <td> {{ cab.novedad }}</td>
     <td>
         <span class="btn {% if cab.prioridad == 'M' %}btn-warning{% elif cab.prioridad == 'A' %}btn-danger{% else %}btn-success{% endif %}">
             {{ cab.get_prioridad_display }}
