@@ -108,6 +108,7 @@ Módulo Reportes
 <th> Estado del incidente </th>
 <th> Actualizar estado del incidente </th>
 <th> Ver evidencia </th>
+<th> Generar pdf </th>
 
 {% endblock %}
 
@@ -213,6 +214,11 @@ Módulo Reportes
         <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalLabel-{{ cab.id }}">
             <i class="fa-sharp fa-solid fa-eye"></i>
         </button>
+    </td>
+    <td>
+        <a href="{% url 'reportesCoord:reporte_incidente' cab.id %}">
+            <i class="fa-sharp fa-solid fa-file-pdf"></i>
+        </a>
     </td>
    
     

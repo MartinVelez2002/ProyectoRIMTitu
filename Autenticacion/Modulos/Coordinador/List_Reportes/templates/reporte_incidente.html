@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+{% load custom_filters %}
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: 'Arima', sans-serif;
+            margin: 10px;
+            color: #34495e;
+            line-height: 1.6;
+        }
+        .encabezado{
+            display: flex;
+            background-color: #12171e;
+            border-bottom: 2px solid #ecf0f1;
+            border-radius: 20px 20px 0 0;
+            text-align: center;
+        }
+
+        h1 {
+            color: white;
+            margin: auto;
+            padding: 10px;
+            font-size: 16px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 14px;
+            margin: 5px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fdfefe;
+        }
+
+        th, td {
+            border: 1px solid #bdc3c7;
+            padding: 4px 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #ecf0f1;
+            color: #2C3E50;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        td {
+            background-color: #ffffff;
+        }
+
+        td.evidencia {
+            text-align: center;
+        }
+
+        .evidencia img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        a {
+            color: #2980b9;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .no-detalles {
+            text-align: center;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="encabezado">
+        <h1>Reporte del Incidente</h1>
+    </div>
+    <h2>Detalles de la Cabecera</h2>
+    <p><strong>Agente que reporta:</strong> {{ cabecera.agente.usuario.nombre }} {{ cabecera.agente.usuario.apellido }}
+    </p>
+    <p><strong>Novedad:</strong> {{ cabecera.novedad }}</p>
+    <p><strong>Prioridad:</strong> {{ cabecera.get_prioridad_display }}</p>
+    <p><strong>Fecha:</strong> {{ cabecera.fecha }}</p>
+
+    <h2>Detalles del Incidente</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Hora</th>
+                <th>Estado</th>
+                <th>Descripción</th>
+                <th>Comentarios</th>
+                <th>Evidencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for detalle in detalles %}
+            <tr>
+                <td>{{ detalle.hora }}</td>
+                <td>{{ detalle.get_estado_incidente_display }}</td>
+                <td>{{ detalle.descripcion }}</td>
+                <td>{{ detalle.comentarios_adicionales|default:"No existen comentarios adicionales" }}</td>
+                <td class="evidencia">
+                    {% if detalle.evidencia %}
+                    {% if detalle.evidencia.url|is_image %}
+                    <img src="{{ detalle.evidencia.url }}" alt="Evidencia">
+                    {% elif detalle.evidencia.url|is_video %}
+                    <a href="{{ detalle.evidencia.url }}">Ver video</a>
+                    {% else %}
+                    <a href="{{ detalle.evidencia.url }}">Descargar archivo</a>
+                    {% endif %}
+                    {% else %}
+                    Sin evidencia
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="no-detalles">No hay detalles disponibles.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+
+</html>

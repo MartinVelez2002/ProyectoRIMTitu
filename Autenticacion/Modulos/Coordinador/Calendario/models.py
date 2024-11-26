@@ -23,5 +23,8 @@ class TurnUsuario_Model(models.Model):
     ubicacion = models.ForeignKey(Ubicacion_Model, on_delete= models.PROTECT)
     estado = models.BooleanField(default = True)
     
+    class Meta:
+        unique_together = ('usuario', 'calendario', 'turno', 'ubicacion')
+    
     
     

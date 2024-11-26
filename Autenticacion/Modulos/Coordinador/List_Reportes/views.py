@@ -7,7 +7,9 @@ from django.views.generic import ListView, TemplateView
 from django.contrib import messages
 from Modulos.Coordinador.Ubicacion.models import *
 from Modulos.Login.mixin import RoleRequiredMixin
-
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
 
 # Create your views here.
 
@@ -153,6 +155,9 @@ class ListarReportes_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
 from django.db.models import Count, OuterRef, Subquery, Value
 from django.db.models.functions import Coalesce
 
+
+
+
 class DashboardView(LoginRequiredMixin, RoleRequiredMixin, ListView):
     template_name = 'dashboards.html'
     required_role = 'Coordinador'
@@ -191,3 +196,32 @@ class DashboardView(LoginRequiredMixin, RoleRequiredMixin, ListView):
         context['reportes_por_estado'] = list(reportes_por_estado)
         context['reportes_por_prioridad'] = list(reportes_por_prioridad)
         return context
+
+
+# GENERACIÓN DE PDF
+def generar_reporte_incidente(request, incidente_id):
+    # Recuperar el incidente con su detalle
+    try:
+        cabecera = CabIncidente_Model.objects.get(id=incidente_id)
+        detalles = cabecera.detalles.all()  # Relación definida por related_name='detalles'
+
+        # Preparar contexto
+        context = {
+            "cabecera": cabecera,
+            "detalles": detalles,
+        }
+
+        # Cargar la plantilla HTML
+        template = get_template("reporte_incidente.html")
+        html = template.render(context)
+
+        # Generar el PDF
+        response = HttpResponse(content_type="application/pdf")
+        response["Content-Disposition"] = f'attachment; filename="reporte_incidente_{incidente_id}.pdf"'
+
+        pisa_status = pisa.CreatePDF(html, dest=response)
+        if pisa_status.err:
+            return HttpResponse("Error al generar el PDF", content_type="text/plain")
+        return response
+    except CabIncidente_Model.DoesNotExist:
+        return HttpResponse("Incidente no encontrado", content_type="text/plain")
