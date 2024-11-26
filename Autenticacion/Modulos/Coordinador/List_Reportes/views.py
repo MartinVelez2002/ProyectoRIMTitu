@@ -1,7 +1,7 @@
-
-from django.db.models.functions import TruncMonth
 from django.shortcuts import redirect
-from django.db.models import Case, When, Value, IntegerField, Count, Subquery, OuterRef, Q
+from datetime import datetime
+from django.db.models.functions import TruncDay
+from django.db.models import Case, When, Value, IntegerField, Count, Subquery, OuterRef
 from Modulos.Agente.Reportes.models import CabIncidente_Model, DetIncidente_Model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, TemplateView
@@ -163,39 +163,43 @@ class DashboardView(LoginRequiredMixin, RoleRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         
-        # Datos para el gráfico de pastel (prioridades)
+        # Datos de prioridades
         prioridades = CabIncidente_Model.objects.values('prioridad').annotate(count=Count('id'))
-        context['labels'] = ['Alto', 'Medio', 'Bajo']
-        context['data'] = [p['count'] for p in prioridades]
-
-         # Gráfico de líneas (tendencia por estados)
-        estados = ['Notificado', 'En Proceso', 'Atendido', 'Cerrado']
-        tendencia = {}
-
-        for estado in estados:
-            # Filtrar incidencias por estado en DetIncidente_Model y usar fecha de CabIncidente_Model
-            tendencia[estado] = (
-                DetIncidente_Model.objects.filter(estado_incidente=estado)
-                .select_related('cabincidente')  # Unir con la cabecera
-                .annotate(month=TruncMonth('cabincidente__fecha'))  # Agrupar por mes usando la fecha de la cabecera
-                .values('month')
-                .annotate(count=Count('id'))
-                .order_by('month')
-            )
+        labels = ['Alto', 'Bajo', 'Medio']
+        data = [p['count'] for p in prioridades]
         
-        # Preparar datos para el gráfico de líneas
-        fechas = sorted(
-            {item['month'] for data in tendencia.values() for item in data}
-        )  # Fechas únicas ordenadas
-        series = {estado: {f['month']: f['count'] for f in data} for estado, data in tendencia.items()}
-        tendencia_data = [
-            {
-                'label': estado,
-                'data': [series[estado].get(fecha, 0) for fecha in fechas],
-            }
-            for estado in estados
-        ]
+  
+        # Datos de incidencias por agente
+        incidencias_por_agente = CabIncidente_Model.objects.values('agente__usuario__nombre').annotate(count=Count('id')).order_by('-count')
+        agentes = [item['agente__usuario__nombre'] for item in incidencias_por_agente]
+        incidencias = [item['count'] for item in incidencias_por_agente]
 
-        context['fechas'] = [fecha.strftime('%Y-%m') for fecha in fechas]
-        context['tendencia_data'] = tendencia_data
+      
+        # Resumen general de incidencias
+        total_incidencias = CabIncidente_Model.objects.count()
+        
+       
+
+         # Obtener incidencias agrupadas por ubicación
+        incidencias_por_ubicacion = CabIncidente_Model.objects.values('agente__ubicacion__lugar').annotate(count=Count('id')).order_by('agente__ubicacion__lugar')
+        
+        # Extraer etiquetas (ubicaciones) y datos (conteo de incidencias)
+        ubicaciones = [incidencia['agente__ubicacion__lugar'] for incidencia in incidencias_por_ubicacion]
+        incidencias_por_ubicacion_data = [incidencia['count'] for incidencia in incidencias_por_ubicacion]
+        
+        # Agregar los datos al contexto
+        context['ubicaciones'] = ubicaciones
+        context['incidencias_por_ubicacion'] = incidencias_por_ubicacion_data
+       
+     
+        context['total_incidencias'] = total_incidencias
+      
+        
+        context['labels'] = labels
+        context['data'] = data
+        
+        # Agregar datos de incidencias por agente
+        context['agentes'] = agentes
+        context['incidencias'] = incidencias
+        
         return context
