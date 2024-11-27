@@ -44,10 +44,15 @@ class DetalleIncidente_Form(ModelForm):
 
 
     def __init__(self, *args, **kwargs):
-        super(DetalleIncidente_Form, self).__init__(*args, **kwargs)
-        for field in self.fields.values():
-            field.widget.attrs.update({'class': 'form-control'})
-        self.fields['comentarios_adicionales'].required = False
+        super().__init__(*args, **kwargs)
+        # Aplicar clase y atributo required a todos los campos excepto 'comentarios_adicionales'
+        for field_name, field in self.fields.items():
+            if field_name != 'comentarios_adicionales':
+                field.widget.attrs.update({'class': 'form-control', 'required': 'required'})
+
+
+        
+
 
 
     def clean_evidencia(self):

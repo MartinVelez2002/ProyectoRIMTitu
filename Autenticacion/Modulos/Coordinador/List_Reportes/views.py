@@ -1,6 +1,5 @@
 from django.shortcuts import redirect
-from datetime import datetime
-from django.db.models.functions import TruncDay
+from django.db.models.functions import TruncMonth
 from django.db.models import Case, When, Value, IntegerField, Count, Subquery, OuterRef
 from Modulos.Agente.Reportes.models import CabIncidente_Model, DetIncidente_Model
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -71,7 +70,7 @@ class ListarReportes_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
         
         # Obtener el último detalle para cada cabecera de incidente
         ultimo_detalle = DetIncidente_Model.objects.filter(
-            cabincidente=OuterRef('id')
+            cabincidente=OuterRef('pk')
         ).order_by('-hora')
 
         # Consultar las cabeceras con el estado del último detalle
@@ -82,14 +81,15 @@ class ListarReportes_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
         # Convertir los resultados en un diccionario
         estados_dict = {item['estado_actual']: item['total'] for item in estados}
 
-        # Crear el resumen
+        # Crear el resumen de estados
         resumen_estados = {
             'pendientes': estados_dict.get('N', 0),  # Notificados
             'en_proceso': estados_dict.get('E', 0), # En proceso
             'atendidos': estados_dict.get('A', 0),  # Atendidos
-            'cerrados': estados_dict.get('C', 0) #Cerrados
+            'cerrados': estados_dict.get('C', 0)    # Cerrados
         }
 
+        # Agregar el resumen a tu contexto
         context['resumen_estados'] = resumen_estados
         context['title_table'] = 'Reportes de los Agentes'
         context['ubicaciones'] = Ubicacion_Model.objects.all()
@@ -154,34 +154,42 @@ class ListarReportes_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
  
 
 
-
-
 class DashboardView(LoginRequiredMixin, RoleRequiredMixin, TemplateView):
     template_name = 'dashboards.html'
     required_role = 'Coordinador'
 
     def get_context_data(self, **kwargs):
+        # Accede al request a través de self.request
+        request = self.request
+        
         context = super().get_context_data(**kwargs)
         
+        # Obtener el mes seleccionado o 'todos' si no se ha seleccionado ninguno
+        mes_param = request.GET.get('mes', 'todos')
+        
+        # Filtrar incidentes por el mes seleccionado
+        if mes_param != 'todos':
+            year = int(mes_param[:4])
+            month = int(mes_param[5:7])
+            fecha_filter = {'fecha__year': year, 'fecha__month': month}
+        else:
+            fecha_filter = {}
+
         # Datos de prioridades
-        prioridades = CabIncidente_Model.objects.values('prioridad').annotate(count=Count('id'))
+        prioridades = CabIncidente_Model.objects.filter(**fecha_filter).values('prioridad').annotate(count=Count('id'))
         labels = ['Alto', 'Bajo', 'Medio']
         data = [p['count'] for p in prioridades]
         
-  
         # Datos de incidencias por agente
-        incidencias_por_agente = CabIncidente_Model.objects.values('agente__usuario__nombre').annotate(count=Count('id')).order_by('-count')
+        incidencias_por_agente = CabIncidente_Model.objects.filter(**fecha_filter).values('agente__usuario__nombre').annotate(count=Count('id')).order_by('-count')
         agentes = [item['agente__usuario__nombre'] for item in incidencias_por_agente]
         incidencias = [item['count'] for item in incidencias_por_agente]
-
-      
-        # Resumen general de incidencias
-        total_incidencias = CabIncidente_Model.objects.count()
         
-       
-
-         # Obtener incidencias agrupadas por ubicación
-        incidencias_por_ubicacion = CabIncidente_Model.objects.values('agente__ubicacion__lugar').annotate(count=Count('id')).order_by('agente__ubicacion__lugar')
+        # Resumen general de incidencias
+        total_incidencias = CabIncidente_Model.objects.filter(**fecha_filter).count()
+        
+        # Obtener incidencias agrupadas por ubicación
+        incidencias_por_ubicacion = CabIncidente_Model.objects.filter(**fecha_filter).values('agente__ubicacion__lugar').annotate(count=Count('id')).order_by('agente__ubicacion__lugar')
         
         # Extraer etiquetas (ubicaciones) y datos (conteo de incidencias)
         ubicaciones = [incidencia['agente__ubicacion__lugar'] for incidencia in incidencias_por_ubicacion]
@@ -190,16 +198,81 @@ class DashboardView(LoginRequiredMixin, RoleRequiredMixin, TemplateView):
         # Agregar los datos al contexto
         context['ubicaciones'] = ubicaciones
         context['incidencias_por_ubicacion'] = incidencias_por_ubicacion_data
-       
-     
         context['total_incidencias'] = total_incidencias
-      
-        
         context['labels'] = labels
         context['data'] = data
-        
-        # Agregar datos de incidencias por agente
         context['agentes'] = agentes
         context['incidencias'] = incidencias
         
+        # Obtener los estados más recientes de los reportes
+        subquery_estado = DetIncidente_Model.objects.filter(
+            cabincidente=OuterRef('id')
+        ).order_by('-hora').values('estado_incidente')[:1]  # Obtener el estado más reciente
+
+        # Obtener la distribución de incidentes por estado (Notificado, En Proceso, Atendido, Cerrado)
+        reportes_por_estado = CabIncidente_Model.objects.filter(**fecha_filter).annotate(
+            estado_reciente=Subquery(subquery_estado)
+        ).values('estado_reciente').annotate(cantidad=Count('estado_reciente')).order_by('estado_reciente')
+
+        # Asegurarse que los estados tengan un valor, incluso si no hay incidentes en ese estado
+        estados = ['N', 'E', 'A', 'C']  # N = Notificado, E = En Proceso, A = Atendido, C = Cerrado
+        estados_labels = {
+            'N': 'Notificado',
+            'E': 'En Proceso',
+            'A': 'Atendido',
+            'C': 'Cerrado'
+        }
+
+        # Contar el total por cada estado
+        estado_count = {estado: 0 for estado in estados}
+        for reporte in reportes_por_estado:
+            estado_count[reporte['estado_reciente']] = reporte['cantidad']
+
+        # Generar los datos del gráfico de estados
+        context['reportes_por_estado'] = [
+            {'estado': estados_labels[estado], 'cantidad': estado_count[estado]} for estado in estados
+        ]
+        
+        # Obtener la distribución de incidentes sin resolver (estados 'N' y 'E')
+        reportes_sin_resolver = CabIncidente_Model.objects.filter(**fecha_filter).annotate(
+            estado_reciente=Subquery(subquery_estado)
+        ).filter(estado_reciente__in=['N', 'E'])  # Filtrar por estados 'N' y 'E')
+        
+        # Agrupar por mes y contar incidentes en estado 'N' o 'E'
+        incidentes_por_mes = reportes_sin_resolver.annotate(
+            mes=TruncMonth('fecha')  # Agrupar por mes de la fecha de creación
+        ).values('mes').annotate(
+            cantidad=Count('id')  # Contar incidentes en 'N' o 'E'
+        ).order_by('mes')
+
+        meses = []
+        cantidad_sin_resolver = []  # Cantidad de incidentes sin resolver (N o E)
+
+        # Crear listas separadas de meses y cantidades
+        meses = [item['mes'].strftime('%B %Y') for item in incidentes_por_mes]
+        cantidades = [item['cantidad'] for item in incidentes_por_mes]
+
+        # Obtener los meses disponibles para el filtro (únicos y ordenados)
+        meses_disponibles = incidentes_por_mes.values('mes').distinct().order_by('mes')
+        
+        # Si se selecciona un mes específico, filtrar por el mes correspondiente
+        if mes_param != 'todos':
+            incidentes_sin_resolver_filtrados = reportes_sin_resolver.filter(fecha__year=year, fecha__month=month)
+            incidentes_por_mes = incidentes_sin_resolver_filtrados.annotate(
+                mes=TruncMonth('fecha')
+            ).values('mes').annotate(
+                cantidad=Count('id')
+            ).order_by('mes')
+            # Actualizar meses y cantidades según el filtro
+            meses = [item['mes'].strftime('%B %Y') for item in incidentes_por_mes]
+            cantidades = [item['cantidad'] for item in incidentes_por_mes]
+        
+        # Combinar los meses y las cantidades en una lista de tuplas
+        data = zip(meses, cantidades)
+        
+        # Pasar los datos al contexto
+        context['datas'] = data
+        context['meses_disponibles'] = meses_disponibles
+        context['mes_param'] = mes_param
+
         return context

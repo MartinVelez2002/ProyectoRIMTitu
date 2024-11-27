@@ -1,69 +1,132 @@
 {% extends 'modulos.html' %}
 
 {% block title %}
-Resumen de datos
+Dashboard Profesional
 {% endblock %}
 
+{% block filtros %}
+
+<form method="get" class="row align-items-center" >
+    <div class="col-md-4 ">
+        <!-- Campo Select -->
+        <label for="mes" class="form-label fw-bold">Filtrar por mes:</label>
+        <select name="mes" id="mes" class="form-select">
+            <option value="todos" disabled {% if mes_param == 'todos' %}selected{% endif %}>---Seleccione---</option>
+            {% for mes in meses_disponibles %}
+                <option value="{{ mes.mes|date:'Y-m' }}" {% if mes.mes|date:'Y-m' == mes_param %}selected{% endif %}>
+                    {{ mes.mes|date:'F Y' }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-4 text-center mt-4">
+        <!-- Botones centrados debajo del campo Select -->
+        <button type="submit" class="btn btn-primary me-2 ">Filtrar</button>
+        <a href="{% url 'reportesCoord:resumen_datos' %}" class="btn btn-secondary ">Limpiar</a>
+    </div>
+</form>
+
+{% endblock %}
 
 {% block charts %}
-<div class="row justify-content-center">
-    <div class="col-lg-4 mb-4">
-        <!-- Gráfico de prioridades -->
-        <canvas id="prioridadChart"></canvas>
+<div class="row g-1">
+    <div class="col-lg-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">Distribución de Prioridades</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="prioridadChart"></canvas>
+            </div>
+        </div>
     </div>
-    <div class="col-lg-4 mb-4">
-        <!-- Gráfico de incidencias por agente -->
-        <canvas id="agentesChart"></canvas>
+    <div class="col-lg-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-secondary text-white">
+                <h5 class="card-title mb-0">Estado de Incidencias</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="estadoChart"></canvas>
+            </div>
+        </div>
     </div>
-    <div class="col-lg-4 mb-4">
-        <!-- Gráfico de incidencias por ubicación -->
-        <canvas id="ubicacionChart"></canvas>
+    <div class="col-lg-6">  <!-- Ancho personalizado -->
+        <div class="card shadow-sm">
+            <div class="card-header bg-info text-white">
+                <h5 class="card-title mb-0">Incidencias por Agente</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="agentesChart"></canvas>
+            </div>
+        </div>
     </div>
+    
+    <div class="col-lg-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-success text-white">
+                <h5 class="card-title mb-0">Incidencias por Ubicación</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="ubicacionChart"></canvas>
+            </div>
+        </div>
+    </div>
+    
 </div>
-<div class="summary-container">
-    <h3>Resumen General de Incidencias</h3>
-    <div class="summary-content">
-        <div class="summary-item">
-            <h4>Total Incidencias:</h4>
-            <p>{{ total_incidencias }}</p>
+{% endblock %}
+
+{% block tabla %}
+<div class="card mt-4">
+    <div class="card-header" style="background-color: #2c3e50; color: #ecf0f1;">
+        <h5 class="card-title mb-0">Incidentes Sin Resolver por Mes</h5>
+    </div>
+
+    <div class="card-body" style="background-color: #f4f6f9;">
+        <div class="table-responsive">
+            <table class="table" style="border-collapse: collapse; width: 100%;">
+                <thead>
+                    <tr style="background-color: #34495e; color: #ecf0f1; text-align: center;">
+                        <th style="padding: 12px 15px; border-bottom: 2px solid #ecf0f1;">Mes</th>
+                        <th style="padding: 12px 15px; border-bottom: 2px solid #ecf0f1;">Incidentes Sin Resolver</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for mes, cantidad in datas %}
+                    <tr style="border-bottom: 1px solid #ddd; text-align: center;">
+                        <td style="padding: 12px 15px; background-color: #ffffff;">{{ mes }}</td>
+                        <td style="padding: 12px 15px; background-color: #ffffff;">{{ cantidad }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
+
 {% endblock %}
 
+{% block table %}
 
+{% endblock%}
 
 
 {% block js %}
+
 <script>
     // Gráfico de prioridades (pie chart)
     var ctx = document.getElementById('prioridadChart').getContext('2d');
-    var prioridadChart = new Chart(ctx, {
+    new Chart(ctx, {
         type: 'pie',
         data: {
             labels: {{ labels|safe }},
             datasets: [{
                 label: 'Prioridades',
                 data: {{ data|safe }},
-                backgroundColor: [
-                    '#FF6384',
-                    '#36A2EB',
-                    '#FFCE56'
-                ],
-                borderColor: [
-                    '#FF6384',
-                    '#36A2EB',
-                    '#FFCE56'
-                ],
-                borderWidth: 1
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
             }]
         },
         options: {
-            responsive: true,
             plugins: {
-                legend: {
-                    position: 'top',
-                },
                 tooltip: {
                     callbacks: {
                         label: function(context) {
@@ -79,40 +142,26 @@ Resumen de datos
     });
 
     // Gráfico de incidencias por agente (bar chart)
-    var ctx2 = document.getElementById('agentesChart').getContext('2d');
-    var agentesChart = new Chart(ctx2, {
+    new Chart(document.getElementById('agentesChart'), {
         type: 'bar',
         data: {
             labels: {{ agentes|safe }},
             datasets: [{
                 label: 'Incidencias por Agente',
                 data: {{ incidencias|safe }},
-                backgroundColor: '#36A2EB',
-                borderColor: '#36A2EB',
-                borderWidth: 1
+                backgroundColor: '#15C3AB'
             }]
         },
         options: {
-            responsive: true,
             scales: {
-                x: {
-                    beginAtZero: true
-                },
-                y: {
-                    beginAtZero: true
-                }
-            },
-            plugins: {
-                legend: {
-                    position: 'top',
-                }
+                x: { beginAtZero: true },
+                y: { beginAtZero: true }
             }
         }
     });
 
     // Gráfico de incidencias por ubicación (line chart)
-    var ctx3 = document.getElementById('ubicacionChart').getContext('2d');
-    var ubicacionChart = new Chart(ctx3, {
+    new Chart(document.getElementById('ubicacionChart'), {
         type: 'line',
         data: {
             labels: {{ ubicaciones|safe }},
@@ -121,41 +170,66 @@ Resumen de datos
                 data: {{ incidencias_por_ubicacion|safe }},
                 borderColor: '#FF6384',
                 backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                fill: true,
-                tension: 0.4
+                fill: true
             }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            let value = context.raw;
-                            return `${context.label}: ${value} incidencias`;
+        }
+    });
+
+    // Gráfico de estados (doughnut chart)
+    const reportesPorEstado = {{ reportes_por_estado|safe }};
+
+        // Gráfico de donas para la distribución de reportes por estado
+        const estadoCtx = document.getElementById('estadoChart').getContext('2d');
+        const estadoLabels = reportesPorEstado.map(item => item.estado);
+        const estadoData = reportesPorEstado.map(item => item.cantidad);
+
+        new Chart(estadoCtx, {
+            type: 'doughnut',
+            data: {
+                labels: estadoLabels,
+                datasets: [{
+                    label: 'Cantidad de Reportes',
+                    data: estadoData,
+                    backgroundColor: [
+                        '#36A2EB', // Notificado
+                        '#FFCE56', // En Proceso
+                        '#58d68d', // Atendido
+                        '#85929e'  // Cerrado
+                    ],
+                    hoverOffset: 10 // Efecto hover
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom', // Leyenda en la parte inferior
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                const label = tooltipItem.label || '';
+                                const value = tooltipItem.raw || 0;
+                                return `${label}: ${value} reportes`;
+                            }
                         }
                     }
                 }
-            },
-            scales: {
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Ubicación'
-                    }
-                },
-                y: {
-                    title: {
-                        display: true,
-                        text: 'Número de Incidencias'
-                    },
-                    min: 0,
-                }
             }
-        }
-    });
+        });
+        
+        document.getElementById('mesFiltro').addEventListener('change', function() {
+            const selectedMonth = this.value;
+            const rows = document.querySelectorAll('#incidentes-listado tbody tr');
+            rows.forEach(row => {
+                const month = row.cells[0].innerText;
+                if (selectedMonth === 'todos' || month === selectedMonth) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
 </script>
 {% endblock %}
