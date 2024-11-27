@@ -97,7 +97,6 @@ class CalendarioUsuario_Create(LoginRequiredMixin, RoleRequiredMixin, CreateView
         form.fields['usuario'].queryset = Usuario.objects.filter(is_superuser=False)
         return form
     
-    print(Usuario.objects.filter(rol__name="Agente"))
 
 class InactivarActivarPlanificacion(CambiarEstadoMixin):
     model = TurnUsuario_Model

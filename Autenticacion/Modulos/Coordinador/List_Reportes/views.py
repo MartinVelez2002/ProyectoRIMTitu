@@ -10,6 +10,10 @@ from Modulos.Login.mixin import RoleRequiredMixin
 from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
+import base64
+from django.utils.html import escape
+from pathlib import Path
+
 
 # Create your views here.
 
@@ -278,35 +282,49 @@ class DashboardView(LoginRequiredMixin, RoleRequiredMixin, TemplateView):
 
         return context
 
+def convertir_imagen_a_base64(file_field):
+    if file_field and Path(file_field.path).is_file():
+        with open(file_field.path, "rb") as img_file:
+            return f"data:image/{file_field.path.split('.')[-1]};base64,{base64.b64encode(img_file.read()).decode('utf-8')}"
+    return None
 
 def generar_reporte_incidente(request, incidente_id):
-    # Recuperar el incidente con su detalle
     try:
         cabecera = CabIncidente_Model.objects.prefetch_related('detalles').get(id=incidente_id)
-        print(cabecera, "--- Cabecera")
         detalles = cabecera.detalles.all()
-        print(detalles, "--- Detalle")
-        
-        # Preparar contexto
+
+        # Convertir evidencias a base64
+        detalles_procesados = []
+        for detalle in detalles:
+            detalle_dict = {
+                "descripcion": detalle.descripcion,
+                "comentarios_adicionales": detalle.comentarios_adicionales,
+                "estado_incidente": detalle.estado_incidente,
+                "estado_incidente_display": detalle.get_estado_incidente_display(),
+                "hora": detalle.hora,
+                "evidencia": convertir_imagen_a_base64(detalle.evidencia),
+            }
+            detalles_procesados.append(detalle_dict)
+
         context = {
             "cabecera": cabecera,
-            "detalles": detalles,
+            "detalles": detalles_procesados,
         }
 
-        # Cargar la plantilla HTML
+
+        # Cargar plantilla HTML y generar PDF
         template = get_template("reporte_incidente.html")
         html = template.render(context)
-
-        # Generar el PDF
         response = HttpResponse(content_type="application/pdf")
-        response["Content-Disposition"] = "inline; filename=reporte_incidente.pdf"  # Abrir en navegador
-
+        response["Content-Disposition"] = "inline; filename=reporte_incidente.pdf"
         pisa_status = pisa.CreatePDF(html, dest=response)
+
         if pisa_status.err:
             return HttpResponse("Error al generar el PDF", content_type="text/plain")
         return response
     except CabIncidente_Model.DoesNotExist:
         return HttpResponse("Incidente no encontrado", content_type="text/plain")
+
 
        
 # def generar_reporte_incidente(request, incidente_id):

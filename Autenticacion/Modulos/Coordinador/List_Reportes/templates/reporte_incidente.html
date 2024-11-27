@@ -104,8 +104,8 @@
         </thead>
         <tbody>
             {% if detalle.estado_incidente == "N" %}
-            <p> <strong> Hora: </strong> {{detalle.hora}} </p>
-            <p> <strong> Estado del incidente: </strong> {{ detalle.get_estado_incidente_display }} </p>
+            <p><strong>Hora:</strong> {{ detalle.hora }}</p>
+            <p><strong>Estado del incidente:</strong> {{ detalle.estado_incidente_display }}</p>
             <tr>
                 <td>
                     <p>{{ detalle.descripcion }}</p>
@@ -115,81 +115,55 @@
                 </td>
                 <td class="evidencia">
                     {% if detalle.evidencia %}
-                    {% if detalle.evidencia.url %}
-                    <img src="{{ detalle.evidencia.url }}" alt="Evidencia">
-                    {% else %}
-                    Sin URL para la evidencia
-                    {% endif %}
+                    <img src="{{ detalle.evidencia }}" alt="Evidencia" width="200">
                     {% else %}
                     Sin evidencia
                     {% endif %}
                 </td>
-
             </tr>
-            {% endif %}
-            {% if detalle.estado_incidente == "A" %}
-
+            {% elif detalle.estado_incidente == "A" %}
             <tr>
                 <h2>Resolución del incidente</h2>
-                <p> Estado modificado por el Agente </p>
-                <p> <strong> Fecha: </strong> {{cabecera.fecha}} </p>
-                <p> <strong> Hora: </strong> {{detalle.hora}} </p>
-                <p> <strong> Estado del incidente: </strong> {{ detalle.get_estado_incidente_display }} </p>
-                <td>
-                    <p> {{ detalle.descripcion }}</p>
-                </td>
-                <td>
-                    <p><strong>Comentarios adicionales:</strong>
-                        {{ detalle.comentarios_adicionales|default:"No hay comentarios adicionales" }}
-                    </p>
-                </td>
-                <td class="evidencia">
-                    {% if detalle.evidencia %}
-                    {% if detalle.evidencia.url %}
-                    <img src="{{ detalle.evidencia.url }}" alt="Evidencia">
-                    {% else %}
-                    Sin URL para la evidencia
-                    {% endif %}
-                    {% else %}
-                    Sin evidencia
-                    {% endif %}
-                </td>
-
-            </tr>
-            {% endif %}
-
-            {% if detalle.estado_incidente == "C" %}
-
-            <tr>
-
-                <h2>Resolución del incidente</h2>
-                <p> Estado modificado por el Coordinador </p>
-                <p> <strong> Fecha: </strong> {{cabecera.fecha}} </p>
-                <p> <strong> Hora: </strong> {{detalle.hora}} </p>
-                <p> <strong> Estado del incidente: </strong> {{ detalle.get_estado_incidente_display }} </p>
+                <p>Estado modificado por el Agente</p>
+                <p><strong>Fecha:</strong> {{ cabecera.fecha }}</p>
+                <p><strong>Hora:</strong> {{ detalle.hora }}</p>
+                <p><strong>Estado del incidente:</strong> {{ detalle.estado_incidente_display }}</p>
                 <td>
                     <p>{{ detalle.descripcion }}</p>
                 </td>
                 <td>
-                    <p><strong>Comentarios adicionales:</strong>
-                        {{ detalle.comentarios_adicionales|default:"No hay comentarios adicionales" }}
-                    </p>
+                    <p>{{ detalle.comentarios_adicionales|default:"No hay comentarios adicionales" }}</p>
                 </td>
                 <td class="evidencia">
                     {% if detalle.evidencia %}
-                    {% if detalle.evidencia.url %}
-                    <img src="{{ detalle.evidencia.url }}" alt="Evidencia">
-                    {% else %}
-                    Sin URL para la evidencia
-                    {% endif %}
+                    <img src="{{ detalle.evidencia }}" alt="Evidencia" width="200">
                     {% else %}
                     Sin evidencia
                     {% endif %}
                 </td>
-
+            </tr>
+            {% elif detalle.estado_incidente == "C" %}
+            <tr>
+                <h2>Resolución del incidente</h2>
+                <p>Estado modificado por el Coordinador</p>
+                <p><strong>Fecha:</strong> {{ cabecera.fecha }}</p>
+                <p><strong>Hora:</strong> {{ detalle.hora }}</p>
+                <p><strong>Estado del incidente:</strong> {{ detalle.estado_incidente_display }}</p>
+                <td>
+                    <p>{{ detalle.descripcion }}</p>
+                </td>
+                <td>
+                    <p>{{ detalle.comentarios_adicionales|default:"No hay comentarios adicionales" }}</p>
+                </td>
+                <td class="evidencia">
+                    {% if detalle.evidencia %}
+                    <img src="{{ detalle.evidencia }}" alt="Evidencia" width="200">
+                    {% else %}
+                    Sin evidencia
+                    {% endif %}
+                </td>
             </tr>
             {% endif %}
-
         </tbody>
     </table>
     {% endfor %}
