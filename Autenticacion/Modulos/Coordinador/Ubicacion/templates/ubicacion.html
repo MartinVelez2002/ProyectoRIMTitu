@@ -6,10 +6,13 @@ Módulo Ubicación
 {% endblock %}
 {% block search %}
 <form action="{{ dir_search }}" method="GET">
-    <div class="input-group">
-        <input type="text" name="query" value="{{ query }}"
-        placeholder = "Filtrar por Lugar o Sector" aria-describedby="basic-addon2" />
-        <button type="submit" class="btn btn-primary mr-1" id="idSearchSp">Buscar</button>
+    <div class="d-flex flex-row">
+        <div class="input-group me-2">
+            <input type="text" class="form-control" name="query" value="{{ query }}"
+                placeholder="Filtrar por Lugar o Sector" aria-describedby="basic-addon2" />
+            <button type="submit" class="btn btn-primary mr-1" id="idSearchSp">Buscar</button>
+        </div>
+        <a href="{{ dir_search }}" class="btn btn-secondary ">Limpiar</a>
     </div>
 </form>
 {% endblock %}
@@ -50,9 +53,9 @@ Módulo Ubicación
             {% csrf_token %}
 
             {% if i.estado %}
-            <button type="submit" class="btn btn-danger">Inactivar</button> 
+            <button type="submit" class="btn btn-danger">Inactivar</button>
             {% else %}
-            <button type="submit" class="btn btn-success">Activar</button> 
+            <button type="submit" class="btn btn-success">Activar</button>
             {% endif %}
         </form>
 
