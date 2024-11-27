@@ -178,10 +178,10 @@ Dashboard Profesional
     // Gráfico de estados (doughnut chart)
     const reportesPorEstado = {{ reportes_por_estado|safe }};
 
-        // Gráfico de donas para la distribución de reportes por estado
-        const estadoCtx = document.getElementById('estadoChart').getContext('2d');
-        const estadoLabels = reportesPorEstado.map(item => item.estado);
-        const estadoData = reportesPorEstado.map(item => item.cantidad);
+    // Gráfico de donas para la distribución de reportes por estado
+    const estadoCtx = document.getElementById('estadoChart').getContext('2d');
+    const estadoLabels = reportesPorEstado.map(item => item.estado);
+    const estadoData = reportesPorEstado.map(item => item.cantidad);
 
         new Chart(estadoCtx, {
             type: 'doughnut',

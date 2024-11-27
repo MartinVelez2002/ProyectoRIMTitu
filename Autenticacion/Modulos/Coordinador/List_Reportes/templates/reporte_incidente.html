@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: 'Arima', sans-serif;
+            margin: 10px;
+            color: #34495e;
+            line-height: 1.6;
+        }
+
+        .encabezado {
+            display: flex;
+            background-color: #12171e;
+            border-bottom: 2px solid #ecf0f1;
+            border-radius: 20px 20px 0 0;
+            text-align: center;
+        }
+
+        h1 {
+            color: white;
+            margin: auto;
+            font-size: 20px;
+            padding: 10px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        p {
+            font-size: 12px;
+            margin: 5px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fdfefe;
+        }
+
+        th,
+        td {
+            border: 1px solid #bdc3c7;
+            padding: 4px 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #ecf0f1;
+            color: #2C3E50;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        td {
+            background-color: #ffffff;
+        }
+
+        a {
+            color: #2980b9;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="encabezado">
+        <h1>Reporte del Incidente</h1>
+    </div>
+    <h2>Detalles de la Cabecera</h2>
+    <p><strong>Agente que reporta:</strong> {{ cabecera.agente.usuario.nombre }} {{ cabecera.agente.usuario.apellido }}
+    </p>
+    <p><strong>Novedad:</strong> {{ cabecera.novedad }}</p>
+    <p><strong>Prioridad:</strong> {{ cabecera.get_prioridad_display }}</p>
+    <p><strong>Fecha:</strong> {{ cabecera.fecha }}</p>
+
+    <h2>Detalles del Incidente</h2>
+    {% for detalle in detalles %}
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    <h4>Descripción</h4>
+                </th>
+                <th>
+                    <h4>Comentarios</h4>
+                </th>
+                <th>
+                    <h4>Evidencia</h4>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if detalle.estado_incidente == "N" %}
+            <p> <strong> Hora: </strong> {{detalle.hora}} </p>
+            <p> <strong> Estado del incidente: </strong> {{ detalle.get_estado_incidente_display }} </p>
+            <tr>
+                <td>
+                    <p>{{ detalle.descripcion }}</p>
+                </td>
+                <td>
+                    <p>{{ detalle.comentarios_adicionales|default:"No existen comentarios adicionales" }}</p>
+                </td>
+                <td class="evidencia">
+                    {% if detalle.evidencia %}
+                    {% if detalle.evidencia.url %}
+                    <img src="{{ detalle.evidencia.url }}" alt="Evidencia">
+                    {% else %}
+                    Sin URL para la evidencia
+                    {% endif %}
+                    {% else %}
+                    Sin evidencia
+                    {% endif %}
+                </td>
+
+            </tr>
+            {% endif %}
+            {% if detalle.estado_incidente == "A" %}
+
+            <tr>
+                <h2>Resolución del incidente</h2>
+                <p> Estado modificado por el Agente </p>
+                <p> <strong> Fecha: </strong> {{cabecera.fecha}} </p>
+                <p> <strong> Hora: </strong> {{detalle.hora}} </p>
+                <p> <strong> Estado del incidente: </strong> {{ detalle.get_estado_incidente_display }} </p>
+                <td>
+                    <p> {{ detalle.descripcion }}</p>
+                </td>
+                <td>
+                    <p><strong>Comentarios adicionales:</strong>
+                        {{ detalle.comentarios_adicionales|default:"No hay comentarios adicionales" }}
+                    </p>
+                </td>
+                <td class="evidencia">
+                    {% if detalle.evidencia %}
+                    {% if detalle.evidencia.url %}
+                    <img src="{{ detalle.evidencia.url }}" alt="Evidencia">
+                    {% else %}
+                    Sin URL para la evidencia
+                    {% endif %}
+                    {% else %}
+                    Sin evidencia
+                    {% endif %}
+                </td>
+
+            </tr>
+            {% endif %}
+
+            {% if detalle.estado_incidente == "C" %}
+
+            <tr>
+
+                <h2>Resolución del incidente</h2>
+                <p> Estado modificado por el Coordinador </p>
+                <p> <strong> Fecha: </strong> {{cabecera.fecha}} </p>
+                <p> <strong> Hora: </strong> {{detalle.hora}} </p>
+                <p> <strong> Estado del incidente: </strong> {{ detalle.get_estado_incidente_display }} </p>
+                <td>
+                    <p>{{ detalle.descripcion }}</p>
+                </td>
+                <td>
+                    <p><strong>Comentarios adicionales:</strong>
+                        {{ detalle.comentarios_adicionales|default:"No hay comentarios adicionales" }}
+                    </p>
+                </td>
+                <td class="evidencia">
+                    {% if detalle.evidencia %}
+                    {% if detalle.evidencia.url %}
+                    <img src="{{ detalle.evidencia.url }}" alt="Evidencia">
+                    {% else %}
+                    Sin URL para la evidencia
+                    {% endif %}
+                    {% else %}
+                    Sin evidencia
+                    {% endif %}
+                </td>
+
+            </tr>
+            {% endif %}
+
+        </tbody>
+    </table>
+    {% endfor %}
+</body>
+
+</html>

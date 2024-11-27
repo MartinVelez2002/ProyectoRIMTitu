@@ -7,7 +7,9 @@ from django.views.generic import ListView, TemplateView
 from django.contrib import messages
 from Modulos.Coordinador.Ubicacion.models import *
 from Modulos.Login.mixin import RoleRequiredMixin
-
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
 
 # Create your views here.
 
@@ -153,7 +155,6 @@ class ListarReportes_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
  
  
 
-
 class DashboardView(LoginRequiredMixin, RoleRequiredMixin, TemplateView):
     template_name = 'dashboards.html'
     required_role = 'Coordinador'
@@ -246,7 +247,7 @@ class DashboardView(LoginRequiredMixin, RoleRequiredMixin, TemplateView):
         ).order_by('mes')
 
         meses = []
-        cantidad_sin_resolver = []  # Cantidad de incidentes sin resolver (N o E)
+       
 
         # Crear listas separadas de meses y cantidades
         meses = [item['mes'].strftime('%B %Y') for item in incidentes_por_mes]
@@ -276,3 +277,56 @@ class DashboardView(LoginRequiredMixin, RoleRequiredMixin, TemplateView):
         context['mes_param'] = mes_param
 
         return context
+
+
+def generar_reporte_incidente(request, incidente_id):
+    # Recuperar el incidente con su detalle
+    try:
+        cabecera = CabIncidente_Model.objects.prefetch_related('detalles').get(id=incidente_id)
+        print(cabecera, "--- Cabecera")
+        detalles = cabecera.detalles.all()
+        print(detalles, "--- Detalle")
+        
+        # Preparar contexto
+        context = {
+            "cabecera": cabecera,
+            "detalles": detalles,
+        }
+
+        # Cargar la plantilla HTML
+        template = get_template("reporte_incidente.html")
+        html = template.render(context)
+
+        # Generar el PDF
+        response = HttpResponse(content_type="application/pdf")
+        response["Content-Disposition"] = "inline; filename=reporte_incidente.pdf"  # Abrir en navegador
+
+        pisa_status = pisa.CreatePDF(html, dest=response)
+        if pisa_status.err:
+            return HttpResponse("Error al generar el PDF", content_type="text/plain")
+        return response
+    except CabIncidente_Model.DoesNotExist:
+        return HttpResponse("Incidente no encontrado", content_type="text/plain")
+
+       
+# def generar_reporte_incidente(request, incidente_id):
+#     try:
+#         cabecera = CabIncidente_Model.objects.get(id=incidente_id)
+#         detalles = cabecera.detalles.all() 
+#         context = {
+#             "cabecera": cabecera,
+#             "detalles": detalles,
+#         }
+
+#         template = get_template("reporte_incidente.html")
+#         html = template.render(context)
+
+#         response = HttpResponse(content_type="application/pdf")
+#         response["Content-Disposition"] = f'attachment; inline="reporte_incidente_{incidente_id}.pdf"'
+
+#         pisa_status = pisa.CreatePDF(html, dest=response)
+#         if pisa_status.err:
+#             return HttpResponse("Error al generar el PDF", content_type="text/plain")
+#         return response
+#     except CabIncidente_Model.DoesNotExist:
+#         return HttpResponse("Incidente no encontrado", content_type="text/plain")
