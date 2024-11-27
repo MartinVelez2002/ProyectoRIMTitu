@@ -10,14 +10,6 @@
     --transition-speed: 0.5s;
 }
 
-.accordion-button::after {
-    color: white; /* Cambia el color de la flecha a blanco */
-}
-
-.accordion-button:not(.collapsed)::after {
-    color: white; /* Asegura que la flecha sea blanca también cuando está expandida */
-}
-
 .side-bar {
     position: fixed;
     top: 70px;
@@ -172,6 +164,9 @@
     margin-left: 90px;
 }
 
+.navbar .movil-view{
+    display: none;
+}
 
 @media (max-width: 875px) {
     .side-bar {
@@ -184,6 +179,10 @@
         width: 100%;
         margin: 0px;
     }
+    .navbar .movil-view{
+        display: block;
+    }
+
 }
 
 
