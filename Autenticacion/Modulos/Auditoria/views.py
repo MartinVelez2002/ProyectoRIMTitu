@@ -15,17 +15,15 @@ class Auditoria_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
 
     def get_queryset(self):
         """
-        Puedes extender el filtrado aquí si necesitas buscar auditorías 
-        por acciones específicas o por otros criterios basados en query params.
+        Filtra los registros por la acción seleccionada si se proporciona un valor válido.
         """
         query = self.request.GET.get('query')
         queryset = super().get_queryset()
 
-        if query:
-            queryset = queryset.filter(
-                descripcion__icontains=query
-            )
+        if query:  # Si se selecciona un filtro, aplicarlo
+            queryset = queryset.filter(accion=query)
         return queryset
+
 
     def get_context_data(self, **kwargs):
         """
