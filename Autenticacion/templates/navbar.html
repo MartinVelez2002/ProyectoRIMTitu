@@ -14,12 +14,12 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-
         <!-- Contenido del navbar -->
         <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
             <div class="movil-view">
                 <div class="accordion" id="accordionExample">
-                    <li class="nav-item">
+                    <!-- Sección: Administración del Personal -->
+                    <li class="nav-item d-flex flex-column">
                         <div class="accordion-item bg-dark border-0">
                             <h2 class="accordion-header">
                                 <button class="accordion-button bg-dark text-white border-0 collapsed" type="button"
@@ -29,16 +29,16 @@
                                     <span class="nav-text">Administración del personal</span>
                                 </button>
                             </h2>
-                            <div id="collapseAdmin" class="accordion-collapse collapse" data-bs-parent="#asideAccordion">
-                                <ul class="list-unstyled accordion-body p-2">
-                                    <li class="mb-2">
+                            <div id="collapseAdmin" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                <ul class="  accordion-body p-3">
+                                    <li class="mb-3 mx-3">
                                         <a class="nav-link text-white d-flex align-items-center"
                                             href="{% url 'login:listar_rol' %}">
                                             <i class="fa-sharp fa-solid fa-address-book me-2"></i>
                                             <span class="nav-text">Rol</span>
                                         </a>
                                     </li>
-                                    <li>
+                                    <li class="mx-3">
                                         <a class="nav-link text-white d-flex align-items-center"
                                             href="{% url 'login:personal' %}">
                                             <i class="fa-solid fa-users me-2"></i>
@@ -49,42 +49,43 @@
                             </div>
                         </div>
                     </li>
-                    <li class="nav-item">
+
+                    <!-- Sección: Planificación -->
+                    <li class="nav-item d-flex flex-column">
                         <div class="accordion-item bg-dark border-0">
                             <h2 class="accordion-header">
                                 <button class="accordion-button bg-dark text-white border-0 collapsed" type="button"
                                     data-bs-toggle="collapse" data-bs-target="#collapsePlanning" aria-expanded="false"
                                     aria-controls="collapsePlanning">
-                                    <i class="fa-sharp fa-solid fa-calendar-alt me-2"> </i>
+                                    <i class="fa-sharp fa-solid fa-calendar-alt me-2"></i>
                                     <span class="nav-text">Planificación</span>
-        
                                 </button>
                             </h2>
-                            <div id="collapsePlanning" class="accordion-collapse collapse" data-bs-parent="#asideAccordion">
-                                <ul class="list-unstyled accordion-body p-2">
-                                    <li class="mb-2">
+                            <div id="collapsePlanning" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                <ul class="  accordion-body p-3">
+                                    <li class="mb-3 mx-3">
                                         <a class="nav-link text-white d-flex align-items-center"
                                             href="{% url 'turno:listar_turno' %}">
                                             <i class="fa-sharp fa-solid fa-code-compare me-2"></i>
                                             <span class="nav-text">Turno</span>
                                         </a>
                                     </li>
-                                    <li class="mb-2">
+                                    <li class="mb-3 mx-3">
                                         <a class="nav-link text-white d-flex align-items-center"
                                             href="{% url 'calendario:listado_calendario' %}">
                                             <i class="fa-sharp fa-solid fa-calendar-days me-2"></i>
                                             <span class="nav-text">Periodo</span>
                                         </a>
                                     </li>
-                                    <li class="mb-2">
+                                    <li class="mb-3 mx-3">
                                         <a class="nav-link text-white d-flex align-items-center"
                                             href="{% url 'ubicacion:inicio' %}">
                                             <i class="fa-solid fa-map-location-dot me-2"></i>
                                             <span class="nav-text">Lugares de Guardia</span>
                                         </a>
                                     </li>
-                                    <li>
-                                        <a class="nav-link text-white  d-flex align-items-center"
+                                    <li class="mb-3 mx-3">
+                                        <a class="nav-link text-white d-flex align-items-center"
                                             href="{% url 'calendario:listar_planificacion' %}">
                                             <i class="fa-solid fa-calendar me-2"></i>
                                             <span class="nav-text">Planificación</span>
@@ -94,7 +95,9 @@
                             </div>
                         </div>
                     </li>
-                    <li class="nav-item">
+
+                    <!-- Sección: Novedades -->
+                    <li class="nav-item d-flex flex-column">
                         <div class="accordion-item bg-dark border-0">
                             <h2 class="accordion-header">
                                 <button class="accordion-button bg-dark text-white border-0 collapsed" type="button"
@@ -104,16 +107,16 @@
                                     <span class="nav-text">Novedades</span>
                                 </button>
                             </h2>
-                            <div id="collapseNews" class="accordion-collapse collapse" data-bs-parent="#asideAccordion">
-                                <ul class="list-unstyled accordion-body p-2">
-                                    <li class="mb-2">
+                            <div id="collapseNews" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                <ul class="  accordion-body p-3">
+                                    <li class="mb-3 mx-3">
                                         <a class="nav-link text-white d-flex align-items-center"
                                             href="{% url 'novedad:inicio_tipoNov' %}">
                                             <i class="fa-solid fa-list-ul me-2"></i>
                                             <span class="nav-text">Tipo de Novedades</span>
                                         </a>
                                     </li>
-                                    <li>
+                                    <li class="mx-3">
                                         <a class="nav-link text-white d-flex align-items-center"
                                             href="{% url 'novedad:inicio' %}">
                                             <i class="fa-solid fa-list-check me-2"></i>
@@ -124,46 +127,48 @@
                             </div>
                         </div>
                     </li>
-                    <li class="nav-item">
+
+                    <!-- Sección: Gestión de Reportes -->
+                    <li class="nav-item d-flex flex-column">
                         <div class="accordion-item bg-dark border-0">
                             <h2 class="accordion-header">
                                 <button class="accordion-button bg-dark text-white border-0 collapsed" type="button"
                                     data-bs-toggle="collapse" data-bs-target="#collapseReportes" aria-expanded="false"
                                     aria-controls="collapseReportes">
-                                    <i class="fa-sharp fa-solid fa-folder-open me-2"></i> 
-                                    <span class="nav-text" >Gestión de Reportes</span>
+                                    <i class="fa-sharp fa-solid fa-folder-open me-2"></i>
+                                    <span class="nav-text">Gestión de Reportes</span>
                                 </button>
                             </h2>
-                            <div id="collapseReportes" class="accordion-collapse collapse" data-bs-parent="#asideAccordion">
-                                <ul class="list-unstyled accordion-body p-2">
-                                    <li class="mb-2">
+                            <div id="collapseReportes" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                <ul class="  accordion-body p-3">
+                                    <li class="mb-3 mx-3">
                                         <a class="nav-link text-white d-flex align-items-center"
                                             href="{% url 'reportesCoord:listado_reportes_agente' %}">
                                             <i class="fa-solid fa-box-tissue me-2"></i>
-                                            <span class="nav-text"> Reportes del Personal </span>
+                                            <span class="nav-text">Reportes del Personal</span>
                                         </a>
                                     </li>
-                                    <li>
+                                    <li class="mb-3 mx-3">
                                         <a class="nav-link text-white d-flex align-items-center"
                                             href="{% url 'reportesCoord:resumen_datos' %}">
                                             <i class="fa-solid fa-chart-pie me-2"></i>
-                                            <span class="nav-text"> Dashboard </span>
+                                            <span class="nav-text">Dashboard</span>
                                         </a>
                                     </li>
-                                    <li>
+                                    <li class="mx-3">
                                         <a class="nav-link text-white d-flex align-items-center"
                                             href="{% url 'auditoria:listar_auditoria' %}">
                                             <i class="fa-sharp fa-solid fa-folder me-2"></i>
-                                            <span class="nav-text"> Auditoría </span>
+                                            <span class="nav-text">Auditoría</span>
                                         </a>
                                     </li>
-                                    
                                 </ul>
                             </div>
                         </div>
                     </li>
                 </div>
             </div>
+            <!-- Opciones del usuario -->
             <ul class="navbar-nav mb-2 mb-lg-0">
                 <!-- Dropdown para el usuario -->
                 <li class="nav-item dropdown mx-3 my-auto">
@@ -180,7 +185,6 @@
                         <li><a class="dropdown-item" href="{% url 'login:logout' %}">Cerrar sesión</a></li>
                     </ul>
                 </li>
-
                 <!-- Turno y ubicación solo si es agente -->
                 {% if request.user.rol and request.user.rol.name == 'Agente' %}
                 <li class="nav-item mx-4 my-auto">

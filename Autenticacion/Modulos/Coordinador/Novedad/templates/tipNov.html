@@ -9,7 +9,7 @@ Modulo Tipo Novedad
 {% block search %}
 <form action="{{ dir_search }}" method="GET">
     <div class="input-group container mb-3">
-        <input type="text" name="query" value="{{ query }}"
+        <input type="text" class="form-control" name="query" value="{{ query }}"
         placeholder = "Filtra por Tipo de Novedades" aria-describedby="basic-addon2" />
         <button type="submit" class="btn btn-primary mr-1" id="idSearchSp">Buscar</button>
     </div>

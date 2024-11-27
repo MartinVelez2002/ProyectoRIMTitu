@@ -19,6 +19,12 @@
     background-color: #f8f9fa;
 }
 
+.container .botones{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
 .side-bar {
     padding: 20px 0;
     display: grid;
@@ -49,9 +55,6 @@
 
 .side-bar::-webkit-scrollbar-thumb:hover {
     background-color: #c4c4c4;
-}
-.navbar-toggler-icon{
-    color: white;
 }
 
 .side-bar .nav-link {
@@ -168,6 +171,8 @@
     display: none;
 }
 
+
+
 @media (max-width: 875px) {
     .side-bar {
         transform: translateX(-100%);
@@ -177,12 +182,32 @@
     }
     .main-content {
         width: 100%;
-        margin: 0px;
+        margin: 0px;    
     }
+    
     .navbar .movil-view{
         display: block;
     }
 
+    .navbar span.nav-text{
+        font-size: 12px;
+    }
+
+    .navbar-collapse {
+        max-height: 80vh; /* Limita el alto máximo del navbar al 80% del alto de la ventana */
+        overflow-y: auto; /* Habilita el scroll vertical si el contenido excede */
+    }
+
+    .navbar-collapse {
+        max-height: 80vh;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+    
+    .container .botones{
+        justify-content: center;
+        flex-direction: column;
+    }
 }
 
 
