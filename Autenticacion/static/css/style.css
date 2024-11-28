@@ -92,7 +92,7 @@
     margin-right: auto;
 }
 
-.side-bar.active .nav-item .accordion-item .nav-text{
+.side-bar.active .nav-item .nav-text{
     display: none;
 }
 
