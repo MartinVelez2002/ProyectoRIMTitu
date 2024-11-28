@@ -131,7 +131,6 @@ class RegistroView(LoginRequiredMixin, CreateView):
             context = {
                 "user": nuevo_usuario.username,
                 'nombre': nuevo_usuario.nombre,
-                "email": nuevo_usuario.email,
                 "password": form.cleaned_data.get('password1'),
                 "site_name": 'Municipio de Milagro',
                 

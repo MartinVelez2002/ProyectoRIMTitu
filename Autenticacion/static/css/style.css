@@ -172,6 +172,10 @@
 }
 
 
+.nav-link.active {
+    background-color: #495057;
+    border-radius: 5px;
+}
 
 @media (max-width: 875px) {
     .side-bar {

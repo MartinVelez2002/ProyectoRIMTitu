@@ -1,31 +1,26 @@
-from time import sleep
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.conf import settings
-from Modulos.Login.models import  Usuario
-from .models import  CabIncidente_Model, DetIncidente_Model
+from Modulos.Login.models import Usuario
+from .models import CabIncidente_Model
 
-
-from django.template.loader import render_to_string
 @receiver(post_save, sender=CabIncidente_Model)
-def enviar_notificacion_al_crear_detalle(sender, instance, created, **kwargs):
+def enviar_notificacion_al_crear_reporte(sender, instance, created, **kwargs):
     if created:
-        # Obtener la cabecera del incidente asociada al detalle
-        #cabecera = instance.cabincidente
-        
-        # Obtener al coordinador
-        coordinador = Usuario.objects.filter(rol__name='Coordinador').first()
+        # Obtener a todos los coordinadores activos
+        coordinadores = Usuario.objects.filter(rol__name='Coordinador', estado=True)
 
-        if coordinador:
-            # Obtener los datos necesarios
-            novedad = instance.novedad  # Asegúrate de que `Novedad_Model` tiene un campo `nombre`
+        if coordinadores.exists():
+            # Obtener los correos electrónicos de los coordinadores
+            destinatarios = coordinadores.values_list('email', flat=True)
+
+            # Obtener los datos necesarios para el correo
+            novedad = instance.novedad  # Asegúrate de que CabIncidente_Model tiene un campo novedad
             prioridad = instance.get_prioridad_display()
             fecha = instance.fecha
-            agente = instance.agente.usuario.nombre  
-
-    
+            agente = instance.agente.usuario.nombre  # Ajusta según tu modelo
 
             # Renderizar el mensaje en HTML
             subject = f'Nuevo Reporte de Incidencia Creado: {instance.id}'
@@ -41,12 +36,12 @@ def enviar_notificacion_al_crear_detalle(sender, instance, created, **kwargs):
 
             from_email = settings.DEFAULT_FROM_EMAIL
 
-            #Enviar el correo con HTML
+            # Enviar el correo a todos los coordinadores
             send_mail(
                 subject,
                 '',  # Dejar vacío el mensaje de texto plano si solo envías HTML
                 from_email,
-                [coordinador.email],
+                destinatarios,  # Lista de correos
                 fail_silently=False,
                 html_message=html_message
             )
