@@ -79,14 +79,14 @@
     <div class="encabezado">
         <h1>Reporte del Incidente</h1>
     </div>
-    <h2>Detalles de la Cabecera</h2>
+    <h2>Asunto</h2>
     <p><strong>Agente que reporta:</strong> {{ cabecera.agente.usuario.nombre }} {{ cabecera.agente.usuario.apellido }}
     </p>
     <p><strong>Novedad:</strong> {{ cabecera.novedad }}</p>
     <p><strong>Prioridad:</strong> {{ cabecera.get_prioridad_display }}</p>
     <p><strong>Fecha:</strong> {{ cabecera.fecha }}</p>
 
-    <h2>Detalles del Incidente</h2>
+    <h2>Detalle</h2>
     {% for detalle in detalles %}
     <table>
         <thead>
