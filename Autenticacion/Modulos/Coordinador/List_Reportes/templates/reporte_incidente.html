@@ -17,9 +17,9 @@
             background-color: #2980b9;
             color: white;
             text-align: center;
-            padding: 20px;
+            vertical-align: middle;
             border-radius: 10px;
-            margin-bottom: 20px;
+           
         }
 
         .encabezado h1 {
@@ -30,7 +30,7 @@
 
         /* Section heading styles */
         h2 {
-            color: #2980b9;
+            color: #000;
             font-size: 22px;
             margin-top: 20px;
             margin-bottom: 15px;
@@ -39,57 +39,56 @@
 
         /* Paragraph styles */
         p {
+        
             font-size: 14px;
             margin: 8px 0;
         }
 
-        /* Table styling */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        th, td {
-            border: 1px solid #bdc3c7;
-            padding: 12px 15px;
-            text-align: left;
+       
+       
+        
+        th {
+            color:#000;
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: center;
             vertical-align: middle;
         }
-
-        th {
-            background-color: #ecf0f1;
-            color: #2C3E50;
-            font-weight: bold;
-            text-transform: uppercase;
+        
+        td {
+            padding: 10px; /* Espaciado interno para las celdas */
+            border: 1px solid #ddd; /* Bordes suaves para las celdas */
+            vertical-align: top; /* Alinea el contenido en la parte superior */
         }
 
-        td {
-            background-color: #ffffff;
-            word-wrap: break-word; /* Ensures long text will break and not overflow */
+        span {
+            font-weight: bold; color:#000;"
         }
 
         /* Styling for specific data like the agent and priority */
         .data-point {
             font-weight: bold;
-            color: #2980b9;
+            color: #000;
         }
 
-        /* Badge styles for different incident states */
+        
+   
+        
         .estado {
-            padding: 10px 20px;
-            border-radius: 25px;
-            margin: 10px 0;
-            font-weight: bold;
-            font-size: 16px;
-            color: white;
+            display: inline-block; /* Ajusta el tamaño al contenido */
+            padding: 5px 10px; /* Espaciado interno para el fondo */
+            border-radius: 25px; /* Bordes redondeados */
+            font-weight: bold; /* Texto en negrita */
+            font-size: 16px; /* Tamaño del texto */
+            color: white; /* Color del texto */
+        
         }
+        
 
         .bg-info {
-            background-color: #17a2b8;
+            background-color:  #0dcaf0;
+            padding: 10px;
+            border-radius: 10px;
         }
 
         .bg-warning {
@@ -139,9 +138,10 @@
 
 <body>
 
-    <div class="encabezado">
-        <h1>Reporte del Incidente</h1>
+    <div class="encabezado" style="text-align: center; background-color: #6c757d;; padding: 20px;">
+        <h1 style="margin: 0; font-size: 24px; ">Reporte del Incidente</h1>
     </div>
+    
 
     <h2>Asunto</h2>
     <p><span class="data-point">Agente que reporta:</span> {{ cabecera.agente.usuario.nombre }} {{ cabecera.agente.usuario.apellido }}</p>
@@ -149,24 +149,25 @@
     <p><span class="data-point">Prioridad:</span> {{ cabecera.get_prioridad_display }}</p>
     <p><span class="data-point">Fecha:</span> {{ cabecera.fecha }}</p>
 
-    <h2>Detalle</h2>
+    <h2>Detalle del Incidente</h2>
     {% for detalle in detalles %}
-    <table>
-        <thead>
-            <tr>
-                <th><h3>Descripción</h3></th>
-                <th><h3>Comentarios</h3></th>
-                <th><h3>Evidencia</h3></th>
+    <table style="width: 100%; border-collapse: collapse; font-size: 14px; margin: 20px 0;">
+        <thead >
+            <tr style="background-color:#6c757d; text-align: center;">
+                <th>Descripción</th>
+                <th>Comentarios</th>
+                <th>Evidencia</th>
             </tr>
         </thead>
         <tbody>
             {% if detalle.estado_incidente == "N" %}
-            <p class="estado">
-                <strong>Estado del incidente:</strong> 
+            <p>
+                <span><strong>Estado del incidente:</strong></span> 
                 <span class="estado bg-info">{{ detalle.estado_incidente_display }}</span>
             </p>
             
-            <p><strong>Hora:</strong> {{ detalle.hora }}</p>
+            
+            <p><strong style="font-weight: bold; color: #000;">Hora:</strong> {{ detalle.hora }}</p>
             <tr>
                 <td class="descripcion"><p>{{ detalle.descripcion }}</p></td>
                 <td class="comentarios"><p>{{ detalle.comentarios_adicionales|default:"No existen comentarios adicionales" }}</p></td>
@@ -179,13 +180,15 @@
                 </td>
             </tr>
             {% elif detalle.estado_incidente == "E" %}
-            <p class="estado">
-                <strong>Estado del incidente:</strong> 
+            <p>
+                <span><strong>Estado del incidente:</strong></span>
                 <span class="estado bg-warning">{{ detalle.estado_incidente_display }}</span>
             </p>
+ 
+            <p><strong style="font-weight: bold; color: #000;">Fecha:</strong> {{ cabecera.fecha }}</p>
+            <p><strong style="font-weight: bold; color: #000;">Hora:</strong> {{ detalle.hora }}</p>
+
             
-            <p><strong>Fecha:</strong> {{ cabecera.fecha }}</p>
-            <p><strong>Hora:</strong> {{ detalle.hora }}</p>
             <tr>
                 <td class="descripcion"><p>{{ detalle.descripcion }}</p></td>
                 <td class="comentarios"><p>{{ detalle.comentarios_adicionales|default:"No hay comentarios adicionales" }}</p></td>
@@ -198,12 +201,12 @@
                 </td>
             </tr>
             {% elif detalle.estado_incidente == "A" %}
-            <p class="estado">
-                <strong>Estado del incidente:</strong> 
+            <p>
+                <span><strong>Estado del incidente:</strong></span>
                 <span class="estado bg-success">{{ detalle.estado_incidente_display }}</span>
             </p>
-            <p><strong>Fecha:</strong> {{ cabecera.fecha }}</p>
-            <p><strong>Hora:</strong> {{ detalle.hora }}</p>
+            <p><strong style="font-weight: bold; color: #000;">Fecha:</strong> {{ cabecera.fecha }}</p>
+            <p><strong style="font-weight: bold; color: #000;">Hora:</strong> {{ detalle.hora }}</p>
             <tr>
                 <td class="descripcion"><p>{{ detalle.descripcion }}</p></td>
                 <td class="comentarios"><p>{{ detalle.comentarios_adicionales|default:"No hay comentarios adicionales" }}</p></td>
@@ -216,12 +219,12 @@
                 </td>
             </tr>
             {% elif detalle.estado_incidente == "C" %}
-            <p class="estado">
-                <strong>Estado del incidente:</strong> 
+            <p>
+                <span><strong>Estado del incidente:</strong></span>
                 <span class="estado bg-secondary">{{ detalle.estado_incidente_display }}</span>
             </p>
-            <p><strong>Fecha:</strong> {{ cabecera.fecha }}</p>
-            <p><strong>Hora:</strong> {{ detalle.hora }}</p>
+            <p><strong style="font-weight: bold; color: #000;">Fecha:</strong> {{ cabecera.fecha }}</p>
+            <p><strong style="font-weight: bold; color: #000;">Hora:</strong> {{ detalle.hora }}</p>        
             <tr>
                 <td class="descripcion"><p>{{ detalle.descripcion }}</p></td>
                 <td class="comentarios"><p>{{ detalle.comentarios_adicionales|default:"No hay comentarios adicionales" }}</p></td>
