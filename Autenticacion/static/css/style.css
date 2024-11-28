@@ -19,17 +19,29 @@
     background-color: #f8f9fa;
 }
 
+.modal-content .modal-title{
+    font-size: clamp(1rem, 1.5rem, 2rem);
+}
+.modal-content h5{
+    font-size: clamp(0.8rem, 1rem, 2rem);
+    font-weight: bold;
+}
 .container .botones{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
 }
 
+.modal-lg.mod{
+    width: clamp(400px, 600px, 700px);
+    height: clamp(400px, 600px, 700px);
+    margin: auto;
+}
 .side-bar {
     padding: 20px 0;
     display: grid;
     grid-template-columns: repeat(1, 1fr);
-    width: 250px;
+    width: clamp(220px, 250px, 260px);
     background-color: var(--sidebar-bg);
     transition: width var(--transition-speed) ease;
     overflow: auto; /* Agrega scroll vertical si el contenido sobrepasa el espacio */
@@ -212,6 +224,7 @@
         justify-content: center;
         flex-direction: column;
     }
+
 }
 
 

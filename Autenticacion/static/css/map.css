@@ -1,6 +1,6 @@
 #map{
-    width: 400px;
-    height: 400px;
+    width: clamp(150px, 250px, 300px);
+    height: clamp(150px, 250px, 300px);
     box-shadow: 2px 2px 3px 3px #a5a4a4;
 }
 
