@@ -29,27 +29,56 @@ Dashboard Profesional
 {% endblock %}
 
 {% block charts %}
-<div class="row g-1">
-    <div class="col-lg-6">
-        <div class="card shadow-sm">
-            <div class="card-header bg-primary text-white">
-                <h5 class="card-title mb-0">Distribución de Prioridades</h5>
+<div class="row g-1 mb-5">
+    <div class="d-flex row justify-content-evenly pb-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">Distribución de Prioridades</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="prioridadChart"></canvas>
+                </div>
             </div>
-            <div class="card-body">
-                <canvas id="prioridadChart"></canvas>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="card-title mb-0">Estado de Incidencias</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="estadoChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 card">
+            <div class="card-header" style="background-color: #2c3e50; color: #ecf0f1;">
+                <h5 class="card-title mb-0">Incidentes Sin Resolver por Mes</h5>
+            </div>
+        
+            <div class="card-body" style="background-color: #f4f6f9;">
+                <div class="table-responsive">
+                    <table class="table" style="border-collapse: collapse; width: 100%;">
+                        <thead>
+                            <tr style="background-color: #34495e; color: #ecf0f1; text-align: center;">
+                                <th style="padding: 12px 15px; border-bottom: 2px solid #ecf0f1;">Mes</th>
+                                <th style="padding: 12px 15px; border-bottom: 2px solid #ecf0f1;">Incidentes Sin Resolver</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for mes, cantidad in datas %}
+                            <tr style="border-bottom: 1px solid #ddd; text-align: center;">
+                                <td style="padding: 12px 15px; background-color: #ffffff;">{{ mes }}</td>
+                                <td style="padding: 12px 15px; background-color: #ffffff;">{{ cantidad }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-lg-6">
-        <div class="card shadow-sm">
-            <div class="card-header bg-secondary text-white">
-                <h5 class="card-title mb-0">Estado de Incidencias</h5>
-            </div>
-            <div class="card-body">
-                <canvas id="estadoChart"></canvas>
-            </div>
-        </div>
-    </div>
+
     <div class="col-lg-6">  <!-- Ancho personalizado -->
         <div class="card shadow-sm">
             <div class="card-header bg-info text-white">
@@ -107,7 +136,7 @@ Dashboard Profesional
 
 {% block table %}
 
-{% endblock%}
+{% endblock %}
 
 
 {% block js %}

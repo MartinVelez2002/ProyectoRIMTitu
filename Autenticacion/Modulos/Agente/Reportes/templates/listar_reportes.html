@@ -101,8 +101,8 @@ Módulo Reportes
                         
                         <!-- Campo: Evidencia -->
                         <div class="mb-3">
-                            <label for="evidencia-{{ cab.id }}" class="form-label fw-bold">Evidencia (opcional)</label>
-                            <input type="file" class="form-control" name="evidencia" id="evidencia-{{ cab.id }}" accept="image/*;capture=camera">
+                            <label for="evidencia-{{ cab.id }}" class="form-label fw-bold">Evidencia (Obligatorio) </label>
+                            <input type="file" class="form-control" name="evidencia" required id="evidencia-{{ cab.id }}" accept="image/*;capture=camera">
                             <small class="form-text text-muted">Puedes subir imágenes o videos que respalden el cambio de estado.</small>
                         </div>
                         
@@ -146,7 +146,7 @@ Módulo Reportes
                         {% if det.evidencia %}
                         <div class="border border-2 p-2 rounded ">
                             {% if det.evidencia.url|is_image %}
-                                <img  width="400px" height="400px" src="{{ det.evidencia.url }}" alt="Evidencia" class="mx-auto d-block">
+                                <img  width="400px" height="300px" src="{{ det.evidencia.url }}" alt="Evidencia" class="mx-auto d-block">
                             {% elif det.evidencia.url|is_video %}
                                 <video width="100%" height="auto" controls class="mx-auto d-block">
                                     <source src="{{ det.evidencia.url }}" type="video/mp4">
