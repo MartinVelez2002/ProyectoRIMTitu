@@ -46,7 +46,7 @@ class TurnUsuarioUbicacion_Form(ModelForm):
             'turno': forms.Select(),
             'ubicacion': forms.Select(),
         }
-
+#
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         
