@@ -170,13 +170,16 @@ class DashboardView(LoginRequiredMixin, RoleRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         
         # Obtener el mes seleccionado o 'todos' si no se ha seleccionado ninguno
-        mes_param = request.GET.get('mes', 'todos')
+        mes_param = request.GET.get('mes', '')
         
+   
         # Filtrar incidentes por el mes seleccionado
-        if mes_param != 'todos':
-            year = int(mes_param[:4])
-            month = int(mes_param[5:7])
-            fecha_filter = {'fecha__year': year, 'fecha__month': month}
+        if mes_param and mes_param != 'todos':
+            try:
+                year, month = map(int, mes_param.split('-'))
+                fecha_filter = {'fecha__year': year, 'fecha__month': month}
+            except ValueError:
+                fecha_filter = {}  # En caso de error, no aplicar filtro
         else:
             fecha_filter = {}
 
@@ -257,30 +260,32 @@ class DashboardView(LoginRequiredMixin, RoleRequiredMixin, TemplateView):
         meses = [item['mes'].strftime('%B %Y') for item in incidentes_por_mes]
         cantidades = [item['cantidad'] for item in incidentes_por_mes]
 
-        # Obtener los meses disponibles para el filtro (únicos y ordenados)
-        meses_disponibles = incidentes_por_mes.values('mes').distinct().order_by('mes')
         
-        # Si se selecciona un mes específico, filtrar por el mes correspondiente
-        if mes_param != 'todos':
-            incidentes_sin_resolver_filtrados = reportes_sin_resolver.filter(fecha__year=year, fecha__month=month)
-            incidentes_por_mes = incidentes_sin_resolver_filtrados.annotate(
-                mes=TruncMonth('fecha')
-            ).values('mes').annotate(
-                cantidad=Count('id')
-            ).order_by('mes')
-            # Actualizar meses y cantidades según el filtro
-            meses = [item['mes'].strftime('%B %Y') for item in incidentes_por_mes]
-            cantidades = [item['cantidad'] for item in incidentes_por_mes]
+       # Obtener los meses disponibles para el filtro (únicos y ordenados)
+           
+        meses_disponibles = CabIncidente_Model.objects.annotate(
+            mes=TruncMonth('fecha')  # Agrupar por mes de la fecha de creación
+        ).values('mes').distinct().order_by('mes')
+
+         # Convertir los meses disponibles a un formato compatible con el select
+        meses_disponibles_formateados = [{'mes': mes['mes']} for mes in meses_disponibles]       
+            
+        # Actualizar meses y cantidades según el filtro
+        meses = [item['mes'].strftime('%B %Y') for item in incidentes_por_mes]
+        cantidades = [item['cantidad'] for item in incidentes_por_mes]
         
         # Combinar los meses y las cantidades en una lista de tuplas
         data = zip(meses, cantidades)
         
         # Pasar los datos al contexto
         context['datas'] = data
-        context['meses_disponibles'] = meses_disponibles
+        context['meses_disponibles'] = meses_disponibles_formateados
+
         context['mes_param'] = mes_param
 
         return context
+
+
 
 def convertir_imagen_a_base64(file_field):
     if file_field and Path(file_field.path).is_file():

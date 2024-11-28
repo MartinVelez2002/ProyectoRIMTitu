@@ -10,7 +10,7 @@ from .models import CabIncidente_Model
 def enviar_notificacion_al_crear_reporte(sender, instance, created, **kwargs):
     if created:
         # Obtener a todos los coordinadores activos
-        coordinadores = Usuario.objects.filter(rol__name='Coordinador', is_active=True)
+        coordinadores = Usuario.objects.filter(rol__name='Coordinador', estado=True)
 
         if coordinadores.exists():
             # Obtener los correos electrónicos de los coordinadores
