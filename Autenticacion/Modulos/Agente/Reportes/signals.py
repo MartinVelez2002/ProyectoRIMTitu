@@ -43,5 +43,4 @@ def enviar_notificacion_al_crear_reporte(sender, instance, created, **kwargs):
                 from_email,
                 destinatarios,  # Lista de correos
                 fail_silently=False,
-                html_message=html_message
-            )
+                html_message=html_message)
