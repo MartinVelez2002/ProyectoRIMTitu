@@ -41,12 +41,12 @@ def enviar_notificacion_al_crear_detalle(sender, instance, created, **kwargs):
 
             from_email = settings.DEFAULT_FROM_EMAIL
 
-            # Enviar el correo con HTML
-            # send_mail(
-            #     subject,
-            #     '',  # Dejar vacío el mensaje de texto plano si solo envías HTML
-            #     from_email,
-            #     [coordinador.email],
-            #     fail_silently=False,
-            #     html_message=html_message
-            # )
+            #Enviar el correo con HTML
+            send_mail(
+                subject,
+                '',  # Dejar vacío el mensaje de texto plano si solo envías HTML
+                from_email,
+                [coordinador.email],
+                fail_silently=False,
+                html_message=html_message
+            )
