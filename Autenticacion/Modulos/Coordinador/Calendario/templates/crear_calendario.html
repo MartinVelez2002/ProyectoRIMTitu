@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block controls %}
-<div class="form-grid">
+<div class="form-grid grid-cal">
     <div class="input-div one">
         <div class="i">
             <i class="fa-sharp fa-solid fa-window-maximize"></i>
@@ -23,4 +23,11 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/autocomplete_input.js' %}"></script>
+<script src="{% static 'js/input_effect.js' %}"></script>
+<script src="{% static 'js/fecha_limitada.js' %}" ></script>
+<script src="{% static 'js/ocultar_mensajes.js'%}"></script>
 {% endblock %}

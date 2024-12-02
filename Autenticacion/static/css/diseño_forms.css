@@ -19,14 +19,32 @@ header {
     display: grid;
     grid-template-columns: repeat(3, 1fr); 
     gap: 5px 20px;
-	width: 700px;
+	width: 100%;
+}
+.form-grid.grid-cal{
+	grid-template-columns: repeat(2, 1fr);
+}
+
+.form-grid.grid-turn{
+	grid-template-columns: repeat(2, 1fr);
+}
+
+.form-grid.grid-plan{
+	grid-template-columns: repeat(2, 1fr);
 }
 
 
+.form-grid.grid-rol{
+	grid-template-columns: repeat(1, 1fr);
+}
 
-   
+.form-grid.grid-nov{
+	grid-template-columns: repeat(2, 1fr);
+}
 
-
+.form-grid.grid-tip{
+	grid-template-columns: repeat(1, 1fr);
+}
 
 .form-grid .input-div
 {
@@ -93,7 +111,6 @@ header {
 .form-grid .input-div.focus > .i > i{
 	color: #12171e;
 }
-
 
 
 .input-div .div span[id='toggleBtn1'],
@@ -220,27 +237,18 @@ header {
 /* Media Queries para adaptabilidad */
 @media screen and (max-width: 1050px){
 
-
 	.form-grid {
-		grid-template-columns: repeat(2, 1fr);
-		width: 600px;
+		grid-template-columns: repeat(2, 1fr) !important;
 		gap: 20px;
 	}
 
 
 }
 
-@media screen and (max-width: 1000px){
-	.form-grid {
-		width: 400px;
-		gap: 15px;
-	}
-}
 
 @media screen and (max-width: 700px){
 	.form-grid {
-		grid-template-columns: repeat(1, 1fr);
-		width: 300px;
+		grid-template-columns: repeat(1, 1fr) !important;
 	}
 
 }

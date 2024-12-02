@@ -1,11 +1,3 @@
-
-
-
-
-
-
-
-
 /* Para el Sidebar */
 let flecha = document.getElementById('btn');
 let sidebar = document.querySelector('.side-bar');
