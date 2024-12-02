@@ -12,17 +12,18 @@ Módulo Reportes
 
 {% block filtros %}
 <form method="get" class="row g-3 align-items-center mt-3">
+     
      <!-- Filtro por fecha -->
-     <div class="col-md-3">
-        <label for="fecha" class="form-label fw-bold">Fecha:</label>
-        <select class="form-select" id="fecha" name="fecha">
-            <option value="" disabled selected>-- Seleccione --</option>
-            {% for f in fechas %}
-            <option value="{{ f|date:"Y-m-d" }}" {% if fecha == f|date:"Y-m-d" %}selected{% endif %}>
-                {{ f|date:"d/m/Y" }}
-            </option>
-            {% endfor %}
-        </select>
+    <div class="col-md-3">
+        <label for="fecha_inicio" class="form-label fw-bold">Fecha inicio:</label>
+        <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" 
+            value="{{ fecha_inicio|date:"Y-m-d" }}">
+    </div>
+
+    <div class="col-md-3">
+        <label for="fecha_fin" class="form-label fw-bold">Fecha fin:</label>
+        <input type="date" class="form-control" id="fecha_fin" name="fecha_fin" 
+            value="{{ fecha_fin|date:"Y-m-d" }}">
     </div>
 
 

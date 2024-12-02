@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.shortcuts import redirect
 from django.db.models.functions import TruncMonth
 from django.db.models import Case, When, Value, IntegerField, Count, Subquery, OuterRef
@@ -28,7 +29,9 @@ class ListarReportes_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
     def get_queryset(self):
           
         # Obtener los valores de los filtros
-        fecha_query = self.request.GET.get('fecha') #Filtro por fecha
+         # Obtener los valores de los filtros
+        fecha_inicio_query = self.request.GET.get('fecha_inicio')  # Filtro por fecha inicio
+        fecha_fin_query = self.request.GET.get('fecha_fin')  # Filtro por fecha fin 
         ubicacion_query = self.request.GET.get('query')  # Filtro por ubicación
         prioridad_query = self.request.GET.get('prioridad')  # Filtro por prioridad
         estado_query = self.request.GET.get('estado') #Filtro por estado
@@ -63,8 +66,15 @@ class ListarReportes_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
         if prioridad_query:
             queryset = queryset.filter(prioridad=prioridad_query)
         
-        if fecha_query:
-            queryset = queryset.filter(fecha=fecha_query)
+        # Filtrar por rango de fecha si las fechas están definidas
+        if fecha_inicio_query and fecha_fin_query:
+            try:
+                fecha_inicio = datetime.strptime(fecha_inicio_query, '%Y-%m-%d')
+                fecha_fin = datetime.strptime(fecha_fin_query, '%Y-%m-%d')
+                queryset = queryset.filter(fecha__range=[fecha_inicio, fecha_fin])
+            except ValueError:
+                pass  # Si las fechas no son válidas, no se aplica el filtro de fecha
+
             
         if estado_query:
             # Filtrar por el estado más reciente anotado
@@ -113,10 +123,10 @@ class ListarReportes_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
         context['prioridad'] = self.request.GET.get('prioridad', '')
         context['estado'] = self.request.GET.get('estado', '')
         
-        # Pasar las fechas directamente en formato de fecha
-        context['fechas'] = fechas_disponibles
-        context['fecha'] = self.request.GET.get('fecha', '')  
-
+       
+         # Obtener las fechas de inicio y fin seleccionadas
+        context['fecha_inicio'] = self.request.GET.get('fecha_inicio', '')
+        context['fecha_fin'] = self.request.GET.get('fecha_fin', '')
 
         return context
 
