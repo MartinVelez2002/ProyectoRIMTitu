@@ -25,6 +25,8 @@
     justify-content: space-around;
 }
 
+
+
 .modal-content .modal-title{
     font-size: clamp(1rem, 1.5rem, 2rem);
 }
@@ -192,7 +194,7 @@
     border-radius: 5px;
 }
 
-@media (max-width: 875px) {
+@media (width < 875px) {
     .side-bar {
         transform: translateX(-100%);
         opacity: 0;
@@ -207,16 +209,24 @@
     .navbar .movil-view{
         display: block;
     }
+    .container .card-header, .card-title, .card-text{
+        font-size: 14px;
+    }
 
+    .row .form-label, .form-control{
+        font-size: 14px;
+    }
     .navbar span.nav-text{
-        font-size: 12px;
+        font-size: 14px;
     }
 
     .navbar-collapse {
         max-height: 80vh; /* Limita el alto máximo del navbar al 80% del alto de la ventana */
         overflow-y: auto; /* Habilita el scroll vertical si el contenido excede */
     }
-
+    .navbar-nav .dropdown-toggle, .dropdown-item{
+        font-size: 14px;
+    }
     .navbar-collapse {
         max-height: 80vh;
         overflow-y: auto;
@@ -226,6 +236,9 @@
     .container .botones{
         justify-content: center;
         flex-direction: column;
+    }
+    .container .btn{
+        font-size: 14px;
     }
 
 }

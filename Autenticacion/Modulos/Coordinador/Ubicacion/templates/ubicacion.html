@@ -6,7 +6,7 @@ Módulo Ubicación
 {% endblock %}
 {% block search %}
 <form action="{{ dir_search }}" method="GET">
-    <div class="d-flex flex-row">
+    <div class="d-flex flex-row mt-2">
         <div class="input-group me-2">
             <input type="text" class="form-control" name="query" value="{{ query }}"
                 placeholder="Filtrar por Lugar o Sector" aria-describedby="basic-addon2" />
@@ -19,7 +19,7 @@ Módulo Ubicación
 
 
 {% block btnTitle %}
-<a class="btn btn-dark btn-add" href="{{ dirurl }}">
+<a class="btn btn-dark btn-add mt-2" href="{{ dirurl }}">
     Registrar nueva Ubicación
 </a>
 {% endblock %}

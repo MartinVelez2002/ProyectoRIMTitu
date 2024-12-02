@@ -23,11 +23,14 @@
 }
 
 
-.table th, td {
+.table th, td{
+    font-size:  16px;
     padding: 40px;
     text-align: center;
 }
-
+.table .btn{
+    font-size: 16px;
+}
 
 
 /* CSS DE BUSCADOR */
@@ -37,25 +40,11 @@
     
 }
 
-.search-btn input{
-    width: 250px;
-    border-width: 1px;
-    border-color: gainsboro;
-    border-radius: 10px;
-    color: gray;
-    padding: 10px;
-
-}
-.search-btn form{
-    margin: auto;
-}
-.search-btn .btn-add{
-    margin: auto;
-    display: flex;
-    align-items: center;
-}
 
 @media (width < 1025) {
+    .table th, td{
+        font-size: 14px;
+    }
     .search-btn{
         grid-template-columns: repeat(2, auto);
     }
@@ -64,12 +53,17 @@
 
 
 /* Estilos para responsive */
-@media (max-width: 768px) {
+@media (width < 768px) {
     .table-container {
-        padding: 10px;
+        padding: 12px;
     }
-
+    .table-container h5{
+        font-size: 14px;
+    }
     .table th, td {
-        padding: 10px;
+        font-size: 14px;
+    }
+    .table .btn{
+        font-size: 14px;
     }
 }

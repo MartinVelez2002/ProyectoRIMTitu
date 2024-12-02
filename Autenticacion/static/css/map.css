@@ -1,7 +1,9 @@
-#map{
-    width: clamp(150px, 250px, 300px);
-    height: clamp(150px, 250px, 300px);
+#map {
+    width: clamp(150px, 55vw, 300px);
+    height: clamp(150px, 55vw, 300px);
     box-shadow: 2px 2px 3px 3px #a5a4a4;
+    display: flex;
+    justify-content: center;
 }
 
 
@@ -9,10 +11,6 @@
     grid-template-columns: repeat(2, 1fr)!important;
 }
 @media (width < 1000px) {
-    #map{
-        width: 350px;
-        height: 350px;
-    }
     .form-grid.form-grid-map{
         display: flex;
         flex-direction: column;
