@@ -28,9 +28,12 @@ class ListarReportes_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
     def get_queryset(self):
           
         # Obtener los valores de los filtros
+        fecha_query = self.request.GET.get('fecha') #Filtro por fecha
         ubicacion_query = self.request.GET.get('query')  # Filtro por ubicación
         prioridad_query = self.request.GET.get('prioridad')  # Filtro por prioridad
-        estado_query = self.request.GET.get('estado')
+        estado_query = self.request.GET.get('estado') #Filtro por estado
+       
+
        
          # Anotar el estado más reciente de cada incidente
         subquery_estado = DetIncidente_Model.objects.filter(
@@ -42,13 +45,13 @@ class ListarReportes_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
             estado_actual=Subquery(subquery_estado)
         ).annotate(
             prioridad_orden=Case(
-                When(prioridad='A', then=Value(1)),  # Alto tiene mayor prioridad
-                When(prioridad='M', then=Value(2)),  # Medio
-                When(prioridad='B', then=Value(3)),  # Bajo
+                When(prioridad='A', then=Value(1)),  
+                When(prioridad='M', then=Value(2)), 
+                When(prioridad='B', then=Value(3)), 
                 default=Value(4),
                 output_field=IntegerField(),
             )
-        ).prefetch_related('detalles').order_by('prioridad_orden', '-fecha', 'id')  # Orden personalizado
+        ).prefetch_related('detalles').order_by('prioridad_orden')  # Orden personalizado
         
         
     
@@ -60,11 +63,13 @@ class ListarReportes_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
         if prioridad_query:
             queryset = queryset.filter(prioridad=prioridad_query)
         
+        if fecha_query:
+            queryset = queryset.filter(fecha=fecha_query)
+            
         if estado_query:
             # Filtrar por el estado más reciente anotado
             queryset = queryset.filter(estado_actual=estado_query)
-        
-
+    
 
         return queryset 
     
@@ -95,7 +100,11 @@ class ListarReportes_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
             'cerrados': estados_dict.get('C', 0)    # Cerrados
         }
 
-        # Agregar el resumen a tu contexto
+
+        # Obtener las fechas únicas del modelo
+        fechas_disponibles = CabIncidente_Model.objects.values_list('fecha', flat=True).distinct().order_by('fecha')
+
+    
         context['resumen_estados'] = resumen_estados
         context['title_table'] = 'Reportes de los Agentes'
         context['ubicaciones'] = Ubicacion_Model.objects.all()
@@ -103,12 +112,12 @@ class ListarReportes_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
         context['action_save'] = self.request.path
         context['prioridad'] = self.request.GET.get('prioridad', '')
         context['estado'] = self.request.GET.get('estado', '')
-     
-       
+        
+        # Pasar las fechas directamente en formato de fecha
+        context['fechas'] = fechas_disponibles
+        context['fecha'] = self.request.GET.get('fecha', '')  
 
-        
-        
-        
+
         return context
 
     def post(self, request, *args, **kwargs):

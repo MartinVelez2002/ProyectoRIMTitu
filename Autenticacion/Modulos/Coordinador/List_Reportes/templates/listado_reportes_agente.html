@@ -12,6 +12,22 @@ Módulo Reportes
 
 {% block filtros %}
 <form method="get" class="row g-3 align-items-center mt-3">
+     <!-- Filtro por fecha -->
+     <div class="col-md-3">
+        <label for="fecha" class="form-label fw-bold">Fecha:</label>
+        <select class="form-select" id="fecha" name="fecha">
+            <option value="" disabled selected>-- Seleccione --</option>
+            {% for f in fechas %}
+            <option value="{{ f|date:"Y-m-d" }}" {% if fecha == f|date:"Y-m-d" %}selected{% endif %}>
+                {{ f|date:"d/m/Y" }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+
+
+ 
+    
     <div class="col-md-3">
         <label for="prioridad" class="form-label fw-bold">Filtro por prioridad</label>
         <select id="prioridad" name="prioridad" class="form-select">
@@ -24,14 +40,14 @@ Módulo Reportes
     <div class="col-md-3">
         <label for="estado" class="form-label fw-bold">Filtro por estado</label>
         <select id="estado" name="estado" class="form-select">
-            <option value="" disabled selected>Seleccione...</option>
+            <option value="" disabled selected>-- Seleccione --</option>
             <option value="N" {% if estado == "N" %}selected{% endif %}>Notificado</option>
             <option value="E" {% if estado == "E" %}selected{% endif %}>En Proceso</option>
             <option value="A" {% if estado == "A" %}selected{% endif %}>Atendido</option>
             <option value="C" {% if estado == "C" %}selected{% endif %}>Cerrado</option>
         </select>
     </div>
-    <div class="col-md-6 d-flex flex-column">
+    <div class="col-md-3 d-flex flex-column">
         <label for="estado" class="form-label fw-bold">Filtro por lugar</label>
         <select name="query" class="form-select">
             <option value="" disabled selected>-- Seleccione --</option>
