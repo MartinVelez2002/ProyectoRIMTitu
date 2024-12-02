@@ -62,25 +62,17 @@
         }
 
         span {
-            font-weight: bold; color:#000;"
+            font-weight: bold;
+             color:#000;"
         }
 
-        /* Styling for specific data like the agent and priority */
-        .data-point {
-            font-weight: bold;
-            color: #000;
-        }
 
         
    
         
         .estado {
-            display: inline-block; /* Ajusta el tamaño al contenido */
-            padding: 5px 10px; /* Espaciado interno para el fondo */
-            border-radius: 25px; /* Bordes redondeados */
             font-weight: bold; /* Texto en negrita */
-            font-size: 16px; /* Tamaño del texto */
-            color: white; /* Color del texto */
+            font-size: 15px; /* Tamaño del texto */
         
         }
         
@@ -144,10 +136,10 @@
     
 
     <h2>Asunto</h2>
-    <p><span class="data-point">Agente que reporta:</span> {{ cabecera.agente.usuario.nombre }} {{ cabecera.agente.usuario.apellido }}</p>
-    <p><span class="data-point">Novedad:</span> {{ cabecera.novedad }}</p>
-    <p><span class="data-point">Prioridad:</span> {{ cabecera.get_prioridad_display }}</p>
-    <p><span class="data-point">Fecha:</span> {{ cabecera.fecha }}</p>
+    <p><span>Agente que reporta:</span> {{ cabecera.agente.usuario.nombre }} {{ cabecera.agente.usuario.apellido }}</p>
+    <p><span>Novedad:</span> {{ cabecera.novedad }}</p>
+    <p><span>Prioridad:</span> {{ cabecera.get_prioridad_display }}</p>
+    <p><span>Fecha:</span> {{ cabecera.fecha }}</p>
 
     <h2>Detalle del Incidente</h2>
     {% for detalle in detalles %}
