@@ -11,6 +11,8 @@ urlpatterns = [
     
     path('',MainView.as_view(),name = 'index'),
     
+    path('usuarios/pdf/', GenerarPDFView.as_view(), name='generar_usuarios_pdf'),
+    
     #Autenticación
     path('accounts/login/',Login.as_view(), name='login'),
     

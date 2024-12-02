@@ -50,12 +50,6 @@ class TurnUsuarioUbicacion_Form(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         
-        # Filtrar usuarios con el rol "Agente" y que no sean superusuarios
-        self.fields['usuario'].queryset = Usuario.objects.filter(
-            rol__name="Agente",  # Usamos el campo name del modelo Rol 
-            estado=True  # Solo usuarios activos
-        )
-        
         # Aplicar atributos comunes a todos los campos
         for field in self.fields.values():
             field.widget.attrs.update({

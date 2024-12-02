@@ -94,7 +94,10 @@ class CalendarioUsuario_Create(LoginRequiredMixin, RoleRequiredMixin, CreateView
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
         # Filtrar solo usuarios válidos para el select
-        form.fields['usuario'].queryset = Usuario.objects.filter(is_superuser=False)
+        form.fields['usuario'].queryset = Usuario.objects.filter(rol__id=1)
+        form.fields['calendario'].queryset = Calendario_Model.objects.filter(estado=True)
+        form.fields['turno'].queryset = Turno_Model.objects.filter(estado=True)
+        form.fields['ubicacion'].queryset = Ubicacion_Model.objects.filter(estado=True)
         return form
     
 

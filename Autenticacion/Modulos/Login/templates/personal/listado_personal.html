@@ -6,13 +6,16 @@ Módulo Personal
 {% endblock %}
 
 {% block search %}
+
 <form action="{{ dir_search }}" method="GET">
     <div class="input-group">
         <input type="text" class="form-control" name="query" value="{{ query }}"
-        placeholder = "Filtrar por Nombre y/o Apellido" aria-describedby="basic-addon2" />
+            placeholder="Filtrar por Nombre y/o Apellido" aria-describedby="basic-addon2" />
         <button type="submit" class="btn btn-primary mr-1" id="idSearchSp">Buscar</button>
     </div>
 </form>
+<a target="_blank" href="{% url 'login:generar_usuarios_pdf' %}" class="btn btn-secondary mt-3"> Generar PDF de Usuarios</a>
+
 {% endblock %}
 
 {% block btnTitle %}
@@ -49,7 +52,7 @@ Módulo Personal
 
     <td>
         {% if request.user.rol is not None %}
-        <a class="btn btn-dark" href="{% url 'login:editar_personal' i.id %}"> 
+        <a class="btn btn-dark" href="{% url 'login:editar_personal' i.id %}">
             Editar
         </a>
         {% endif %}
@@ -57,21 +60,19 @@ Módulo Personal
             {% csrf_token %}
 
             {% if i.estado %}
-            <button type="submit" class="btn btn-danger">Inactivar</button> <!-- Rojo para Inactivo -->   
+            <button type="submit" class="btn btn-danger">Inactivar</button> <!-- Rojo para Inactivo -->
             {% else %}
             <button type="submit" class="btn btn-success">Activar</button> <!-- Verde para Activo -->
             {% endif %}
         </form>
     </td>
-        
+
     </td>
 </tr>
 {% endfor %}
 {% else %}
-    <tr>
-        <td colspan="7"> No existe personal registrado</td>
-    </tr>
+<tr>
+    <td colspan="7"> No existe personal registrado</td>
+</tr>
 {% endif %}
 {% endblock %}
-
-

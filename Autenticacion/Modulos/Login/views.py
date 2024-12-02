@@ -1,4 +1,5 @@
 import re
+from datetime import datetime
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.encoding import force_bytes
@@ -22,6 +23,9 @@ from Modulos.Login.forms import FormularioLogin, FormularioRegistro, CambiarPass
 from Modulos.Login.mixin import CambiarEstadoMixin, ConfirmarCambioEstadoView, RoleRequiredMixin
 from Modulos.Login.models import Usuario, Rol
 from django.db.models import Q
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
 
 
 class Login(FormView):
@@ -357,7 +361,7 @@ class PasswordResetConfirmView(View):
 
 
 
-class Usuario_view(LoginRequiredMixin ,ListView):
+class Usuario_view(LoginRequiredMixin, ListView):
     template_name = 'personal/listado_personal.html'
     model = Usuario
     context_object_name = 'personal'
@@ -392,7 +396,50 @@ class Usuario_view(LoginRequiredMixin ,ListView):
         context['query'] = self.request.GET.get('query', '')
 
         return context
-   
+
+
+
+
+class GenerarPDFView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        # Filtra los usuarios que no son superusuarios
+        usuarios = Usuario.objects.filter(rol__id=1)
+        query = request.GET.get("query")
+        if query:
+            parts = query.split()
+            if len(parts) > 1:
+                nombre = parts[0]
+                apellido = ' '.join(parts[1:])
+                usuarios = usuarios.filter(
+                    nombre__icontains=nombre, apellido__icontains=apellido
+                )
+            else:
+                usuarios = usuarios.filter(
+                    Q(nombre__icontains=query) | Q(apellido__icontains=query)
+                ) | usuarios.filter(cedula__icontains=query)
+
+        # Fecha actual
+        fecha_actual = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
+
+        # Renderiza la plantilla HTML
+        template = get_template('personal/pdf_personal.html')
+        context = {
+            'usuarios': usuarios,
+            'query': query,
+            'fecha_actual': fecha_actual,  # Agrega la fecha al contexto
+        }
+        html = template.render(context)
+
+        # Genera el PDF
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = 'inline; filename="usuarios.pdf"'
+        pisa_status = pisa.CreatePDF(html, dest=response)
+        if pisa_status.err:
+            return HttpResponse('Ocurrió un error al generar el PDF', content_type='text/plain')
+        return response
+
+
+
     
 
 class Usuario_update(LoginRequiredMixin, RoleRequiredMixin, UpdateView):
