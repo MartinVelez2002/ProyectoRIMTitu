@@ -26,18 +26,12 @@ body{
 	
 }
 
-
 .container-change-pass {
 	display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
 }
-
-
-
-
-
 
 .container-grid {
     display: grid;

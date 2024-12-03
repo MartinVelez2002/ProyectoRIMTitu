@@ -68,13 +68,26 @@ class CalendarioUsuario_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
     template_name = 'listado_planificacion.html'
     context_object_name = 'calendarioUs'
     paginate_by = 5
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['dirurl'] = reverse('calendario:crear_planificacion')
         context['title_table'] = 'Listado de Planificación'
-        
+        context['dir_search'] = self.request.path  # Para mantener el buscador en la misma URL
+        context['query'] = self.request.GET.get('query', '')  # Capturar el filtro actual
+        # Obtener todos los lugares disponibles
+        context['lugares'] = Ubicacion_Model.objects.all()  # Cambia `Lugar_Model` al modelo real que contiene los lugares
         return context
+
+    def get_queryset(self):
+        query = self.request.GET.get("query", "")
+        if query:
+            return self.model.objects.filter(
+                ubicacion__lugar__icontains=query  # Filtra por el campo `lugar` en el modelo relacionado `Ubicacion_Model`
+            )
+        return self.model.objects.all()
+
+
 
 class CalendarioUsuario_Create(LoginRequiredMixin, RoleRequiredMixin, CreateView):
     model = TurnUsuario_Model

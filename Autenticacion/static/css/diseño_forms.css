@@ -165,10 +165,6 @@ header {
     font-family: 'Arima', sans-serif;
 }
 
-/* .btn-cancel, .btn-save{
-	color: white;
-	padding: 0.4rem;} */
-
 .div-btn{
 	display: flex;
 	justify-content: space-evenly;
@@ -235,7 +231,7 @@ header {
 
 
 /* Media Queries para adaptabilidad */
-@media screen and (max-width: 1050px){
+@media screen and (width < 1050px){
 
 	.form-grid {
 		grid-template-columns: repeat(2, 1fr) !important;
@@ -253,17 +249,13 @@ header {
 
 }
 
-
-
 /* Responsividad en pantallas más pequeñas */
 @media screen and (max-width: 500px) {
-
 	
 	.form-grid {
 		width: 200px;
 	}
 
-   
     
 }
 

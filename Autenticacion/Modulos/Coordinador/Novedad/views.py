@@ -21,6 +21,8 @@ class Novedad_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
         context['title_table'] = 'Listado de Novedades'
         context['dir_search'] = self.request.path
         context['query'] = self.request.GET.get('query', '')
+        # Agrega los tipos de novedades al contexto
+        context['tipos_novedades'] = TipoNovedad_Model.objects.all()  # Cambia según tu modelo de tipos de novedades
         return context
     
     def get_queryset(self):
@@ -28,9 +30,10 @@ class Novedad_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
         if query:
             return self.model.objects.filter(
                 Q(descripcion__icontains=query) |
-                Q(tiponovedad__descripcion__icontains=query)  # Reemplaza "tipo_novedad" con el nombre del campo de relación.
+                Q(tiponovedad__descripcion__icontains=query)  # Reemplaza con tu campo de relación
             )
         return self.model.objects.all()
+
 
     
 class Novedad_Create(LoginRequiredMixin, RoleRequiredMixin,CreateView):
@@ -48,6 +51,13 @@ class Novedad_Create(LoginRequiredMixin, RoleRequiredMixin,CreateView):
         
         return context
 
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        # Filtrar solo usuarios válidos para el select
+        form.fields['tiponovedad'].queryset = TipoNovedad_Model.objects.filter(estado=True)
+        
+        return form
+        
         
     def form_invalid(self, form):
         messages.error(self.request, "Favor llenar el formulario")

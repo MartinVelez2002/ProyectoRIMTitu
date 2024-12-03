@@ -25,6 +25,9 @@
     justify-content: space-around;
 }
 
+.regist-content .form-header{
+    width: 100%;
+}
 
 
 .modal-content .modal-title{

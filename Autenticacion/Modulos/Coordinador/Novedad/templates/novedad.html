@@ -9,12 +9,20 @@ Modulo Novedad
 {% block search %}
 <form action="{{ dir_search }}" method="GET">
     <div class="input-group">
-        <input type="text" class="form-control" name="query" value="{{ query }}"
-        placeholder = "Filtra por Tipos de Novedades o Novedades" aria-describedby="basic-addon2" />
+        <select class="form-control" name="query" aria-describedby="basic-addon2">
+            <option value="">-- Filtrar por Tipo de Novedad --</option>
+            {% for tipo in tipos_novedades %}
+            <option value="{{ tipo.descripcion }}" {% if query == tipo.descripcion %}selected{% endif %}>
+                {{ tipo.descripcion }}
+            </option>
+            {% endfor %}
+        </select>
         <button type="submit" class="btn btn-primary mr-1" id="idSearchSp">Buscar</button>
+        <a href="{{ dir_search }}" class="mx-2 btn btn-secondary ">Limpiar</a>
     </div>
 </form>
 {% endblock %}
+
 
 {% block btnTitle %}
 <a class="btn btn-dark btn-add" href="{{ dirurl }}">

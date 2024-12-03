@@ -5,6 +5,23 @@
 Modulo Planificación
 {% endblock %}
 
+{% block search %}
+<form action="{{ dir_search }}" method="GET">
+    <div class="input-group">
+        <select class="form-control" name="query" aria-describedby="basic-addon2">
+            <option value="">-- Filtrar por Lugar --</option>
+            {% for lugar in lugares %}
+            <option value="{{ lugar.nombre }}" {% if query == lugar.nombre %}selected{% endif %}>
+                {{ lugar.lugar }}
+            </option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-primary mr-1" id="idSearchSp">Buscar</button>
+        <a href="{{ dir_search }}" class="mx-2 btn btn-secondary">Limpiar</a>
+    </div>
+</form>
+{% endblock %}
+
 
 {% block btnTitle %}
 <a class="btn btn-dark btn-add" href="{{ dirurl }}">

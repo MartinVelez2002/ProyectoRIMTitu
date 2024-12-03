@@ -101,8 +101,9 @@ class MainView(LoginRequiredMixin, TemplateView):
 
   
 
-class RegistroView(LoginRequiredMixin, CreateView):
+class RegistroView(LoginRequiredMixin, RoleRequiredMixin, CreateView):
     template_name = 'personal/registro.html'
+    required_role = 'Coordinador'
     model = Usuario
     form_class = FormularioRegistro
     success_url = reverse_lazy('login:personal')
@@ -113,7 +114,14 @@ class RegistroView(LoginRequiredMixin, CreateView):
         context['cancelar'] = reverse('login:personal')
         context['action_save'] = self.request.path
         return context
-  
+    
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        # Filtrar solo usuarios válidos para el select
+        form.fields['rol'].queryset = Rol.objects.filter(estado=True)
+        
+        return form
+    
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)    
         if form.is_valid():
@@ -162,12 +170,6 @@ class RegistroView(LoginRequiredMixin, CreateView):
         else:  
             messages.error(request,'El formulario no ha procesado la información correctamente.')
             return render(request, self.template_name, {'form': form})
-
-
-
-
-
-
 
 class ForgetPassword(FormView):
     template_name = 'olvidar_clave.html'
@@ -361,9 +363,10 @@ class PasswordResetConfirmView(View):
 
 
 
-class Usuario_view(LoginRequiredMixin, ListView):
+class Usuario_view(LoginRequiredMixin, RoleRequiredMixin, ListView):
     template_name = 'personal/listado_personal.html'
     model = Usuario
+    required_role = 'Coordinador'
     context_object_name = 'personal'
     paginate_by = 5
     
@@ -400,7 +403,8 @@ class Usuario_view(LoginRequiredMixin, ListView):
 
 
 
-class GenerarPDFView(LoginRequiredMixin, View):
+class GenerarPDFView(LoginRequiredMixin, RoleRequiredMixin, View):
+    required_role = 'Coordinador'
     def get(self, request, *args, **kwargs):
         # Filtra los usuarios que no son superusuarios
         usuarios = Usuario.objects.filter(rol__id=1)
@@ -466,9 +470,10 @@ class Usuario_update(LoginRequiredMixin, RoleRequiredMixin, UpdateView):
         return response
 
 
-class Rol_View(LoginRequiredMixin, ListView):
+class Rol_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
     template_name = 'rol/listado_rol.html'
     model = Rol
+    required_role = 'Coordinador'
     context_object_name = 'rol'
     paginate_by = '5'
     
