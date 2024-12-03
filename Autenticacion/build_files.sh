@@ -1,13 +1,10 @@
-#!/bin/bash
-
-# Instalar las dependencias desde requirements.txt
+# build_files.sh
+echo "Instalando los archivos en requirements"
 pip install -r requirements.txt
 
-# Recolectar archivos estáticos
-python3.9 manage.py collectstatic --noinput
+echo "Haciendo las migraciones"
+python3.9 manage.py makemigrations
+python3.9 manage.py migrate
 
-# Crear el directorio para archivos estáticos que espera Vercel
-mkdir -p staticfiles_build
-
-# Mover los archivos recolectados al directorio de salida
-cp -r staticfiles/* staticfiles_build/
+echo "Recolectando del archivo Static"
+python3.9 manage.py collectstatic
