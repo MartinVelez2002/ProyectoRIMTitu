@@ -17,10 +17,10 @@ def enviar_notificacion_al_crear_reporte(sender, instance, created, **kwargs):
             destinatarios = coordinadores.values_list('email', flat=True)
 
             # Obtener los datos necesarios para el correo
-            novedad = instance.novedad  # Asegúrate de que CabIncidente_Model tiene un campo novedad
+            novedad = instance.novedad 
             prioridad = instance.get_prioridad_display()
             fecha = instance.fecha
-            agente = instance.agente.usuario.nombre  # Ajusta según tu modelo
+            agente = instance.agente.usuario.nombre  
 
             # Renderizar el mensaje en HTML
             subject = f'Nuevo Reporte de Incidencia Creado: {instance.id}'
