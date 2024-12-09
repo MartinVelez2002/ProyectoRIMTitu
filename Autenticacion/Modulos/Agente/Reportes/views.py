@@ -128,7 +128,7 @@ class IncidenteCreateView(LoginRequiredMixin, RoleRequiredMixin,CreateView):
                 with transaction.atomic():
                     # Guardar cabecera del incidente
                     cab_incidente = form.save(commit=False)
-                    cab_incidente.agente = turn_usuario  # Suponiendo que el agente es el usuario actual
+                    cab_incidente.agente = turn_usuario
                     cab_incidente.save()
 
                     # Guardar detalle del incidente

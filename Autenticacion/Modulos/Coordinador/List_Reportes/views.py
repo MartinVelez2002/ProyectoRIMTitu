@@ -173,7 +173,7 @@ class ListarReportes_View(LoginRequiredMixin, RoleRequiredMixin, ListView):
         else:
             messages.error(request, "Debe seleccionar un nuevo estado para el incidente.")
 
-        return redirect('reportesCoord:listado_reportes_agente')  # Asegúrate de que la URL esté correcta
+        return redirect('reportesCoord:listado_reportes_agente')  
     
  
  
